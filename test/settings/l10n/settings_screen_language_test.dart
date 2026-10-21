@@ -151,6 +151,53 @@ void main() {
       expect(find.text('ערכת נושא'), findsNothing);
     });
 
+    testWidgets('יידיש — לשוניות ביידיש והמסך RTL', (tester) async {
+      final yi = kSettingsCatalogs[SettingsLanguage.yiddish.code]!;
+      givenLanguageCode(SettingsLanguage.yiddish.code);
+      await pumpScreen(tester);
+
+      expect(find.widgetWithText(SidebarNavItem, yi['מראה']!), findsOneWidget);
+      expect(
+        find.widgetWithText(SidebarNavItem, yi['קיצורי מקשים']!),
+        findsOneWidget,
+      );
+      expect(find.widgetWithText(SidebarNavItem, 'מראה'), findsNothing);
+      expect(find.text(yi['הגדרות']!), findsWidgets);
+
+      expect(
+        Directionality.of(tester.element(find.byType(SidebarNavItem).first)),
+        TextDirection.rtl,
+      );
+    }, variant: TargetPlatformVariant.only(TargetPlatform.windows));
+
+    testWidgets('יידיש — תוכן לשונית מראה מתורגם, בלי נפילה לעברית', (
+      tester,
+    ) async {
+      final yi = kSettingsCatalogs[SettingsLanguage.yiddish.code]!;
+      givenLanguageCode(SettingsLanguage.yiddish.code);
+      await pumpScreen(tester);
+
+      expect(find.text(yi['שפת ההגדרות']!), findsWidgets);
+      expect(find.text(yi['ערכת נושא']!), findsWidgets);
+      expect(find.text('ערכת נושא'), findsNothing);
+
+      // טקסט שמוצג כמו המפתח העברי שלו, כשיש לו תרגום שונה, הוא נפילה
+      // ל-fallback — מפתח שחסר בקטלוג היידי.
+      final translations = yi.values.toSet();
+      final untranslated = tester
+          .widgetList<Text>(find.byType(Text))
+          .map((text) => text.data)
+          .whereType<String>()
+          .where(
+            (data) =>
+                yi.containsKey(data) &&
+                yi[data] != data &&
+                !translations.contains(data),
+          )
+          .toSet();
+      expect(untranslated, isEmpty);
+    });
+
     testWidgets('הבורר סגור מציג את השפה הנבחרת בלבד', (tester) async {
       givenLanguageCode(SettingsLanguage.hebrew.code);
       await pumpScreen(tester);
@@ -196,6 +243,22 @@ void main() {
       ).called(1);
     });
 
+    testWidgets('בחירת יידיש בתפריט משדרת את קוד השפה', (tester) async {
+      givenLanguageCode(SettingsLanguage.hebrew.code);
+      await pumpScreen(tester);
+
+      await tester.tap(find.byType(AppDropdownField<String>));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text(SettingsLanguage.yiddish.label).last);
+      await tester.pumpAndSettle();
+
+      verify(
+        () => settingsBloc.add(
+          UpdateSettingsLanguageCode(SettingsLanguage.yiddish.code),
+        ),
+      ).called(1);
+    });
+
     testWidgets('אוטומטי — מערכת בעברית מציגה הגדרות בעברית ו-RTL', (
       tester,
     ) async {
@@ -222,6 +285,22 @@ void main() {
       expect(
         Directionality.of(tester.element(find.byType(SidebarNavItem).first)),
         TextDirection.ltr,
+      );
+    });
+
+    testWidgets('אוטומטי — מערכת ביידיש מציגה הגדרות ביידיש ו-RTL', (
+      tester,
+    ) async {
+      final yi = kSettingsCatalogs[SettingsLanguage.yiddish.code]!;
+      givenSystemLocale(tester, const Locale('yi'));
+      givenLanguageCode(kSettingsLanguageSystemCode);
+      await pumpScreen(tester);
+
+      expect(find.widgetWithText(SidebarNavItem, yi['מראה']!), findsOneWidget);
+      expect(find.widgetWithText(SidebarNavItem, 'מראה'), findsNothing);
+      expect(
+        Directionality.of(tester.element(find.byType(SidebarNavItem).first)),
+        TextDirection.rtl,
       );
     });
 

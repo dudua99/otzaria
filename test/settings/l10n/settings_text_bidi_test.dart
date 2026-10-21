@@ -58,6 +58,33 @@ void main() {
     });
   });
 
+  group('בשפה RTL שאינה המקור (יידיש) אין בידוד', () {
+    const yiddish = {'מחיקת "{title}"?': 'אויסמעקן "{title}"?'};
+
+    test('כיוון הפסקה כבר RTL, ולכן גם fallback עברי נשאר נקי', () {
+      expect(
+        resolveSettingsText(
+          'משפט עברי שאין לו תרגום.',
+          language: SettingsLanguage.yiddish,
+          catalog: yiddish,
+        ),
+        'משפט עברי שאין לו תרגום.',
+      );
+    });
+
+    test('תרגום יידיש וערך דינמי עברי נשארים נקיים', () {
+      expect(
+        resolveSettingsText(
+          'מחיקת "{title}"?',
+          language: SettingsLanguage.yiddish,
+          args: {'title': 'בבא קמא'},
+          catalog: yiddish,
+        ),
+        'אויסמעקן "בבא קמא"?',
+      );
+    });
+  });
+
   group('בשפת המקור אין בידוד', () {
     test('כיוון הפסקה כבר RTL, ולכן הטקסט נקי מתווי בקרה', () {
       expect(

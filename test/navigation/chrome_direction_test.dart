@@ -32,6 +32,16 @@ void main() {
       expect(_directionAt(tester, probe), TextDirection.rtl);
     });
 
+    testWidgets('יידיש (RTL) — הכרום נשאר RTL', (tester) async {
+      await tester.pumpWidget(
+        _app(
+          SettingsLanguage.yiddish,
+          const ChromeDirectionality(child: SizedBox(key: probe)),
+        ),
+      );
+      expect(_directionAt(tester, probe), TextDirection.rtl);
+    });
+
     testWidgets('שפה LTR — הכרום עובר ל-LTR', (tester) async {
       await tester.pumpWidget(
         _app(

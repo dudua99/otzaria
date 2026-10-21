@@ -9,7 +9,8 @@ import 'package:flutter/widgets.dart';
 /// שאר המערכת — הבורר, השמירה והזיהוי האוטומטי — מתעדכנת מאליה.
 enum SettingsLanguage {
   hebrew('he', 'עברית', TextDirection.rtl),
-  english('en', 'English', TextDirection.ltr);
+  english('en', 'English', TextDirection.ltr),
+  yiddish('yi', 'ייִדיש', TextDirection.rtl);
 
   const SettingsLanguage(this.code, this.label, this.textDirection);
 

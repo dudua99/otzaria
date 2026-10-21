@@ -42,10 +42,12 @@ void main() {
     test('כיווני הכתיבה מוגדרים נכון', () {
       expect(SettingsLanguage.hebrew.textDirection, TextDirection.rtl);
       expect(SettingsLanguage.english.textDirection, TextDirection.ltr);
+      expect(SettingsLanguage.yiddish.textDirection, TextDirection.rtl);
     });
 
     test('קוד שמור מתורגם לשפה; ערך חסר או לא מוכר מחזיר null', () {
       expect(SettingsLanguage.fromCode('en'), SettingsLanguage.english);
+      expect(SettingsLanguage.fromCode('yi'), SettingsLanguage.yiddish);
       expect(SettingsLanguage.fromCode('he'), SettingsLanguage.hebrew);
       expect(SettingsLanguage.fromCode(null), isNull);
       expect(SettingsLanguage.fromCode('fr'), isNull);
@@ -66,6 +68,10 @@ void main() {
       expect(
         resolveSettingsLanguage('en', systemLocale: const Locale('he', 'IL')),
         SettingsLanguage.english,
+      );
+      expect(
+        resolveSettingsLanguage('yi', systemLocale: const Locale('en', 'US')),
+        SettingsLanguage.yiddish,
       );
     });
 
@@ -92,8 +98,18 @@ void main() {
       }
     });
 
+    test('אוטומטי: מערכת ביידיש מניבה יידיש', () {
+      expect(
+        resolveSettingsLanguage(
+          kSettingsLanguageSystemCode,
+          systemLocale: const Locale('yi'),
+        ),
+        SettingsLanguage.yiddish,
+      );
+    });
+
     test('אוטומטי: שפה שאינה נתמכת נופלת לאנגלית', () {
-      for (final code in ['fr', 'ru', 'ar', 'yi']) {
+      for (final code in ['fr', 'ru', 'ar']) {
         expect(
           resolveSettingsLanguage(
             kSettingsLanguageSystemCode,
@@ -133,6 +149,14 @@ void main() {
         'locale': 'en',
         'language': 'en',
         'textDirection': 'ltr',
+      });
+    });
+
+    test('יידיש: locale הוא קוד השפה הנקי וכיוון rtl', () {
+      expect(pluginLocalePayload(code: 'yi'), {
+        'locale': 'yi',
+        'language': 'yi',
+        'textDirection': 'rtl',
       });
     });
 
@@ -198,6 +222,17 @@ void main() {
           catalog: catalog,
         ),
         'Search',
+      );
+    });
+
+    test('במצב יידיש מוחזר התרגום', () {
+      expect(
+        resolveSettingsText(
+          'חיפוש',
+          language: SettingsLanguage.yiddish,
+          catalog: const {'חיפוש': 'זוכן'},
+        ),
+        'זוכן',
       );
     });
 

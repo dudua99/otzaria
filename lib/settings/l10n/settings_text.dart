@@ -32,12 +32,10 @@ String resolveSettingsText(
             entries[hebrew] ??
             hebrew;
   // הבידוד נקבע לפי התרגום עצמו — לפני הכנסת הערכים — אחרת ערך עברי
-  // בתוך משפט אנגלי היה גורם לבידוד המשפט כולו.
-  return _applyArgs(
-    _isolateBidi(text, isSourceLanguage),
-    args,
-    isSourceLanguage,
-  );
+  // בתוך משפט אנגלי היה גורם לבידוד המשפט כולו. בשפה RTL (עברית, יידיש)
+  // כיוון הפסקה כבר RTL, ולכן אין צורך בבידוד.
+  final isRtl = language.textDirection == TextDirection.rtl;
+  return _applyArgs(_isolateBidi(text, isRtl), args, isRtl);
 }
 
 // ── בידוד כיווניות ───────────────────────────────────────────────────────────
@@ -58,25 +56,19 @@ final RegExp _hebrewLetter = RegExp(r'[֐-׿]');
 String _isolateArg(String value) =>
     _hebrewLetter.hasMatch(value) ? '$_fsi$value$_pdi' : value;
 
-/// עוטף טקסט שנשאר עברי בשפה שאינה עברית — כלומר נפל ל-fallback, או תוכן
-/// שאינו מתורגם בכוונה. בשפת המקור אין צורך: כיוון הפסקה כבר RTL.
-String _isolateBidi(String text, bool isSourceLanguage) =>
-    isSourceLanguage || !_hebrewLetter.hasMatch(text)
-    ? text
-    : '$_fsi$text$_pdi';
+/// עוטף טקסט שנשאר עברי בשפה LTR — כלומר נפל ל-fallback, או תוכן שאינו
+/// מתורגם בכוונה. בשפה RTL אין צורך: כיוון הפסקה כבר RTL.
+String _isolateBidi(String text, bool isRtl) =>
+    isRtl || !_hebrewLetter.hasMatch(text) ? text : '$_fsi$text$_pdi';
 
-String _applyArgs(
-  String text,
-  Map<String, Object?>? args,
-  bool isSourceLanguage,
-) {
+String _applyArgs(String text, Map<String, Object?>? args, bool isRtl) {
   if (args == null || args.isEmpty) return text;
   var result = text;
   for (final entry in args.entries) {
     final value = '${entry.value}';
     result = result.replaceAll(
       '{${entry.key}}',
-      isSourceLanguage ? value : _isolateArg(value),
+      isRtl ? value : _isolateArg(value),
     );
   }
   return result;

@@ -26,7 +26,14 @@ import 'package:otzaria/tour/models/tour_steps.dart';
 import '../../../tool/src/settings_l10n_generator.dart';
 
 void main() {
-  final catalog = kSettingsCatalogs['en']!;
+  // כל שפה נבדקת בנפרד, כך ששפה שתתווסף בעתיד נכללת מאליה.
+  for (final code in kSettingsCatalogs.keys) {
+    group('[$code]', () => _labelTests(code));
+  }
+}
+
+void _labelTests(String code) {
+  final catalog = kSettingsCatalogs[code]!;
 
   group('תוויות מטבלאות נתונים', () {
     const dataLabels = <String, List<String>>{
@@ -54,10 +61,12 @@ void main() {
         kSemanticSearchConsentTemplate,
         contains('פרטים אישיים אחרים עלולים להישלח'),
       );
-      expect(
-        catalog[kSemanticSearchConsentTemplate],
-        contains('other personal details may still be sent'),
-      );
+      if (code == 'en') {
+        expect(
+          catalog[kSemanticSearchConsentTemplate],
+          contains('other personal details may still be sent'),
+        );
+      }
     });
 
     test('הודעות הכשל של נתוני החיפוש הסמנטי', () {
@@ -263,7 +272,7 @@ void main() {
       for (final entry in scanSegmentOptionKeys(Directory.current)) {
         final label = resolveSettingsText(
           entry.hebrew,
-          language: SettingsLanguage.english,
+          language: SettingsLanguage.fromCode(code)!,
           context: entry.context,
         );
         if (label.length > maxLabelLength) {
