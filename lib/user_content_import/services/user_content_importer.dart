@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'dart:isolate';
 
-import 'package:flutter/foundation.dart';
 import 'package:otzaria/migration/database/daos/database.dart';
 import 'package:otzaria/migration/database/query_loader.dart';
 import 'package:otzaria/migration/database/repository/seforim_repository.dart';
@@ -838,7 +837,6 @@ const String kUnrecognizedImportFileMessage =
 
 /// בצמד-שורות, כל `anchorStart` שונה הוא רשומה נפרדת; רשומה חסרת-עוגן (הצד
 /// ההפוך של צמד דו-כיווני) נבלעת במעוגנת ומשלימה לה heRef.
-@visibleForTesting
 List<UserLinkRecord> mergeUserLinks(List<UserLinkRecord> links) {
   final groups = <String, List<UserLinkRecord>>{};
   for (final link in links) {

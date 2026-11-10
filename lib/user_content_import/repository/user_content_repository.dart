@@ -436,7 +436,7 @@ class UserContentRepository {
   }
 
   /// מוחק את קישורי הצמד של [link] *מאותו [source]*. IS ולא =, כדי ש-NULL
-  /// ישווה ל-NULL; כפילות בין מקורות מתמזגת בתצוגה ב-`dedupeUserLinks`.
+  /// ישווה ל-NULL; כפילות בין מקורות מתמזגת בתצוגה ב-`loadUserLinksForBook`.
   void _deleteUserLinksAt(
     sqlite3.Database db,
     UserLinkRecord link,

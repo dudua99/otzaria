@@ -7,7 +7,9 @@ import 'package:otzaria/migration/database/query_loader.dart';
 import 'package:otzaria/models/book_source.dart';
 import 'package:otzaria/models/link_types.dart';
 import 'package:otzaria/models/links.dart';
+import 'package:otzaria/user_content_import/models/user_import_models.dart';
 import 'package:otzaria/user_content_import/repository/user_content_repository.dart';
+import 'package:otzaria/user_content_import/services/user_content_importer.dart';
 import 'package:otzaria/utils/text/text_manipulation.dart' as utils;
 
 /// טוען קישורי-משתמש (מ-user_books.db) ככ-[Link] עבור ספר שנקרא, בשני
@@ -53,9 +55,10 @@ Future<List<Link>> loadUserLinksForBook({
         endLineIndex: endLineIndex,
       ),
     ),
-    ifSkipped: (const [], const []),
+    ifSkipped: (const <UserLinkRecord>[], const <UserLinkRecord>[]),
   );
-  for (final r in forward) {
+  // אותו קישור נשמר לכל מקור (ייבוא ידני, קובץ תיקייה) — ממוזג כמו בייבוא.
+  for (final r in mergeUserLinks(forward)) {
     final targetLine = r.targetLineIndex;
     // ללא יעד-שורה אין לאן לפתוח (index2==0 נכשל כ-"Invalid link reference").
     if (targetLine == null) continue;
@@ -85,7 +88,7 @@ Future<List<Link>> loadUserLinksForBook({
     );
   }
 
-  for (final r in inverse) {
+  for (final r in mergeUserLinks(inverse)) {
     final targetLine = r.targetLineIndex;
     if (targetLine == null) continue;
     result.add(
@@ -97,6 +100,9 @@ Future<List<Link>> loadUserLinksForBook({
             : r.targetLineIndexEnd! + 1,
         path2: r.sourceTitle,
         index2: r.sourceLineIndex + 1,
+        index2End: r.sourceLineIndexEnd == null
+            ? null
+            : r.sourceLineIndexEnd! + 1,
         // כמו ה-inverse של seforim.db: מפרש שקורא את בסיסו רואה אותו כ'מקור'
         // וירטואלי בפאנל הקישורים, לא כמפרש.
         connectionType: LinkTypes.isDependentTextLink(r.connectionType)
