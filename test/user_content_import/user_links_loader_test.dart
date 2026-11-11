@@ -339,6 +339,107 @@ void main() {
       expect(result, hasLength(5));
     });
   });
+
+  group('טווח קישור-משתמש בצד ההפוך', () {
+    late UserContentRepository ucr;
+
+    setUp(() async {
+      await Settings.init(cacheProvider: MemoryCacheProvider());
+      final tempDir = await Directory.systemTemp.createTemp('user_link_range');
+      final previousRoot = AppPaths.cachedDataRootPath;
+      await UserBooksDatabaseHolder.instance.close();
+      AppPaths.debugOverrideDataRootPath(p.join(tempDir.path, 'data'));
+      addTearDown(() async {
+        await UserBooksDatabaseHolder.instance.close();
+        AppPaths.debugOverrideDataRootPath(previousRoot);
+        await tempDir.delete(recursive: true);
+      });
+      ucr = UserContentRepository(
+        (await UserBooksDatabaseHolder.instance.repository).database,
+      );
+    });
+
+    Future<List<Link>> linksOf(String title, BookSource source) =>
+        loadUserLinksForBook(
+          bookTitle: title,
+          bookCategoryId: null,
+          source: source,
+          startLineIndex: 0,
+          endLineIndex: 50,
+        );
+
+    test('הפניה מצביעה על כל הטווח בספר השני', () async {
+      await ucr.upsertUserLink(
+        const UserLinkRecord(
+          sourceTitle: 'מראי מקומות',
+          sourceLineIndex: 3,
+          sourceLineIndexEnd: 5,
+          targetTitle: 'בסיס',
+          targetLineIndex: 1,
+          connectionType: 'REFERENCE',
+        ),
+      );
+
+      final reference = (await linksOf('בסיס', BookSource.official)).single;
+      expect(reference.path2, 'מראי מקומות');
+      expect(reference.connectionType, 'REFERENCE');
+      expect((reference.index2, reference.index2End), (4, 6));
+    });
+
+    test('מפרש-משתמש: הבסיס מוצג כמקור עם כל הטווח', () async {
+      await ucr.upsertUserLink(
+        const UserLinkRecord(
+          sourceTitle: 'בסיס',
+          sourceIsUserBook: false,
+          sourceLineIndex: 7,
+          sourceLineIndexEnd: 9,
+          targetTitle: 'מפרש',
+          targetIsUserBook: true,
+          targetLineIndex: 2,
+          connectionType: 'COMMENTARY',
+        ),
+      );
+
+      final base = (await linksOf('מפרש', BookSource.user)).single;
+      expect(base.path2, 'בסיס');
+      expect(base.connectionType, 'SOURCE');
+      expect((base.index2, base.index2End), (8, 10));
+    });
+
+    test('צמד הפניות דו-כיווני עם טווח מוצג פעם אחת משני הספרים', () async {
+      await ucr.replaceUserLinks([
+        const UserLinkRecord(
+          sourceTitle: 'בסיס',
+          sourceIsUserBook: false,
+          sourceLineIndex: 1,
+          targetTitle: 'מראי מקומות',
+          targetIsUserBook: true,
+          targetRef: 'מראי מקומות ד',
+          targetLineIndex: 3,
+          targetLineIndexEnd: 5,
+          connectionType: 'REFERENCE',
+        ),
+      ], source: 'links/בסיס_links.json');
+      await ucr.replaceUserLinks([
+        const UserLinkRecord(
+          sourceTitle: 'מראי מקומות',
+          sourceLineIndex: 3,
+          sourceLineIndexEnd: 5,
+          targetTitle: 'בסיס',
+          targetLineIndex: 1,
+          connectionType: 'REFERENCE',
+        ),
+      ], source: 'links/מראי מקומות_links.json');
+
+      final fromBase = (await linksOf('בסיס', BookSource.official)).single;
+      expect(fromBase.heRef, 'מראי מקומות ד');
+      expect((fromBase.index2, fromBase.index2End), (4, 6));
+
+      final fromOther = (await linksOf('מראי מקומות', BookSource.user)).single;
+      expect((fromOther.index1, fromOther.index1End), (4, 6));
+      expect(fromOther.index2, 2);
+    });
+  });
 }
 
 Future<void> _holdExclusiveLock(String dbPath, SendPort ready) =>
