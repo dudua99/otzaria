@@ -840,21 +840,23 @@ const String kUnrecognizedImportFileMessage =
 List<UserLinkRecord> mergeUserLinks(List<UserLinkRecord> links) {
   final groups = <String, List<UserLinkRecord>>{};
   for (final link in links) {
-    final key = [
-      link.sourceIsUserBook,
-      link.sourceCategoryId,
-      link.sourceTitle,
-      link.sourceLineIndex,
-      link.targetIsUserBook,
-      link.targetCategoryId,
-      link.targetTitle,
-      link.targetLineIndex,
-      link.connectionType,
-    ].join('|');
-    (groups[key] ??= []).add(link);
+    (groups[userLinkPairKey(link)] ??= []).add(link);
   }
   return [for (final group in groups.values) ..._mergeLinkGroup(group)];
 }
+
+/// צמד-השורות של קישור, בלי העוגן — הזהות שלפיה [mergeUserLinks] ממזג.
+String userLinkPairKey(UserLinkRecord link) => [
+  link.sourceIsUserBook,
+  link.sourceCategoryId,
+  link.sourceTitle,
+  link.sourceLineIndex,
+  link.targetIsUserBook,
+  link.targetCategoryId,
+  link.targetTitle,
+  link.targetLineIndex,
+  link.connectionType,
+].join('|');
 
 List<UserLinkRecord> _mergeLinkGroup(List<UserLinkRecord> group) {
   if (group.length == 1) return group;

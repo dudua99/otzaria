@@ -474,6 +474,64 @@ void main() {
       expect((fromOther.index1, fromOther.index1End), (4, 6));
       expect(fromOther.index2, 2);
     });
+
+    test(
+      'רשומה בלי עוגן ורשומות מעוגנות — העשירה, באותו סדר',
+      () async {
+        UserLinkRecord commentary({
+          int? anchorStart,
+          int? targetLineIndexEnd,
+        }) => UserLinkRecord(
+          sourceTitle: 'בסיס',
+          sourceIsUserBook: false,
+          sourceLineIndex: 1,
+          targetTitle: 'מפרש',
+          targetIsUserBook: true,
+          targetLineIndex: 3,
+          targetLineIndexEnd: targetLineIndexEnd,
+          anchorStart: anchorStart,
+          connectionType: 'COMMENTARY',
+        );
+        await ucr.upsertUserLink(commentary());
+        await ucr.upsertUserLink(
+          const UserLinkRecord(
+            sourceTitle: 'בסיס',
+            sourceIsUserBook: false,
+            sourceLineIndex: 1,
+            targetTitle: 'אחר',
+            targetIsUserBook: true,
+            targetLineIndex: 0,
+            connectionType: 'COMMENTARY',
+          ),
+        );
+        await ucr.upsertUserLink(
+          const UserLinkRecord(
+            sourceTitle: 'עוד',
+            sourceLineIndex: 0,
+            targetTitle: 'מפרש',
+            targetIsUserBook: true,
+            targetLineIndex: 3,
+            connectionType: 'REFERENCE',
+          ),
+        );
+        await ucr.replaceUserLinks([
+          commentary(anchorStart: 10, targetLineIndexEnd: 4),
+          commentary(anchorStart: 2),
+        ], source: 'links/בסיס_links.json');
+
+        final fromBase = await linksOf('בסיס', BookSource.official);
+        expect(
+          [for (final link in fromBase) (link.path2, link.anchorStart)],
+          [('אחר', null), ('מפרש', 10), ('מפרש', 2)],
+        );
+
+        final fromCommentary = await linksOf('מפרש', BookSource.user);
+        expect(
+          [for (final link in fromCommentary) (link.path2, link.index1End)],
+          [('בסיס', 5), ('עוד', null)],
+        );
+      },
+    );
   });
 }
 

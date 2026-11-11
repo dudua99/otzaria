@@ -58,7 +58,7 @@ Future<List<Link>> loadUserLinksForBook({
     ifSkipped: (const <UserLinkRecord>[], const <UserLinkRecord>[]),
   );
   // אותו קישור נשמר לכל מקור (ייבוא ידני, קובץ תיקייה) — ממוזג כמו בייבוא.
-  for (final r in mergeUserLinks(forward)) {
+  for (final r in _mergeInPlace(forward, showsAnchors: true)) {
     final targetLine = r.targetLineIndex;
     // ללא יעד-שורה אין לאן לפתוח (index2==0 נכשל כ-"Invalid link reference").
     if (targetLine == null) continue;
@@ -88,7 +88,7 @@ Future<List<Link>> loadUserLinksForBook({
     );
   }
 
-  for (final r in mergeUserLinks(inverse)) {
+  for (final r in _mergeInPlace(inverse, showsAnchors: false)) {
     final targetLine = r.targetLineIndex;
     if (targetLine == null) continue;
     result.add(
@@ -169,6 +169,35 @@ Future<T> _readUserContentInIsolate<T>(
       db.close();
     }
   });
+}
+
+/// [mergeUserLinks] בלי לשנות את הסדר: כל רשומה מוחלפת במקומה בשורדת של
+/// הצמד והעוגן שלה, ו-[dedupeUserLinks] שומר כמו קודם את הראשונה.
+List<UserLinkRecord> _mergeInPlace(
+  List<UserLinkRecord> records, {
+  required bool showsAnchors,
+}) {
+  final survivors = {
+    for (final survivor in mergeUserLinks(records))
+      '${userLinkPairKey(survivor)}|${survivor.anchorStart}': survivor,
+  };
+  UserLinkRecord? survivorOf(UserLinkRecord record) =>
+      survivors['${userLinkPairKey(record)}|${record.anchorStart}'];
+  // חסרת-עוגן שנבלעה במעוגנות: הצד הקדמי משמיט אותה ממילא, ובצד ההפוך (שאינו
+  // מציג עוגן) מוצגת במקומה המעוגנת הראשונה של הצמד.
+  final firstAnchored = <String, UserLinkRecord>{};
+  for (final record in records) {
+    if (!showsAnchors && record.anchorStart != null) {
+      firstAnchored.putIfAbsent(
+        userLinkPairKey(record),
+        () => survivorOf(record)!,
+      );
+    }
+  }
+  return [
+    for (final record in records)
+      ?(survivorOf(record) ?? firstAnchored[userLinkPairKey(record)]),
+  ];
 }
 
 /// מסיר כפילויות בין forward ל-inverse: קישור דו-כיווני (כמו שמייצר "מנהל
