@@ -196,7 +196,9 @@ List<UserLinkRecord> _mergeInPlace(
   }
   return [
     for (final record in records)
-      ?(survivorOf(record) ?? firstAnchored[userLinkPairKey(record)]),
+      // השורדת נבחרת לפי מספר השדות, ועלולה לחסור טווח שיש ברשומה עצמה.
+      ?(survivorOf(record) ?? firstAnchored[userLinkPairKey(record)])
+          ?.fillMissingFrom(record),
   ];
 }
 

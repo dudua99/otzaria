@@ -407,6 +407,42 @@ void main() {
       expect(fromCommentary.index2End, 3);
     });
 
+    test('כל רשומה נושאת חלק מהשדות — אף טווח לא אובד', () async {
+      await ucr.replaceUserLinks([
+        const UserLinkRecord(
+          sourceTitle: 'בסיס',
+          sourceIsUserBook: false,
+          sourceLineIndex: 1,
+          sourceLineIndexEnd: 2,
+          targetTitle: 'מפרש',
+          targetIsUserBook: true,
+          targetLineIndex: 3,
+          connectionType: 'COMMENTARY',
+        ),
+      ], source: 'links/בסיס_links.json');
+      await ucr.upsertUserLink(
+        const UserLinkRecord(
+          sourceTitle: 'בסיס',
+          sourceIsUserBook: false,
+          sourceLineIndex: 1,
+          targetTitle: 'מפרש',
+          targetIsUserBook: true,
+          targetRef: 'מפרש ג',
+          targetLineIndex: 3,
+          targetLineIndexEnd: 5,
+          targetRefEnd: 'מפרש ה',
+          connectionType: 'COMMENTARY',
+        ),
+      );
+
+      final fromBase = (await linksOf('בסיס', BookSource.official)).single;
+      expect(fromBase.heRef, 'מפרש ג');
+      expect((fromBase.index1End, fromBase.index2End), (3, 6));
+
+      final fromCommentary = (await linksOf('מפרש', BookSource.user)).single;
+      expect((fromCommentary.index1End, fromCommentary.index2End), (6, 3));
+    });
+
     test('הצד ההפוך מצביע על כל הטווח בספר השני', () async {
       await ucr.replaceUserLinks([
         const UserLinkRecord(
