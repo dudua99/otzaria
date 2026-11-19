@@ -2,6 +2,7 @@ import 'package:otzaria/settings/engine/app_settings_store.dart';
 import 'package:flutter/foundation.dart' show debugPrint, visibleForTesting;
 import 'package:otzaria/data/data_providers/sqlite_data_provider.dart';
 import 'package:otzaria/data/data_providers/user_books_database_holder.dart';
+import 'package:otzaria/library/models/library.dart' show normalizeBookTitle;
 import 'package:otzaria/migration/database/daos/database.dart';
 import 'package:otzaria/migration/database/repository/seforim_repository.dart';
 import 'package:otzaria/migration/models/book.dart';
@@ -105,6 +106,7 @@ Future<Book?> _bookByTitle(
 }
 
 typedef LocatedUserLinkBook = ({
+  String title,
   bool isUserBook,
   int? categoryId,
   int totalLines,
@@ -149,9 +151,10 @@ Future<LocatedUserLinkBook?> _locateIn(
   final userBook = userRepository == null
       ? null
       : await _bookByTitle(userRepository, title, null);
+  final SeforimRepository? officialRepository;
   Book? officialBook;
   try {
-    final officialRepository = await repositoryFor(false);
+    officialRepository = await repositoryFor(false);
     officialBook = officialRepository == null
         ? null
         : await _bookByTitle(officialRepository, title, null);
@@ -161,14 +164,42 @@ Future<LocatedUserLinkBook?> _locateIn(
   if (userBook != null && officialBook != null) {
     throw AmbiguousUserLinkBookException(title);
   }
-  final book = userBook ?? officialBook;
-  if (book == null) return null;
+  var isUserBook = userBook != null;
+  var book = userBook ?? officialBook;
+  if (book == null) {
+    final loose = [
+      for (final (isUser, repo) in [
+        (true, userRepository),
+        (false, officialRepository),
+      ])
+        if (repo != null)
+          for (final match in await _titlesLike(repo, title))
+            (isUser, repo, match),
+    ];
+    if (loose.length != 1) return null;
+    final (isUser, repo, match) = loose.single;
+    isUserBook = isUser;
+    book = await _bookByTitle(repo, match, null);
+    if (book == null) return null;
+  }
   return (
-    isUserBook: userBook != null,
+    title: book.title,
+    isUserBook: isUserBook,
     categoryId: book.categoryId,
     totalLines: book.totalLines,
     isDependentOnly: _isDependentOnly(book),
   );
+}
+
+/// כותרות [repo] שזהות ל-[title] בלי גרשיים: שם קובץ ב-Windows אינו יכול
+/// להכיל ", ולכן `ריף שבת_links.json` מכוון ל-`רי"ף שבת`.
+Future<Set<String>> _titlesLike(SeforimRepository repo, String title) async {
+  final key = normalizeBookTitle(title);
+  return {
+    for (final row in await repo.database.bookDao.selectAllLocalBooksSlim())
+      if (normalizeBookTitle(row['title'] as String) == key)
+        row['title'] as String,
+  };
 }
 
 // ספר תלוי יכול להיות מסומן גם כספר בסיס בפני עצמו.
@@ -299,6 +330,24 @@ class AttachedLinkBooks {
     }
     return null;
   });
+
+  /// כמו [locate] בלי slug, לכותרת יחידה במסדים הגלויים שזהה ל-[title] בלי
+  /// גרשיים; מחזיר גם את הכותרת שבמסד.
+  Future<(String, ({String slug, int totalLines, bool isDependentOnly}))?>
+  locateLoose(String title) async {
+    final titles = <String>{};
+    for (final library in _libraries) {
+      if (!library.visible) continue;
+      try {
+        titles.addAll(await _titlesLike(library.repository, title));
+      } on Exception catch (e) {
+        debugPrint('[AttachedLinkBooks] ${library.slug} unreadable: $e');
+      }
+    }
+    if (titles.length != 1) return null;
+    final located = await locate(titles.single);
+    return located == null ? null : (titles.single, located);
+  }
 
   /// השורה (0-based) של [ref] בספר [title] שבמסד [slug].
   Future<int?> resolveRef(String slug, String title, String ref) async {

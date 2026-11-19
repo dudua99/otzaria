@@ -215,6 +215,7 @@ class UserContentImporter {
           bookTitleFromFile: null,
           resolveRef: resolveRef,
           sourceExists: sourceExists,
+          locateBook: locateBook,
           attached: attached,
         );
       } else if (lower.endsWith('.links.csv')) {
@@ -227,6 +228,7 @@ class UserContentImporter {
           bookTitleFromFile: bookTitle,
           resolveRef: resolveRef,
           sourceExists: sourceExists,
+          locateBook: locateBook,
           attached: attached,
         );
       } else if (lower.endsWith('.links.json')) {
@@ -239,6 +241,7 @@ class UserContentImporter {
           bookTitleFromFile: bookTitle,
           resolveRef: resolveRef,
           sourceExists: sourceExists,
+          locateBook: locateBook,
           attached: attached,
         );
       } else if (lower.endsWith('_links.json')) {
@@ -554,6 +557,7 @@ class UserContentImporter {
     required String? bookTitleFromFile,
     required UserLinkRefResolver resolveRef,
     required UserLinkSourceChecker sourceExists,
+    required UserLinkBookLocator locateBook,
     required AttachedLinkBooks attached,
   }) async {
     final fileName = file.name;
@@ -633,8 +637,18 @@ class UserContentImporter {
             );
     }
 
+    var fileTitle = bookTitleFromFile;
+    if (fileTitle != null) {
+      try {
+        fileTitle =
+            (await _locateLinkBook(fileTitle, locateBook, attached))?.title ??
+            fileTitle;
+      } on Exception {
+        // דו-משמעות או מסד שאינו זמין נבדקים כרגיל בכל שורה.
+      }
+    }
     for (final row in parsed.rows) {
-      final sourceTitle = bookTitleFromFile ?? row.sourceBookTitle;
+      final sourceTitle = fileTitle ?? row.sourceBookTitle;
       if (sourceTitle == null || sourceTitle.isEmpty) {
         errors.add('$fileName: חסר ספר מקור (עמודת "ספר_מקור")');
         continue;
@@ -712,28 +726,8 @@ class UserContentImporter {
       errors.add('$fileName ${err.message} (שורה ${err.lineNumber})');
     }
 
-    // אישי/רשמי קודמים; ספר שאין בהם נלקח מהמסד המצורף הגלוי הראשון שמכיל אותו.
-    Future<_LocatedLinkBook?> locate(String title) async {
-      final found = await locateBook(title);
-      if (found != null) {
-        return (
-          isUserBook: found.isUserBook,
-          categoryId: found.categoryId,
-          totalLines: found.totalLines,
-          isDependentOnly: found.isDependentOnly,
-          db: null,
-        );
-      }
-      final inAttached = await attached.locate(title);
-      if (inAttached == null) return null;
-      return (
-        isUserBook: false,
-        categoryId: null,
-        totalLines: inAttached.totalLines,
-        isDependentOnly: inAttached.isDependentOnly,
-        db: inAttached.slug,
-      );
-    }
+    Future<_LocatedLinkBook?> locate(String title) =>
+        _locateLinkBook(title, locateBook, attached);
 
     final _LocatedLinkBook? source;
     try {
@@ -820,12 +814,12 @@ class UserContentImporter {
       out.add(
         flip
             ? UserLinkRecord(
-                sourceTitle: row.targetTitle,
+                sourceTitle: target.title,
                 sourceCategoryId: target.categoryId,
                 sourceIsUserBook: target.isUserBook,
                 sourceDb: target.db,
                 sourceLineIndex: row.targetLineNumber - 1,
-                targetTitle: baseTitle,
+                targetTitle: source.title,
                 targetCategoryId: source.categoryId,
                 targetIsUserBook: source.isUserBook,
                 targetDb: source.db,
@@ -839,12 +833,12 @@ class UserContentImporter {
                 connectionType: connectionType,
               )
             : UserLinkRecord(
-                sourceTitle: baseTitle,
+                sourceTitle: source.title,
                 sourceCategoryId: source.categoryId,
                 sourceIsUserBook: source.isUserBook,
                 sourceDb: source.db,
                 sourceLineIndex: row.sourceLineNumber - 1,
-                targetTitle: row.targetTitle,
+                targetTitle: target.title,
                 targetCategoryId: target.categoryId,
                 targetIsUserBook: target.isUserBook,
                 targetDb: target.db,
@@ -864,6 +858,44 @@ class UserContentImporter {
               ),
       );
     }
+  }
+
+  /// אישי/רשמי קודמים; ספר שאין בהם נלקח מהמסד המצורף הגלוי הראשון שמכיל אותו.
+  /// כתיב שונה בגרשיים בלבד נבחר רק כשאף מסד אינו מכיל את [title] עצמו.
+  static Future<_LocatedLinkBook?> _locateLinkBook(
+    String title,
+    UserLinkBookLocator locateBook,
+    AttachedLinkBooks attached,
+  ) async {
+    final found = await locateBook(title);
+    final exactInAttached = found?.title == title
+        ? null
+        : await attached.locate(title);
+    if (found != null && exactInAttached == null) {
+      return (
+        title: found.title,
+        isUserBook: found.isUserBook,
+        categoryId: found.categoryId,
+        totalLines: found.totalLines,
+        isDependentOnly: found.isDependentOnly,
+        db: null,
+      );
+    }
+    var attachedTitle = title;
+    var inAttached = exactInAttached;
+    if (inAttached == null) {
+      final loose = await attached.locateLoose(title);
+      if (loose == null) return null;
+      (attachedTitle, inAttached) = loose;
+    }
+    return (
+      title: attachedTitle,
+      isUserBook: false,
+      categoryId: null,
+      totalLines: inAttached.totalLines,
+      isDependentOnly: inAttached.isDependentOnly,
+      db: inAttached.slug,
+    );
   }
 
   /// בונה רשומת קישור עם אינדקס-שורה ביעד. "מיקום_יעד" מספרי = אינדקס שורה
@@ -954,6 +986,7 @@ class UserContentImporter {
 }
 
 typedef _LocatedLinkBook = ({
+  String title,
   bool isUserBook,
   int? categoryId,
   int totalLines,

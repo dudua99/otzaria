@@ -353,4 +353,119 @@ void main() {
       isEmpty,
     );
   });
+
+  group('כותרת עם גרשיים ושם קובץ בלעדיהם (issue #4512)', () {
+    const riaf = 'רי"ף שבת';
+    const commentary = 'ביאור אישי';
+
+    Future<UserImportResult> importNative(
+      String name,
+      String content, {
+      AttachedLinkBooks? attached,
+      bool official = true,
+    }) => UserContentImporter.importContents(
+      [ImportedFile(name: name, content: content)],
+      userDb,
+      locateBook: (title) => locateUserLinkBookInRepositories(
+        title,
+        userRepository: userRepository,
+        officialRepository: official ? officialRepository : null,
+      ),
+      attachedBooks: attached,
+    );
+
+    for (final fileTitle in ['ריף שבת', 'רי״ף שבת']) {
+      test('בסיס רשמי משם הקובץ "$fileTitle"', () async {
+        await addBook(officialDb, riaf, isBaseBook: true);
+        await addBook(userDb, commentary);
+
+        final result = await importNative(
+          '${fileTitle}_links.json',
+          '[{"line_index_1": 3, "line_index_2": 5, '
+              '"path_2": "$commentary.txt", "Conection Type": "commentary"}]',
+        );
+
+        expect(result.errors, isEmpty);
+        expect(result.linksApplied, 1);
+        final links = await UserContentRepository(
+          userDb,
+        ).forwardUserLinks(riaf, sourceIsUserBook: false);
+        expect(links.single.targetTitle, commentary);
+        expect(links.single.sourceLineIndex, 2);
+      });
+    }
+
+    test('יעד ב-path_2 עם ״ מול " במסד', () async {
+      await addBook(userDb, commentary);
+      await addBook(officialDb, 'רש"י על שבת');
+
+      final result = await importNative(
+        '${commentary}_links.json',
+        '[{"line_index_1": 1, "line_index_2": 2, '
+            '"path_2": "רש״י על שבת.txt"}]',
+      );
+
+      expect(result.errors, isEmpty);
+      final links = await UserContentRepository(
+        userDb,
+      ).forwardUserLinks(commentary, sourceIsUserBook: true);
+      expect(links.single.targetTitle, 'רש"י על שבת');
+      expect(links.single.targetIsUserBook, isFalse);
+    });
+
+    test('בסיס במסד מצורף', () async {
+      await addBook(officialDb, riaf, isBaseBook: true);
+      await addBook(userDb, commentary);
+      final attached = AttachedLinkBooks.open([
+        (slug: 'attached', path: officialDb.path, immutable: false, visible: true),
+      ]);
+      addTearDown(attached.close);
+
+      final result = await importNative(
+        'ריף שבת_links.json',
+        '[{"line_index_1": 3, "line_index_2": 5, '
+            '"path_2": "$commentary.txt", "Conection Type": "commentary"}]',
+        attached: attached,
+        official: false,
+      );
+
+      expect(result.errors, isEmpty);
+      final links = await UserContentRepository(userDb).forwardUserLinks(
+        riaf,
+        sourceIsUserBook: false,
+        sourceDb: 'attached',
+      );
+      expect(links.single.targetTitle, commentary);
+    });
+
+    test('קובץ CSV לספר: ריף שבת.links.csv', () async {
+      await addBook(officialDb, riaf, isBaseBook: true);
+      await addBook(userDb, commentary);
+      final resolvers = userLinkResolversFor(
+        userDb,
+        officialRepository: officialRepository,
+      );
+
+      final result = await UserContentImporter.importContents(
+        const [
+          ImportedFile(
+            name: 'ריף שבת.links.csv',
+            content:
+                'מקור,ספר_יעד,מיקום_יעד,סוג,מקור_אישי,יעד_אישי\n'
+                '3,ביאור אישי,5,פירוש,לא,כן\n',
+          ),
+        ],
+        userDb,
+        resolveRef: resolvers.resolveRef,
+        sourceExists: resolvers.sourceExists,
+        locateBook: resolvers.locateBook,
+      );
+
+      expect(result.errors, isEmpty);
+      final links = await UserContentRepository(
+        userDb,
+      ).forwardUserLinks(riaf, sourceIsUserBook: false);
+      expect(links.single.targetTitle, commentary);
+    });
+  });
 }
