@@ -243,11 +243,9 @@ class AppThemeData {
             .copyWith(color: cs.onSurface),
       ),
       // צ'יפ בחירה (FilterChip / ChoiceChip / Chip): פינות 8 ותווית
-      // labelMedium 12 (DD-13). הצבע כמו ברירת המחדל של M3. הבחירה ניכרת
-      // במילוי, בלי וי שמרחיב את הצ'יפ ומזיז את השכנים ב-Wrap (#5562).
+      // labelMedium 12 (DD-13). הצבע כמו ברירת המחדל של M3.
       chipTheme: ChipThemeData(
         shape: AppTokens.roundedShape,
-        showCheckmark: false,
         labelStyle: theme.textTheme.labelMedium?.copyWith(
           color: WidgetStateColor.resolveWith(
             (states) => states.contains(WidgetState.disabled)

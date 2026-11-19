@@ -50,6 +50,11 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(tester.widget<FilterChip>(target).selected, isTrue);
+      // בלי הווי הבחירה עדיין מוכרזת לקורא מסך.
+      expect(
+        tester.getSemantics(target),
+        isSemantics(isSelected: true),
+      );
       expect(rects(), before);
     });
   }
