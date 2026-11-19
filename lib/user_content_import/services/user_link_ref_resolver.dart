@@ -2,6 +2,7 @@ import 'package:otzaria/settings/engine/app_settings_store.dart';
 import 'package:flutter/foundation.dart' show debugPrint, visibleForTesting;
 import 'package:otzaria/data/data_providers/sqlite_data_provider.dart';
 import 'package:otzaria/data/data_providers/user_books_database_holder.dart';
+import 'package:otzaria/library/models/library.dart' show normalizeBookTitle;
 import 'package:otzaria/migration/database/daos/database.dart';
 import 'package:otzaria/migration/database/repository/seforim_repository.dart';
 import 'package:otzaria/migration/models/book.dart';
@@ -105,6 +106,7 @@ Future<Book?> _bookByTitle(
 }
 
 typedef LocatedUserLinkBook = ({
+  String title,
   bool isUserBook,
   int? categoryId,
   int totalLines,
@@ -149,9 +151,10 @@ Future<LocatedUserLinkBook?> _locateIn(
   final userBook = userRepository == null
       ? null
       : await _bookByTitle(userRepository, title, null);
+  final SeforimRepository? officialRepository;
   Book? officialBook;
   try {
-    final officialRepository = await repositoryFor(false);
+    officialRepository = await repositoryFor(false);
     officialBook = officialRepository == null
         ? null
         : await _bookByTitle(officialRepository, title, null);
@@ -161,10 +164,31 @@ Future<LocatedUserLinkBook?> _locateIn(
   if (userBook != null && officialBook != null) {
     throw AmbiguousUserLinkBookException(title);
   }
-  final book = userBook ?? officialBook;
-  if (book == null) return null;
+  var isUserBook = userBook != null;
+  var book = userBook ?? officialBook;
+  if (book == null) {
+    // שם קובץ ב-Windows אינו יכול להכיל ", ולכן `ריף שבת` מכוון ל-`רי"ף שבת`.
+    final key = normalizeBookTitle(title);
+    final loose = [
+      for (final (isUser, repo) in [
+        (true, userRepository),
+        (false, officialRepository),
+      ])
+        if (repo != null)
+          for (final row
+              in await repo.database.bookDao.selectAllLocalBooksSlim())
+            if (normalizeBookTitle(row['title'] as String) == key)
+              (isUser, repo, row['title'] as String),
+    ];
+    if (loose.length != 1) return null;
+    final (isUser, repo, match) = loose.single;
+    isUserBook = isUser;
+    book = await _bookByTitle(repo, match, null);
+    if (book == null) return null;
+  }
   return (
-    isUserBook: userBook != null,
+    title: book.title,
+    isUserBook: isUserBook,
     categoryId: book.categoryId,
     totalLines: book.totalLines,
     isDependentOnly: _isDependentOnly(book),
