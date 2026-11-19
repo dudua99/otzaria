@@ -20,7 +20,7 @@ Closes #3640
 
 - בדיקה חדשה `test/plugins/view/plugin_tab_horizontal_scroll_test.dart`: `TabSwipeDetector` אמיתי ו-`buildPluginTabBody` אמיתי, עם `Listener` במקום ה-WebView. גרירה אופקית ב-trackpad ובאצבע ב-Windows וב-Linux לא מזיזה את ה-PageView, והדף עדיין מקבל את הגלילה. ב-macOS ובמובייל לא נוספת עטיפה. על upstream/dev נכשלות 4 בדיקות, ואחרי התיקון כל 7 עוברות.
 - `flutter test -j 1 test/plugins/view test/tabs test/tools/tool_tab_reload_stability_test.dart`: בענף 1252 עברו, 4 דולגו, 0 נכשלו. בבסיס (upstream/dev) 1245 עברו, 4 דולגו, 0 נכשלו (ההפרש הוא 7 הבדיקות החדשות).
-- הבדיקה החדשה ו-`tab_swipe_detector_test` עוברות גם על מיזוג עם #5560. (עם `tab_content_vertical_drag_recognizer_test`: 17 עברו).
+- הבדיקה החדשה ו-`tab_swipe_detector_test` עוברות גם על מיזוג עם #5560 (יחד עם `tab_content_vertical_drag_recognizer_test`: 17 עברו).
 - `dart analyze` ו-`dart format` נקיים בקבצים שנגעתי בהם. `tool/ui_lint_cli.dart`: 0 הפרות חדשות.
 
 <!-- SUITE -->
