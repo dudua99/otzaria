@@ -75,6 +75,20 @@ void main() {
     expect(await File(path).readAsBytes(), utf8.encode(json.encode(data)));
   });
 
+  test('ערך שאינו ניתן לקידוד אינו משאיר קובץ קטוע', () async {
+    final path = p.join(tempDir.path, 'backup.json');
+    final data = <String, dynamic>{
+      'history': [for (var i = 0; i < 200000; i++) 'ספר $i'],
+      'bad': DateTime(2026),
+    };
+
+    await expectLater(
+      BackupService.writeBackupJson(path, data),
+      throwsA(anything),
+    );
+    expect(File(path).existsSync(), isFalse);
+  });
+
   test('שגיאת כתיבה מוחזרת למי שממתין לגיבוי', () async {
     await expectLater(
       BackupService.writeBackupJson(

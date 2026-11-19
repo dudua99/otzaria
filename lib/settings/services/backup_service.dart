@@ -477,8 +477,12 @@ class BackupService {
       }
       length += pending.length;
       sink.write(pending);
-    } finally {
       await sink.close();
+    } catch (_) {
+      // קובץ קטוע נראה כגיבוי לכל דבר ברשימה וברוטציה.
+      await sink.close().catchError((_) {});
+      if (await File(path).exists()) await File(path).delete();
+      rethrow;
     }
     return length;
   }
