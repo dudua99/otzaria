@@ -7,7 +7,9 @@ import 'package:otzaria/migration/database/query_loader.dart';
 import 'package:otzaria/models/book_source.dart';
 import 'package:otzaria/models/link_types.dart';
 import 'package:otzaria/models/links.dart';
+import 'package:otzaria/user_content_import/models/user_import_models.dart';
 import 'package:otzaria/user_content_import/repository/user_content_repository.dart';
+import 'package:otzaria/user_content_import/services/user_content_importer.dart';
 import 'package:otzaria/utils/text/text_manipulation.dart' as utils;
 
 /// טוען קישורי-משתמש (מ-user_books.db) ככ-[Link] עבור ספר שנקרא, בשני
@@ -37,21 +39,31 @@ Future<List<Link>> loadUserLinksForBook({
     dbPath,
     (ucr) async => (
       // forward — קישורים היוצאים מהספר הנקרא (אישי או רשמי).
-      await ucr.forwardUserLinks(
-        bookTitle,
-        sourceIsUserBook: isUserBook,
-        sourceDb: db,
-        sourceCategoryId: categoryId,
+      await _withAllRecords(
+        (from, to) => ucr.forwardUserLinks(
+          bookTitle,
+          sourceIsUserBook: isUserBook,
+          sourceDb: db,
+          sourceCategoryId: categoryId,
+          startLineIndex: from,
+          endLineIndex: to,
+        ),
+        startOf: (r) => r.sourceLineIndex,
         startLineIndex: startLineIndex,
         endLineIndex: endLineIndex,
       ),
       // inverse — קישור-משתמש שמצביע אל הספר הנקרא; פתיחתו חוזרת אל ספר
       // המקור (אישי או רשמי, לפי sourceIsUserBook).
-      await ucr.inverseUserLinks(
-        bookTitle,
-        targetIsUserBook: isUserBook,
-        targetDb: db,
-        targetCategoryId: categoryId,
+      await _withAllRecords(
+        (from, to) => ucr.inverseUserLinks(
+          bookTitle,
+          targetIsUserBook: isUserBook,
+          targetDb: db,
+          targetCategoryId: categoryId,
+          startLineIndex: from,
+          endLineIndex: to,
+        ),
+        startOf: (r) => r.targetLineIndex!,
         startLineIndex: startLineIndex,
         endLineIndex: endLineIndex,
       ),
@@ -103,11 +115,35 @@ Future<List<Link>> loadUserLinksForBook({
         connectionType: LinkTypes.inverse(r.connectionType),
         targetSource: r.sourceOrigin,
         targetCategoryId: r.sourceCategoryId,
+        index2End: r.sourceLineIndexEnd == null
+            ? null
+            : r.sourceLineIndexEnd! + 1,
       ),
     );
   }
 
   return _applyCommentatorFilter(dedupeUserLinks(result), targetBookTitles);
+}
+
+/// רשומות הקישורים שבחלון, ממוזגות ב-[mergeUserLinks] עם *כל* רשומותיהם (גם
+/// אלה שמחוץ לחלון): אותו קישור נשמר לעתים בכמה מקורות, ובכל חלון חייבת
+/// לשרוד אותה רשומה — העשירה, כמו בייבוא — אחרת התצוגה מכפילה אותו.
+/// [load] ממוין לפי שורת ההתחלה, ולכן הראשונה והאחרונה תוחמות את כל צמדיו.
+Future<List<UserLinkRecord>> _withAllRecords(
+  Future<List<UserLinkRecord>> Function(int from, int to) load, {
+  required int Function(UserLinkRecord) startOf,
+  required int startLineIndex,
+  required int endLineIndex,
+}) async {
+  final window = await load(startLineIndex, endLineIndex);
+  if (window.isEmpty) return window;
+  final shown = {for (final r in window) (userLinkKey(r), r.anchorStart)};
+  final all = await load(startOf(window.first), startOf(window.last));
+  return mergeUserLinks(all).where((r) {
+    final key = userLinkKey(r);
+    // רשומה חסרת-עוגן שבחלון נבלעת במעוגנת.
+    return shown.contains((key, r.anchorStart)) || shown.contains((key, null));
+  }).toList();
 }
 
 /// כותרות מפרשי-המשתמש של ספר — להזנת רשימת המפרשים לבחירה (שאחרת נבנית
