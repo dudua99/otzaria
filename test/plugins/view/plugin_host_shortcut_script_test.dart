@@ -26,9 +26,18 @@ Future<Map<String, dynamic>?> runStub(
       '''
 var calls = [];
 // Node provides listener order/removal/cancellation; each DOM phase has its
-// own EventTarget so the bubble phase sees additions made during capture.
+// own EventTarget so later phases see additions made during earlier ones.
 var captureTarget = new EventTarget();
+var documentTarget = new EventTarget();
 var bubbleTarget = new EventTarget();
+var document = {
+  addEventListener: function (type, cb) {
+    documentTarget.addEventListener(type, cb);
+  },
+  removeEventListener: function (type, cb) {
+    documentTarget.removeEventListener(type, cb);
+  }
+};
 var window = {
   addEventListener: function (type, cb, capture) {
     (capture ? captureTarget : bubbleTarget).addEventListener(type, cb);
@@ -85,7 +94,14 @@ var results = events.map(function (ev) {
     Event.prototype.stopImmediatePropagation.call(e);
   };
   captureTarget.dispatchEvent(e);
+  // מאזין של התוסף ביעד ההקשה רושם מאזין window באמצע אותה הקשה.
+  var lateHandler = function (le) { pluginWindowHandler(le); };
+  if (ev.registerDuringKeydown) {
+    window.addEventListener('keydown', lateHandler);
+  }
+  documentTarget.dispatchEvent(e);
   bubbleTarget.dispatchEvent(e);
+  window.removeEventListener('keydown', lateHandler);
   return { prevented: hostPrevented, stopped: hostStopped,
     defaultPrevented: e.defaultPrevented, pageHandled: e.pageHandled,
     pageSawPrevented: e.pageSawPrevented };
@@ -551,6 +567,30 @@ void main() {
         ]);
         expect(out['calls'], isEmpty);
         expect(field(out, 'prevented'), everyElement(isFalse));
+      });
+
+      test('מאזין שהתוסף רושם באמצע ההקשה קודם למארח: mac=$isMac', () async {
+        PluginHostShortcuts.isMacForTesting = isMac;
+        for (final action in ['prevent', 'stop']) {
+          final out = await runRequiredStub(PluginHostShortcuts.build({}), [
+            for (final target in [
+              ...targets,
+              {'tagName': 'DIV'},
+            ])
+              for (final key in tabKeys)
+                {
+                  ...key,
+                  'target': target,
+                  'registerDuringKeydown': true,
+                  'windowAction': action,
+                },
+          ]);
+          expect(out['calls'], isEmpty);
+          expect(field(out, 'pageHandled'), everyElement(1));
+          expect(field(out, 'pageSawPrevented'), everyElement(isFalse));
+          expect(field(out, 'prevented'), everyElement(isFalse));
+          expect(field(out, 'stopped'), everyElement(isFalse));
+        }
       });
     }
   });

@@ -86,11 +86,15 @@ const String _hostShortcutsJs = r'''
     if (e.key === 'Escape') {
       window.flutter_inappwebview.callHandler('otzaria_escape_pressed');
     }
-    // מאזיני התוסף נרשמים אחרי ה-stub. ב-bubble הם צריכים לקבל קדימות,
-    // ועדיין אפשר למנוע את פעולת ברירת המחדל לפני סיום האירוע.
+    // מאזיני התוסף ב-window קודמים למארח, גם כשנרשמו באמצע ההקשה: בסוף שלב
+    // ה-document המאזין עובר לסוף, ועדיין אפשר למנוע את פעולת ברירת המחדל.
+    document.removeEventListener('keydown', _forwardLast);
+    document.addEventListener('keydown', _forwardLast);
+  }, true);
+  function _forwardLast() {
     window.removeEventListener('keydown', _forwardHostShortcut);
     window.addEventListener('keydown', _forwardHostShortcut);
-  }, true);
+  }
   // שלב bubble: קיצור שהתוסף טיפל בו (preventDefault) נשאר שלו. בשדה עריכה
   // מועברים הקבועים, סגירה ושחזור של לשוניות וחיפוש חדש; קיצורי עריכה נשארים.
   var _fieldShortcutIds =
