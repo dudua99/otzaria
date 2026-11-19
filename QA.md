@@ -17,3 +17,5 @@ Check:
 Push any fix commits: `git push origin HEAD:<branch>`.
 
 FINAL ANSWER (Hebrew): READY / NOT READY + reasons; commits pushed (SHAs); fail-on-base proof; tests branch vs base exact counts; analyze/format/ui_lint; conflicts; open decisions; and the final PR body in plain Hebrew (problem, root cause with commit, fix, "Closes #N" or "Refs #N" if only part is fixed, "## בדיקות" with exact counts, the line `<!-- SUITE -->`, no AI attribution, no "🤖" line). PR title = subject of the fix commit.
+
+ALSO: write the final PR body (exactly as it should appear on GitHub) to a file BODY.md and push it as the only file of a NEW orphan branch named `prbody/<N>-<short>` (e.g. `git checkout --orphan prbody/5232-qa && git rm -rf . -q && cp /tmp/BODY.md BODY.md && git add BODY.md && git commit -m body && git push origin HEAD:prbody/5232-qa`), then return to your work branch. The coordinator reads the body from there (the run log truncates long answers).
