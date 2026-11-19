@@ -40,13 +40,14 @@ Future<List<Link>> loadUserLinksForBook({
     (ucr) async => (
       // forward — קישורים היוצאים מהספר הנקרא (אישי או רשמי).
       await _withAllRecords(
-        (from, to) => ucr.forwardUserLinks(
+        (from, to, [starts]) => ucr.forwardUserLinks(
           bookTitle,
           sourceIsUserBook: isUserBook,
           sourceDb: db,
           sourceCategoryId: categoryId,
           startLineIndex: from,
           endLineIndex: to,
+          startLines: starts,
         ),
         startOf: (r) => r.sourceLineIndex,
         startLineIndex: startLineIndex,
@@ -55,13 +56,14 @@ Future<List<Link>> loadUserLinksForBook({
       // inverse — קישור-משתמש שמצביע אל הספר הנקרא; פתיחתו חוזרת אל ספר
       // המקור (אישי או רשמי, לפי sourceIsUserBook).
       await _withAllRecords(
-        (from, to) => ucr.inverseUserLinks(
+        (from, to, [starts]) => ucr.inverseUserLinks(
           bookTitle,
           targetIsUserBook: isUserBook,
           targetDb: db,
           targetCategoryId: categoryId,
           startLineIndex: from,
           endLineIndex: to,
+          startLines: starts,
         ),
         startOf: (r) => r.targetLineIndex!,
         startLineIndex: startLineIndex,
@@ -128,17 +130,26 @@ Future<List<Link>> loadUserLinksForBook({
 /// רשומות הקישורים שבחלון, ממוזגות ב-[mergeUserLinks] עם *כל* רשומותיהם (גם
 /// אלה שמחוץ לחלון): אותו קישור נשמר לעתים בכמה מקורות, ובכל חלון חייבת
 /// לשרוד אותה רשומה — העשירה, כמו בייבוא — אחרת התצוגה מכפילה אותו.
-/// [load] ממוין לפי שורת ההתחלה, ולכן הראשונה והאחרונה תוחמות את כל צמדיו.
+/// קישור שמתחיל בחלון — כל רשומותיו חופפות לחלון וכבר נטענו; לקישור-טווח
+/// שמתחיל לפניו נטענות רק שורות ההתחלה (טווח ארוך לא יטען את כל הספר).
 Future<List<UserLinkRecord>> _withAllRecords(
-  Future<List<UserLinkRecord>> Function(int from, int to) load, {
+  Future<List<UserLinkRecord>> Function(int? from, int? to, [Set<int>? starts])
+  load, {
   required int Function(UserLinkRecord) startOf,
   required int startLineIndex,
   required int endLineIndex,
 }) async {
   final window = await load(startLineIndex, endLineIndex);
-  if (window.isEmpty) return window;
+  final before = {
+    for (final r in window)
+      if (startOf(r) < startLineIndex) startOf(r),
+  };
+  if (before.isEmpty) return mergeUserLinks(window);
   final shown = {for (final r in window) (userLinkKey(r), r.anchorStart)};
-  final all = await load(startOf(window.first), startOf(window.last));
+  final all = [
+    ...await load(null, null, before),
+    ...window.where((r) => startOf(r) >= startLineIndex),
+  ];
   return mergeUserLinks(all).where((r) {
     final key = userLinkKey(r);
     // רשומה חסרת-עוגן שבחלון נבלעת במעוגנת.
