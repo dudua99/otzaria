@@ -1199,9 +1199,7 @@ String _footnoteHtml(xml.XmlElement footnote) {
           text.write(' ');
       }
     }
-    if (text.isEmpty || segs.isEmpty && text.toString().trim().isEmpty) {
-      continue;
-    }
+    if (text.isEmpty) continue;
     final paragraph = run.ancestorElements.firstWhere(
       (e) => e.name.qualified == 'w:p',
       orElse: () => footnote,
@@ -1217,9 +1215,8 @@ String _footnoteHtml(xml.XmlElement footnote) {
   }
   return _renderSegs(segs)
       .replaceAll(RegExp(r'\s+'), ' ')
-      .replaceAll(' <br>', '<br>')
-      .replaceAll('<br> ', '<br>')
-      .trim();
+      .replaceAll(RegExp(r' ?<br> ?'), '<br>')
+      .replaceAll(RegExp(r'^(?: |<br>)+|(?: |<br>)+$'), '');
 }
 
 /// Extracts footnotes from the document
