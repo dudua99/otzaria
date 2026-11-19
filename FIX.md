@@ -20,3 +20,6 @@ Procedure (mandatory):
 If it is not a code bug, already fixed, needs reporter info, or needs a maintainer decision you cannot reasonably infer from the thread — do not push; explain with evidence.
 
 OUTPUT: push an orphan branch `prbody/<N>-fix` with two files: BODY.md (final PR body in plain Hebrew: what was broken, root cause with commit, fix, "Closes #N" or "Refs #N" if only part is fixed, "## בדיקות" with exact counts, the line `<!-- SUITE -->`, no AI attribution, no "🤖") and VERDICT.md (first line `READY` or `NOT READY`, then ≤25 Hebrew lines: reason, branch name + head SHA, PR title = fix commit subject, tests branch vs base, conflicts, open decisions, visual check advice). Example: `git checkout --orphan prbody/<N>-fix && git rm -rf -q . && cp /tmp/BODY.md /tmp/VERDICT.md . && git add BODY.md VERDICT.md && git commit -qm body && git push origin HEAD:prbody/<N>-fix`.
+
+
+GIT IDENTITY (mandatory, before any commit): commits must be authored by the fork owner, not "Claude". Run: `git config user.name "dudua99"; git config user.email "$(git log -1 --format=%ae --author=dudua99 origin/dev 2>/dev/null || git log -1 --format=%ae --author=dudua99 --all)"` and check `git config user.email` is not empty and not noreply@anthropic.com. Never add Co-Authored-By.

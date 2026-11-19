@@ -20,3 +20,6 @@ FINAL ANSWER (Hebrew): READY / NOT READY + reasons; commits pushed (SHAs); fail-
 
 ALSO: write the final PR body (exactly as it should appear on GitHub) to a file BODY.md and push it as the only file of a NEW orphan branch named `prbody/<N>-<short>` (e.g. `git checkout --orphan prbody/5232-qa && git rm -rf . -q && cp /tmp/BODY.md BODY.md && git add BODY.md && git commit -m body && git push origin HEAD:prbody/5232-qa`), then return to your work branch. The coordinator reads the body from there (the run log truncates long answers).
 In the same prbody branch also add VERDICT.md: first line exactly `READY` or `NOT READY`, then a short Hebrew summary (≤25 lines): reasons, final branch head SHA, PR title (= fix commit subject), Closes/Refs, tests branch vs base counts, conflicts, open decisions, and whether a local visual check is advisable.
+
+
+GIT IDENTITY (mandatory, before any commit): commits must be authored by the fork owner, not "Claude". Run: `git config user.name "dudua99"; git config user.email "$(git log -1 --format=%ae --author=dudua99 origin/dev 2>/dev/null || git log -1 --format=%ae --author=dudua99 --all)"` and check `git config user.email` is not empty and not noreply@anthropic.com. Never add Co-Authored-By.
