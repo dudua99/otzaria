@@ -143,10 +143,29 @@ Future<LocatedUserLinkBook?> locateUserLinkBookInRepositories(
   title,
 );
 
+/// כותרות המסד לפי [normalizeBookTitle], נבנות פעם אחת לכל מאתר ולא לכל החטאה.
+typedef _LooseTitles =
+    Map<SeforimRepository, Future<Map<String, List<String>>>>;
+
+Future<Map<String, List<String>>> _looseTitlesOf(SeforimRepository repo) async {
+  final byKey = <String, List<String>>{};
+  try {
+    for (final row in await repo.database.bookDao.selectAllLocalBooksSlim()) {
+      final title = row['title'] as String;
+      (byKey[normalizeBookTitle(title)] ??= []).add(title);
+    }
+  } on Exception catch (e) {
+    // כמו לפני הגיבוי: ספר שלא נמצא בהתאמה מדויקת פשוט אינו נמצא.
+    debugPrint('⚠️ [UserLinkBookLocator] $e');
+  }
+  return byKey;
+}
+
 Future<LocatedUserLinkBook?> _locateIn(
   Future<SeforimRepository?> Function(bool isUserBook) repositoryFor,
-  String title,
-) async {
+  String title, [
+  _LooseTitles? looseTitles,
+]) async {
   final userRepository = await repositoryFor(true);
   final userBook = userRepository == null
       ? null
@@ -169,16 +188,20 @@ Future<LocatedUserLinkBook?> _locateIn(
   if (book == null) {
     // שם קובץ ב-Windows אינו יכול להכיל ", ולכן `ריף שבת` מכוון ל-`רי"ף שבת`.
     final key = normalizeBookTitle(title);
+    final cache = looseTitles ?? {};
     final loose = [
       for (final (isUser, repo) in [
         (true, userRepository),
         (false, officialRepository),
       ])
         if (repo != null)
-          for (final row
-              in await repo.database.bookDao.selectAllLocalBooksSlim())
-            if (normalizeBookTitle(row['title'] as String) == key)
-              (isUser, repo, row['title'] as String),
+          for (final match
+              in (await cache.putIfAbsent(
+                    repo,
+                    () => _looseTitlesOf(repo),
+                  ))[key] ??
+                  const <String>[])
+            (isUser, repo, match),
     ];
     if (loose.length != 1) return null;
     final (isUser, repo, match) = loose.single;
@@ -213,6 +236,7 @@ userLinkResolversFor(
 }) {
   final userRepo = SeforimRepository(userDb);
   final locatedBooks = <String, Future<LocatedUserLinkBook?>>{};
+  final _LooseTitles looseTitles = {};
   Future<SeforimRepository?> repositoryFor(bool isUserBook) async {
     if (isUserBook) return userRepo;
     if (officialError != null) throw officialError;
@@ -241,7 +265,7 @@ userLinkResolversFor(
             _bookExists(await repositoryFor(isUserBook), title, categoryId),
     locateBook: (title) => locatedBooks.putIfAbsent(
       title,
-      () => _locateIn(repositoryFor, title),
+      () => _locateIn(repositoryFor, title, looseTitles),
     ),
   );
 }
