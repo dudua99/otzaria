@@ -331,7 +331,8 @@ class _CommentatorsTabScreenState extends State<CommentatorsTabScreen>
 
   // ריבוי-בחירה ב'ניווט' (Ctrl+לחיצה): אינדקסי שורות נוספים להצגת מפרשים מעבר
   // לבחירה הראשית. ריק = בחירה יחידה רגילה. מתאפס בכל ניווט רגיל.
-  final Set<int> _extraIndexes = <int>{};
+  // חי על הטאב, כדי שבחירה מרובה מטאב המקור תגיע לכאן ותישמר לדיסק.
+  Set<int> get _extraIndexes => widget.tab.selectedIndices;
 
   @visibleForTesting
   CommentatorsNavSelection get debugNavSelection => CommentatorsNavSelection(
@@ -639,7 +640,7 @@ class _CommentatorsTabScreenState extends State<CommentatorsTabScreen>
 
     if (chapters.isEmpty) {
       _initialChapterResolved = true;
-      _triggerLinkLoad([lineIndex]);
+      _triggerLinkLoad([lineIndex, ..._extraIndexes]);
       return;
     }
 
@@ -647,6 +648,8 @@ class _CommentatorsTabScreenState extends State<CommentatorsTabScreen>
     if (pos.chapter == null) return;
 
     _initialChapterResolved = true;
+    // הבחירה ההתחלתית היא ניווט שמאפס את ריבוי-הבחירה — שומרים אותו לפניה.
+    final initialMulti = _extraIndexes.toList();
     final chapter = pos.chapter!;
     final verseIdx = resolveOpenedVerseIdx(
       posVerseIdx: pos.verseIdx,
@@ -662,6 +665,9 @@ class _CommentatorsTabScreenState extends State<CommentatorsTabScreen>
     } else {
       _selectInChapter(verseIdx, chapter, chapters);
     }
+    if (initialMulti.isEmpty) return;
+    setState(() => _extraIndexes.addAll(initialMulti));
+    _triggerLinkLoad(initialMulti);
   }
 
   /// גוללת את רשימת הניווט לפרק הנבחר. נקראת בעת פתיחת הפאנל ומעבר
