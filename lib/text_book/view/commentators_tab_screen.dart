@@ -633,6 +633,8 @@ class _CommentatorsTabScreenState extends State<CommentatorsTabScreen>
   void _resolveInitialChapter(TextBookLoaded state) {
     if (_initialChapterResolved) return;
 
+    // בחירה ששוחזרה מהדיסק אחרי שהספר התקצר — שורות שאינן קיימות יורדות.
+    _extraIndexes.removeWhere((i) => i < 0 || i >= state.content.length);
     final chapters = _getChapters(state.tableOfContents);
     final lineIndex =
         state.selectedIndex ??

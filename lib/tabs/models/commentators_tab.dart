@@ -107,7 +107,9 @@ class CommentatorsTab extends OpenedTab {
       startIndex: json['initialIndex'] as int?,
     )..isPinned = json['isPinned'] ?? false;
     final savedIndices = json['selectedIndices'];
-    if (savedIndices is List) tab.selectedIndices.addAll(savedIndices.cast());
+    if (savedIndices is List) {
+      tab.selectedIndices.addAll(savedIndices.whereType());
+    }
     if (json.containsKey('selectedCommentators')) {
       final saved = json['selectedCommentators'];
       tab.selectedCommentators = saved is List
@@ -197,7 +199,8 @@ class CommentatorsTab extends OpenedTab {
       'bookTitle': sourceTab.book.title,
       'sourceTab': sourceTab.toJson(),
       'selectedCommentators': selectedCommentators,
-      'selectedIndices': selectedIndices.toList()..sort(),
+      if (selectedIndices.isNotEmpty)
+        'selectedIndices': selectedIndices.toList()..sort(),
     };
   }
 }
