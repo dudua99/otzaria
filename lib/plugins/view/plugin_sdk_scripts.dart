@@ -92,14 +92,15 @@ const String _hostShortcutsJs = r'''
     window.addEventListener('keydown', _forwardHostShortcut);
   }, true);
   // שלב bubble: קיצור שהתוסף טיפל בו (preventDefault) נשאר שלו. בשדה עריכה
-  // מועברים הקיצורים הקבועים וחיפוש חדש; קיצורי עריכה (Ctrl+K, Ctrl+H) נשארים.
+  // מועברים הקבועים, סגירה ושחזור של לשוניות וחיפוש חדש; קיצורי עריכה נשארים.
+  var _fieldShortcutIds =
+      /^(fixed:|key-shortcut-(open-new-search|close-tab|close-all-tabs|restore-closed-tab)$)/;
   function _forwardHostShortcut(e) {
     if (!window.flutter_inappwebview || e.key === 'Escape') return;
     if (e.repeat || e.defaultPrevented) return;
     var match = window.__otzariaMatchHostShortcut(e, window.__otzariaHostShortcuts);
     if (!match) return;
-    if (match.id.indexOf('fixed:') !== 0 &&
-        match.id !== 'key-shortcut-open-new-search' &&
+    if (!_fieldShortcutIds.test(match.id) &&
         window.__otzariaIsEditableTarget(e)) {
       return;
     }
