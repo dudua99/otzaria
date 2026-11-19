@@ -839,6 +839,10 @@ class LibraryUpdateBloc extends Bloc<LibraryUpdateEvent, LibraryUpdateState> {
     SqliteException(resultCode: 13) => true, // SQLITE_FULL
     // ENOSPC, ERROR_DISK_FULL
     FileSystemException(osError: OSError(errorCode: 28 || 112)) => true,
+    // ERROR_HANDLE_DISK_FULL; בלינוקס 39 הוא ENOTEMPTY.
+    FileSystemException(osError: OSError(errorCode: 39))
+        when Platform.isWindows =>
+      true,
     _ => false,
   };
 
