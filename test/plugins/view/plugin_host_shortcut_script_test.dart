@@ -407,4 +407,151 @@ void main() {
       });
     }
   });
+
+  group('קיצורי לשוניות משדה בתוסף (issue #3942)', () {
+    const targets = <Map<String, Object>>[
+      {'tagName': 'INPUT', 'type': 'text'},
+      {'tagName': 'TEXTAREA'},
+      {'tagName': 'DIV', 'isContentEditable': true},
+    ];
+    const tabIds = [
+      'key-shortcut-close-tab',
+      'key-shortcut-close-all-tabs',
+      'key-shortcut-restore-closed-tab',
+    ];
+
+    Future<Map<String, dynamic>> runRequiredStub(
+      List<PluginHostShortcut> shortcuts,
+      List<Map<String, Object>> events,
+    ) async {
+      final out = await runStub(shortcuts, events);
+      expect(out, isNotNull, reason: 'node נדרש לבדיקת גשר המקלדת');
+      return out!;
+    }
+
+    List<Object?> field(Map<String, dynamic> out, String name) =>
+        (out['results'] as List).map((result) => result[name]).toList();
+
+    for (final isMac in [false, true]) {
+      final modifier = isMac ? 'metaKey' : 'ctrlKey';
+      // פריסה עברית: ההתאמה היא למקש הפיזי ולא לתו המוקלד.
+      final closeTab = <String, Object>{
+        'code': 'KeyW',
+        'key': "'",
+        modifier: true,
+      };
+      final tabKeys = [
+        closeTab,
+        {...closeTab, 'shiftKey': true},
+        {'code': 'KeyT', 'key': 'א', modifier: true, 'shiftKey': true},
+      ];
+
+      testWidgets('ברירות המחדל עוברות מהשדה לצינור המקלדת: mac=$isMac', (
+        tester,
+      ) async {
+        PluginHostShortcuts.isMacForTesting = isMac;
+        final shortcuts = PluginHostShortcuts.build({});
+        final out = await tester.runAsync(
+          () => runRequiredStub(shortcuts, [
+            for (final target in targets)
+              for (final key in tabKeys) {...key, 'target': target},
+          ]),
+        );
+        expect(
+          (out!['calls'] as List).map((c) => '${c['name']}:${c['arg']}'),
+          [
+            for (final _ in targets)
+              for (final id in tabIds) 'otzaria_host_shortcut:$id',
+          ],
+        );
+        expect(field(out, 'prevented'), everyElement(isTrue));
+        expect(field(out, 'stopped'), everyElement(isTrue));
+
+        var closes = 0;
+        await tester.pumpWidget(
+          CallbackShortcuts(
+            bindings: {
+              SingleActivator(
+                LogicalKeyboardKey.keyW,
+                control: !isMac,
+                meta: isMac,
+              ): () =>
+                  closes++,
+            },
+            child: const Focus(autofocus: true, child: SizedBox()),
+          ),
+        );
+        await tester.pump();
+        for (final call in out['calls'] as List) {
+          final shortcut = shortcuts.singleWhere((s) => s.id == call['arg']);
+          expect(PluginHostShortcuts.dispatch(shortcut), isTrue);
+        }
+        expect(closes, targets.length);
+        expect(HardwareKeyboard.instance.physicalKeysPressed, isEmpty);
+      });
+
+      test('קיצור סגירה מותאם וביטולו נשמרים בשדות: mac=$isMac', () async {
+        PluginHostShortcuts.isMacForTesting = isMac;
+        final custom = await runRequiredStub(
+          PluginHostShortcuts.build({tabIds.first: 'ctrl+shift+e'}),
+          [
+            for (final target in targets) ...[
+              {...closeTab, 'target': target},
+              {
+                'code': 'KeyE',
+                'key': 'ק',
+                modifier: true,
+                'shiftKey': true,
+                'target': target,
+              },
+            ],
+          ],
+        );
+        expect(
+          (custom['calls'] as List).map((c) => c['arg']),
+          List.filled(targets.length, tabIds.first),
+        );
+        expect(field(custom, 'prevented'), [
+          for (final _ in targets) ...[false, true],
+        ]);
+
+        final disabled = await runRequiredStub(
+          PluginHostShortcuts.build({tabIds.first: ''}),
+          [
+            for (final target in targets) {...closeTab, 'target': target},
+          ],
+        );
+        expect(disabled['calls'], isEmpty);
+        expect(field(disabled, 'prevented'), everyElement(isFalse));
+      });
+
+      test('תוסף שמטפל ב-Ctrl+W בעצמו שומר על קדימותו: mac=$isMac', () async {
+        PluginHostShortcuts.isMacForTesting = isMac;
+        for (final action in ['prevent', 'stop']) {
+          final out = await runRequiredStub(PluginHostShortcuts.build({}), [
+            {'code': 'KeyA', 'key': 'ש', 'target': targets.first},
+            for (final target in targets)
+              {
+                ...closeTab,
+                'target': target,
+                'registerWindowHandler': true,
+                'windowAction': action,
+              },
+          ]);
+          expect(out['calls'], isEmpty);
+          expect(field(out, 'pageHandled').skip(1), everyElement(1));
+          expect(field(out, 'prevented'), everyElement(isFalse));
+          expect(field(out, 'stopped'), everyElement(isFalse));
+        }
+        final out = await runRequiredStub(PluginHostShortcuts.build({}), [
+          for (final target in targets) ...[
+            {...closeTab, 'target': target, 'pagePrevented': true},
+            {...closeTab, 'target': target, 'repeat': true},
+          ],
+        ]);
+        expect(out['calls'], isEmpty);
+        expect(field(out, 'prevented'), everyElement(isFalse));
+      });
+    }
+  });
 }
