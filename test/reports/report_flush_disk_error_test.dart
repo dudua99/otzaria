@@ -236,6 +236,11 @@ void main() {
 
         expect(unhandled, isEmpty);
         expect(await loggedFailures(), 1);
+        // שליחה ידנית מההגדרות ממשיכה להציג את השגיאה.
+        await expectLater(
+          queue.flushPendingReports(),
+          throwsA(isA<SqliteException>()),
+        );
 
         store.failing = false;
         expect(await queue.flushPendingReports(), 1);
