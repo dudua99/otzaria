@@ -528,6 +528,7 @@ class _SearchDialogState extends State<SearchDialog> {
               child: FilterChip(
                 label: Text(context.settingsText(key)),
                 visualDensity: VisualDensity.compact,
+                showCheckmark: false,
                 selected: _searchTab.globalSearchOptions[key] ?? false,
                 onSelected:
                     disabledOptionIds.contains(
@@ -560,6 +561,7 @@ class _SearchDialogState extends State<SearchDialog> {
         key: const ValueKey('search-word-order-chip'),
         label: Text(context.settingsText('שמור על סדר המילים המקורי')),
         visualDensity: VisualDensity.compact,
+        showCheckmark: false,
         selected: !state.anyOrder,
         onSelected: (keepOrder) => _searchTab.searchBloc.add(
           _usesStagedSubmit
@@ -822,19 +824,6 @@ class _SearchDialogState extends State<SearchDialog> {
               _searchTab.spacingValues
                 ..clear()
                 ..addAll(bookmark.spacingValues!);
-            }
-            // רשומות ההיסטוריה של החיפוש הן מילוליות. חיפוש חכם עשוי שלא
-            // לתמוך בהיקף השמור, למשל כשהוא מוגבל לספר אישי.
-            if (widget.bookTitle == null &&
-                widget.onSearch == null &&
-                !widget.returnResultOnSubmit &&
-                !_isSemanticActive) {
-              final scope = bookmark.searchScopeFacets;
-              setState(
-                () => _scopeSelection = scope == null || scope.isEmpty
-                    ? {'/'}
-                    : scope.toSet(),
-              );
             }
 
             _historyMenuController.close();
@@ -1807,6 +1796,7 @@ class _SearchDialogState extends State<SearchDialog> {
             key: ValueKey('plugin-search-dialog-$pluginId-${item.id}'),
             label: Text(item.title),
             visualDensity: VisualDensity.compact,
+            showCheckmark: false,
             selected: _pluginSelectionValue(pluginId, item),
             onSelected: (value) =>
                 _updatePluginSearchSelection(pluginId, item, value),
