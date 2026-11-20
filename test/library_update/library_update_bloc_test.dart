@@ -2698,6 +2698,33 @@ void main() {
     );
 
     blocTest<LibraryUpdateBloc, LibraryUpdateState>(
+      'דלתא כבדה בלי הורדה מלאה חלופית: גם בה הגודל מוצג לפני ההורדה',
+      build: () => _bloc(
+        _FakeService(
+          LibraryUpdatePlan.delta(
+            localVersion: 1,
+            targetVersion: 2,
+            steps: [sizedEdge(1, 2, 3 * mb)],
+            heavyDeltaReason: 'החלה ארוכה',
+          ),
+        ),
+      ),
+      act: (b) => b.add(const StartLibraryUpdate()),
+      skip: 1,
+      expect: () => [
+        isA<LibraryUpdateState>()
+            .having(
+              (s) => s.status,
+              'status',
+              LibraryUpdateStatus.needsDeltaConfirmation,
+            )
+            .having((s) => s.message, 'message', contains('3MB')),
+      ],
+      verify: (b) =>
+          expect((b.repository as _FakeService).applyCalled, isFalse),
+    );
+
+    blocTest<LibraryUpdateBloc, LibraryUpdateState>(
       'בדיקה אוטומטית: עדכון קטן ממשיך בשקט כמו קודם',
       build: () => _bloc(_FakeService(small)),
       act: (b) => b.add(const StartLibraryUpdate(automatic: true)),

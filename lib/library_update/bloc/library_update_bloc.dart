@@ -290,7 +290,7 @@ class LibraryUpdateBloc extends Bloc<LibraryUpdateEvent, LibraryUpdateState> {
           );
         case LibraryUpdatePlanKind.delta:
           // דלתא כבדה (issue #1211): ההחלה עשויה להימשך שעה. כשיש הורדה מלאה
-          // חלופית הבחירה היא של המשתמש; בלעדיה רק מזהירים וממשיכים.
+          // חלופית הבחירה היא של המשתמש; בלעדיה מזהירים בזמן ההחלה.
           if (plan.isHeavyDelta && plan.fullDbAsset != null) {
             emit(
               LibraryUpdateState(
@@ -309,8 +309,7 @@ class LibraryUpdateBloc extends Bloc<LibraryUpdateEvent, LibraryUpdateState> {
           // גודל ההורדה מוצג לפני שמתחילים, עם אפשרות לדחות (issue #3722).
           // בבדיקה אוטומטית עדכון קטן ממשיך בשקט כמו קודם.
           final size = plan.totalDownloadSize;
-          if (!plan.isHeavyDelta &&
-              size > 0 &&
+          if (size > 0 &&
               (_userInitiated || size >= deltaConfirmationMinBytes)) {
             emit(
               LibraryUpdateState(
