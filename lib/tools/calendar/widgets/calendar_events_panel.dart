@@ -183,6 +183,10 @@ class _CalendarEventsPanelState extends State<CalendarEventsPanel> {
   Widget _buildEventsList(BuildContext context) {
     final cubit = context.read<CalendarCubit>();
     final events = _resolveVisibleCalendarEvents(widget.state, cubit);
+    // בקרובים התאריך שבשורה הוא מופע, ואליו עוברים בלחיצה.
+    final showsOccurrence =
+        widget.state.eventSearchQuery.isEmpty &&
+        widget.state.eventsView == CalendarEventsView.upcoming;
 
     if (events.isEmpty) {
       return OtzariaEmptyState(
@@ -368,7 +372,11 @@ class _CalendarEventsPanelState extends State<CalendarEventsPanel> {
                 return AppCard(
                   padding: AppTokens.cardPadding,
                   onTap: () => cubit.jumpToDate(
-                    event.nextOccurrenceFrom(cubit.state.selectedGregorianDate),
+                    showsOccurrence
+                        ? date
+                        : event.nextOccurrenceFrom(
+                            cubit.state.selectedGregorianDate,
+                          ),
                   ),
                   child: content,
                 );

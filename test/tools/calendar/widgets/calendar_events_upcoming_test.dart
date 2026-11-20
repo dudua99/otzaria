@@ -225,6 +225,23 @@ void main() {
       expect(find.text('כנס'), findsOneWidget);
     });
 
+    testWidgets('לחיצה על שורה בקרובים עוברת לתאריך שמוצג בה', (tester) async {
+      final next = _dayOffset(5);
+      await cubit.addEvent(
+        title: 'שנתי',
+        baseGregorianDate: DateTime(next.year - 2, next.month, next.day),
+        recurrenceType: RecurrenceType.annualGregorian,
+      );
+      // היום הנבחר רחוק מהיום: המופע הבא ממנו אינו המופע שבשורה.
+      cubit.jumpToDate(DateTime(next.year + 3, next.month, next.day - 10));
+      cubit.setEventsView(CalendarEventsView.upcoming);
+      await pumpEventsPanel(tester);
+
+      await tester.tap(find.text('שנתי'));
+      await tester.pumpAndSettle();
+      expect(cubit.state.selectedGregorianDate, next);
+    });
+
     test('סדר לפי המופע הקרוב ואז לפי שעה', () async {
       await cubit.addEvent(
         title: 'בעוד חודש',
