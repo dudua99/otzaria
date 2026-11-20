@@ -227,13 +227,14 @@ void main() {
       );
     });
 
-    testWidgets('בחלון צר המקטעים מקצרים לתווית הקצרה', (tester) async {
+    testWidgets('בחלון צר התווית המלאה נשארת, בלי גלישה', (tester) async {
       tester.view.physicalSize = const Size(360, 800);
       tester.view.devicePixelRatio = 1;
       addTearDown(tester.view.reset);
       await pumpPanel(tester, _FakeRepository([_library('ראשון')]));
 
       expect(tester.takeException(), isNull);
+      expect(find.text('תחת ספרים אישיים'), findsOneWidget);
       expect(
         find.textContaining('ספרים אישיים/ראשון'),
         findsOneWidget,
