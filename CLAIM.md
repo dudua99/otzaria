@@ -1,1 +1,1 @@
-claimed: 2026-11-20T08:52:31Z UTC QA of prbody/4713-fix per QA.md (worker B)
+done: prbody/4713-qa 5e792b6ea598b7b3f1e70b3cf3b65fdcebdc2379 (branch head 574a2cc74ad79dfb7917907d86d21dab40597e09) 2026-11-20T09:04:06Z
