@@ -60,6 +60,7 @@ class ShamorZachorDataProvider with ChangeNotifier {
   /// ספרי PDF שאינם ב-seforim.db (היברובוקס, אישיים) נשמרים בנפרד, במפתחות
   /// שליליים — מזהי seforim.db חיוביים, ולכן אין התנגשות עם ספר רשמי.
   static const String _trackedPdfBooksKey = 'sz:tracked_pdf_books';
+  static const String _lastPdfKeyKey = 'sz:last_pdf_book_key';
   static const String pdfCategoryName = 'ספרי PDF';
   List<Map<String, dynamic>> _trackedPdfBooks = [];
 
@@ -796,13 +797,12 @@ class ShamorZachorDataProvider with ChangeNotifier {
           failed++;
           continue;
         }
+        // מונה שנשמר ולא חוזר לאחור: מפתח של PDF שהוסר לא ימוחזר, כדי
+        // שההתקדמות שנשמרה תחתיו לא תעבור לספר אחר.
+        final key = (Settings.getValue<int>(_lastPdfKeyKey) ?? 0) - 1;
+        await Settings.setValue<int>(_lastPdfKeyKey, key);
         _trackedPdfBooks.add({
-          'key':
-              _trackedPdfBooks.fold<int>(
-                0,
-                (min, e) => math.min(min, e['key'] as int),
-              ) -
-              1,
+          'key': key,
           'identity': BookIdentity.indexedFilePath(book),
           'title': book.title,
           'pages': info.pageCount,

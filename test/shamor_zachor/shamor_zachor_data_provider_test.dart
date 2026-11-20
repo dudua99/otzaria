@@ -355,6 +355,27 @@ void main() {
         expect(reloaded.isBookTrackedById(key), isFalse);
       },
     );
+
+    test(
+      'מפתח של PDF שהוסר אינו ממוחזר — ההתקדמות שלו לא עוברת לספר אחר',
+      () async {
+        final provider = buildProvider();
+        addTearDown(provider.dispose);
+        await provider.loadAllData();
+        await provider.addPdfBooks([hebrewBooksPdf()]);
+        final removedKey = pdfDetails(provider)!.id!;
+        await provider.removeBookFromTracking(removedKey);
+
+        await provider.addPdfBooks([
+          PdfBook(title: 'ספר אחר', path: '/personal/other.pdf'),
+        ]);
+
+        final other = provider
+            .getCategory(ShamorZachorDataProvider.pdfCategoryName)!
+            .books['ספר אחר']!;
+        expect(other.id, isNot(removedKey));
+      },
+    );
   });
 }
 
