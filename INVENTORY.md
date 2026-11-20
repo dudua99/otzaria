@@ -1,6 +1,20 @@
 # מצאי כינויי ספרים — upstream/dev (acb6759c5), לקראת ריפקטור #5599
 
-סטטוס: טיוטה ראשונה — מתעדכן תוך כדי עבודה.
+סטטוס: מימוש בענף refactor/book-aliases-5599 (עדיין לא דחוף). המודול: `lib/book_aliases/book_aliases.dart`.
+
+## מה עבר לאן
+
+| מקור / כלל | איפה היה ב-dev | איפה הוא עכשיו |
+|---|---|---|
+| `bookNameAcronymForm` ("על", #5611) | lib/find_ref/book_name_match.dart | book_aliases.dart, ללא שינוי התנהגות |
+| `bookNameTractateAcronymForm`, `isTractateWord` ("מסכת", #5620) | book_name_match.dart | book_aliases.dart, ללא שינוי התנהגות |
+| נרמול `book_acronym` של הקטלוג הרשמי + אינדקס ביגרמים (`AcronymCacheData`, `buildAcronymCacheData`) | lib/data/cache/acronym_cache_data.dart (נמחק) | book_aliases.dart (`collectBookAliasTerms`, `buildBookAliasBigrams`, `AcronymCacheData.candidatesFor`) |
+| נרמול `book_acronym` של מסד מצורף (לולאה כפולה) | `AcronymsCache.readAttachedAcronyms` | אותה פונקציה, דרך `collectBookAliasTerms` |
+| `AcronymCandidateBooks` + חישוב המועמדים | acronyms_cache.dart | book_aliases.dart |
+| שמות קיבוציים ("פירוש המשניות", "פיה"מ"…) | לא היה | `bookSetCollectiveNames` + `derivedBookAliases` |
+| הכותרת בלי מילות קישור ככינוי | לא היה | `BookTitleIndex._titleAliasIndex` (צורות book_aliases) |
+| כל הכינויים של ספר (מילולי + נגזר) | כל צרכן קרא `acronymsFor` | `bookAliasesOf` / `AcronymsCache.aliasesFor` — איתור, ספרייה, @שם, היסטוריה/סימניות |
+
 
 ## מקורות הכינויים (data)
 
