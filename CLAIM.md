@@ -1,2 +1,1 @@
-claimed: 2026-11-20T09:19:42Z UTC
-FIX (feature-default) of issue #5495 per FIX.md + notes/5495.md
+done: prbody/5495-fix 98f8032c2707260664f572c8e39fb628c633e6b5
