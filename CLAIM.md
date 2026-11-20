@@ -1,2 +1,1 @@
-claimed: 2026-11-20T08:56:55Z UTC
-QA of prbody/3170-fix per QA.md
+done: prbody/3170-qa b0e435733f900d40f9162e90fc9975c1838652b3 (2026-11-20T09:25:24Z)
