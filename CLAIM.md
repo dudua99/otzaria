@@ -1,1 +1,1 @@
-claimed: 2026-11-20T09:26:52Z UTC FIX (feature-default) of issue #3160 per FIX.md + notes/3160.md
+done: prbody/3160-fix 30d6029b64bdc477200f2f72708a8dddcc46a037 (branch head abf3b9e4a)
