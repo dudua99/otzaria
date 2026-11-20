@@ -1,0 +1,99 @@
+// זמני — צילומי לפני/אחרי ל-issue #4452, לא נכלל בקומיט.
+import 'dart:io';
+import 'dart:ui' as ui;
+
+import 'package:bloc_test/bloc_test.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:otzaria/core/ui_snack.dart';
+import 'package:otzaria/plugins/bloc/plugin_system_bloc.dart';
+import 'package:otzaria/plugins/bloc/plugin_system_event.dart';
+import 'package:otzaria/plugins/bloc/plugin_system_state.dart';
+import 'package:otzaria/settings/engine/app_settings_store.dart';
+import 'package:otzaria/settings/engine/settings_bloc.dart';
+import 'package:otzaria/settings/engine/settings_repository.dart';
+import 'package:otzaria/settings/tabs/shortcuts_settings_tab.dart';
+import 'package:otzaria/shortcuts/view/shortcut_dropdown_tile.dart';
+
+import '../helpers/memory_settings_cache.dart';
+import '../support/golden_fonts.dart';
+import 'golden_harness.dart';
+
+class _PluginBloc extends MockBloc<PluginSystemEvent, PluginSystemState>
+    implements PluginSystemBloc {}
+
+void main() {
+  final out = Platform.environment['QA_OUT']!;
+  for (final b in Brightness.values) {
+    for (final w in [1000.0, 360.0]) {
+      for (final scale in [1.0, 1.3]) {
+        final name = '${b.name}_w${w.toInt()}_x$scale';
+        testWidgets(name, (tester) async {
+          await Settings.init(cacheProvider: MemorySettingsCache());
+          final settings = SettingsBloc(repository: SettingsRepository());
+          addTearDown(settings.close);
+          final plugins = _PluginBloc();
+          whenListen(
+            plugins,
+            const Stream<PluginSystemState>.empty(),
+            initialState: PluginSystemInitial(),
+          );
+          debugDefaultTargetPlatformOverride = goldenPlatform;
+          tester.view.physicalSize = Size(w, 820);
+          tester.view.devicePixelRatio = 1;
+          tester.platformDispatcher.textScaleFactorTestValue = scale;
+          addTearDown(tester.view.reset);
+          addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+          const key = ValueKey('cap');
+          await tester.pumpWidget(
+            RepaintBoundary(
+              key: key,
+              child: MaterialApp(
+                navigatorKey: navigatorKey,
+                debugShowCheckedModeBanner: false,
+                theme: goldenTheme(b),
+                locale: const Locale('he'),
+                builder: (c, child) => Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: child!,
+                ),
+                home: Scaffold(
+                  body: MultiBlocProvider(
+                    providers: [
+                      BlocProvider<SettingsBloc>.value(value: settings),
+                      BlocProvider<PluginSystemBloc>.value(value: plugins),
+                    ],
+                    child: const ShortcutsSettingsTab(),
+                  ),
+                ),
+              ),
+            ),
+          );
+          await tester.pump(const Duration(milliseconds: 300));
+          final tile = find.byWidgetPredicate(
+            (wd) =>
+                wd is ShortcutDropDownTile &&
+                wd.settingKey == 'key-shortcut-open-settings',
+          );
+          await tester.ensureVisible(tile);
+          await tester.pump(const Duration(milliseconds: 300));
+          final ex = tester.takeException();
+          final boundary =
+              tester.renderObject(find.byKey(key)) as RenderRepaintBoundary;
+          await tester.runAsync(() async {
+            final img = await boundary.toImage(pixelRatio: 1);
+            final bytes = await img.toByteData(format: ui.ImageByteFormat.png);
+            File('$out/$name.png')
+              ..createSync(recursive: true)
+              ..writeAsBytesSync(bytes!.buffer.asUint8List());
+          });
+          debugDefaultTargetPlatformOverride = null;
+          if (ex != null) fail('exception: $ex');
+        });
+      }
+    }
+  }
+}
