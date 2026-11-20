@@ -68,10 +68,8 @@ String monthlyCycleHeadingLabel(String label) {
   final letters = _dayLetters.firstMatch(plain)?.group(1);
   final day = digits != null
       ? int.parse(digits)
-      : letters
-            ?.split('')
-            .fold<int>(0, (sum, l) => sum + (hebrewLetterValues[l] ?? 100));
-  if (day == null || day < 1 || day > 30) return trimmed;
+      : gematriaToNumber(letters ?? '');
+  if (day < 1 || day > 30) return trimmed;
   final numeral = toHebrewNumeral(day);
   final marked = numeral.length == 1
       ? '$numeral׳'
