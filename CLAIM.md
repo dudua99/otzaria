@@ -1,2 +1,1 @@
-claimed: 2026-11-20T09:29:28Z UTC
-QA of prbody/5127-fix per QA.md
+done: prbody/5127-qa 5cad0792de468df35a56ea450a7eb370b146bf20 (READY; QA fix d9d1126fe on feat/restore-field-focus-5127)
