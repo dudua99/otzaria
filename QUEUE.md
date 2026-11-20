@@ -1,5 +1,6 @@
 # Work queue (top = next). One line per item: <issue> <kind> [note]
 # kind: feature = FEATURE in milestone 0.9.99 (implement per notes/<N>.md); feature-default = maintainers undecided, implement the DEFAULT option written in notes/<N>.md and say so clearly in BODY.md
+# bug = regular bug fix (FIX.md flow) per notes/<N>.md
 3170 feature
 4919 feature
 4993 feature   (reproduce first which list is missing; if not reproducible -> NOT READY with evidence)
@@ -42,3 +43,11 @@
 3160 feature-default
 2835 feature-default
 4345 feature-default
+2840 bug
+5220 bug   (palmoni5: only if cheap - measure cost; do NOT write book.totalLines)
+3491 bug   (touchpad fling in PDF; verify regression b3e7a1c5a)
+2091 bug
+5303 bug   (reproduce first with real Berakhot 2a lines; if not reproducible -> NOT READY with evidence)
+5607 feature-default   (confirm the grey is preview selection first)
+1979 feature-default
+5185 feature-default
