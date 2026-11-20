@@ -1,1 +1,1 @@
-2026-11-20T10:11:36Z QA של prbody/5220-fix לפי QA.md
+done: prbody/5220-qa f679e01cc3f4569b0aa5708e98b5b4cb91933208 (2026-11-20T10:23:25Z)
