@@ -1,3 +1,1 @@
-claim qa-5638
-2026-11-20 14:18:21 UTC
-worker 99-B: QA of feat/arrow-scroll-tuning-5638 per QA.md
+done: prbody/5638-qa f498ef1468f70e3c238ceabf38790719ccff0bb7 (branch feat/arrow-scroll-tuning-5638 @ 716ee3340, READY)
