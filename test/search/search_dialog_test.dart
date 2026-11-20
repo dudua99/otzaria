@@ -1846,6 +1846,23 @@ Future<void> main() async {
         );
       });
 
+      testWidgets('מתקדם פר-מילה: ברירת המחדל של האפשרויות אינה נדרסת', (
+        tester,
+      ) async {
+        SearchDefaults.saveDefaults(const {'קידומות דקדוקיות': true});
+        await pumpWithTab(tester, SearchMode.advanced);
+        // "זהה לכל המילים" כבוי (כמו אחרי שחזור מההיסטוריה): המפה הגלובלית
+        // אינה מה שמוצג בחלונית.
+        tab.useGlobalSearchOptions.value = false;
+        tab.globalSearchOptions.clear();
+        await openDefaultMode(tester);
+        await tester.tap(find.text('קבע כברירת מחדל'));
+        await tester.pumpAndSettle();
+
+        expect(SearchDefaults.loadDefaults(), {'קידומות דקדוקיות': true});
+        expect(SearchDefaults.loadDistanceDefault(), 5);
+      });
+
       testWidgets('בלי הסימון נשמר המצב בלבד', (tester) async {
         await pumpWithTab(tester, SearchMode.advanced);
         await openDefaultMode(tester);

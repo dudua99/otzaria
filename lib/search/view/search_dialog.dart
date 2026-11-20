@@ -623,7 +623,10 @@ class _SearchDialogState extends State<SearchDialog> {
       if (mode == SearchMode.exact) {
         SearchDefaults.saveExactDefaults(options);
       } else {
-        SearchDefaults.saveDefaults(options);
+        // פר-מילה ("זהה לכל המילים" כבוי) המפה הגלובלית אינה המוצג בחלונית.
+        if (_searchTab.useGlobalSearchOptions.value) {
+          SearchDefaults.saveDefaults(options);
+        }
         SearchDefaults.saveMatchPolicyDefault(state.configuration.matchPolicy);
       }
       SearchDefaults.saveDistanceDefault(state.distance);
