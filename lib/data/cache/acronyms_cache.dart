@@ -64,12 +64,11 @@ class AcronymsCache {
   /// כל הכינויים של ספר לחיפוש — המילוליים של המסד שלו ואחריהם הנגזרים מכותרתו
   /// ([bookAliasesOf]). כך מקבל כינויים גם ספר אישי, ספר בלי מזהה ומסד מצורף
   /// בלי טבלת `book_acronym`.
-  List<String> aliasesFor(BookSource source, int? bookId, String title) {
-    final literal = bookId == null ? null : acronymsFor(source, bookId);
-    if (!mayHaveDerivedBookAliases(title)) return literal ?? const <String>[];
-    return bookAliasesOf(literal, normalizeForFindRefMatch(title)) ??
-        const <String>[];
-  }
+  List<String> aliasesFor(BookSource source, int? bookId, String title) =>
+      bookAliasesForTitle(
+        bookId == null ? null : acronymsFor(source, bookId),
+        title,
+      );
 
   /// כל הכינויים של מסד מצורף, או `null` כשלא נטענו. מוחלף בכל טעינה מחדש.
   Map<int, List<String>>? attachedAcronymsOf(String slug) =>

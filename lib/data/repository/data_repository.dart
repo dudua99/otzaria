@@ -11,8 +11,6 @@ import 'package:otzaria/find_ref/book_name_match.dart';
 import 'package:otzaria/models/book_source.dart';
 import 'package:otzaria/models/books.dart';
 import 'package:otzaria/library/models/library.dart';
-import 'package:otzaria/utils/text/text_manipulation.dart'
-    show normalizeForFindRefMatch;
 
 /// מרכז את הגישה לנתוני הספרייה ממסד הנתונים וממערכת הקבצים.
 class DataRepository {
@@ -451,24 +449,15 @@ BookSearchEntry buildBookSearchEntry(
     topics: book.topics,
     acronyms: isExternalCatalog
         ? const []
-        : _bookAliases(book, id, acronymsFor),
+        : bookAliasesForTitle(
+            id == null ? null : acronymsFor(book.source, id),
+            book.title,
+          ),
     eraOrder: eraOrderForId(id, book.source),
     source: book.source,
     isExternalCatalog: isExternalCatalog,
     categoryPath: book.categoryPath ?? '',
   );
-}
-
-/// [bookAliasesOf] של [book]; הכותרת מנורמלת רק כשהיא עשויה לקבל כינוי נגזר.
-List<String> _bookAliases(
-  Book book,
-  int? id,
-  List<String>? Function(BookSource source, int bookId) acronymsFor,
-) {
-  final literal = id == null ? null : acronymsFor(book.source, id);
-  final title = book.title;
-  if (!mayHaveDerivedBookAliases(title)) return literal ?? const [];
-  return bookAliasesOf(literal, normalizeForFindRefMatch(title)) ?? const [];
 }
 
 /// רשומת חיפוש של ספר או תיקייה, בצורה שאפשר לשלוח ל-isolate.

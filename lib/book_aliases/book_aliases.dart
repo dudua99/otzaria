@@ -17,6 +17,7 @@ library;
 import 'dart:typed_data';
 
 import 'package:otzaria/find_ref/book_name_match.dart';
+import 'package:otzaria/utils/text/find_ref_text_matching.dart';
 
 // ── מילות קישור ───────────────────────────────────────────────────────────────
 
@@ -103,6 +104,13 @@ List<String>? bookAliasesOf(List<String>? literal, String normalizedTitle) {
   ];
   return extra.isEmpty ? literal : [...literal, ...extra];
 }
+
+/// [bookAliasesOf] לפי הכותרת הגולמית [rawTitle]; היא מנורמלת רק כשהיא עשויה
+/// לקבל כינוי נגזר ([mayHaveDerivedBookAliases]).
+List<String> bookAliasesForTitle(List<String>? literal, String rawTitle) =>
+    mayHaveDerivedBookAliases(rawTitle)
+    ? bookAliasesOf(literal, normalizeForFindRefMatch(rawTitle)) ?? const []
+    : literal ?? const [];
 
 // ── קריאת הכינויים המילוליים ──────────────────────────────────────────────────
 
