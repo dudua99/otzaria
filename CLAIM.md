@@ -1,2 +1,1 @@
-claimed: 2026-11-20T08:23:15Z UTC
-FIX (feature) of issue #4452 per FIX.md + notes/4452.md
+done: prbody/4452-fix 794daa39ee3bae3b865de7c37f63ce21e14978cf (2026-11-20T08:54:40Z)
