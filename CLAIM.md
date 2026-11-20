@@ -1,2 +1,1 @@
-claimed: 2026-11-20T08:29:17Z UTC
-implement feature #3699 per FIX.md + notes/3699.md
+done: prbody/3699-fix b11d11f2d0bb62b4c4a3c80ba0952c26a269a9b8 (work branch feat/leap-adar-choice-3699 8ebbd3499)
