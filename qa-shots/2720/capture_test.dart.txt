@@ -1,0 +1,228 @@
+import 'dart:io';
+import 'package:otzaria/text_book/view/widgets/selection_gutter_painter.dart';
+
+import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
+import 'package:otzaria/models/links.dart';
+import 'package:otzaria/data/repository/text_book_repository.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:otzaria/settings/engine/app_settings_store.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:otzaria/core/app_paths.dart';
+import 'package:otzaria/data/data_providers/user_books_database_holder.dart';
+import 'package:otzaria/migration/database/daos/database.dart';
+import 'package:otzaria/models/book_source.dart';
+import 'package:otzaria/models/books.dart';
+import 'package:otzaria/personal_notes/bloc/personal_notes_bloc.dart';
+import 'package:otzaria/personal_notes/bloc/personal_notes_state.dart';
+import 'package:otzaria/settings/engine/settings_bloc.dart';
+import 'package:otzaria/settings/engine/settings_state.dart';
+import 'package:otzaria/tabs/models/text_tab.dart';
+import 'package:otzaria/text_book/bloc/text_book_bloc.dart';
+import 'package:otzaria/text_book/bloc/text_book_event.dart';
+import 'package:otzaria/text_book/bloc/text_book_state.dart';
+import 'package:otzaria/text_book/view/combined_view/combined_book_screen.dart';
+import 'package:otzaria/user_content_import/repository/user_content_repository.dart';
+import 'package:otzaria/user_content_import/services/user_headings_builder.dart';
+import 'package:otzaria/text_book/view/reader_line/reader_line_render.dart';
+import 'package:otzaria/text_book/view/selection/selected_text_copy.dart';
+import 'package:otzaria/widgets/misc/app_context_menu.dart';
+
+import '../test_helpers/memory_cache_provider.dart';
+import '../test_helpers/stub_personal_notes_bloc.dart';
+import '../test_helpers/stub_settings_bloc.dart';
+
+import 'dart:ui' as ui;
+import 'package:flutter/foundation.dart';
+import '../support/golden_fonts.dart';
+import 'golden_harness.dart';
+
+const _content = [
+  '<h1>תהלים</h1>',
+  '<h2>כב</h2>',
+  '(לב) יָבֹאוּ וְיַגִּידוּ צִדְקָתוֹ לְעַם נוֹלָד כִּי עָשָׂה',
+  '<h2>כג</h2>',
+  '(א) מִזְמוֹר לְדָוִד יְהוָה רֹעִי לֹא אֶחְסָר',
+  '(ב) בִּנְאוֹת דֶּשֶׁא יַרְבִּיצֵנִי עַל מֵי מְנֻחוֹת יְנַהֲלֵנִי',
+  '<h2>קיט</h2>',
+  '(צה) לִי קִוּוּ רְשָׁעִים לְאַבְּדֵנִי עֵדֹתֶיךָ אֶתְבּוֹנָן',
+  '(צו) לְכָל תִּכְלָה רָאִיתִי קֵץ רְחָבָה מִצְוָתְךָ מְאֹד',
+  '(צז) מָה אָהַבְתִּי תוֹרָתֶךָ כָּל הַיּוֹם הִיא שִׂיחָתִי',
+  '(צח) מֵאֹיְבַי תְּחַכְּמֵנִי מִצְוֹתֶךָ כִּי לְעוֹלָם הִיא לִי',
+];
+
+const _withHeadings = bool.fromEnvironment('WITH_HEADINGS');
+
+
+class _TestTextBookBloc extends Bloc<TextBookEvent, TextBookState>
+    implements TextBookBloc {
+  _TestTextBookBloc(super.initialState) {
+    on<TextBookEvent>((event, emit) {});
+  }
+
+  @override
+  final TextBookRepository repository = _Repository();
+  @override
+  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
+}
+
+class _Repository implements TextBookRepository {
+  @override
+  Future<List<Link>> getBookLinksInRange(
+    TextBook book, {
+    required int startIndex,
+    required int endIndex,
+    Iterable<String>? targetBookTitles,
+  }) async => const [];
+  @override
+  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
+}
+
+void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
+  late Directory tempDir;
+
+  setUp(() async {
+    await Settings.init(cacheProvider: MemoryCacheProvider());
+    tempDir = await Directory.systemTemp.createTemp('otzaria_heading_para');
+    AppPaths.debugOverrideDataRootPath(tempDir.path);
+    final db = MyDatabase.withPath(await AppPaths.resolveUserBooksDbPath());
+    final raw = await db.database;
+    raw.execute("INSERT INTO source (name) VALUES ('external')");
+    raw.execute(
+      'INSERT INTO book (categoryId, sourceId, title, filePath, fileType) '
+      "VALUES (7, 1, 'ספר', '/books/ספר.txt', 'txt')",
+    );
+    await UserContentRepository(db).replaceBookHeadings(raw.lastInsertRowId, [
+      if (_withHeadings)
+        const UserAltTocStructureData(
+          key: 'Topic',
+          heTitle: 'נושאים',
+          entries: [
+            UserAltTocEntryData(level: 1, text: 'יום ד׳ לחודש', lineIndex: 4, parentIndex: null, hasChildren: false, isLastChild: false),
+            UserAltTocEntryData(level: 1, text: 'יום כ״ו לחודש', lineIndex: 9, parentIndex: null, hasChildren: false, isLastChild: true),
+          ],
+        ),
+    ], source: 'test');
+    db.close();
+    await UserBooksDatabaseHolder.instance.repository;
+  });
+
+  tearDown(() async {
+    await UserBooksDatabaseHolder.instance.close();
+    AppPaths.debugOverrideDataRootPath(null);
+    await tempDir.delete(recursive: true);
+  });
+
+  Future<void> pumpBook(
+    WidgetTester tester, {
+    bool preview = false,
+    bool continuous = false,
+    ValueChanged<String?>? onSelectionChanged,
+    ThemeData? theme,
+  }) async {
+    final book = TextBook(
+      title: 'ספר',
+      categoryId: 7,
+      filePath: '/books/ספר.txt',
+      source: BookSource.user,
+    );
+    final textBookBloc = _TestTextBookBloc(
+      TextBookLoaded(
+        book: book,
+        showLeftPane: false,
+        content: _content,
+        fontSize: 18,
+        showSplitView: false,
+        showPageShapeView: false,
+        activeCommentators: const [],
+        commentatorGroups: const [],
+        availableCommentators: const [],
+        links: const [],
+        visibleLinks: const [],
+        linksByLine: const {},
+        tableOfContents: const [],
+        removeNikud: false,
+        visibleIndices: const [0],
+        selectedIndex: null,
+        selectedIndices: const {},
+        pinLeftPane: false,
+        searchText: '',
+        continuousReadingMode: continuous,
+      ),
+    );
+    final personalNotesBloc = StubPersonalNotesBloc(
+      const PersonalNotesState.initial(),
+    );
+    final settingsBloc = StubSettingsBloc(SettingsState.initial());
+    final tab = TextBookTab(book: book, index: 0);
+    addTearDown(textBookBloc.close);
+    addTearDown(personalNotesBloc.close);
+    addTearDown(settingsBloc.close);
+    addTearDown(tab.dispose);
+
+    await tester.pumpWidget(
+      RepaintBoundary(key: const ValueKey('cap'), child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: theme,
+        locale: const Locale('he', 'IL'),
+        localizationsDelegates: GlobalMaterialLocalizations.delegates,
+        supportedLocales: const [Locale('he', 'IL')],
+        home: MultiBlocProvider(
+          providers: [
+            BlocProvider<TextBookBloc>.value(value: textBookBloc),
+            BlocProvider<PersonalNotesBloc>.value(
+              value: personalNotesBloc,
+            ),
+            BlocProvider<SettingsBloc>.value(value: settingsBloc),
+          ],
+          child: Scaffold(
+            body: CombinedView(
+              data: _content,
+              openBookCallback: (_) {},
+              openLeftPaneTab: (_, {searchText}) {},
+              textSize: 18,
+              showCommentaryAsExpansionTiles: false,
+              tab: tab,
+              isPreviewMode: preview,
+              onSelectedTextChanged: (text, _, _) =>
+                  onSelectionChanged?.call(text),
+            ),
+          ),
+        ),
+      )),
+    );
+    // טעינת הכותרות קוראת את user_books.db — I/O אמיתי.
+    for (var i = 0; i < 20; i++) {
+      await tester.runAsync(
+        () => Future<void>.delayed(const Duration(milliseconds: 50)),
+      );
+      await tester.pump(const Duration(milliseconds: 50));
+    }
+  }
+
+  final out = Platform.environment['QA_OUT']!;
+  for (final b in Brightness.values) {
+    for (final w in [900.0, 400.0]) {
+      final name = '${b.name}_w${w.toInt()}';
+      testWidgets(name, (tester) async {
+        tester.view.physicalSize = Size(w, 620);
+        tester.view.devicePixelRatio = 1;
+        addTearDown(tester.view.reset);
+        await pumpBook(tester, theme: goldenTheme(b));
+        final ro = tester.renderObject(find.byKey(const ValueKey('cap'))) as RenderRepaintBoundary;
+        await tester.runAsync(() async {
+          final img = await ro.toImage(pixelRatio: 1);
+          final bytes = await img.toByteData(format: ui.ImageByteFormat.png);
+          File('$out/$name.png')
+            ..createSync(recursive: true)
+            ..writeAsBytesSync(bytes!.buffer.asUint8List());
+        });
+      });
+    }
+  }
+}
