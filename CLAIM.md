@@ -1,1 +1,1 @@
-claimed: 2026-11-20T08:53:48Z UTC FIX (feature) of issue #2306 per FIX.md + notes/2306.md
+claimed earlier; done: prbody/2306-fix b70be9679d0e4790d834b74cfc5573037c97f5d8 (2026-11-20T10:42:09Z)
