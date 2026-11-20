@@ -1,2 +1,1 @@
-claimed: 2026-11-20T08:35:57Z UTC
-Implement feature #5271 per FIX.md + notes/5271.md
+done: prbody/5271-fix 3e8d09f78400442f2955756848452b72557d8b3a
