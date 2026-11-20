@@ -1,1 +1,1 @@
-claimed 2026-11-20T13:41:51Z UTC: fix #5594 (scrollbar-drag drift; reproduce first)
+done: prbody/5594-fix 33e2625afae2799eb1282486f718a4ee3bda889f
