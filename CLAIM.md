@@ -1,2 +1,1 @@
-claimed: 2026-11-20T10:08:46Z UTC
-FIX (feature-default) of issue #1979 per FIX.md + notes/1979.md
+done: prbody/1979-fix 8fde8212781392dd8f55b9ec5673c30fbd219299 (code head a9d704a4a)
