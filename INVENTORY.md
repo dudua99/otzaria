@@ -1,6 +1,6 @@
 # מצאי כינויי ספרים — upstream/dev (acb6759c5), לקראת ריפקטור #5599
 
-סטטוס: מימוש בענף refactor/book-aliases-5599 (עדיין לא דחוף). המודול: `lib/book_aliases/book_aliases.dart`.
+סטטוס: סופי — ענף refactor/book-aliases-5599 (274d8e90d). המודול: `lib/book_aliases/book_aliases.dart`.
 
 ## מה עבר לאן
 
