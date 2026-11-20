@@ -1,2 +1,2 @@
-claimed: 2026-11-20T09:03:04Z UTC
-QA of prbody/4308-fix per QA.md
+claimed: see history
+done: prbody/4308-qa 8641e99904b7e04e426a16c561c7f27df6c477b2 (fix branch head 7b4dbe0d3 unchanged)
