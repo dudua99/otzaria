@@ -1,2 +1,1 @@
-claimed: 2026-11-20T08:55:26Z UTC
-QA of prbody/4452-fix (feat/open-shortcuts-list-4452) per QA.md
+done: prbody/4452-qa 794daa39ee3bae3b865de7c37f63ce21e14978cf
