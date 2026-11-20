@@ -1,1 +1,1 @@
-claimed: 2026-11-20T10:35:44Z UTC QA of prbody/3491-fix per QA.md
+done: prbody/3491-qa e4a6011d930e806050c1bc366c6273604fa66ecb (2026-11-20T11:03:16Z)
