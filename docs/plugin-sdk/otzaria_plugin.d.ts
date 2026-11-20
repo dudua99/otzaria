@@ -1324,8 +1324,10 @@ export interface ReaderSelection {
    * as `sectionIndex`/`currentIndex`. From 0.9.98.1. */
   pageNumber?: number;
   /** `library-book` context only: the book's category path, as in
-   * `library.getTree` (`/הלכה/משנה תורה`). There is no position, so
-   * `currentRef` and `currentIndex` are null. From 0.9.99. */
+   * `library.getTree` (`/הלכה/משנה תורה`). There is no position: the
+   * selection holds only the book identity, `bookTitle`, `categoryPath` and
+   * an empty `text`; the event's `currentRef`/`currentIndex` are null.
+   * From 0.9.99. */
   categoryPath?: string | null;
   /** Identity of the book the text belongs to (see `BookIdentity`). */
   id?: number | null;
