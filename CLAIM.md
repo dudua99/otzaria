@@ -1,2 +1,1 @@
-claimed: 2026-11-20T08:38:43Z UTC
-FIX (feature) of issue #5127 per FIX.md + notes/5127.md
+done: prbody/5127-fix feat/restore-field-focus-5127 8aed63aed0692ce60d5dad82f85aa22a91d7b5eb
