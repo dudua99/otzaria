@@ -1,2 +1,2 @@
-claimed: 2026-11-20T09:12:24Z UTC
-Implement feature-default #4016 per FIX.md + notes/4016.md
+claimed: see history
+done: feat/marker-variants-no-underline-4016 d5b54410e6addc73c47a838a1efc218eb99c13af (prbody/4016-fix)
