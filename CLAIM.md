@@ -1,2 +1,1 @@
-claimed: 2026-11-20T09:20:04Z UTC
-FIX (feature-default) of issue #5296 per FIX.md + notes/5296.md
+done: prbody/5296-fix 45b14fe0ed0f6cc537eb42e34188d6628ecd317f (branch feat/refresh-personal-book-5296 head 8273ddc78)
