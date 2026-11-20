@@ -3602,6 +3602,15 @@ class FindRefRepository {
               ?.exactAlias ??
           false,
     );
+    // כינוי שנגזר מהכללים נדחה רק מפני כינוי מילולי של השאילתה הזו.
+    final hasLiteralAlias =
+        hasExactAlias &&
+        results.any(
+          (r) =>
+              bookMatchRanks[_bookKey(r.source, r.bookId, r.filePath)]
+                  ?.literalAlias ??
+              false,
+        );
 
     // מפתחות הכותרת פעם אחת לכל כותרת; השאילתה מנורמלת במלואה, וכותרת בנרמול
     // חלקי (עם גרשיים) לא תשתווה לה.
@@ -3685,6 +3694,7 @@ class FindRefRepository {
                   ))),
           exactAliasMatch: bookMatch?.exactAlias ?? false,
           aliasByRuleOnly:
+              hasLiteralAlias &&
               (bookMatch?.exactAlias ?? false) &&
               !bookMatch!.literalAlias &&
               !match.exactMatch,

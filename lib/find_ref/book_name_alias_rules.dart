@@ -15,21 +15,27 @@ const Set<String> bookNameConnectorWords = {'על', 'מסכת', 'מס'};
 /// מילת קישור — ראו [bookNameConnectorWords].
 bool isBookNameConnector(String word) => bookNameConnectorWords.contains(word);
 
+/// "מסכת" / "מס'" — מילת הקישור שאינה נספרת גם בדירוג מילות הכותרת (#5609). "על"
+/// נספרת שם: "רמב"ם על מקואות" הוא הפירוש על המשנה, ולא הלכות מקואות.
+bool isTractateWord(String word) => word == 'מסכת' || word == 'מס';
+
 /// [words] בלי מילות הקישור שאחרי המילה הראשונה. בראש השם היא חלק ממנו ("על
-/// התורה", "מסכת סופרים").
+/// התורה", "מסכת סופרים"). "על" בסוף נשארת: צירוף שנגמר בה ("אוצרות יוסף על") היה
+/// נעשה תחילית של הכינוי ובולע אותה משאר השאילתה.
 List<String> withoutBookNameConnectors(List<String> words) => [
   for (var i = 0; i < words.length; i++)
-    if (i == 0 || !isBookNameConnector(words[i])) words[i],
+    if (i == 0 ||
+        !isBookNameConnector(words[i]) ||
+        (i == words.length - 1 && words[i] == 'על'))
+      words[i],
 ];
 
 /// צורת ההשוואה בין שאילתה לכינוי: [bookNameSpellingForm] בלי מילות קישור
 /// ([withoutBookNameConnectors]). השמטת מילה שלמה אינה יוצרת ביגרם שלא היה בטקסט.
 String bookNameAcronymForm(String text) {
   final t = bookNameSpellingForm(text);
-  if (!t.contains(' ')) return t;
-  final words = t.split(' ');
-  if (!words.skip(1).any(isBookNameConnector)) return t;
-  return withoutBookNameConnectors(words).join(' ');
+  if (!bookNameConnectorWords.any((w) => t.contains(' $w'))) return t;
+  return withoutBookNameConnectors(t.split(' ')).join(' ');
 }
 
 /// שמות קיבוציים של סט ספרים, ותחילית הכותרת המשותפת לספריו: "פירוש המשניות

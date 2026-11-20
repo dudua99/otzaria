@@ -122,10 +122,9 @@ class FindRefRankQuery {
 
   bool get needsTokenWiseRanking => tokens.length >= 2;
 
-  /// [matchTokens] בלי מילות קישור ([isBookNameConnector]).
   late final List<String> _nameWords = [
     for (final t in matchTokens)
-      if (!isBookNameConnector(t)) t,
+      if (!isTractateWord(t)) t,
   ];
 
   /// מפתחות ההתאמה של כותרת מנורמלת לשאילתה — תלויים בספר בלבד.
@@ -145,19 +144,25 @@ class FindRefRankQuery {
   }
 
   /// לכל מילת שאילתה: האם המילה שבמקומה בכותרת, מעוגנת למילה הראשונה, פותחת בה.
-  /// מילות קישור אינן נספרות בשני הצדדים: "מסכת יבמות" היא הגמרא "יבמות" (#5609),
-  /// ו"רש"י בראשית" הוא "רש"י על בראשית" (#5599).
+  /// "מסכת" אינה נספרת בשני הצדדים: "מסכת יבמות" היא הגמרא "יבמות" (#5609).
   List<bool> _titleWordMatches(List<String> titleTokens) {
     final words = _nameWords;
+    if (words.isEmpty || words.length == matchTokens.length) {
+      final start = _titleAnchor(titleTokens, matchTokens.first);
+      return [
+        for (var i = 0; i < matchTokens.length; i++)
+          _titleTokenAt(titleTokens, start + i, matchTokens[i]),
+      ];
+    }
     final title = [
       for (final t in titleTokens)
-        if (!isBookNameConnector(t)) t,
+        if (!isTractateWord(t)) t,
     ];
-    final start = words.isEmpty ? 0 : _titleAnchor(title, words.first);
+    final start = _titleAnchor(title, words.first);
     var k = 0;
     return [
       for (final t in matchTokens)
-        isBookNameConnector(t) || _titleTokenAt(title, start + k++, t),
+        isTractateWord(t) || _titleTokenAt(title, start + k++, t),
     ];
   }
 }
@@ -198,8 +203,8 @@ class FindRefRankKey<T> {
   /// הספר נמצא לפי כינוי מדויק (טבלת הכינויים), ולא לפי מילות שמו.
   final bool exactAliasMatch;
 
-  /// הכינוי המדויק של הספר נגזר רק מכללי `book_name_alias_rules.dart` (מילות
-  /// קישור, שם קיבוצי) — שם שהוקלד כפי שהוא כתוב קודם לו.
+  /// הכינוי המדויק של הספר נגזר רק מכללי `book_name_alias_rules.dart`, ולשאילתה
+  /// יש גם כינוי מילולי — שם שהוקלד כפי שהוא כתוב קודם.
   final bool aliasByRuleOnly;
   final bool startsWithMatch;
 
