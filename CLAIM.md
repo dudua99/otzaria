@@ -1,1 +1,1 @@
-interrupted: released without any work, 2026-11-20T09:28:39Z. L-size feature (int seforim.db ids across 9 shamor_zachor files; HebrewBooks PDFs are not in the DB) did not fit the remaining run budget. No work branch was pushed. Any worker may take it over now (deleting this claim branch was refused by the proxy).
+claimed: 2026-11-20T09:30:25Z UTC take-over of released claim: FIX (feature-default) of issue #4345 per FIX.md + notes/4345.md
