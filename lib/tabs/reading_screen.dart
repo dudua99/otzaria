@@ -46,6 +46,8 @@ import 'package:otzaria/text_book/bloc/text_book_event.dart';
 import 'package:otzaria/text_book/companion/companion_book_sync.dart';
 import 'package:otzaria/text_book/view/text_book_screen.dart';
 import 'package:otzaria/text_book/view/commentators_tab_screen.dart';
+import 'package:otzaria/text_book/view/page_shape/simple_text_viewer.dart'
+    show isTextInputFocusNode;
 import 'package:otzaria/pdf_book/view/pdf_commentators_tab_screen.dart';
 import 'package:otzaria/theme/theme_exports.dart';
 import 'package:otzaria/tour/tour_target_keys.dart';
@@ -85,6 +87,13 @@ class _ReadingScreenState extends State<ReadingScreen>
   bool _routeWasCurrent = true;
   OpenedTab? _paneBeforeModal;
 
+  /// שדה הקלט שבחר המשתמש אחרון. לחיצה מחוץ לשדה (גם על לשונית) מסירה ממנו
+  /// את הפוקוס עוד לפני מעבר הטאב, ולכן הוא נזכר עד שרכיב אחר מקבל פוקוס.
+  FocusNode? _lastTextInput;
+
+  /// שדה הקלט שהיה פעיל ביציאה מטאב; החזרה לטאב ממקדת אותו (#5127).
+  final _textInputOnLeave = Expando<FocusNode>();
+
   /// מדכא את [_syncPageController] בזמן החלקה והתיישבות, כדי
   /// ש-jumpToPage של הסנכרון לא יקפיץ את התצוגה באמצע.
   bool _suppressPageSync = false;
@@ -98,6 +107,32 @@ class _ReadingScreenState extends State<ReadingScreen>
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     PluginTextReaderRegistry.instance.addListener(_onTextReaderChanged);
+    FocusManager.instance.addListener(_onPrimaryFocusChanged);
+  }
+
+  void _onPrimaryFocusChanged() {
+    final node = FocusManager.instance.primaryFocus;
+    // הסרת הפוקוס משדה מעבירה אותו ל-scope, ואין בה בחירה ברכיב אחר.
+    if (node == null || node is FocusScopeNode) return;
+    _lastTextInput = isTextInputFocusNode(node) ? node : null;
+  }
+
+  /// זוכר את שדה הקלט של הטאב שעוזבים, ומחזיר את השדה שנזכר לטאב שנכנסים.
+  FocusNode? _swapTextInputOnTabChange(OpenedTab? entered) {
+    final input = _lastTextInput;
+    input?.context?.visitAncestorElements((element) {
+      if (element.widget case ExcludeFocus(
+        key: ObjectKey(value: final OpenedTab left),
+      )) {
+        if (!identical(left, entered)) _textInputOnLeave[left] = input;
+        return false;
+      }
+      return true;
+    });
+    if (entered == null) return null;
+    final restored = _textInputOnLeave[entered];
+    _textInputOnLeave[entered] = null;
+    return restored;
   }
 
   /// התצוגה (החלון) שהמסך יושב בה; הנראות של התוספים נשמרת לפיה.
@@ -129,12 +164,31 @@ class _ReadingScreenState extends State<ReadingScreen>
     _syncVisiblePluginTabs(context.read<TabsBloc>().state);
   }
 
-  void _requestTabContentFocus(OpenedTab pane) {
+  void _requestTabContentFocus(OpenedTab pane, {FocusNode? textInput}) {
     final focusRepository = context.read<FocusRepository>();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted ||
           ModalRoute.isCurrentOf(context) == false ||
           !identical(context.read<TabsBloc>().state.activePane, pane)) {
+        return;
+      }
+      if (textInput != null &&
+          textInput.context != null &&
+          textInput.canRequestFocus) {
+        // השדה בוחר את כל הטקסט כשהוא מקבל פוקוס (EditableText בדסקטופ,
+        // ו-OtzariaSearchField בפריים הבא); הסמן חוזר למקומו אחרי שניהם.
+        final controller = textInput.context!
+            .findAncestorWidgetOfExactType<EditableText>()
+            ?.controller;
+        final selection = controller?.selection;
+        textInput.requestFocus();
+        FocusManager.instance.applyFocusChangesIfNeeded();
+        if (selection != null) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (textInput.hasFocus) controller!.selection = selection;
+          });
+          WidgetsBinding.instance.ensureVisualUpdate();
+        }
         return;
       }
       focusRepository.requestTabContentFocus(pane);
@@ -163,6 +217,7 @@ class _ReadingScreenState extends State<ReadingScreen>
   @override
   void dispose() {
     PluginTextReaderRegistry.instance.removeListener(_onTextReaderChanged);
+    FocusManager.instance.removeListener(_onPrimaryFocusChanged);
     // Check if widget is still mounted before accessing context
     if (mounted) {
       try {
@@ -297,9 +352,10 @@ class _ReadingScreenState extends State<ReadingScreen>
               _syncPageController();
               // הטאבים חיים (initState לא רץ שוב), ולכן ממקדים כאן את החלונית
               // הפעילה כדי שהחיצים יגללו מיד; המסכים נרשמים לפוקוס לפי חלונית.
+              final textInput = _swapTextInputOnTabChange(state.currentTab);
               final focusTarget = state.activePane;
               if (focusTarget != null) {
-                _requestTabContentFocus(focusTarget);
+                _requestTabContentFocus(focusTarget, textInput: textInput);
               }
             }
           },
