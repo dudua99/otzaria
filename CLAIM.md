@@ -1,1 +1,1 @@
-claimed: 2026-11-20T10:47:17Z UTC QA of prbody/2306-fix per QA.md
+done: prbody/2306-qa ccb6317e4fe695217fb7a421def1fd9e5b66ca0a (branch head 4eec98f62878322ff9936e4714930fa24e72a99c) 2026-11-20T11:32:34Z
