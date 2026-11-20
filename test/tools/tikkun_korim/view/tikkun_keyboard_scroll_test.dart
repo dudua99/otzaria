@@ -131,6 +131,10 @@ void main() {
 
       expect(bloc.state.nav.currentColumnIndex, 1);
       expect(column(tester).pixels, 0);
+
+      // הטור של העמוד החדש נבנה מחדש — ↓ עדיין גולל אותו.
+      await press(tester, LogicalKeyboardKey.arrowDown);
+      expect(column(tester).pixels, greaterThan(0));
     });
 
     testWidgets('אחרי Tab לסרגל ↓ אינו גולל; לחיצה בטור מחזירה את המקשים', (
