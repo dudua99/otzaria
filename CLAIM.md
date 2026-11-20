@@ -1,1 +1,1 @@
-claimed: 2026-11-20T10:29:02Z UTC QA of prbody/2435-fix per QA.md
+done: prbody/2435-qa 4be3b5ac61078335e626bf6e7a5fb91e052e6b63 (2026-11-20T11:28:23Z)
