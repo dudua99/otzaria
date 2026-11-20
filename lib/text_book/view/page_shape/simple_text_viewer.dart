@@ -1569,7 +1569,7 @@ class _SimpleTextViewerState extends State<SimpleTextViewer> {
               : settingsState.commentatorsFontBold)
           ? FontWeight.bold
           : null,
-      lineHeight: settingsState.lineHeight,
+      lineHeight: state.lineHeight ?? settingsState.lineHeight,
     );
   }
 
@@ -3244,7 +3244,7 @@ class _SimpleTextViewerState extends State<SimpleTextViewer> {
             family,
             weight ?? FontWeight.normal,
           ),
-          lineHeight: settings.lineHeight,
+          lineHeight: state.lineHeight ?? settings.lineHeight,
           textWidth: (width) => width > 8 ? width - 8 : width,
           crossAxisPadding: _readerListPadding.horizontal,
           builder: buildList,
@@ -3618,7 +3618,7 @@ class _SimpleTextViewerState extends State<SimpleTextViewer> {
             fontSize: widget.fontSize,
             fontFamily: widget.fontFamily ?? settingsState.fontFamily,
             fontWeight: settingsState.fontBold ? FontWeight.bold : null,
-            lineHeight: settingsState.lineHeight,
+            lineHeight: state.lineHeight ?? settingsState.lineHeight,
           ),
         ),
       );
@@ -3640,7 +3640,7 @@ class _SimpleTextViewerState extends State<SimpleTextViewer> {
             : settingsState.commentatorsFontBold)
         ? FontWeight.bold
         : null,
-    lineHeight: settingsState.lineHeight,
+    lineHeight: state.lineHeight ?? settingsState.lineHeight,
     sectionHeadings: _sectionHeadingsByLine,
     isRelated: widget.isMainText
         ? null

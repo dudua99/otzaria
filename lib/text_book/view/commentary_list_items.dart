@@ -653,7 +653,7 @@ class _NotesCommentaryWidgetState extends State<_NotesCommentaryWidget> {
       fontSize: widget.fontSize * 0.85,
       fontFamily: settingsState.commentatorsFontFamily,
       fontWeight: settingsState.commentatorsFontBold ? FontWeight.bold : null,
-      lineHeight: settingsState.lineHeight,
+      lineHeight: widget.state.lineHeight ?? settingsState.lineHeight,
       partialWordHighlight:
           book == null ||
           literalPartialWordMatch(
