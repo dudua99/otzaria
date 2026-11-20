@@ -1,2 +1,1 @@
-claimed: 2026-11-20T09:57:05Z UTC
-FIX (bug) of issue #5220 per FIX.md + notes/5220.md
+done: prbody/5220-fix 43b77711b888d1176b590e6766d687a16ca68960 (code head 55574006b)
