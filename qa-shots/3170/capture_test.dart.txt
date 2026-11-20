@@ -1,0 +1,111 @@
+// זמני — צילומי לפני/אחרי ל-issue #3170, לא נכלל בקומיט.
+import 'dart:io';
+import 'dart:ui' as ui;
+
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:bloc_test/bloc_test.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:otzaria/library/bloc/library_bloc.dart';
+import 'package:otzaria/library/bloc/library_event.dart';
+import 'package:otzaria/library/bloc/library_state.dart';
+import 'package:otzaria/semantic_search/models/semantic_availability.dart';
+import 'package:otzaria/semantic_search/view/semantic_mode_panel.dart';
+import 'package:otzaria/settings/engine/app_settings_store.dart';
+
+import '../helpers/memory_settings_cache.dart';
+import '../support/golden_fonts.dart';
+import 'golden_harness.dart';
+
+class _Lib extends MockBloc<LibraryEvent, LibraryState> implements LibraryBloc {}
+
+void main() {
+  final out = Platform.environment['QA_OUT']!;
+  final withDialog = Platform.environment['QA_DIALOG'] == '1';
+  setUpAll(() async {
+    await Settings.init(cacheProvider: MemorySettingsCache());
+  });
+  for (final b in Brightness.values) {
+    for (final w in [1000.0, 360.0]) {
+      for (final scale in [1.0, 1.3]) {
+        final name = '${withDialog ? 'help_' : ''}${b.name}_w${w.toInt()}_x$scale';
+        testWidgets(name, (tester) async {
+          debugDefaultTargetPlatformOverride = goldenPlatform;
+          tester.view.physicalSize = Size(w, withDialog ? 760 : 340);
+          tester.view.devicePixelRatio = 1;
+          tester.platformDispatcher.textScaleFactorTestValue = scale;
+          addTearDown(tester.view.reset);
+          addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+          final controller = TextEditingController(text: 'שכח לברך');
+          final focus = FocusNode();
+          addTearDown(controller.dispose);
+          addTearDown(focus.dispose);
+          final lib = _Lib();
+          whenListen(lib, const Stream<LibraryState>.empty(),
+              initialState: const LibraryState(library: null));
+          const key = ValueKey('cap');
+          await tester.pumpWidget(
+            RepaintBoundary(
+              key: key,
+              child: MaterialApp(
+                debugShowCheckedModeBanner: false,
+                theme: goldenTheme(b),
+                home: Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: Scaffold(
+                    body: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: BlocProvider<LibraryBloc>.value(
+                        value: lib,
+                        child: SemanticModePanel(
+                        availability: const SemanticAvailability(
+                          phase: SemanticAvailabilityPhase.ready,
+                          consentGranted: true,
+                        ),
+                        queryController: controller,
+                        queryFocusNode: focus,
+                        scopeSelection: const {'/'},
+                        onScopeChanged: (_) {},
+                        includeLexical: true,
+                        onIncludeLexicalChanged: (_) {},
+                        groupIdenticalText: true,
+                        onGroupIdenticalTextChanged: (_) {},
+                        onSubmit: () {},
+                        onGrantConsent: () {},
+                        onDeclineConsent: () {},
+                        onDownload: () {},
+                        onCancelDownload: () {},
+                      ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          );
+          await tester.pump();
+          await tester.pump(const Duration(milliseconds: 300));
+          if (withDialog) {
+            await tester.tap(find.byTooltip('איך לנסח שאלה לחיפוש החכם'));
+            await tester.pump();
+            await tester.pump(const Duration(milliseconds: 600));
+          }
+          final ex = tester.takeException();
+          final boundary =
+              tester.renderObject(find.byKey(key)) as RenderRepaintBoundary;
+          await tester.runAsync(() async {
+            final img = await boundary.toImage(pixelRatio: 2);
+            final bytes = await img.toByteData(format: ui.ImageByteFormat.png);
+            File('$out/$name.png')
+              ..createSync(recursive: true)
+              ..writeAsBytesSync(bytes!.buffer.asUint8List());
+          });
+          debugDefaultTargetPlatformOverride = null;
+          if (ex != null) fail('exception: $ex');
+        });
+      }
+    }
+  }
+}
