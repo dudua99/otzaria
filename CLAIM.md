@@ -1,1 +1,1 @@
-claimed: 2026-11-20T08:26:35Z UTC FIX (feature) of issue #2838 per FIX.md + notes/2838.md
+done: prbody/2838-fix 26a3dee6b8da9e7e1031351e229da7cfbed233ec (feat/library-startup-reveal-2838 b41d408ce916cdfffcd29be84e425809313592b8)
