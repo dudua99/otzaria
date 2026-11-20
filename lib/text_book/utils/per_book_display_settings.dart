@@ -8,12 +8,6 @@ import 'package:otzaria/text_book/bloc/text_book_bloc.dart';
 import 'package:otzaria/text_book/bloc/text_book_state.dart';
 import 'package:otzaria/text_display/text_display_exports.dart';
 
-/// שמירת שינוי בהגדרות התצוגה של הספר (גופן/ניקוד/פיסוק/פיצול/רצף) פר-ספר.
-///
-/// פעילה רק כש"שמירת התאמות לכל ספר" מופעלת בהגדרות. ערך השווה לברירת
-/// המחדל הגלובלית נמחק מהקובץ כדי שהספר יירש שינויים עתידיים בברירת המחדל.
-/// [removeNikud]/[removePunctuation] נכתבים כטלאי על חריץ הגוף של התצוגה
-/// הפעילה — ראה [savePerBookDisplayPatch].
 /// גודל גופן המפרשים בספר שב-[context]: מה שנשמר לספר, או הכללי (#2306).
 double commentatorsFontSizeOf(BuildContext context, SettingsState settings) =>
     context.select((TextBookBloc bloc) {
@@ -22,6 +16,12 @@ double commentatorsFontSizeOf(BuildContext context, SettingsState settings) =>
     }) ??
     settings.commentatorsFontSize;
 
+/// שמירת שינוי בהגדרות התצוגה של הספר (גופן/ניקוד/פיסוק/פיצול/רצף) פר-ספר.
+///
+/// פעילה רק כש"שמירת התאמות לכל ספר" מופעלת בהגדרות. ערך השווה לברירת
+/// המחדל הגלובלית נמחק מהקובץ כדי שהספר יירש שינויים עתידיים בברירת המחדל.
+/// [removeNikud]/[removePunctuation] נכתבים כטלאי על חריץ הגוף של התצוגה
+/// הפעילה — ראה [savePerBookDisplayPatch].
 Future<void> savePerBookDisplaySettings(
   BuildContext context,
   TextBookLoaded state, {
