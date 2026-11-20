@@ -1,2 +1,1 @@
-claimed: 2026-11-20T08:14:03Z UTC
-QA of prbody/2543-fix (feat/open-books-scope-2543) per QA.md
+done: prbody/2543-qa 8a5fecfae6e6c4d67149e8a7e8414d8d8c2568a7
