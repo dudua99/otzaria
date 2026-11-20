@@ -64,10 +64,7 @@ String? _letterFor(Link link, String? storedLabel) {
   final label = storedLabel?.trim();
   if (label != null && label.isNotEmpty) return _textPresentation(label);
   final tail = link.heRef.split(',').last.trim();
-  final letters = tail.replaceAll(RegExp(r'["׳״]'), '');
-  if (letters.isEmpty || letters.length > 4) return null;
-  if (!RegExp(r'^[א-ת]+$').hasMatch(letters)) return null;
-  return tail;
+  return _ordinal(tail) == null ? null : tail;
 }
 
 /// ♦ (U+2666) נתפס ע"י גופן האימוג'י ומוצג כיהלום אדום גדול (issue #1106);
