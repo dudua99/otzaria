@@ -1,1 +1,2 @@
-claimed: 2026-11-20T10:13:40Z UTC FIX (feature-default) of issue #5185 per FIX.md + notes/5185.md
+claimed: see history
+done: prbody/5185-fix cf31e125c5db35bbb8d1bc5dde4399dd31f6e8e4 (work branch feat/default-mode-with-options-5185 @ bcd58c872)
