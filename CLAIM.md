@@ -1,2 +1,1 @@
-claimed: 2026-11-20T08:54:57Z UTC
-FIX (feature) of issue #2720 per FIX.md + notes/2720.md
+done: prbody/2720-fix 9d25c09864da70c2262cf68d34025ea54e7a7be5 (2026-11-20T09:07:32Z)
