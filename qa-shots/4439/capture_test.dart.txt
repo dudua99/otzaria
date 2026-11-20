@@ -1,0 +1,98 @@
+// זמני — צילומי לפני/אחרי ל-issue #4439, לא נכלל בקומיט.
+import 'dart:io';
+import 'dart:ui' as ui;
+
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:otzaria/app_report/bloc/app_report_bloc.dart';
+import 'package:otzaria/app_report/view/app_report_dialog.dart';
+import 'package:otzaria/settings/engine/app_settings_store.dart';
+import 'package:otzaria/settings/engine/settings_repository.dart';
+import 'package:otzaria/settings/l10n/settings_l10n_exports.dart';
+import 'package:otzaria_report_contract/otzaria_report_contract.dart';
+
+import '../app_report/app_report_test_fakes.dart';
+import '../helpers/memory_settings_cache.dart';
+import '../support/golden_fonts.dart';
+import 'golden_harness.dart';
+
+void main() {
+  final out = Platform.environment['QA_OUT']!;
+  setUpAll(() async {
+    await Settings.init(cacheProvider: MemorySettingsCache());
+    await Settings.setValue<String>(SettingsRepository.keySettingsLanguage, 'he');
+    await loadGoldenFonts();
+  });
+  for (final b in Brightness.values) {
+    final name = '${b.name}_w1000_hover_send';
+    testWidgets(name, (tester) async {
+      debugDefaultTargetPlatformOverride = goldenPlatform;
+      tester.view.physicalSize = const Size(1000, 760);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+      const key = ValueKey('cap');
+      await tester.pumpWidget(
+        RepaintBoundary(
+          key: key,
+          child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: goldenTheme(b),
+            locale: const Locale('he', 'IL'),
+            supportedLocales: const [Locale('he', 'IL')],
+            localizationsDelegates: const [
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            home: SettingsTextScope(
+              language: SettingsLanguage.hebrew,
+              child: Builder(
+                builder: (context) => Scaffold(
+                  body: Center(
+                    child: TextButton(
+                      onPressed: () => showAppReportDialog(
+                        context,
+                        createBloc: () => AppReportBloc(
+                          trigger: AppReportTrigger.manual,
+                          service: FakeAppReportService(),
+                          collector: FakeAppReportCollector(),
+                          redactor: AppReportRedactor(environment: const {}),
+                          appVersion: '0.9.98',
+                        ),
+                      ),
+                      child: const Text('open'),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+      await tester.tap(find.text('open'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
+      final g = await tester.createGesture(kind: PointerDeviceKind.mouse);
+      await g.addPointer(location: Offset.zero);
+      addTearDown(g.removePointer);
+      await g.moveTo(tester.getCenter(find.byKey(const ValueKey('app-report-send'))));
+      await tester.pump();
+      await tester.pump(const Duration(seconds: 2));
+      final ex = tester.takeException();
+      final boundary = tester.renderObject(find.byKey(key)) as RenderRepaintBoundary;
+      await tester.runAsync(() async {
+        final img = await boundary.toImage(pixelRatio: 2);
+        final bytes = await img.toByteData(format: ui.ImageByteFormat.png);
+        File('$out/$name.png')
+          ..createSync(recursive: true)
+          ..writeAsBytesSync(bytes!.buffer.asUint8List());
+      });
+      debugDefaultTargetPlatformOverride = null;
+      if (ex != null) fail('exception: $ex');
+    });
+  }
+}
