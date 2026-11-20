@@ -1197,6 +1197,12 @@ void main() {
               .map((book) => PluginBookIdentity.keyOf(book).bookId),
           ['ערוך השלחן', 'ערוך השלחן'],
         );
+        final volume = books.firstWhere((book) => book.id == 1);
+        expect(PluginBookIdentity.toJson(volume)['bookId'], 'ערוך השלחן');
+        expect(
+          PluginBookIdentity.matches(volume, id: 1, bookId: 'ערוך השלחן'),
+          isTrue,
+        );
       });
 
       test('שמירה ב-JSON וטעינה ממנו אינן מכפילות את הכרך', () async {
