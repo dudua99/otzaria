@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart'
     show ValueListenable, visibleForTesting;
 import 'package:flutter/cupertino.dart' show InheritedCupertinoTheme;
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart' show RenderIgnorePointer;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:otzaria/core/focus_repository.dart';
 import 'package:otzaria/core/windowing/tab_drag_preview.dart';
@@ -135,6 +136,22 @@ class _ReadingScreenState extends State<ReadingScreen>
     return restored;
   }
 
+  /// חלונית שנסגרה נשארת בעץ, ושדה בתוכה עדיין יכול לקבל פוקוס — אבל היא
+  /// מוזזת מחוץ לתצוגה מאחורי IgnorePointer, או מכווצת לרוחב 0.
+  static bool _isShowing(FocusNode node) {
+    final context = node.context;
+    if (context == null || !context.mounted) return false;
+    for (
+      RenderObject? o = context.findRenderObject();
+      o != null;
+      o = o.parent
+    ) {
+      if (o is RenderIgnorePointer && o.ignoring) return false;
+      if (o is RenderBox && o.hasSize && o.size.isEmpty) return false;
+    }
+    return true;
+  }
+
   /// התצוגה (החלון) שהמסך יושב בה; הנראות של התוספים נשמרת לפיה.
   int? _viewId;
   bool _viewResolved = false;
@@ -173,8 +190,8 @@ class _ReadingScreenState extends State<ReadingScreen>
         return;
       }
       if (textInput != null &&
-          textInput.context != null &&
-          textInput.canRequestFocus) {
+          textInput.canRequestFocus &&
+          _isShowing(textInput)) {
         // השדה בוחר את כל הטקסט כשהוא מקבל פוקוס (EditableText בדסקטופ,
         // ו-OtzariaSearchField בפריים הבא); הסמן חוזר למקומו אחרי שניהם.
         final controller = textInput.context!

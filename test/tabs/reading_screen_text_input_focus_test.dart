@@ -245,6 +245,34 @@ void main() {
       await showTab(tester, 0);
       expect(field.hasFocus, isTrue);
     });
+    for (final pinned in [true, false]) {
+      testWidgets(
+        'חלונית החיפוש נסגרה (נעוצה: $pinned) — החזרה לא ממקדת שדה מוסתר',
+        (tester) async {
+          await pumpReadingScreen(tester, tabCount: 2);
+          final field = searchFieldOf(tester, tabs[0]);
+          field.requestFocus();
+          await tester.pump();
+          // לחיצה על כפתור הסגירה מסירה את הפוקוס מהשדה, והחלונית נשארת בעץ.
+          field.unfocus();
+          final state = tabs[0].bloc.state as TextBookLoaded;
+          tabs[0].bloc.emit(
+            state.copyWith(showLeftPane: false, pinLeftPane: pinned),
+          );
+          await tester.pump();
+          await tester.pump(const Duration(seconds: 1));
+
+          await showTab(tester, 1);
+          await showTab(tester, 0);
+
+          expect(field.hasFocus, isFalse);
+          expect(
+            FocusManager.instance.primaryFocus,
+            isNot(isA<FocusScopeNode>()),
+          );
+        },
+      );
+    }
   });
 }
 
