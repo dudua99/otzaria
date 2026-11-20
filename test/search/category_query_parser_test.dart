@@ -728,7 +728,7 @@ void main() {
         FacetHelper.buildBookFacet(FacetHelper.resolveCategoryPath(book), book);
 
     late TextBook torah;
-    late TextBook chovot;
+    late TextBook kadHakemach;
     late TextBook other;
     late Library library;
 
@@ -739,7 +739,7 @@ void main() {
         author: 'רבינו בחיי',
         categoryPath: '/מפרשים',
       );
-      chovot = TextBook(
+      kadHakemach = TextBook(
         title: 'כד הקמח',
         id: 2,
         author: 'רבינו בחיי',
@@ -754,7 +754,7 @@ void main() {
       library = Library(
         categories: [
           _category('מפרשים', [torah]),
-          _category('מחשבה', [chovot, other]),
+          _category('מחשבה', [kadHakemach, other]),
         ],
       );
       for (final category in library.subCategories) {
@@ -765,13 +765,13 @@ void main() {
     test('@שם מוסיף ספרים שהמחבר שלהם הוא השם בדיוק', () {
       final parsed = parseCategoryQuery('שלום@רבינו בחיי', library);
       expect(parsed.categoryFound, isTrue);
-      expect(parsed.facets, [facetOf(torah), facetOf(chovot)]);
+      expect(parsed.facets, [facetOf(torah), facetOf(kadHakemach)]);
     });
 
     test('ההשוואה מנורמלת (ניקוד), אבל לא חלקית', () {
       final parsed = parseCategoryQuery('שלום@רבינו בְּחיי', library);
       expect(parsed.facets, isNot(contains(facetOf(other))));
-      expect(parsed.facets, contains(facetOf(chovot)));
+      expect(parsed.facets, contains(facetOf(kadHakemach)));
     });
 
     test('מחבר בלבד, בלי ספר או קטגוריה בשם — השם נמצא', () {
@@ -782,7 +782,7 @@ void main() {
 
     test('בנתיב, המחבר מוגבל לתחום החלק הקודם', () {
       final parsed = parseCategoryQuery('שלום@מחשבה/רבינו בחיי', library);
-      expect(parsed.facets, [facetOf(chovot)]);
+      expect(parsed.facets, [facetOf(kadHakemach)]);
     });
 
     test('התאמת כותרת בלי מחבר תואם — ללא שינוי', () {
