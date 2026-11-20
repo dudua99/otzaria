@@ -1,1 +1,1 @@
-claimed 2026-11-20T14:14:41Z UTC: QA of prbody/3942v3-fix (fix/plugin-close-tab-in-field-3942-v3)
+done: prbody/3942v3-qa bbbda8f69d67640a842a9c79bf3695eb012036a2 (2026-11-20T14:32:10Z)
