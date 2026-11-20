@@ -1,2 +1,1 @@
-claimed: 2026-11-20T08:03:48Z UTC
-QA of prbody/2348-fix (feat/tikkun-keyboard-scroll-2348) per QA.md
+done: prbody/2348-qa 7012ea9b6a60e1bdd71af54cfa70ab4b151972f7 (fix branch head 11762ca758923744f23155900ccaeaeb59e6a629) at 2026-11-20T08:27:23Z UTC
