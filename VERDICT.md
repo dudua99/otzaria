@@ -17,7 +17,7 @@ analyze/format נקיים. ui_lint: 0 חדשות.
 החלטות פתוחות:
 - חלונית המפרשים שליד PDF נשארה כהה.
 - הרקע סביב עמודי ה-PDF נשאר כהה (כמו Word).
-- mock_settings_repository.mocks.dart לא נוצר מחדש. נוסף לו מתודה חסרה, ואין בדיקה שתלויה בה.
+- mock_settings_repository.mocks.dart לא נוצר מחדש, ולכן אין בו את המתודה החדשה. אין בדיקה שתלויה בה.
 צילומים: qa-shots/2435
 - after: dark_on w1000/w360, light_on
 - before: dark_off, שזהה להתנהגות הבסיס
