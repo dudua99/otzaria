@@ -1,1 +1,1 @@
-claimed: 2026-11-20T09:26:07Z UTC FIX (feature-default) of issue #4394 per FIX.md + notes/4394.md
+done: prbody/4394-fix ca699c61cb1668b49fd82cae31f2e516d19468e7 (2026-11-20T10:02:22Z)
