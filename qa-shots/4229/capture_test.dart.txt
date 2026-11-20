@@ -1,0 +1,256 @@
+import 'dart:convert';
+import 'dart:io';
+import 'dart:ui' as ui;
+import 'package:flutter/foundation.dart';
+import 'package:flutter/rendering.dart';
+import 'package:otzaria/theme/app_theme_data.dart';
+import 'package:otzaria/theme/app_seed_colors.dart';
+import '../support/golden_fonts.dart';
+import 'dart:async';
+
+import 'package:bloc_test/bloc_test.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
+import 'package:otzaria/core/focus_repository.dart';
+import 'package:otzaria/data/repository/data_repository.dart';
+import 'package:otzaria/library/models/library_navigation_history.dart';
+import 'package:otzaria/history/bloc/history_bloc.dart';
+import 'package:otzaria/history/bloc/history_event.dart';
+import 'package:otzaria/history/bloc/history_state.dart';
+import 'package:otzaria/library/bloc/library_bloc.dart';
+import 'package:otzaria/library/bloc/library_event.dart';
+import 'package:otzaria/library/bloc/library_state.dart';
+import 'package:otzaria/library/models/library.dart';
+import 'package:otzaria/library/view/library_browser.dart';
+import 'package:otzaria/library/view/otzar_book_dialog.dart';
+import 'package:otzaria/tabs/models/pdf_tab.dart';
+import 'package:otzaria/tabs/models/tab.dart';
+import 'package:otzaria/tabs/models/text_tab.dart';
+import 'package:otzaria/library_update/bloc/library_update_bloc.dart';
+import 'package:otzaria/models/books.dart';
+import 'package:otzaria/navigation/bloc/navigation_bloc.dart';
+import 'package:otzaria/navigation/bloc/navigation_event.dart';
+import 'package:otzaria/navigation/bloc/navigation_state.dart';
+import 'package:otzaria/settings/engine/app_settings_store.dart';
+import 'package:otzaria/settings/engine/settings_bloc.dart';
+import 'package:otzaria/settings/engine/settings_event.dart';
+import 'package:otzaria/settings/engine/settings_state.dart';
+import 'package:otzaria/settings/services/custom_folders/bloc/custom_folders_bloc.dart';
+import 'package:otzaria/tabs/bloc/tabs_bloc.dart';
+import 'package:otzaria/tabs/bloc/tabs_event.dart';
+import 'package:otzaria/tabs/bloc/tabs_state.dart';
+import 'package:otzaria/tools/calendar/bloc/calendar_cubit.dart';
+import 'package:provider/provider.dart';
+
+import '../test_helpers/memory_cache_provider.dart';
+
+class _MockLibraryBloc extends MockBloc<LibraryEvent, LibraryState>
+    implements LibraryBloc {
+  @override
+  final navigationHistory = LibraryNavigationHistory();
+}
+
+class _MockSettingsBloc extends MockBloc<SettingsEvent, SettingsState>
+    implements SettingsBloc {}
+
+class _MockNavigationBloc extends MockBloc<NavigationEvent, NavigationState>
+    implements NavigationBloc {}
+
+class _MockLibraryUpdateBloc
+    extends MockBloc<LibraryUpdateEvent, LibraryUpdateState>
+    implements LibraryUpdateBloc {}
+
+class _MockTabsBloc extends MockBloc<TabsEvent, TabsState>
+    implements TabsBloc {}
+
+class _MockHistoryBloc extends MockBloc<HistoryEvent, HistoryState>
+    implements HistoryBloc {}
+
+class _StubCalendarCubit extends Cubit<CalendarState> implements CalendarCubit {
+  _StubCalendarCubit(super.initialState);
+
+  @override
+  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
+}
+
+class _Harness {
+  final libraryBloc = _MockLibraryBloc();
+  final libraryStates = StreamController<LibraryState>.broadcast();
+  final navigationBloc = _MockNavigationBloc();
+  final tabsBloc = _MockTabsBloc();
+  final historyBloc = _MockHistoryBloc();
+
+  /// הספרים שנפתחו, לפי סדר האירועים שהגיעו ל-TabsBloc.
+  List<String> openedTitles() => verify(
+    () => tabsBloc.add(captureAny()),
+  ).captured.whereType<OpenOrFocusTab>().map((e) => e.tab.title).toList();
+}
+
+Future<_Harness> _pumpBrowser(
+  WidgetTester tester, {
+  required List<Book> books,
+  required String viewMode,
+  List<OpenedTab> openTabs = const [],
+  List<Book>? searchResults,
+  bool previewEnabled = false,
+  ThemeData? theme,
+}) async {
+  final h = _Harness();
+  final library = Library(categories: [])..books.addAll(books);
+  final settingsBloc = _MockSettingsBloc();
+  final libraryUpdateBloc = _MockLibraryUpdateBloc();
+  final calendarCubit = _StubCalendarCubit(CalendarState.initial());
+
+  whenListen(
+    h.libraryBloc,
+    h.libraryStates.stream,
+    initialState: LibraryState(
+      library: library,
+      currentCategory: library,
+      searchResults: searchResults,
+    ),
+  );
+  whenListen(
+    settingsBloc,
+    const Stream<SettingsState>.empty(),
+    initialState: SettingsState.initial().copyWith(
+      libraryViewMode: viewMode,
+      libraryShowPreview: previewEnabled,
+    ),
+  );
+  whenListen(
+    h.navigationBloc,
+    const Stream<NavigationState>.empty(),
+    initialState: const NavigationState(currentScreen: Screen.library),
+  );
+  whenListen(
+    libraryUpdateBloc,
+    const Stream<LibraryUpdateState>.empty(),
+    initialState: const LibraryUpdateState(),
+  );
+  whenListen(
+    h.tabsBloc,
+    const Stream<TabsState>.empty(),
+    initialState: TabsState(tabs: openTabs, currentTabIndex: 0),
+  );
+  whenListen(
+    h.historyBloc,
+    const Stream<HistoryState>.empty(),
+    initialState: HistoryInitial(),
+  );
+
+  tester.view.devicePixelRatio = 1;
+  tester.view.physicalSize = const Size(1400, 900);
+  addTearDown(() async {
+    await tester.pumpWidget(const SizedBox.shrink());
+    tester.view.reset();
+    await h.libraryStates.close();
+    await settingsBloc.close();
+    await h.navigationBloc.close();
+    await libraryUpdateBloc.close();
+    await h.tabsBloc.close();
+    await h.historyBloc.close();
+    await calendarCubit.close();
+  });
+
+  await tester.pumpWidget(
+    MultiProvider(
+      providers: [
+        Provider<FocusRepository>.value(value: FocusRepository()),
+        BlocProvider<LibraryBloc>(create: (_) => h.libraryBloc),
+        BlocProvider<SettingsBloc>.value(value: settingsBloc),
+        BlocProvider<NavigationBloc>.value(value: h.navigationBloc),
+        BlocProvider<LibraryUpdateBloc>.value(value: libraryUpdateBloc),
+        BlocProvider<CalendarCubit>.value(value: calendarCubit),
+        BlocProvider<TabsBloc>.value(value: h.tabsBloc),
+        BlocProvider<HistoryBloc>.value(value: h.historyBloc),
+        BlocProvider<CustomFoldersBloc>(
+          create: (_) => CustomFoldersBloc(addLibraryEvent: (_) {}),
+        ),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: theme,
+        builder: (context, child) =>
+            Directionality(textDirection: TextDirection.rtl, child: child!),
+        home: const LibraryBrowser(),
+      ),
+    ),
+  );
+  await tester.pump();
+  // כפתור הדף היומי גולש עם CalendarState מדומה — לא נושא הבדיקה.
+  tester.takeException();
+  return h;
+}
+
+Future<void> _tapWith(
+  WidgetTester tester,
+  Finder finder, {
+  LogicalKeyboardKey? holding,
+}) async {
+  if (holding != null) await tester.sendKeyDownEvent(holding);
+  await tester.tap(finder);
+  // המקש משתחרר מיד אחרי הלחיצה, כמו ביד אנושית — לפני שחלון הלחיצה הכפולה
+  // (שמעכב לחיצה בודדת) נסגר.
+  if (holding != null) await tester.sendKeyUpEvent(holding);
+  await tester.pump(const Duration(milliseconds: 400));
+  await tester.pump();
+}
+
+
+void main() {
+  final out = Platform.environment['QA_OUT']!;
+  setUpAll(() async {
+    await Settings.init(cacheProvider: MemoryCacheProvider());
+    final manifest =
+        jsonDecode(await rootBundle.loadString('FontManifest.json')) as List;
+    for (final entry in manifest.cast<Map<String, dynamic>>()) {
+      final loader = FontLoader(entry['family'] as String);
+      for (final f in (entry['fonts'] as List).cast<Map<String, dynamic>>()) {
+        loader.addFont(rootBundle.load(f['asset'] as String));
+      }
+      await loader.load();
+    }
+  });
+  for (final b in Brightness.values) {
+    for (final w in [1000.0, 360.0]) {
+      final name = '${b.name}_w${w.toInt()}';
+      testWidgets(name, (tester) async {
+        debugDefaultTargetPlatformOverride = goldenPlatform;
+        tester.view.physicalSize = Size(w, 300);
+        final cs = AppThemeData.createColorScheme(
+          b == Brightness.light ? AppSeedColors.defaultLight : AppSeedColors.purple, b);
+        final theme = b == Brightness.light
+            ? AppThemeData.light(cs, compactMenuMode: false)
+            : AppThemeData.dark(cs, compactMenuMode: false);
+        await _pumpBrowser(
+          tester,
+          books: [TextBook(title: 'ספר בספרייה')],
+          viewMode: 'grid',
+          theme: theme,
+          openTabs: [TextBookTab(book: TextBook(title: 'בראשית'), index: 0)],
+        );
+        tester.view.physicalSize = Size(w, 300);
+        await tester.pump(const Duration(milliseconds: 300));
+        await tester.pump();
+        tester.takeException();
+        RenderObject? node = tester.renderObject(find.byType(LibraryBrowser));
+        while (node is! RenderRepaintBoundary) {
+          node = node!.parent;
+        }
+        final boundary = node;
+        await tester.runAsync(() async {
+          final img = await boundary.toImage(pixelRatio: 2);
+          final bytes = await img.toByteData(format: ui.ImageByteFormat.png);
+          File('$out/$name.png')
+            ..createSync(recursive: true)
+            ..writeAsBytesSync(bytes!.buffer.asUint8List());
+        });
+        debugDefaultTargetPlatformOverride = null;
+      });
+    }
+  }
+}
