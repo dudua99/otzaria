@@ -1,2 +1,1 @@
-claimed: 2026-11-20T08:16:21Z UTC
-QA of prbody/4937-fix (feat/copy-heading-only-4937) per QA.md
+done: prbody/4937-qa 845412ed60e824cce6bb77a69a919066ea1c222e
