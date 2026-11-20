@@ -2,6 +2,7 @@
 /// התאמות ה-AltToc הגלובלי ב-worker (isolate-safe).
 library;
 
+import 'package:otzaria/find_ref/book_name_alias_rules.dart';
 import 'package:otzaria/find_ref/book_name_match.dart';
 import 'package:otzaria/utils/text/ref_key.dart';
 
@@ -121,9 +122,10 @@ class FindRefRankQuery {
 
   bool get needsTokenWiseRanking => tokens.length >= 2;
 
+  /// [matchTokens] בלי מילות קישור ([isBookNameConnector]).
   late final List<String> _nameWords = [
     for (final t in matchTokens)
-      if (!isTractateWord(t)) t,
+      if (!isBookNameConnector(t)) t,
   ];
 
   /// מפתחות ההתאמה של כותרת מנורמלת לשאילתה — תלויים בספר בלבד.
@@ -143,25 +145,19 @@ class FindRefRankQuery {
   }
 
   /// לכל מילת שאילתה: האם המילה שבמקומה בכותרת, מעוגנת למילה הראשונה, פותחת בה.
-  /// "מסכת" אינה נספרת בשני הצדדים: "מסכת יבמות" היא הגמרא "יבמות" (#5609).
+  /// מילות קישור אינן נספרות בשני הצדדים: "מסכת יבמות" היא הגמרא "יבמות" (#5609),
+  /// ו"רש"י בראשית" הוא "רש"י על בראשית" (#5599).
   List<bool> _titleWordMatches(List<String> titleTokens) {
     final words = _nameWords;
-    if (words.isEmpty || words.length == matchTokens.length) {
-      final start = _titleAnchor(titleTokens, matchTokens.first);
-      return [
-        for (var i = 0; i < matchTokens.length; i++)
-          _titleTokenAt(titleTokens, start + i, matchTokens[i]),
-      ];
-    }
     final title = [
       for (final t in titleTokens)
-        if (!isTractateWord(t)) t,
+        if (!isBookNameConnector(t)) t,
     ];
-    final start = _titleAnchor(title, words.first);
+    final start = words.isEmpty ? 0 : _titleAnchor(title, words.first);
     var k = 0;
     return [
       for (final t in matchTokens)
-        isTractateWord(t) || _titleTokenAt(title, start + k++, t),
+        isBookNameConnector(t) || _titleTokenAt(title, start + k++, t),
     ];
   }
 }
@@ -188,6 +184,7 @@ class FindRefRankKey<T> {
     this.punctuationAgrees = true,
     this.directNameMatch = false,
     this.exactAliasMatch = false,
+    this.aliasByRuleOnly = false,
   });
 
   final T item;
@@ -200,6 +197,10 @@ class FindRefRankKey<T> {
 
   /// הספר נמצא לפי כינוי מדויק (טבלת הכינויים), ולא לפי מילות שמו.
   final bool exactAliasMatch;
+
+  /// הכינוי המדויק של הספר נגזר רק מכללי `book_name_alias_rules.dart` (מילות
+  /// קישור, שם קיבוצי) — שם שהוקלד כפי שהוא כתוב קודם לו.
+  final bool aliasByRuleOnly;
   final bool startsWithMatch;
 
   /// מ-[FindRefRankQuery.titleMatch]: נקבע פעם אחת לכותרת ולא בכל השוואה.
@@ -253,6 +254,9 @@ int compareFindRefRelevance(
 
   if (a.directNameMatch != b.directNameMatch) {
     return a.directNameMatch ? -1 : 1;
+  }
+  if (a.directNameMatch && a.aliasByRuleOnly != b.aliasByRuleOnly) {
+    return a.aliasByRuleOnly ? 1 : -1;
   }
 
   // כינוי מדויק מקדם את כל קבוצת היסוד, כדי שכינויים חלקיים לא יפצלו אותה.

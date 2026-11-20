@@ -10,6 +10,7 @@ import 'package:otzaria/data/data_providers/book_database_resolver.dart';
 import 'package:otzaria/data/data_providers/cache_database_holder.dart';
 import 'package:otzaria/data/repository/data_repository.dart'
     show bookSearchWordMatchesFuzzy, bookSearchWordPairMatches;
+import 'package:otzaria/find_ref/book_name_alias_rules.dart';
 import 'package:otzaria/find_ref/book_name_match.dart';
 import 'package:otzaria/data/data_providers/file_system_library_provider.dart';
 import 'package:otzaria/data/data_providers/sqlite_data_provider.dart';
@@ -1118,6 +1119,23 @@ class BookTitleIndex {
   final Map<int, (List<String>, List<String>)> _matchAcronyms =
       <int, (List<String>, List<String>)>{};
 
+  /// [_matchTitles] ב-[bookNameAcronymForm], והספרים לפי הצורה הזו — נבנים בסריקה
+  /// הראשונה אחרי טעינת הכותרות.
+  final Map<int, String> _ruleTitles = <int, String>{};
+  final Map<String, List<int>> _booksByRuleTitle = <String, List<int>>{};
+
+  Set<int> _ruleTitleBooks(Iterable<String?> forms) {
+    if (_ruleTitles.isEmpty) {
+      for (final MapEntry(key: id, value: mt) in _matchTitles.entries) {
+        final ft = _ruleTitles[id] = bookNameAcronymForm(mt);
+        _booksByRuleTitle.putIfAbsent(ft, () => <int>[]).add(id);
+      }
+    }
+    return {
+      for (final form in forms) ...?_booksByRuleTitle[form],
+    };
+  }
+
   /// כל המילים השונות שבכותרות ובכינויים, ומזהי הספרים לכל מילה. הספרייה
   /// כולה מכילה ~6,900 מילים שונות בלבד, ולכן ההתאמה המקורבת רצה עליהן פעם
   /// אחת לכל מילת שאילתה במקום על ~190,000 המילים שבספרים.
@@ -1161,6 +1179,8 @@ class BookTitleIndex {
       );
     _matchTitleTokens.clear();
     _matchAcronyms.clear();
+    _ruleTitles.clear();
+    _booksByRuleTitle.clear();
   }
 
   void clearTitles() {
@@ -1202,10 +1222,15 @@ class BookTitleIndex {
               final sq = bookNameAcronymForm(q);
               final amq = bookNameAcronymForm(mq);
               final aq = [sq, if (amq != sq) amq];
+              final lq = bookNameSpellingForm(q);
+              final setQuery = bookSetTitleQuery(mq);
               return _QueryScan(
                 q,
                 mq,
                 aq,
+                [lq, if (mq != lq) mq],
+                setQuery,
+                _ruleTitleBooks([...aq, setQuery]),
                 words,
                 // מסננת הביגרמים חוסכת את המעבר על כינויי כל הספרים — כינוי מתאים מכיל כל
                 // ביגרם של השאילתה: אין השמטת ה"א, והשמטת מילה שלמה אינה יוצרת ביגרם חדש.
@@ -1297,6 +1322,7 @@ class BookTitleIndex {
     var tailIsTitleWords = false;
     var lastWordTruncated = false;
     var exactAlias = false;
+    var aliasByRule = false;
     var mask = 0;
 
     if (parentMask & _titleMay != 0) {
@@ -1330,12 +1356,21 @@ class BookTitleIndex {
           String? aq;
           for (final form in queries) {
             if (ma == form) {
-              matchRank = 3;
-              matchedTerm = a;
-              break aliases;
+              // כינוי מילולי קודם לכינוי שהתאים רק בכללים — ממשיכים לחפש אותו.
+              final literal = scan.literalAliasQueries.contains(
+                bookNameSpellingForm(a),
+              );
+              if (literal || matchRank != 3) {
+                matchRank = 3;
+                matchedTerm = a;
+                aliasByRule = !literal;
+              }
+              if (literal) break aliases;
+              continue aliases;
             }
             if (aq == null && ma.startsWith(form)) aq = form;
           }
+          if (matchRank == 3) continue;
           if (aq != null) {
             titleTokens ??= _matchTitleTokens[book.id] ??= titleMatchTokensOf(
               _splitTitleTokens(mt),
@@ -1378,6 +1413,42 @@ class BookTitleIndex {
       if (matchRank != null) mask = _acronymMay;
     }
 
+    // הכותרת עצמה ככינוי בכללי book_name_alias_rules: בלי מילות קישור ("רשבא בבא
+    // קמא" ל"רשב"א על בבא קמא"), ובשם קיבוצי של סט ("פיה"מ ברכות").
+    if (matchRank == null || matchRank > 3) {
+      final setQuery = scan.setTitleQuery;
+      if (scan.ruleTitleBooks.contains(book.id)) {
+        matchRank = 3;
+        matchedTerm = null;
+        aliasByRule = true;
+        tailIsTitleWords = false;
+        lastWordTruncated = false;
+      } else if (setQuery != null &&
+          (_ruleTitles[book.id] ?? '').startsWith(setQuery)) {
+        final ft = _ruleTitles[book.id]!;
+        final titleTokens = _matchTitleTokens[book.id] ??= titleMatchTokensOf(
+          _splitTitleTokens(mt),
+        );
+        final whole = ReferenceBooksCache._acronymTailIsTitleWords(
+          ft,
+          setQuery,
+          titleTokens,
+        );
+        if (whole ||
+            ReferenceBooksCache._acronymCompletesLastWord(
+              ft,
+              setQuery,
+              titleTokens,
+            )) {
+          matchRank = 4;
+          matchedTerm = null;
+          aliasByRule = true;
+          tailIsTitleWords = true;
+          lastWordTruncated = !whole;
+        }
+      }
+    }
+
     // הכתיב החלופי מזהה את טוקני שם הספר, בלי לדרוס התאמת כינוי מילולית.
     int? spellingVariantTitleIndex;
     if ((matchRank == null || matchRank >= 4) &&
@@ -1418,6 +1489,7 @@ class BookTitleIndex {
         acronymTailIsTitleWords: tailIsTitleWords,
         acronymLastWordTruncated: lastWordTruncated,
         isExactAlias: exactAlias,
+        isAliasByRule: aliasByRule,
         isWholeTitlePrefix: matchRank == 1 && mt.startsWith('$q '),
         spellingVariantTitleIndex: spellingVariantTitleIndex,
         titleTokens: _titleTokens[book.id],
@@ -1638,18 +1710,23 @@ class ReferenceBookHit {
   /// השאילתה היא גם כינוי מדויק של ספר שהותאם לפי כותרתו ("זהר" ל"ספר הזהר").
   final bool isExactAlias;
 
+  /// ההתאמה ב-[matchRank] 3/4 נגזרה מכללי `book_name_alias_rules.dart` (מילות קישור,
+  /// שם קיבוצי) ואינה כתובה כך בכינויים — התאמה מילולית קודמת לה.
+  final bool isAliasByRule;
+
   /// תחילת כותרת המסתיימת בגבול מילה, בלי לשנות את משמעות [matchRank].
   final bool isWholeTitlePrefix;
 
   /// מקום מילות השאילתה בכותרת כשהותאמו בכתיב מלא/חסר, גם לצד כינוי מילולי.
   final int? spellingVariantTitleIndex;
 
-  /// מילות כותרת שלמות קודמות לכינוי, וכינוי מדויק קודם למילה חלקית.
+  /// מילות כותרת שלמות קודמות לכינוי, וכינוי מדויק קודם למילה חלקית; כינוי מילולי
+  /// קודם לכינוי בכללים ([isAliasByRule]).
   /// [matchRank] נשמר לצורך פירוש טוקני המיקום.
   double get rankOrder => matchRank == 1 && isWholeTitlePrefix
       ? 0.25
       : matchRank != 0 && matchesExactAlias
-      ? 0.5
+      ? (isAliasByRule ? 0.75 : 0.5)
       : spellingVariantTitleIndex != null && matchRank == 2
       ? 5.5
       : matchRank.toDouble();
@@ -1672,6 +1749,7 @@ class ReferenceBookHit {
     this.acronymTailIsTitleWords = false,
     this.acronymLastWordTruncated = false,
     this.isExactAlias = false,
+    this.isAliasByRule = false,
     this.isWholeTitlePrefix = false,
     this.spellingVariantTitleIndex,
     List<String>? titleTokens,
@@ -1806,6 +1884,9 @@ class _QueryScan {
     this.q,
     this.mq,
     this.acronymQueries,
+    this.literalAliasQueries,
+    this.setTitleQuery,
+    this.ruleTitleBooks,
     this.words,
     this.acronymCandidates,
     this.fuzzyCandidates,
@@ -1818,6 +1899,15 @@ class _QueryScan {
 
   /// צורות [q] ו-[mq] מול כינויים, ב-[bookNameAcronymForm] (בלי כפילות).
   final List<String> acronymQueries;
+
+  /// צורות [q] ו-[mq] ב-[bookNameSpellingForm] — כינוי ששווה להן הוא מילולי.
+  final List<String> literalAliasQueries;
+
+  /// [bookSetTitleQuery] של [mq], מול הכותרות; `null` כשאינה פותחת בשם קיבוצי.
+  final String? setTitleQuery;
+
+  /// ספרים שכותרתם ב-[bookNameAcronymForm] שווה ל-[acronymQueries] או ל-[setTitleQuery].
+  final Set<int> ruleTitleBooks;
   final List<String> words;
   late final List<String> matchWords = words
       .map(bookNameMatchToken)

@@ -1533,6 +1533,9 @@ class FindRefRepository {
               hit.matchesExactAlias ||
               (hit.matchRank == 4 && hit.acronymLastWordTruncated) ||
               (previous?.exactAlias ?? false),
+          literalAlias:
+              (hit.matchesExactAlias && !hit.isAliasByRule) ||
+              (previous?.literalAlias ?? false),
           wholeName:
               hit.namesBookExactly ||
               (hit.matchRank == 4 && hit.acronymTailIsTitleWords) ||
@@ -3681,6 +3684,10 @@ class FindRefRepository {
                     r.reference,
                   ))),
           exactAliasMatch: bookMatch?.exactAlias ?? false,
+          aliasByRuleOnly:
+              (bookMatch?.exactAlias ?? false) &&
+              !bookMatch!.literalAlias &&
+              !match.exactMatch,
           startsWithMatch: match.startsWithMatch,
           punctuationAgrees:
               quotedWords.isEmpty ||
@@ -3859,7 +3866,13 @@ typedef _UserBooksVersion = ({
 /// ספר בכל מסד: מקור, מזהה, ונתיב הקובץ רק ל-PDF שמחוץ למסד (מזהה שלילי).
 typedef _BookKey = (String source, int bookId, String filePath);
 
-typedef _BookMatchRank = ({int rank, bool exactAlias, bool wholeName});
+/// [literalAlias] — [exactAlias] שלא נגזר מכללי `book_name_alias_rules.dart`.
+typedef _BookMatchRank = ({
+  int rank,
+  bool exactAlias,
+  bool literalAlias,
+  bool wholeName,
+});
 
 _BookKey _bookKey(BookSource source, int bookId, String filePath) =>
     (source.wireKey, bookId, bookId > 0 ? '' : filePath);
