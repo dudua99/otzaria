@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart' show listEquals, visibleForTesting;
+import 'package:otzaria/book_aliases/book_aliases.dart';
 import 'package:otzaria/data/cache/acronyms_cache.dart';
 import 'package:otzaria/data/cache/generation_cache.dart';
 import 'package:otzaria/data/data_providers/file_system_data_provider.dart';
@@ -10,6 +11,8 @@ import 'package:otzaria/find_ref/book_name_match.dart';
 import 'package:otzaria/models/book_source.dart';
 import 'package:otzaria/models/books.dart';
 import 'package:otzaria/library/models/library.dart';
+import 'package:otzaria/utils/text/text_manipulation.dart'
+    show normalizeForFindRefMatch;
 
 /// מרכז את הגישה לנתוני הספרייה ממסד הנתונים וממערכת הקבצים.
 class DataRepository {
@@ -427,7 +430,8 @@ class _BookSearchCatalog {
   }
 }
 
-/// בונה רשומת חיפוש; כינויים ודור נקראים רק במרחב המזהים של מסד הספר.
+/// בונה רשומת חיפוש; כינויים מילוליים ודור נקראים רק במרחב המזהים של מסד הספר,
+/// והכינויים הנגזרים מהכותרת ([bookAliasesOf]) חלים על כל ספר שאינו מקטלוג חיצוני.
 @visibleForTesting
 BookSearchEntry buildBookSearchEntry(
   int index,
@@ -445,12 +449,26 @@ BookSearchEntry buildBookSearchEntry(
     title: book.title,
     author: book.author ?? '',
     topics: book.topics,
-    acronyms: id == null ? const [] : acronymsFor(book.source, id) ?? const [],
+    acronyms: isExternalCatalog
+        ? const []
+        : _bookAliases(book, id, acronymsFor),
     eraOrder: eraOrderForId(id, book.source),
     source: book.source,
     isExternalCatalog: isExternalCatalog,
     categoryPath: book.categoryPath ?? '',
   );
+}
+
+/// [bookAliasesOf] של [book]; הכותרת מנורמלת רק כשהיא עשויה לקבל כינוי נגזר.
+List<String> _bookAliases(
+  Book book,
+  int? id,
+  List<String>? Function(BookSource source, int bookId) acronymsFor,
+) {
+  final literal = id == null ? null : acronymsFor(book.source, id);
+  final title = book.title;
+  if (!mayHaveDerivedBookAliases(title)) return literal ?? const [];
+  return bookAliasesOf(literal, normalizeForFindRefMatch(title)) ?? const [];
 }
 
 /// רשומת חיפוש של ספר או תיקייה, בצורה שאפשר לשלוח ל-isolate.
@@ -460,7 +478,8 @@ class BookSearchEntry {
   final String author;
   final String topics;
 
-  /// כינויים מנורמלים מראש מטבלת book_acronym (ראה [AcronymsCache]).
+  /// כינויים מנורמלים מראש: מטבלת book_acronym ([AcronymsCache]) ומהכותרת
+  /// ([bookAliasesOf]).
   final List<String> acronyms;
 
   /// סדר הדור של הספר (נמוך = מוקדם). ראה [GenerationCache]; ברירת מחדל = סוף.
