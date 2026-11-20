@@ -51,3 +51,5 @@
 5607 feature-default   (confirm the grey is preview selection first)
 1979 feature-default
 5185 feature-default
+5594 bug   (reproduce first: scrollbar-drag drift; if proportional -> NOT READY with numbers)
+5638 feature-default   (arrow tuning only; PageUp/Down already in 0b07a7b88)
