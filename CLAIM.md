@@ -1,2 +1,2 @@
-claimed: 2026-11-20T09:47:42Z UTC
-QA of prbody/4231-fix per QA.md (worker run 2026-11-20 08:46)
+done: prbody/4231-qa 742d853cecf91b258a825f8ad0df68eed1bf6e3d
+branch head: b1572c2aa0c641d8a604ed303c93ee46d3676775 (no QA commits)
