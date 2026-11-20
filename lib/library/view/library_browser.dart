@@ -794,7 +794,9 @@ class _LibraryBrowserState extends State<LibraryBrowser>
     }
 
     trailingItems.addAll([
-      if (readingTitle != null)
+      // בחלון צר הכפתור דוחק את רמז החיפוש; "עיון" זמין שם בסרגל הניווט.
+      if (readingTitle != null &&
+          MediaQuery.sizeOf(context).width >= LayoutBreakpoints.compact)
         AppTopBarItem(
           widget: BarButton.icon(
             compact: isCompact,
@@ -803,9 +805,7 @@ class _LibraryBrowserState extends State<LibraryBrowser>
               args: {'title': readingTitle},
             ),
             icon: OtzariaIcons.otzaria_icon_2_page_24_regular,
-            label: MediaQuery.sizeOf(context).width >= LayoutBreakpoints.compact
-                ? context.settingsText('חזרה לעיון')
-                : null,
+            label: context.settingsText('חזרה לעיון'),
             onPressed: _returnToReading,
           ),
         ),
