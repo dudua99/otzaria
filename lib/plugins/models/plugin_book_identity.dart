@@ -70,7 +70,7 @@ class PluginBookIdentity {
   static String uidOf(Book book) => BookIdentity.keyOf(book);
 
   static PluginBookIdentityKey keyOf(Book book) => (
-    bookId: book.title,
+    bookId: book is ExternalLibraryBook ? book.catalogTitle : book.title,
     id: book.id,
     type: typeOf(book),
     source: sourceOf(book),
