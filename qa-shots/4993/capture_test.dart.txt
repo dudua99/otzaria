@@ -1,0 +1,73 @@
+// זמני — צילומי לפני/אחרי ל-issue #4993, לא נכלל בקומיט.
+import 'dart:io';
+import 'dart:ui' as ui;
+
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:otzaria/models/link_types.dart';
+import 'package:otzaria/models/links.dart';
+import 'package:otzaria/settings/engine/app_settings_store.dart';
+import 'package:otzaria/text_book/view/sibling_commentaries_menu.dart';
+import 'package:otzaria/widgets/misc/app_context_menu.dart';
+
+import '../helpers/memory_settings_cache.dart';
+import '../support/golden_fonts.dart';
+import 'golden_harness.dart';
+
+Link _c(String t) => Link(heRef: t, index1: 5, path2: t, index2: 2,
+    connectionType: LinkTypes.commentary, targetCategoryId: 4, targetFileType: 'text');
+
+void main() {
+  final out = Platform.environment['QA_OUT']!;
+  setUpAll(() async {
+    await Settings.init(cacheProvider: MemorySettingsCache());
+    await loadGoldenFonts();
+  });
+  for (final b in Brightness.values) {
+    testWidgets('${b.name}_sibling_menu', (tester) async {
+      debugDefaultTargetPlatformOverride = goldenPlatform;
+      tester.view.physicalSize = const Size(900, 500);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+      final c = SiblingCommentariesController(loadSiblings: (_) async =>
+          [_c('ברטנורא על משנה מכות'), _c('תפארת ישראל על משנה מכות'), _c('מלאכת שלמה על משנה מכות')]);
+      final source = Link(heRef: 'משנה מכות א א', index1: 1, path2: 'משנה מכות',
+          index2: 3, connectionType: LinkTypes.source, targetCategoryId: 3, targetFileType: 'text');
+      const key = ValueKey('cap');
+      await tester.pumpWidget(RepaintBoundary(key: key, child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: goldenTheme(b),
+        locale: const Locale('he', 'IL'),
+        supportedLocales: const [Locale('he', 'IL')],
+        localizationsDelegates: const [GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate, GlobalCupertinoLocalizations.delegate],
+        home: Scaffold(body: AppContextMenuRegion(
+          menuBuilder: (_, __) => [c.buildEntry(lineIndex: 1, sourceLink: source,
+            onNavigate: (_) {}, /*OPENALL*/)!],
+          child: const SizedBox.expand(child: ColoredBox(color: Colors.transparent)),
+        )),
+      )));
+      final g = await tester.createGesture(kind: PointerDeviceKind.mouse, buttons: kSecondaryMouseButton);
+      await g.addPointer(location: const Offset(700, 60));
+      await g.down(const Offset(700, 60));
+      await g.up();
+      await tester.pumpAndSettle();
+      await g.moveTo(tester.getCenter(find.textContaining('מפרשים נוספים על')));
+      for (var i = 0; i < 10; i++) { await tester.pump(const Duration(milliseconds: 100)); }
+      await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 50)));
+      for (var i = 0; i < 10; i++) { await tester.pump(const Duration(milliseconds: 100)); }
+      final ro = tester.renderObject<RenderRepaintBoundary>(find.byKey(key));
+      final bytes = await tester.runAsync(() async {
+        final img = await ro.toImage();
+        return (await img.toByteData(format: ui.ImageByteFormat.png))!.buffer.asUint8List();
+      });
+      File('$out/${b.name}_sibling_menu.png')..createSync(recursive: true)..writeAsBytesSync(bytes!);
+      debugDefaultTargetPlatformOverride = null;
+      c.dispose();
+    });
+  }
+}
