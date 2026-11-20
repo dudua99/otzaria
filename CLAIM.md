@@ -1,2 +1,2 @@
-claimed: 2026-11-20T09:27:18Z UTC
-FIX (feature-default) of issue #2835 per FIX.md + notes/2835.md
+done: prbody/2835-fix 1ebe63cd82910d7aab229ea02efd167474c35415
+branch: feat/commentary-toggle-chevron-2835 529cc4221c2bc5385ab1c000aa1ce14dbcf83b49
