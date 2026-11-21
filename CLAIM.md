@@ -1,1 +1,1 @@
-claimed 2026-11-21T17:27:36Z UTC: QA of fix/commentary-search-count-notes-5715 per QA.md
+done: prbody/5715-qa 7c7b0d4e52658e6eb9c711f6af49edb41f96e5fc (2026-11-21T17:49:22Z UTC)
