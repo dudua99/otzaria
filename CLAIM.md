@@ -1,3 +1,3 @@
-claim fix-5715
-2026-11-21 16:57:53 UTC
-worker: implementing bug fix for issue #5715 per FIX.md + notes/5715.md
+done: prbody/5715-fix 66304612821f46b15498e62f4bf47a43626afb49
+fix branch head 761b3cf3638489aa74fd5b16bd2bd235777f3b3f
+2026-11-21 17:25:43 UTC
