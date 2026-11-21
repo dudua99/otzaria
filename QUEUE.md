@@ -53,3 +53,7 @@
 5185 feature-default
 5594 bug   (reproduce first: scrollbar-drag drift; if proportional -> NOT READY with numbers)
 5638 feature-default   (arrow tuning only; PageUp/Down already in 0b07a7b88)
+5715 bug   (regression 41f93430e: notes highlighted but not counted)
+5714 bug   (Word/ODT import only: allowBookLinks for otzaria:// links; rest out of scope)
+5711 bug   (reproduce first: debounce echo overwrites newer keystrokes; if not reproducible -> NOT READY with evidence)
+5712 feature-default
