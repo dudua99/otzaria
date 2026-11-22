@@ -1,3 +1,1 @@
-claimed 2026-11-22T13:08:35Z UTC
-worker: cloud run
-unit: QA of prbody/5742-fix
+done: prbody/5742-qa ffa95644963b155d8ac6a79faec902a940dfcb2d (2026-11-22T13:19:33Z UTC)
