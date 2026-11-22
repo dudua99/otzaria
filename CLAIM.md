@@ -1,3 +1,2 @@
-claimed: 2026-11-22T12:45:58Z UTC
-worker: cloud run
-unit: fix #5744
+done: prbody/5744-fix ea1e6c634276a4405298b0085d8c112b58ce68e5
+at: 2026-11-22T13:10:25Z UTC
