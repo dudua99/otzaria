@@ -63,3 +63,8 @@
 5742 bug
 5728 feature-default
 2691 feature-default   (part 1 only: official shelves first; part 2 done in #5624)
+5759 bug   (engine budget is index-wide, separate repo: fix banner wording in-app + engine proposal in BODY, Refs)
+5757 bug   (reproduce first: first highlight is a partial quote; if not reproducible -> NOT READY with evidence)
+5758 feature-default
+5761 feature-default   (changes ypl's c4a227ecd: keep "…" expand, only add scroll)
+5766 feature-default
