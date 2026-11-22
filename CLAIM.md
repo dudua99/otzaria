@@ -1,2 +1,1 @@
-claimed 2026-11-22T20:34:30Z UTC
-worker: cloud run, will reproduce/implement #5757 (scroll to full match, not partial quote) per notes/5757.md
+claimed earlier; done: prbody/5757-fix 2070401bb260da7c8ea364cc0eac1b38f20d2a50 (work branch fix/scroll-to-full-match-5757 e13831e83) 2026-11-22T21:30:44Z UTC
