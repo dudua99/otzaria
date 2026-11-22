@@ -19,6 +19,7 @@ import 'package:otzaria/library/models/library.dart';
 import 'package:otzaria/library/view/library_browser.dart';
 import 'package:otzaria/library/view/otzar_book_dialog.dart';
 import 'package:otzaria/tabs/models/pdf_tab.dart';
+import 'package:otzaria/tabs/models/searching_tab.dart';
 import 'package:otzaria/tabs/models/tab.dart';
 import 'package:otzaria/tabs/models/text_tab.dart';
 import 'package:otzaria/library_update/bloc/library_update_bloc.dart';
@@ -1211,6 +1212,28 @@ void main() {
       await tester.sendKeyEvent(LogicalKeyboardKey.escape);
       await tester.pump();
       expectReturnedToReading(h);
+    });
+
+    testWidgets('החלונית הפעילה היא חיפוש: חוזרים למסך החיפוש', (
+      tester,
+    ) async {
+      final search = SearchingTab('חיפוש', null);
+      addTearDown(search.dispose);
+      final h = await _pumpBrowser(
+        tester,
+        books: [book],
+        viewMode: 'grid',
+        openTabs: [search, ...tabs()],
+      );
+
+      await tester.tap(find.byTooltip('חזרה לעיון: חיפוש'));
+      await tester.pump();
+      verify(
+        () => h.navigationBloc.add(const NavigateToScreen(Screen.search)),
+      ).called(1);
+      verifyNever(
+        () => h.navigationBloc.add(const NavigateToScreen(Screen.reading)),
+      );
     });
 
     testWidgets('אין כרטיסיות פתוחות: אין כפתור ו-Esc לא עובר לעיון', (
