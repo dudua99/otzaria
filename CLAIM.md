@@ -1,3 +1,2 @@
-claimed: 2026-11-22T13:10:52Z UTC
-worker: cloud run
-unit: qa #5728
+done: prbody/5728-qa 225bb7f8e1722f340275eb294e0f8208a123b9b9
+at: 2026-11-22T13:26:40Z UTC
