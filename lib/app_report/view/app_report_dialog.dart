@@ -259,7 +259,6 @@ class _AppReportDialogState extends State<AppReportDialog> {
           _buildDraftNotice(context, enabled: enabled),
           const SizedBox(height: AppTokens.spaceMD),
         ],
-        // רוב הדיווחים השגויים הם על תוספים, שאינם חלק מהתוכנה (#5728).
         AppInfoBanner(
           message: context.settingsText(
             'כאן מדווחים על התוכנה ועל הכלים המובנים בה (למשל לוח השנה '
