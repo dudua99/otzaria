@@ -835,9 +835,7 @@ class _TantivySearchResultsState extends State<TantivySearchResults> {
             return Column(
               children: [
                 _buildTruncatedBanner(
-                  scoped:
-                      state.currentFacets.isNotEmpty &&
-                      !state.currentFacets.contains('/'),
+                  scoped: state.currentFacets.any((f) => f != '/'),
                 ),
                 Expanded(child: scrollView),
               ],
