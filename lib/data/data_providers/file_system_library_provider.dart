@@ -622,7 +622,6 @@ class FileSystemLibraryProvider implements LibraryProvider, LinkLinesProvider {
           subCategories: [],
           books: [],
           parent: currentParent,
-          isOfficial: true,
         );
 
         currentParent.subCategories.add(newCategory);
