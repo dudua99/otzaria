@@ -1,3 +1,2 @@
-claim fix-5745
-2026-11-22T12:45:52Z UTC
-worker: verify-on-dev then fix issue #5745 per FIX.md
+done: prbody/5745-fix 044fff2209f9db6bbbc399a8c2aa1fd3c51d28ec
+2026-11-22T13:41:48Z UTC
