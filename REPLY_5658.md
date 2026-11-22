@@ -1,0 +1,6 @@
+תודה, הבעיה אמיתית, אבל ההגדרה שחוסמת אחרת מזו שבממצא. `openLeftPane` שולט בחלונית הניווט (תוכן העניינים, `NavSidePanel`), לא בחלונית המפרשים. מה שמשאיר את המפרשים סגורים הוא ההגדרה "פתיחת חלונית המפרשים בפתיחת ספר" (`defaultCommentaryOpen`). `SplitedViewScreen._maybeAutoOpenCommentaryPane` פותח את החלונית בטעינה רק כשההגדרה הזו פעילה. כשהיא כבויה, "הצג את כל המפרשים" פותח את השורה הנכונה, המפרשים נבחרים, והחלונית נשארת סגורה.
+
+**מה שונה (38cb40328):** לטאב נוסף `openCommentaryPane`. `buildLinkTargetTab` מגדיר אותו כשהיעד נפתח עם רשימת מפרשים מפורשת. הפתיחה האוטומטית של החלונית מכבדת את הבקשה הזו בנוסף להגדרה. שאר מסלולי הפתיחה לא השתנו.
+
+**הבדיקה (2dcff95a1):** `"הצג את כל המפרשים" פותח את חלונית המפרשים גם כשפתיחתה האוטומטית כבויה` ב-`test/text_book/view/splited_view_toggle_commentators_pane_test.dart`. היא פותחת יעד דרך `buildLinkTargetTab(..., commentators: ...)` כשההגדרה כבויה, ובודקת ש-`TabbedCommentaryPanel` מוצג. הבדיקה נכשלה על ראש הענף (החלונית סגורה) ועוברת אחרי התיקון.
+כל `test/text_book/view/`, `test/tabs/`, `talmud_bavli_open_format_test` ו-`sibling_commentaries_menu_test`: 2811 עברו ו-1 נכשלה. הנכשלת היא `page_shape_super_commentary_wait_test`, בדיקה רגישה לתזמון שרצה במקביל לעומס אחר. כשהורצה לבד היא עברה, גם עם התיקון וגם בלעדיו (8 מתוך 8). dart analyze ו-format נקיים, ו-ui_lint לא מצא הפרות חדשות.
