@@ -52,6 +52,7 @@ import 'package:collection/collection.dart';
 import 'dart:async';
 import 'dart:isolate';
 
+import 'package:otzaria/core/error_log_file.dart';
 import 'package:otzaria/core/messages/text_book_messages.dart';
 import 'package:otzaria/core/ui_snack.dart';
 import 'package:otzaria/data/book_locator.dart';
@@ -2830,13 +2831,13 @@ class _CommentaryPaneState extends State<_CommentaryPane> {
           widget.commentatorName == requestedCommentatorName) {
         unawaited(_initCommentaryAnchors(book));
       }
-    } catch (e) {
-      if (kDebugMode) {
-        debugPrint(
-          '⚠️ CommentaryPane::loadCommentary failed '
-          'for ${widget.commentatorName}: $e',
-        );
-      }
+    } catch (e, stackTrace) {
+      ErrorLogFile.appendInBackground(
+        title: 'כשל בטעינת מפרש בצורת הדף',
+        error: e,
+        stackTrace: stackTrace,
+        details: {'commentator': widget.commentatorName},
+      );
       // כשל זמני אינו מסתיר את הטור — החלונית מציעה "נסה שוב".
       if (mounted) {
         setState(() {

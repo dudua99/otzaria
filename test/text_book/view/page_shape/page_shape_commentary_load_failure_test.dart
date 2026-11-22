@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:otzaria/core/app_paths.dart';
+import 'package:otzaria/core/error_log_file.dart';
 import 'package:otzaria/text_book/view/page_shape/utils/page_shape_settings_manager.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -161,6 +162,11 @@ void main() {
     await _pumpUntil(tester, () => false);
     expect(find.text(_failedMessage), findsOneWidget);
     expect(find.text(_retry), findsOneWidget);
+    await tester.runAsync(ErrorLogFile.flushPending);
+    expect(
+      File(ErrorLogFile.resolvePath()).readAsStringSync(),
+      contains('database is locked'),
+    );
     await tester.tap(find.text(_retry));
     await _pumpUntil(tester, () => commentaryViewer().evaluate().isNotEmpty);
     expect(find.text(_failedMessage), findsNothing);
