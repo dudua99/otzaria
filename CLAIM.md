@@ -1,2 +1,1 @@
-claimed 2026-11-22T20:29:57Z UTC
-worker: cloud run, will implement fix for #5759 (truncated banner wording) per notes/5759.md
+done: prbody/5759-fix 0ec9b21d11c90a599fec08e8cdcefae906410699 (2026-11-22T21:10:34Z)
