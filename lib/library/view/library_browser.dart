@@ -441,8 +441,13 @@ class _LibraryBrowserState extends State<LibraryBrowser>
   }
 
   bool _returnToReading() {
-    if (!context.read<TabsBloc>().state.hasOpenTabs) return false;
-    context.read<NavigationBloc>().add(const NavigateToScreen(Screen.reading));
+    final tabs = context.read<TabsBloc>().state;
+    if (!tabs.hasOpenTabs) return false;
+    // כמו NavigationBloc: חלונית חיפוש מוצגת במסך החיפוש ולא בעיון.
+    final screen = tabs.activePane is SearchingTab
+        ? Screen.search
+        : Screen.reading;
+    context.read<NavigationBloc>().add(NavigateToScreen(screen));
     return true;
   }
 
