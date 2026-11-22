@@ -658,6 +658,27 @@ void main() {
   });
 
   group('IndexingRepository.dropOrphanedIndexEntries', () {
+    // optimize מחזיק את המנוע בבלעדיות עד סוף המיזוגים, וחיפוש ואינדוקס
+    // שמגיעים בינתיים ממתינים לו (הסיבה שבגללה נסגר #5659). פינוי המחוקים
+    // אחרי הסרה גדולה שייך למיזוג הרקע של המנוע (issue #5040).
+    test('הסרה גדולה ברענון אינה מריצה optimize שנועל את המנוע', () async {
+      final engine = _RecordingSearchEngine();
+      final provider = _RecordingTantivyDataProvider(engine);
+      final library = _buildLibrary(bavliBooks: const []);
+      provider.indexedFilePaths.addAll({
+        for (var i = 0; i < 100; i++) 'uid:$i',
+      });
+      expect(
+        await IndexingRepository(
+          provider,
+          indexPdfBooks: () => false,
+        ).dropOrphanedIndexEntries(library, customFolders: []),
+        100,
+      );
+      expect(engine.commitCount, 1);
+      expect(engine.optimizeCount, 0);
+    });
+
     test('ניקוי רגיל בכיבוי PDF אינו מוסיף איחוד לנתיב העלייה', () async {
       final engine = _RecordingSearchEngine();
       final provider = _RecordingTantivyDataProvider(engine);
