@@ -2727,6 +2727,7 @@ class DatabaseLibraryProvider implements LibraryProvider, LinkLinesProvider {
           books: [],
           parent: category,
           order: orphanOrder,
+          isOfficial: true,
         );
         category.subCategories.add(orphanCategory);
         category.subCategories.sort((a, b) => a.order.compareTo(b.order));
@@ -3817,6 +3818,7 @@ class DatabaseLibraryProvider implements LibraryProvider, LinkLinesProvider {
       subCategories: [],
       books: [],
       parent: parent,
+      isOfficial: true,
     );
 
     // Get books for this category and sort by order

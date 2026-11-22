@@ -29,6 +29,11 @@ class Category {
   /// Defaults to 999 if no order is specified for this category.
   int order;
 
+  /// מדף מקטלוג הספרייה הרשמית. נקבע כשהעץ הרשמי נבנה, ונשאר גם כשספרים
+  /// אישיים מצטרפים אליו. [personalSource] אינו מבחן לכך: הוא null גם לתיקייה
+  /// מעורבת או ריקה.
+  bool isOfficial;
+
   /// returns the path of this category e.g תנך/ראשונים/רשי/תורה
   String get path {
     if (title == 'ספריית אוצריא') {
@@ -114,6 +119,7 @@ class Category {
     required this.subCategories,
     required this.books,
     required this.parent,
+    this.isOfficial = false,
   });
 }
 
