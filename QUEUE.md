@@ -57,3 +57,9 @@
 5714 bug   (Word/ODT import only: allowBookLinks for otzaria:// links; rest out of scope)
 5711 bug   (reproduce first: debounce echo overwrites newer keystrokes; if not reproducible -> NOT READY with evidence)
 5712 feature-default
+5747 bug   (reproduce first: tap at line end in RtlTextField; suspect hard-break workaround c4a623e72)
+5745 bug   (verify on dev first: 4a1dd70c8 moved link text to source; if all 4 cases pass -> NOT READY)
+5744 bug   (palmoni5: fix root + retry button; avoid #3442 matcher overlap)
+5742 bug
+5728 feature-default
+2691 feature-default   (part 1 only: official shelves first; part 2 done in #5624)
