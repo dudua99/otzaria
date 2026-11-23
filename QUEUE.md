@@ -72,3 +72,7 @@
 5772 bug   (vertical tab column never scrolls to the active tab; ReadingTabStrip)
 5798 bug   (reproduce first: commentators-tab position after restart/History; 7a8ff8fa9 #2139 may cover it -> NOT READY with evidence)
 5840 bug   (reproduce first with windows platform override: restored query not selected in regular mode; if all paths select -> NOT READY with evidence)
+5819 feature-default   (read-only "fixed shortcuts" card in settings, as palmoni5 suggested; no behavior change)
+5794 feature-default   (location in commentators-tab top-bar title; reuse bookmark ref wording)
+5810 feature-default   (remember commentators-TAB selection per book; scope pending Y-PLONI - say so in BODY)
+5790 feature-default   (zoomed PDF: Left/Right pan until the edge, then turn page; palmoni5 thought it already works - show failing test)
