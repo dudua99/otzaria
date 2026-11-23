@@ -1,1 +1,1 @@
-2026-11-23T01:04:45Z claim qa-5772: QA per QA.md for fix/vertical-tabs-scroll-to-active-5772
+2026-11-23T01:30:52Z done: prbody/5772-qa 161bc78ebb2d81ae97cc015367584913c24e6576
