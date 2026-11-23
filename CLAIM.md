@@ -1,1 +1,1 @@
-claimed 2026-11-23T19:38:44Z UTC fix #5743 (main window steals focus after tab move)
+done: prbody/5743-fix be402578420fa1bc9049aebe3d83d5f9e29cff89
