@@ -1,1 +1,1 @@
-2026-11-23T00:43:35Z claim fix-5772: vertical tab column scroll to active tab (ReadingTabStrip) per notes/5772.md
+2026-11-23T01:03:53Z done: prbody/5772-fix 0ed50f16755c8e44c6dba8879b676e6a11419b30 (branch fix/vertical-tabs-scroll-to-active-5772)
