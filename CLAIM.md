@@ -1,2 +1,1 @@
-claimed 2026-11-23T19:08:30Z UTC
-fix #5727 (page-shape category save base-name match)
+done: prbody/5727-fix 7e3fe0fb7ff5bf1117ed1e47bb84e77ddabb325f
