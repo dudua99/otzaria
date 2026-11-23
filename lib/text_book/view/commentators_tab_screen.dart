@@ -499,6 +499,10 @@ class _CommentatorsTabScreenState extends State<CommentatorsTabScreen>
     if (savedCommentators != null) {
       _selectedCommentatorsOverride = List<String>.from(savedCommentators);
     }
+    if (widget.tab.applyBookSelection) {
+      widget.tab.applyBookSelection = false;
+      _applyBookSelection(savedCommentators);
+    }
     // טעינת הספר והמפרשים ב-BLoC העצמאי
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
@@ -733,6 +737,7 @@ class _CommentatorsTabScreenState extends State<CommentatorsTabScreen>
             buildWhen: (prev, curr) {
               if (prev is TextBookLoaded && curr is TextBookLoaded) {
                 return prev.fontSize != curr.fontSize ||
+                    prev.commentatorsFontSize != curr.commentatorsFontSize ||
                     prev.tableOfContents != curr.tableOfContents ||
                     prev.links != curr.links ||
                     prev.availableCommentators != curr.availableCommentators ||
@@ -782,10 +787,15 @@ class _CommentatorsTabScreenState extends State<CommentatorsTabScreen>
                 autofocus: true,
                 onKeyEvent: (_, event) => handleCommentatorsTabShortcuts(
                   event,
+                  settings: context.read<SettingsBloc>(),
                   onPrint: () =>
                       _commentaryKey.currentState?.printDisplayedCommentaries(),
                   onSearch: _openSearchPane,
                   onToggleNavPane: _toggleNavPane,
+                  onPrevMajor: () => _navigateToPrevChapter(chapters),
+                  onPrevMinor: () => _navigateToPrevVerse(chapters),
+                  onNextMinor: () => _navigateToNextVerse(chapters),
+                  onNextMajor: () => _navigateToNextChapter(chapters),
                 ),
                 child: Scaffold(
                   body: Column(
@@ -855,7 +865,9 @@ class _CommentatorsTabScreenState extends State<CommentatorsTabScreen>
       builder: (context, settingsState) => CommentaryListBase(
         key: _commentaryKey,
         openBookCallback: widget.openBookCallback,
-        fontSize: settingsState.commentatorsFontSize,
+        fontSize: settingsState.commentatorsFontSizeForBook(
+          state.commentatorsFontSize,
+        ),
         indexes: effectiveIndexes,
         showSearch: true,
         autofocus: true,
@@ -1008,9 +1020,34 @@ class _CommentatorsTabScreenState extends State<CommentatorsTabScreen>
     _navTabController.animateTo(_commentatorsTabIndex);
   }
 
+  /// טוען את הבחירה האחרונה של כרטיסיית מפרשים לספר, אלא אם הקורא כבר שינה.
+  Future<void> _applyBookSelection(List<String>? opening) async {
+    try {
+      final saved = (await TextBookPerBookSettings.load(
+        widget.tab.sourceTab.book,
+      ))?.commentatorsTabSelection;
+      if (!mounted ||
+          saved == null ||
+          !identical(widget.tab.selectedCommentators, opening)) {
+        return;
+      }
+      widget.tab.selectedCommentators = List<String>.from(saved);
+      setState(() => _selectedCommentatorsOverride = saved);
+    } catch (e) {
+      debugPrint('⚠️ Failed to load commentators tab selection: $e');
+    }
+  }
+
   void _updateSelectedCommentators(List<String> list) {
     widget.tab.selectedCommentators = List<String>.from(list);
     setState(() => _selectedCommentatorsOverride = list);
+    TextBookPerBookSettings.saveCommentatorsTabSelection(
+      widget.tab.sourceTab.book,
+      list,
+    ).catchError(
+      (Object e) =>
+          debugPrint('⚠️ Failed to save commentators tab selection: $e'),
+    );
   }
 
   Future<void> _addBookmark(
@@ -1046,6 +1083,20 @@ class _CommentatorsTabScreenState extends State<CommentatorsTabScreen>
 
   // ── AppBar ─────────────────────────────────────────────────────────────────
 
+  String _currentTitleRef(TextBookLoaded state, List<TocEntry> chapters) {
+    final chapter = _selectedChapter;
+    final String ref;
+    if (chapter != null && chapters.contains(chapter)) {
+      final child = _selectedVerseIdx >= 0
+          ? chapter.children.elementAtOrNull(_selectedVerseIdx)
+          : null;
+      ref = (child ?? chapter).fullText;
+    } else {
+      ref = refFromTocList(widget.tab.currentIndex, state.tableOfContents);
+    }
+    return addBookTitleToRef(refUpToDaf(ref), state.book.title);
+  }
+
   Widget _buildAppBar(
     BuildContext context,
     TextBookLoaded state,
@@ -1063,7 +1114,7 @@ class _CommentatorsTabScreenState extends State<CommentatorsTabScreen>
       ),
     );
     return CommentatorsTabTopBar(
-      title: 'מפרשים על ${state.book.title}',
+      title: 'מפרשים על ${_currentTitleRef(state, chapters)}',
       prevMajorTooltip: 'הפרק הקודם',
       nextMajorTooltip: 'הפרק הבא',
       navPaneOpen: _navPaneOpen,
@@ -1182,7 +1233,10 @@ class _CommentatorsTabScreenState extends State<CommentatorsTabScreen>
           onTypeChipsChanged: (types) => _typeSelection.value = types,
           heCategories: bookCategoriesSource(state.book),
           onCategoryDefaultsSaved: () =>
-              TextBookPerBookSettings.clearActiveCommentators(state.book),
+              TextBookPerBookSettings.clearCommentatorsTabSelection(
+                state.book,
+                selected,
+              ),
         );
       },
     );

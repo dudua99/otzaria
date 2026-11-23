@@ -1570,7 +1570,7 @@ class _SimpleTextViewerState extends State<SimpleTextViewer> {
               : settingsState.commentatorsFontBold)
           ? FontWeight.bold
           : null,
-      lineHeight: settingsState.lineHeight,
+      lineHeight: settingsState.lineHeightForBook(state.lineHeight),
     );
   }
 
@@ -3172,7 +3172,12 @@ class _SimpleTextViewerState extends State<SimpleTextViewer> {
     bool continuous,
   ) {
     final currentAnchor = _lines?.captureAnchor();
-    final anchor = currentAnchor ?? _initialAnchor;
+    final tab = widget.tab;
+    final anchor =
+        currentAnchor ??
+        (widget.isMainText && tab is TextBookTab && tab.markerReference != null
+            ? tab.openingReadingAnchor(state)
+            : _initialAnchor);
     TargetRectResolver? initialResolver;
     if (segments != null &&
         anchor != null &&
@@ -3245,7 +3250,7 @@ class _SimpleTextViewerState extends State<SimpleTextViewer> {
             family,
             weight ?? FontWeight.normal,
           ),
-          lineHeight: settings.lineHeight,
+          lineHeight: settings.lineHeightForBook(state.lineHeight),
           textWidth: (width) => width > 8 ? width - 8 : width,
           crossAxisPadding: _readerListPadding.horizontal,
           builder: buildList,
@@ -3298,10 +3303,12 @@ class _SimpleTextViewerState extends State<SimpleTextViewer> {
         segment != null &&
         !segment.isHeader &&
         segment.sourceLineIndices.length > 1;
-    if (isMultiLine && !segment.isLoaded) {
+    // גם שורה בודדת: בגובה אפס, קפיצה לאזור שלא נטען בונה אלפי שורות בפריים.
+    if (segment != null && !segment.isLoaded) {
       return UnloadedParagraphPlaceholder(
         lineCount: segment.sourceLineIndices.length,
         fontSize: widget.fontSize,
+        lineHeight: state.lineHeight,
       );
     }
     final itemLines = segment?.sourceLineIndices ?? [primaryLineIndex];
@@ -3619,7 +3626,7 @@ class _SimpleTextViewerState extends State<SimpleTextViewer> {
             fontSize: widget.fontSize,
             fontFamily: widget.fontFamily ?? settingsState.fontFamily,
             fontWeight: settingsState.fontBold ? FontWeight.bold : null,
-            lineHeight: settingsState.lineHeight,
+            lineHeight: settingsState.lineHeightForBook(state.lineHeight),
           ),
         ),
       );
@@ -3641,7 +3648,7 @@ class _SimpleTextViewerState extends State<SimpleTextViewer> {
             : settingsState.commentatorsFontBold)
         ? FontWeight.bold
         : null,
-    lineHeight: settingsState.lineHeight,
+    lineHeight: settingsState.lineHeightForBook(state.lineHeight),
     sectionHeadings: _sectionHeadingsByLine,
     isRelated: widget.isMainText
         ? null

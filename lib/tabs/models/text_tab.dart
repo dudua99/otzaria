@@ -21,6 +21,8 @@ import 'package:otzaria/utils/ui/reading_left_pane_policy.dart';
 import 'package:otzaria/text_book/view/reading_viewport/line_scroll_controller.dart';
 import 'package:otzaria/text_book/utils/reading_segment_navigation.dart'
     show initialReadingAlignment;
+import 'package:otzaria/text_book/utils/section_search_utils.dart'
+    show bracketMarkerFractionForReference;
 
 /// כרטיסיית קורא טקסט; ה-BLoC שלה נוצר רק בגישה הראשונה אליו.
 class TextBookTab extends OpenedTab {
@@ -64,6 +66,9 @@ class TextBookTab extends OpenedTab {
   /// הסעיף המודגש, שנשאר קבוע גם כשהמיקום הנוכחי משתנה; null משתמש ב-[index].
   final int? pinpointHighlightSectionIndex;
 
+  /// הפניה שסמן הכותרת שבסופה (`[סעיף ו]`) נמצא בתוך שורת היעד; הפתיחה גוללת אליו.
+  final String? markerReference;
+
   /// שורה שקישור ביקש לבחור בפתיחה הזאת. הערך אינו נשמר בשולחן העבודה.
   int? get linkSelectedLine => _linkSelectedLine;
   int? _linkSelectedLine;
@@ -92,6 +97,21 @@ class TextBookTab extends OpenedTab {
   ReadingAnchor get readingAnchor =>
       lines.captureAnchor() ??
       ReadingAnchor(line: index, alignment: initialReadingAlignment(index));
+
+  /// עוגן הפתיחה של תוצאת איתור עם סמן בשורה.
+  ReadingAnchor openingReadingAnchor(TextBookLoaded state) {
+    final current = lines.captureAnchor();
+    if (current != null) return current;
+    final line = index;
+    final marker = markerReference;
+    return ReadingAnchor(
+      line: line,
+      alignment: initialReadingAlignment(line),
+      intraLineFraction: marker != null && line < state.content.length
+          ? bracketMarkerFractionForReference(state.content[line], marker)
+          : 0,
+    );
+  }
 
   /// הכותרת הנוכחית של המיקום בספר (למשל "בראשית פרק ד")
   final currentTitle = ValueNotifier<String>("");
@@ -151,8 +171,10 @@ class TextBookTab extends OpenedTab {
   // StreamSubscription לניהול ה-listener
   StreamSubscription<TextBookState>? _stateSubscription;
 
+  /// [book] שנשמר בכותרת ישנה מקבל את הכותרת שבקטלוג, כדי שהטאב, ההערות
+  /// והשמירה יחלקו אותה כותרת.
   TextBookTab({
-    required this.book,
+    required TextBook book,
     required int index,
     ReadingAnchor? initialReadingAnchor,
     this.searchText = '',
@@ -176,14 +198,13 @@ class TextBookTab extends OpenedTab {
     this.pinpointHighlight,
     this.pinpointHighlightSectionIndex,
     this._linkSelectedLine,
+    this.markerReference,
     @visibleForTesting TextBookBloc? blocOverride,
     // מהדורה חלופית מקבלת כותרת טאב עם שם המהדורה, להבחנה מהנוסח הממוזג.
-  }) : _index = initialReadingAnchor?.line ?? index,
-       super(
-         book.versionDisplayTitle == null
-             ? book.title
-             : '${book.title} (${book.versionDisplayTitle})',
-       ) {
+  }) : book = book.withCatalogTitle(),
+       _index = initialReadingAnchor?.line ?? index,
+       super('') {
+    title = _tabTitle(this.book);
     lines = LineScrollController(initialAnchor: initialReadingAnchor);
     // קביעת ברירת המחדל של splitedView מההגדרות אם לא סופק
     final bool effectiveSplitedView =
@@ -192,14 +213,14 @@ class TextBookTab extends OpenedTab {
     // כשאין בחירה מפורשת, גם פתיחה מהיסטוריה ומקישורים מכבדת את העדפת הספר.
     final bool effectiveShowPageShapeView =
         showPageShapeView ??
-        PageShapeSettingsManager.getViewModePreference(book.title) ??
+        PageShapeSettingsManager.getViewModePreference(this.book.title) ??
         false;
 
     _lastSplitView = effectiveSplitedView;
     _lastShowPageShapeView = effectiveShowPageShapeView;
 
     _initialState = TextBookInitial.named(
-      book,
+      this.book,
       _index,
       openLeftPane,
       commentators ?? [],
@@ -231,6 +252,10 @@ class TextBookTab extends OpenedTab {
     // ה‑blocOverride קיים רק לטסטים שצריכים להזריק bloc עם repository מזויף.
     if (blocOverride != null) _bloc = _attachBloc(blocOverride);
   }
+
+  static String _tabTitle(TextBook book) => book.versionDisplayTitle == null
+      ? book.title
+      : '${book.title} (${book.versionDisplayTitle})';
 
   TextBookBloc _createBloc() {
     final created = _attachBloc(

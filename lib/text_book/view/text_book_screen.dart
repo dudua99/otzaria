@@ -7,9 +7,7 @@ import 'package:otzaria/theme/app_fonts.dart';
 import 'package:otzaria/theme/app_motion.dart';
 import 'package:otzaria/core/messages/common_messages.dart';
 import 'package:otzaria/core/windowing/app_window_keys.dart';
-import 'dart:io';
 
-import 'package:otzaria/core/windowing/window_fullscreen_cubit.dart';
 import 'package:otzaria/core/windowing/window_fullscreen_top_bar.dart';
 import 'package:otzaria/book_protection/utils/copy_guard.dart';
 import 'package:otzaria/bookmarks/view/book_bookmarks_action.dart';
@@ -88,7 +86,6 @@ import 'package:otzaria/personal_notes/utils/personal_note_source_selection.dart
 import 'package:otzaria/widgets/smart_text/render_settings.dart';
 import 'package:otzaria/shortcuts/shortcut_helper.dart';
 import 'package:otzaria/shortcuts/shortcut_validator.dart';
-import 'package:otzaria/utils/ui/fullscreen_helper.dart';
 
 import 'package:otzaria/widgets/navigation/responsive_action_bar.dart';
 import 'package:otzaria/widgets/navigation/book_view_actions.dart';
@@ -2574,6 +2571,7 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
       repository,
       widget.tab.lines,
       state.searchText,
+      state.searchTextSource,
       state.searchOptions,
       state.alternativeWords,
       state.spacingValues,
@@ -2593,6 +2591,7 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
       lines: widget.tab.lines,
       // הוא מעביר את טקסט החיפוש מה-state הנוכחי אל תוך רכיב החיפוש
       initialQuery: state.searchText,
+      initialQuerySource: state.searchTextSource,
       initialSearchOptions: state.searchOptions,
       initialAlternativeWords: state.alternativeWords,
       initialSpacingValues: state.spacingValues,
@@ -2961,10 +2960,10 @@ bool _handleGlobalKeyEvent(
     }
   }
 
-  // ESC ללא Ctrl/Cmd; F11 מטופל בקיצורים הגלובליים, כדי שלא יוחלף פעמיים
+  // יציאה ממסך מלא מטופלת בקיצורים הגלובליים, אחרי הקיצורים המותאמים.
   if (event is KeyDownEvent && !isCtrlOrCmd) {
     switch (event.logicalKey) {
-      // ESC - ניקוי הדגשת החיפוש או ה-?mark, ואם אין הדגשה — יציאה ממסך מלא
+      // ESC ללא Ctrl/Cmd מנקה את הדגשת החיפוש או ה־?mark.
       case LogicalKeyboardKey.escape:
         if (state.searchText.isNotEmpty) {
           context.read<TextBookBloc>().add(
@@ -2978,12 +2977,6 @@ bool _handleGlobalKeyEvent(
             TourInteraction(type: TourInteractionType.linkHighlightCleared),
           );
           return true;
-        }
-        if (!Platform.isAndroid && !Platform.isIOS) {
-          if (context.read<WindowFullscreenCubit>().state) {
-            FullscreenHelper.toggleFullscreen(context, false);
-            return true;
-          }
         }
         break;
     }
@@ -3110,7 +3103,7 @@ Future<void> _dispatchContextMenuShortcut({
     fontSize: state.fontSize,
     fontFamily: settingsState.fontFamily,
     fontWeight: settingsState.fontBold ? FontWeight.bold : null,
-    lineHeight: settingsState.lineHeight,
+    lineHeight: settingsState.lineHeightForBook(state.lineHeight),
   );
 
   final Map<String, dynamic> selection;

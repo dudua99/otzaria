@@ -111,6 +111,24 @@ class UpdateFontSize extends TextBookEvent {
   List<Object?> get props => [fontSize];
 }
 
+/// גודל גופן המפרשים / מרווח השורות של הספר הזה בלבד (#2306).
+class UpdateBookReadingMetrics extends TextBookEvent {
+  final double? commentatorsFontSize;
+  final double? lineHeight;
+
+  /// הערכים שניתנו שווים להגדרה הכללית: הספר חוזר לרשת אותה, כמו בקובץ שלו.
+  final bool inherit;
+
+  const UpdateBookReadingMetrics({
+    this.commentatorsFontSize,
+    this.lineHeight,
+    this.inherit = false,
+  });
+
+  @override
+  List<Object?> get props => [commentatorsFontSize, lineHeight, inherit];
+}
+
 class ToggleLeftPane extends TextBookEvent {
   final bool show;
 
@@ -264,6 +282,9 @@ class TogglePinLeftPane extends TextBookEvent {
 
 class UpdateSearchText extends TextBookEvent {
   final String text;
+
+  /// זהות חלונית החיפוש. חיפוש חיצוני מקבל זהות חדשה לכל אירוע.
+  final Object? textSource;
   final Map<String, Map<String, bool>>? searchOptions;
   final Map<int, List<String>>? alternativeWords;
   final Map<String, String>? spacingValues;
@@ -278,6 +299,7 @@ class UpdateSearchText extends TextBookEvent {
 
   const UpdateSearchText(
     this.text, {
+    this.textSource,
     this.searchOptions,
     this.alternativeWords,
     this.spacingValues,
@@ -292,6 +314,7 @@ class UpdateSearchText extends TextBookEvent {
   @override
   List<Object?> get props => [
     text,
+    textSource,
     searchOptions,
     alternativeWords,
     spacingValues,

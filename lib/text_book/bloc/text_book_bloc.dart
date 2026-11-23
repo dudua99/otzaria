@@ -238,6 +238,19 @@ class TextBookBloc extends Bloc<TextBookEvent, TextBookState> {
     on<UpdateResolvedBookId>(_onUpdateResolvedBookId);
     on<UpdateDivineNames>(_onUpdateDivineNames);
     on<UpdateFontSize>(_onUpdateFontSize);
+    on<UpdateBookReadingMetrics>((event, emit) {
+      final current = state;
+      if (current is! TextBookLoaded) return;
+      emit(
+        current.copyWith(
+          commentatorsFontSize: event.commentatorsFontSize,
+          lineHeight: event.lineHeight,
+          clearCommentatorsFontSize:
+              event.inherit && event.commentatorsFontSize != null,
+          clearLineHeight: event.inherit && event.lineHeight != null,
+        ),
+      );
+    });
     on<ToggleLeftPane>(_onToggleLeftPane);
     on<ToggleSplitView>(_onToggleSplitView);
     on<TogglePageShapeView>(_onTogglePageShapeView);
@@ -766,6 +779,7 @@ class TextBookBloc extends Bloc<TextBookEvent, TextBookState> {
   ) async {
     TextBook book;
     String searchText;
+    Object? searchTextSource;
     String highlightText = '';
     int? permanentHighlightLine;
     Map<String, Map<String, bool>> searchOptions = {};
@@ -797,6 +811,7 @@ class TextBookBloc extends Bloc<TextBookEvent, TextBookState> {
       final currentState = state as TextBookLoaded;
       book = currentState.book;
       searchText = currentState.searchText;
+      searchTextSource = currentState.searchTextSource;
       highlightText = currentState.highlightText;
       permanentHighlightLine = currentState.permanentHighlightLine;
       searchOptions = currentState.searchOptions;
@@ -1099,6 +1114,8 @@ class TextBookBloc extends Bloc<TextBookEvent, TextBookState> {
         commentatorsLoaded: existingCommentatorsLoaded,
         tableOfContents: tableOfContents,
         fontSize: _pendingFontSize ?? event.fontSize,
+        commentatorsFontSize: perBookSettings?.commentatorsFontSize,
+        lineHeight: perBookSettings?.lineHeight,
         showLeftPane: initialShowLeftPane,
         showSplitView: event.showSplitView,
         showPageShapeView: initialShowPageShapeView,
@@ -1122,6 +1139,7 @@ class TextBookBloc extends Bloc<TextBookEvent, TextBookState> {
             ((Settings.getValue<bool>('key-pin-sidebar') ?? false) ||
                 initialShowLeftPane),
         searchText: searchText,
+        searchTextSource: searchTextSource,
         searchOptions: searchOptions,
         alternativeWords: alternativeWords,
         spacingValues: spacingValues,
@@ -2152,6 +2170,7 @@ class TextBookBloc extends Bloc<TextBookEvent, TextBookState> {
       emit(
         currentState.copyWith(
           searchText: event.text,
+          searchTextSource: event.textSource ?? Object(),
           searchOptions: event.searchOptions,
           alternativeWords: event.alternativeWords,
           spacingValues: event.spacingValues,

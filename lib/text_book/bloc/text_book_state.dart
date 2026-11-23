@@ -280,6 +280,10 @@ class TextBookLoaded extends TextBookState {
   final int contentVersion;
   final ContentLineChanges? contentChanges;
   final double fontSize;
+
+  /// גודל גופן המפרשים ומרווח השורות שנשמרו לספר זה (#2306); null = הכללי.
+  final double? commentatorsFontSize;
+  final double? lineHeight;
   final bool showSplitView;
   final bool showPageShapeView;
   final List<String> activeCommentators;
@@ -344,6 +348,7 @@ class TextBookLoaded extends TextBookState {
   final Set<int> selectedIndices;
   final bool pinLeftPane;
   final String searchText;
+  final Object? searchTextSource;
   final Map<String, Map<String, bool>> searchOptions;
   final Map<int, List<String>> alternativeWords;
   final Map<String, String> spacingValues;
@@ -404,6 +409,8 @@ class TextBookLoaded extends TextBookState {
     this.contentVersion = 0,
     this.contentChanges,
     required this.fontSize,
+    this.commentatorsFontSize,
+    this.lineHeight,
     required this.showSplitView,
     this.showPageShapeView = false,
     required this.activeCommentators,
@@ -440,6 +447,7 @@ class TextBookLoaded extends TextBookState {
     this.selectedIndices = const {},
     required this.pinLeftPane,
     required this.searchText,
+    this.searchTextSource,
     this.searchOptions = const {},
     this.alternativeWords = const {},
     this.spacingValues = const {},
@@ -614,6 +622,10 @@ class TextBookLoaded extends TextBookState {
     int? contentVersion,
     ContentLineChanges? contentChanges,
     double? fontSize,
+    double? commentatorsFontSize,
+    bool clearCommentatorsFontSize = false,
+    double? lineHeight,
+    bool clearLineHeight = false,
     bool? showLeftPane,
     bool? showSplitView,
     bool? showPageShapeView,
@@ -656,6 +668,7 @@ class TextBookLoaded extends TextBookState {
     List<int>? visibleIndices,
     bool? pinLeftPane,
     String? searchText,
+    Object? searchTextSource,
     Map<String, Map<String, bool>>? searchOptions,
     Map<int, List<String>>? alternativeWords,
     Map<String, String>? spacingValues,
@@ -763,6 +776,10 @@ class TextBookLoaded extends TextBookState {
               ? this.contentChanges
               : null),
       fontSize: fontSize ?? this.fontSize,
+      commentatorsFontSize: clearCommentatorsFontSize
+          ? null
+          : commentatorsFontSize ?? this.commentatorsFontSize,
+      lineHeight: clearLineHeight ? null : lineHeight ?? this.lineHeight,
       showLeftPane: showLeftPane ?? this.showLeftPane,
       showSplitView: showSplitView ?? this.showSplitView,
       showPageShapeView: showPageShapeView ?? this.showPageShapeView,
@@ -805,6 +822,9 @@ class TextBookLoaded extends TextBookState {
           : (selectedIndices ?? this.selectedIndices),
       pinLeftPane: pinLeftPane ?? this.pinLeftPane,
       searchText: searchText ?? this.searchText,
+      searchTextSource: searchText == null
+          ? this.searchTextSource
+          : searchTextSource,
       searchOptions: searchOptions ?? this.searchOptions,
       alternativeWords: alternativeWords ?? this.alternativeWords,
       spacingValues: spacingValues ?? this.spacingValues,
@@ -873,6 +893,8 @@ class TextBookLoaded extends TextBookState {
     contentVersion,
     content.length,
     fontSize,
+    commentatorsFontSize,
+    lineHeight,
     showLeftPane,
     showSplitView,
     showPageShapeView,
@@ -906,6 +928,7 @@ class TextBookLoaded extends TextBookState {
     _SetProp(selectedIndices),
     pinLeftPane,
     searchText,
+    searchTextSource,
     _SearchOptionsProp(searchOptions),
     _AlternativeWordsProp(alternativeWords),
     _SpacingValuesProp(spacingValues),
