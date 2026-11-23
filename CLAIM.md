@@ -1,2 +1,1 @@
-claimed 2026-11-23T19:29:59Z UTC
-fix #5905 (select target segment after opening from itur)
+done: prbody/5905-fix 9d562b36b33a152bc515ca95e45dfe73c10d97f0
