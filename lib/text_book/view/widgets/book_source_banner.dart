@@ -73,7 +73,8 @@ class BookSourceBanner extends StatefulWidget {
 class _BookSourceBannerState extends State<BookSourceBanner> {
   bool _expanded = false;
   static const _collapseThreshold = 300;
-  static const _collapseLineThreshold = 3;
+  // הכפתור ושתי השורות המקופלות גבוהים כמעט כמו ארבע שורות מלאות.
+  static const _collapseLineThreshold = 4;
   List<List<BannerSegment>> _lines = const [];
 
   /// מקביל ל-[_lines]; null לקטע שאינו קישור.

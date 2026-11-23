@@ -184,6 +184,15 @@ void main() {
       expect(find.textContaining('שורה 8'), findsNothing);
     });
 
+    testWidgets('a credit of four short lines is shown in full', (
+      tester,
+    ) async {
+      final fourLines = [for (var i = 1; i <= 4; i++) 'שורה $i'].join('\n');
+      await tester.pumpWidget(_wrap(BookSourceBanner(text: fourLines)));
+      expect(find.text('הצג פרטים'), findsNothing);
+      expect(find.textContaining('שורה 4'), findsOneWidget);
+    });
+
     testWidgets('a short credit that wraps in a narrow window collapses', (
       tester,
     ) async {
