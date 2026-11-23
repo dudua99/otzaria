@@ -1,2 +1,1 @@
-claimed 2026-11-23T19:09:37Z UTC
-fix #5904 (prev-segment arrow selection cleared)
+done: prbody/5904-fix 369c9a0630327ddb7dead0116069796ee64bcc82 (fix branch head a0c7aa949b4f8e9e51fca4a67b54cec6772b35fd)
