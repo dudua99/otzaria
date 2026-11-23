@@ -456,6 +456,15 @@ class UpdateRestoreAllWindows extends SettingsEvent {
   List<Object?> get props => [enabled];
 }
 
+class UpdateStartOnHomeScreen extends SettingsEvent {
+  final bool enabled;
+
+  const UpdateStartOnHomeScreen(this.enabled);
+
+  @override
+  List<Object?> get props => [enabled];
+}
+
 /// תיקיית הגיבוי שנבחרה; ריק = תיקיית ברירת המחדל.
 class UpdateBackupPath extends SettingsEvent {
   final String path;

@@ -17,11 +17,19 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
   /// אותו עמוד טאבים, ומעבר ביניהם (לחיצה על תוצאת חיפוש, החלפת לשונית
   /// עליונה) עובר דרך TabsBloc בלבד; בלי היישור הזה currentScreen מתאבן על
   /// הערך האחרון שנשלח ב-NavigateToScreen והסרגל מדגיש את האייקון הלא-נכון.
+  ///
+  /// [startOnHomeScreen] — "התחל במסך הבית" (#5853): המסך הראשון הוא
+  /// הספרייה גם כשיש כרטיסיות שמורות. הכרטיסיות עצמן נטענות ב-TabsBloc כרגיל.
   NavigationBloc({
     required this._repository,
     required TabsRepository tabsRepository,
     Stream<OpenedTab?>? activePaneStream,
-  }) : super(NavigationState.initial(tabsRepository.loadTabs().isNotEmpty)) {
+    bool startOnHomeScreen = false,
+  }) : super(
+         NavigationState.initial(
+           !startOnHomeScreen && tabsRepository.loadTabs().isNotEmpty,
+         ),
+       ) {
     on<NavigateToScreen>(_onNavigateToScreen);
     on<CheckLibrary>(_onCheckLibrary);
     on<SyncScreenWithActivePane>(_onSyncScreenWithActivePane);

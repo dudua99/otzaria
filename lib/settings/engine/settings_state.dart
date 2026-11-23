@@ -105,6 +105,9 @@ class SettingsState extends Equatable {
   final String updateCheckFrequency;
   final bool restoreAllWindows;
 
+  /// issue #5853: בהפעלה מוצג מסך הבית גם כשיש כרטיסיות שמורות.
+  final bool startOnHomeScreen;
+
   /// תיקיית הגיבוי שנבחרה; ריק = ברירת המחדל.
   final String backupPath;
   final String autoBackupFrequency;
@@ -202,6 +205,7 @@ class SettingsState extends Equatable {
     this.autoSync = true,
     this.updateCheckFrequency = '',
     this.restoreAllWindows = false,
+    this.startOnHomeScreen = false,
     this.backupPath = '',
     this.autoBackupFrequency = 'weekly',
     this.backupRetentionProfile = '',
@@ -330,6 +334,7 @@ class SettingsState extends Equatable {
     bool? autoSync,
     String? updateCheckFrequency,
     bool? restoreAllWindows,
+    bool? startOnHomeScreen,
     String? backupPath,
     String? autoBackupFrequency,
     String? backupRetentionProfile,
@@ -429,6 +434,7 @@ class SettingsState extends Equatable {
       autoSync: autoSync ?? this.autoSync,
       updateCheckFrequency: updateCheckFrequency ?? this.updateCheckFrequency,
       restoreAllWindows: restoreAllWindows ?? this.restoreAllWindows,
+      startOnHomeScreen: startOnHomeScreen ?? this.startOnHomeScreen,
       backupPath: backupPath ?? this.backupPath,
       autoBackupFrequency: autoBackupFrequency ?? this.autoBackupFrequency,
       backupRetentionProfile:
@@ -528,6 +534,7 @@ class SettingsState extends Equatable {
     autoSync,
     updateCheckFrequency,
     restoreAllWindows,
+    startOnHomeScreen,
     backupPath,
     autoBackupFrequency,
     backupRetentionProfile,

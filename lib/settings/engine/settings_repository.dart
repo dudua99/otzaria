@@ -75,6 +75,9 @@ class SettingsRepository {
   static const String keyCopyHeaderFormat = 'key-copy-header-format';
   static const String keyIsFullscreen = 'key-is-fullscreen';
   static const String keyRestoreAllWindows = 'key-restore-all-windows';
+
+  /// "התחל במסך הבית" — נקרא ב-[NavigationBloc] בבחירת המסך הראשון.
+  static const String keyStartOnHomeScreen = 'key-start-on-home-screen';
   static const String keyLibraryViewMode = 'key-library-view-mode';
   static const String keyLibraryShowPreview = 'key-library-show-preview';
 
@@ -349,6 +352,7 @@ class SettingsRepository {
     keyCopyHeaderFormat,
     keyIsFullscreen,
     keyRestoreAllWindows,
+    keyStartOnHomeScreen,
     keyLibraryViewMode,
     keyLibraryShowPreview,
     keyLibraryShowPreviewShortWindow,
@@ -666,6 +670,10 @@ class SettingsRepository {
       ),
       'restoreAllWindows': _settings.getValue<bool>(
         keyRestoreAllWindows,
+        defaultValue: false,
+      ),
+      'startOnHomeScreen': _settings.getValue<bool>(
+        keyStartOnHomeScreen,
         defaultValue: false,
       ),
       'backupPath': _settings.getValue<String>(keyBackupPath, defaultValue: ''),
@@ -1063,6 +1071,10 @@ class SettingsRepository {
 
   Future<void> updateRestoreAllWindows(bool value) async {
     await _settings.setValue(keyRestoreAllWindows, value);
+  }
+
+  Future<void> updateStartOnHomeScreen(bool value) async {
+    await _settings.setValue(keyStartOnHomeScreen, value);
   }
 
   Future<void> updateBackupPath(String value) async {

@@ -28,6 +28,8 @@ import 'package:otzaria/plugins/repository/plugin_registry_repository.dart';
 import 'package:otzaria/plugins/services/plugin_reader_actions.dart';
 import 'package:otzaria/plugins/services/plugin_search_completed_publisher.dart';
 import 'package:otzaria/plugins/services/plugin_toolbar_registry.dart';
+import 'package:otzaria/settings/engine/app_settings_store.dart';
+import 'package:otzaria/settings/engine/settings_repository.dart';
 import 'package:otzaria/settings/services/custom_folders/bloc/custom_folders_bloc.dart';
 import 'package:otzaria/tools/calendar/services/calendar_alerts_client.dart';
 import 'package:otzaria/tabs/bloc/tabs_bloc.dart';
@@ -155,6 +157,11 @@ class WindowScopeProviders extends StatelessWidget {
                     NavigationBloc(
                       repository: NavigationRepository(),
                       tabsRepository: TabsRepository(window: tabsSession),
+                      startOnHomeScreen:
+                          Settings.getValue<bool>(
+                            SettingsRepository.keyStartOnHomeScreen,
+                          ) ??
+                          false,
                       // "חיפוש" ו"עיון" הם אותו עמוד טאבים; היישור לפי
                       // החלונית הפעילה שומר שהאייקון המודגש בסרגל יתאים
                       // למה שמוצג בפועל.

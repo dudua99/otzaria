@@ -100,6 +100,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     on<UpdateAutoSync>(_onUpdateAutoSync);
     on<UpdateUpdateCheckFrequency>(_onUpdateUpdateCheckFrequency);
     on<UpdateRestoreAllWindows>(_onUpdateRestoreAllWindows);
+    on<UpdateStartOnHomeScreen>(_onUpdateStartOnHomeScreen);
     on<UpdateBackupPath>(_onUpdateBackupPath);
     on<UpdateAutoBackupFrequency>(_onUpdateAutoBackupFrequency);
     on<UpdateBackupRetentionProfile>(_onUpdateBackupRetentionProfile);
@@ -241,6 +242,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
       autoSync: settings['autoSync'] ?? true,
       updateCheckFrequency: settings['updateCheckFrequency'] ?? '',
       restoreAllWindows: settings['restoreAllWindows'] ?? false,
+      startOnHomeScreen: settings['startOnHomeScreen'] ?? false,
       backupPath: settings['backupPath'] ?? '',
       autoBackupFrequency: settings['autoBackupFrequency'] ?? 'weekly',
       backupRetentionProfile: settings['backupRetentionProfile'] ?? '',
@@ -365,6 +367,14 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   ) async {
     await _repository.updateRestoreAllWindows(event.enabled);
     emit(state.copyWith(restoreAllWindows: event.enabled));
+  }
+
+  Future<void> _onUpdateStartOnHomeScreen(
+    UpdateStartOnHomeScreen event,
+    Emitter<SettingsState> emit,
+  ) async {
+    await _repository.updateStartOnHomeScreen(event.enabled);
+    emit(state.copyWith(startOnHomeScreen: event.enabled));
   }
 
   Future<void> _onUpdateBackupPath(

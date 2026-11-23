@@ -191,6 +191,14 @@ class SystemSettingsTab extends StatefulWidget {
       keywords: ['חלון', 'חלונות', 'הפעלה', 'שחזור', 'מופעל', 'לא מופעל'],
     ),
     SettingsSearchEntry(
+      id: 'system.advanced.startOnHomeScreen',
+      title: 'התחל במסך הבית',
+      subtitle: 'בהפעלה מוצג מסך הבית במקום הספר האחרון',
+      tab: SettingsTab.system,
+      cardId: 'system.advanced',
+      keywords: ['בית', 'ספרייה', 'הפעלה', 'פתיחה', 'ספר אחרון'],
+    ),
+    SettingsSearchEntry(
       id: 'system.advanced.backup',
       title: 'גיבוי אוטומטי',
       subtitle: 'תדירות גיבוי + יצירה ושחזור גיבוי',
@@ -1319,6 +1327,19 @@ class _SystemSettingsTabState extends State<SystemSettingsTab> {
               UpdateRestoreAllWindows(value),
             ),
           ),
+        SettingsSwitchTile(
+          icon: FluentIcons.home_24_regular,
+          title: context.settingsText('התחל במסך הבית'),
+          subtitle: state.startOnHomeScreen
+              ? context.settingsText(
+                  'התוכנה נפתחת במסך הבית, והכרטיסיות נשמרות',
+                )
+              : context.settingsText('התוכנה נפתחת בספר האחרון שהיה פתוח'),
+          value: state.startOnHomeScreen,
+          onChanged: (value) => context.read<SettingsBloc>().add(
+            UpdateStartOnHomeScreen(value),
+          ),
+        ),
         // ── צור/שחזר גיבוי ──
         SettingsActionTile.text(
           icon: FluentIcons.arrow_sync_24_regular,
