@@ -68,3 +68,7 @@
 5758 feature-default
 5761 feature-default   (changes ypl's c4a227ecd: keep "…" expand, only add scroll)
 5766 feature-default
+5796 bug   (commentators tab: nav + zoom shortcuts missing in handleCommentatorsTabShortcuts; answer Rivka-Or with the failing test)
+5772 bug   (vertical tab column never scrolls to the active tab; ReadingTabStrip)
+5798 bug   (reproduce first: commentators-tab position after restart/History; 7a8ff8fa9 #2139 may cover it -> NOT READY with evidence)
+5840 bug   (reproduce first with windows platform override: restored query not selected in regular mode; if all paths select -> NOT READY with evidence)
