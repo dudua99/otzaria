@@ -1,1 +1,1 @@
-2026-11-23T00:47:25Z claim fix-5794: commentators-tab title location per notes/5794.md
+2026-11-23T01:53:36Z done: prbody/5794-fix 72b79fe19373b9d079fe0f4c4e0de514b003a603
