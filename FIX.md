@@ -23,3 +23,5 @@ OUTPUT: push an orphan branch `prbody/<N>-fix` with two files: BODY.md (final PR
 
 
 GIT IDENTITY (mandatory, before any commit): commits must be authored by the fork owner, not "Claude". Run: `git config user.name "dudua99"; git config user.email "$(git log -1 --format=%ae --author=dudua99 origin/dev 2>/dev/null || git log -1 --format=%ae --author=dudua99 --all)"` and check `git config user.email` is not empty and not noreply@anthropic.com. Never add Co-Authored-By.
+
+**Commit signing (owner decision 23.11):** before the first commit run `git config commit.gpgsign false && git config tag.gpgsign false` in every repo you commit to, so commits are unsigned (the cloud signing key is unknown to GitHub and shows "Unverified").
