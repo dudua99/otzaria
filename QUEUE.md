@@ -76,3 +76,5 @@
 5794 feature-default   (location in commentators-tab top-bar title; reuse bookmark ref wording)
 5810 feature-default   (remember commentators-TAB selection per book; scope pending Y-PLONI - say so in BODY)
 5790 feature-default   (zoomed PDF: Left/Right pan until the edge, then turn page; palmoni5 thought it already works - show failing test)
+5727 bug   (page-shape category save: base name "תוספות" startsWith-matches תוספות רא"ש; prefer exact base-name match; read palmoni5 comment first)
+5904 bug   (reproduce first: prev-segment arrow selection cleared by combined_book_screen _onScroll stale visibleIndices; 9c79c5f14)
