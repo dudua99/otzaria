@@ -1,0 +1,64 @@
+name: Transfer Windows Full installer
+on:
+  push:
+    branches:
+      - build/windows-full-v40-20261123
+    paths:
+      - .github/workflows/transfer-windows-full-v40.yml
+permissions:
+  actions: read
+jobs:
+  transfer:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download the verified build artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh api "repos/${GITHUB_REPOSITORY}/actions/artifacts/14846334962/zip" > installer.zip
+          echo 'd3e13a638cc94b316a11bf2aefd944acfcedd901884ff14503e61d2f9fbf295a  installer.zip' | sha256sum -c
+          mkdir chunks
+          split --bytes=480M --numeric-suffixes=0 --suffix-length=2 installer.zip chunks/installer.zip.part-
+      - name: Upload part 1 of 6
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: windows-full-v40-part-00
+          path: chunks/installer.zip.part-00
+          if-no-files-found: error
+          compression-level: 0
+      - name: Upload part 2 of 6
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: windows-full-v40-part-01
+          path: chunks/installer.zip.part-01
+          if-no-files-found: error
+          compression-level: 0
+      - name: Upload part 3 of 6
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: windows-full-v40-part-02
+          path: chunks/installer.zip.part-02
+          if-no-files-found: error
+          compression-level: 0
+      - name: Upload part 4 of 6
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: windows-full-v40-part-03
+          path: chunks/installer.zip.part-03
+          if-no-files-found: error
+          compression-level: 0
+      - name: Upload part 5 of 6
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: windows-full-v40-part-04
+          path: chunks/installer.zip.part-04
+          if-no-files-found: error
+          compression-level: 0
+      - name: Upload part 6 of 6
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: windows-full-v40-part-05
+          path: chunks/installer.zip.part-05
+          if-no-files-found: error
+          compression-level: 0
