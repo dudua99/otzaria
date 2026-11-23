@@ -1,1 +1,1 @@
-2026-11-23T01:15:58Z claim qa-5798: QA per QA.md for fix/commentators-tab-restore-position-5798
+2026-11-23T01:53:51Z done: prbody/5798-qa 367587d3e63b366c8a995714bfd0cb84404a5b63 (branch head fe49dcce00e096471e58bba00738d7acbbbb1b5d)
