@@ -1,1 +1,1 @@
-2026-11-23T00:43:43Z claim fix-5840 per notes/5840.md
+2026-11-23T00:51:54Z done: prbody/5840-fix 8c67122f9a37542ce5f151b3d54cc6e67c484e50 (NOT READY: not reproducible on dev)
