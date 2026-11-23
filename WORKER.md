@@ -6,6 +6,8 @@ Rules: follow `FIX.md` / `QA.md` from this branch (they include GIT IDENTITY: du
 
 Before taking any item: `git show FETCH_HEAD:HOLD.md` (if it exists) and skip every issue number listed there — for fix AND for QA.
 
+**Commit signing (owner decision 23.11):** before the first commit run `git config commit.gpgsign false && git config tag.gpgsign false` in every repo you commit to, so commits are unsigned (the cloud signing key is unknown to GitHub and shows "Unverified").
+
 ## 0. Setup
 `git fetch origin cloud-notes && git show FETCH_HEAD:FIX.md > /tmp/FIX.md && git show FETCH_HEAD:QA.md > /tmp/QA.md && git show FETCH_HEAD:QUEUE.md > /tmp/QUEUE.md`; set the git identity now.
 List remote branches once: `git ls-remote origin 'refs/heads/prbody/*' 'refs/heads/claim/*'`.
