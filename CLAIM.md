@@ -1,1 +1,1 @@
-claimed 2026-11-23T21:09:25Z UTC: QA of prbody/5904-fix (fix/prev-segment-keeps-selection-5904)
+done: prbody/5904-qa c022572e68536f503e897b4d16e6cf24332e8f3c (2026-11-23T21:35:42Z UTC)
