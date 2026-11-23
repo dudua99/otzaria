@@ -1,1 +1,1 @@
-2026-11-23T00:49:35Z claim fix-5810 per notes/5810.md
+2026-11-23T01:52:28Z done: prbody/5810-fix 733ca014cb1e4566987a68b445edb166510eba8a
