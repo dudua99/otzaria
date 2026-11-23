@@ -1,1 +1,1 @@
-2026-11-23T00:43:41Z claim fix-5798: implement per notes/5798.md
+2026-11-23T01:14:59Z done: prbody/5798-fix fe49dcce00e096471e58bba00738d7acbbbb1b5d
