@@ -2232,11 +2232,11 @@ void main() {
       final escapeListener = find
           .descendant(
             of: find.byType(TextBookViewerBloc),
-            matching: find.byType(KeyboardListener),
+            matching: _bookKeyFocus,
           )
           .first;
       expect(
-        tester.widget<KeyboardListener>(escapeListener).focusNode.hasFocus,
+        tester.widget<Focus>(escapeListener).focusNode!.hasFocus,
         isTrue,
       );
       await tester.sendKeyEvent(LogicalKeyboardKey.escape);
@@ -2269,13 +2269,13 @@ void main() {
       expect(geometry.calls, ['fullScreen:false', 'titleBar']);
       geometry.calls.clear();
 
-      // התרחיש מחייב פוקוס בתוך ה-KeyboardListener של הספר.
+      // התרחיש מחייב פוקוס בתוך ה-Focus של הספר.
       final bookListener = find.descendant(
         of: find.byType(TextBookViewerBloc),
-        matching: find.byType(KeyboardListener),
+        matching: _bookKeyFocus,
       );
       expect(
-        tester.widget<KeyboardListener>(bookListener.first).focusNode.hasFocus,
+        tester.widget<Focus>(bookListener.first).focusNode!.hasFocus,
         isTrue,
       );
 
@@ -2848,6 +2848,11 @@ void main() {
     });
   });
 }
+
+/// ה-Focus של מסך הספר שמטפל בקיצורי הספר.
+final _bookKeyFocus = find.byWidgetPredicate(
+  (widget) => widget is Focus && widget.child is Scaffold,
+);
 
 Future<void> _pumpTextBookScreen(
   WidgetTester tester, {

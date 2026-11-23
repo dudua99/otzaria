@@ -1059,23 +1059,26 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
                 }
               });
 
-              return KeyboardListener(
+              // מקש שהספר טיפל בו לא ממשיך לקיצורים הקבועים (Ctrl+Tab, F11...).
+              return Focus(
                 focusNode: _bookContentFocusNode,
-                autofocus: false,
-                onKeyEvent: (event) => _handleGlobalKeyEvent(
-                  event,
-                  context,
-                  state,
-                  widget.tab,
-                  openSearchFromToolbar: _openSearchFromToolbar,
-                  onPrint: () => handlePrintPress(state),
-                  openNotesForCurrentView: () =>
-                      _openPersonalNotesForCurrentView(state),
-                  isNotesPanelOpen: _isPersonalNotesPanelOpen(state),
-                  selectedTextForNote: _selectedTextForSearch,
-                  selectedLineForNote: _selectedLineForNote,
-                  selectedColumnForNote: _selectedColumnForNote,
-                ),
+                onKeyEvent: (_, event) =>
+                    _handleGlobalKeyEvent(
+                      event,
+                      context,
+                      state,
+                      widget.tab,
+                      openSearchFromToolbar: _openSearchFromToolbar,
+                      onPrint: () => handlePrintPress(state),
+                      openNotesForCurrentView: () =>
+                          _openPersonalNotesForCurrentView(state),
+                      isNotesPanelOpen: _isPersonalNotesPanelOpen(state),
+                      selectedTextForNote: _selectedTextForSearch,
+                      selectedLineForNote: _selectedLineForNote,
+                      selectedColumnForNote: _selectedColumnForNote,
+                    )
+                    ? KeyEventResult.handled
+                    : KeyEventResult.ignored,
                 child: Scaffold(
                   body: Column(
                     children: [
