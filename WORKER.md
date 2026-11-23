@@ -4,6 +4,8 @@ You are one of several identical workers started on a schedule. The coordinator'
 
 Rules: follow `FIX.md` / `QA.md` from this branch (they include GIT IDENTITY: dudua99 / 99@9900.co.il, NO Co-Authored-By / AI attribution anywhere, no force push, no PRs, no GitHub comments). AGENTS.md from upstream/dev overrides everything.
 
+Before taking any item: `git show FETCH_HEAD:HOLD.md` (if it exists) and skip every issue number listed there — for fix AND for QA.
+
 ## 0. Setup
 `git fetch origin cloud-notes && git show FETCH_HEAD:FIX.md > /tmp/FIX.md && git show FETCH_HEAD:QA.md > /tmp/QA.md && git show FETCH_HEAD:QUEUE.md > /tmp/QUEUE.md`; set the git identity now.
 List remote branches once: `git ls-remote origin 'refs/heads/prbody/*' 'refs/heads/claim/*'`.
