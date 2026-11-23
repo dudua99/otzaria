@@ -103,6 +103,7 @@ class ShamorZachorDataProvider with ChangeNotifier {
   /// שווה לגודל של ספר במעקב.
   Future<Set<PdfBook>> trackedPdfBooksAmong(Iterable<PdfBook> books) async {
     final tracked = <PdfBook>{};
+    if (_trackedPdfBooks.isEmpty) return tracked;
     for (final book in books) {
       if (await _trackedPdfEntryOf(book) != null) tracked.add(book);
     }
