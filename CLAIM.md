@@ -1,1 +1,1 @@
-2026-11-23T01:53:52Z claim qa-5810: QA per QA.md for feat/commentators-tab-selection-per-book-5810
+2026-11-23T02:35:02Z done: prbody/5810-qa 6f9f6b2feab4aef6b4ce03d0c8acb5efd5b893f1
