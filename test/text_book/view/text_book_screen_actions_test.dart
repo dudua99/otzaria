@@ -2378,6 +2378,58 @@ void main() {
         variant: TargetPlatformVariant.only(TargetPlatform.windows),
       );
     }
+
+    testWidgets('מקש בודד שהוקצה לספר אינו נבלע בהקלדה בשדה החיפוש בספר', (
+      tester,
+    ) async {
+      await Settings.setValue<String>(ShortcutValidator.zoomInKey, 'z');
+      final book = TextBook(title: 'ספר בדיקה');
+      final bloc = _ExportTextBookBloc(_loadedState(book), content: 'א');
+      final tab = TextBookTab(book: book, index: 0, blocOverride: bloc);
+      final tabsBloc = _TestTabsBloc(
+        TabsState(tabs: [tab], currentTabIndex: 0),
+      );
+      final settingsBloc = _TestSettingsBloc(SettingsState.initial());
+      addTearDown(() async {
+        await tester.pumpWidget(const SizedBox.shrink());
+        await tester.pump();
+        await Settings.setValue<String?>(ShortcutValidator.zoomInKey, null);
+        await bloc.close();
+        await tabsBloc.close();
+        await settingsBloc.close();
+        tab.dispose();
+      });
+
+      await _setSurfaceSize(tester, const Size(1200, 900));
+      await _pumpTextBookScreen(
+        tester,
+        tab: tab,
+        textBookBloc: bloc,
+        tabsBloc: tabsBloc,
+        settingsBloc: settingsBloc,
+        focusRepository: focusRepository,
+        shamorZachorDataProvider: shamorZachorDataProvider,
+        shamorZachorProgressProvider: shamorZachorProgressProvider,
+        bookmarkBloc: bookmarkBloc,
+        personalNotesBloc: personalNotesBloc,
+        tourCubit: tourCubit,
+        isInCombinedView: false,
+      );
+      // Ctrl+F בוחר בלשונית החיפוש; ה-bloc של הבדיקה לא פותח את החלונית לבד.
+      await tester.sendKeyDownEvent(LogicalKeyboardKey.controlLeft);
+      await tester.sendKeyEvent(LogicalKeyboardKey.keyF);
+      await tester.sendKeyUpEvent(LogicalKeyboardKey.controlLeft);
+      bloc.emitStateForTest(
+        (bloc.state as TextBookLoaded).copyWith(showLeftPane: true),
+      );
+      await tester.pumpAndSettle();
+      expect(ShortcutHelper.isEditingText, isTrue);
+      bloc.receivedEvents.clear();
+
+      // מקש שסומן handled לא מגיע לשדה כתו.
+      expect(await tester.sendKeyEvent(LogicalKeyboardKey.keyZ), isFalse);
+      expect(bloc.receivedEvents.whereType<UpdateFontSize>(), isEmpty);
+    }, variant: TargetPlatformVariant.only(TargetPlatform.windows));
   });
 
   group('שמירת פוקוס מקלדת', () {

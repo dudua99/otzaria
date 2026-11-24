@@ -2695,6 +2695,8 @@ bool _handleGlobalKeyEvent(
   int? selectedLineForNote,
   int? selectedColumnForNote,
 }) {
+  // תו בשדה קלט בתוך הספר שייך לשדה, כמו בקיצורים הגלובליים.
+  if (ShortcutHelper.shouldIgnoreWhileEditing(event)) return false;
   // קריאת קיצורים מההגדרות
   final searchInBookShortcut =
       ShortcutValidator.getShortcutValue(
