@@ -174,10 +174,6 @@ void main() {
     tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
     await select(tester, text);
     final selected = selectedIn(tester, text);
-    // ignore: avoid_print
-    print(
-      'DBG ${tester.renderObjectList<RenderParagraph>(find.descendant(of: regionOf(text), matching: find.byWidgetPredicate((w) => w is RichText))).map((p) => '${p.runtimeType} ${p.text.toPlainText()} ${p.selections}').toList()} ${tester.getRect(find.textContaining(text).first)}',
-    );
     expect(selected, isNotEmpty, reason: 'הגרירה בוחרת טקסט');
 
     windowFocus(tester, ViewFocusState.unfocused);
