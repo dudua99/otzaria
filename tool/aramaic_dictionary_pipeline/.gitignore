@@ -1,6 +1,0 @@
-# נתוני ביניים, PDF ודוחות מופקים — אינם נכנסים ל-git (ראו README).
-work/
-config.local.json
-__pycache__/
-*.pyc
-.pytest_cache/
