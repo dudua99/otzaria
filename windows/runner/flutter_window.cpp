@@ -424,6 +424,10 @@ LRESULT CALLBACK FramelessViewProc(HWND hwnd, UINT message, WPARAM wparam,
     case WM_NCACTIVATE:
       if (framed) return 1;
       break;
+    case WM_MOUSEACTIVATE:
+      // בחירה מפורשת של המשתמש, כמו בחלון הראשי (#5743).
+      Win32Window::NoteUserActivation(hwnd);
+      break;
     case WM_NCDESTROY:
       ::RemoveWindowSubclass(hwnd, FramelessViewProc, kFramelessSubclassId);
       break;
