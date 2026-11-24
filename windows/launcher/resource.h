@@ -1,6 +1,0 @@
-#ifndef LAUNCHER_RESOURCE_H_
-#define LAUNCHER_RESOURCE_H_
-
-#define IDI_APP_ICON 101
-
-#endif  // LAUNCHER_RESOURCE_H_
