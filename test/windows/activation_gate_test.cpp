@@ -62,6 +62,18 @@ int main() {
   Expect(Veto(kHidden, kMain, 30), false, "chosen window is hidden");
   Expect(Veto(kDartWindow, 0, 30), false, "null window");
 
+  // העלאה מכוונת (חשיפת חלון Dart, `focus`) ממש אחרי לחיצה על הראשי נרשמת
+  // ולכן עוברת, והפעלה חוזרת של הראשי אחריה נחסמת.
+  otzaria::ActivationGate<int> gate;
+  gate.NoteUserActivation(kMain, 1000);
+  Expect(gate.ShouldVetoActivation(kDartWindow, 1100, ClassOf, Shown), true,
+         "unnoted raise right after a click on main");
+  gate.NoteUserActivation(kDartWindow, 1100);
+  Expect(gate.ShouldVetoActivation(kDartWindow, 1100, ClassOf, Shown), false,
+         "noted raise right after a click on main");
+  Expect(gate.ShouldVetoActivation(kMain, 1130, ClassOf, Shown), true,
+         "main re-activates after the noted raise");
+
   if (failures != 0) {
     std::cout << failures << " activation gate case(s) failed\n";
     return 1;
