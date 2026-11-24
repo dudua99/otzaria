@@ -82,3 +82,4 @@
 5743 bug   (reproduce first in code: main window steals focus back after tab move; Windows-only -> NOT READY with evidence if not provable)
 5924 bug   (history subtitle shows raw book facet key id:N; resolve via ScopeTree like search_scope_menu _categoryFacetName)
 5925 bug   (reuse _KeepSelectionOnWindowBlurFocusNode from 33eae9ca0 in commentary/links/page-shape SelectionAreas)
+4317 bug   (app self-update fails when installed in a Hebrew path C:\אוצריא — reproduce in the launcher/argument code; notes/4317.md)
