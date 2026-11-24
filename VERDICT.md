@@ -1,0 +1,9 @@
+NOT READY
+סיבה: לא נמצא כשל שניתן להוכיח בקוד (בדיקה שנכשלת על upstream/dev) עבור נתיב התקנה עברי C:\אוצריא. נדרש לוג מהמדווח או בדיקה על Windows.
+נבדק (upstream/dev 7d569ff01): כל מסלולי השיגור ב-Windows משתמשים ב-API רחבים — CreateProcessW עם toPwstr (lib/update/windows_installer_io.dart), Process.start/Process.run של Dart, ShellExecuteW במתקין; קבצי swap-plan/לוג נקראים ונכתבים ב-UTF-8 בעקביות; ציטוט הארגומנטים (windowsCommandLine) תקין לנתיבי קבצים. לא נמצא שימוש ב-ANSI/codepage.
+חשד עיקרי (לא מוכח): התקנת מנהל legacy ב-C:\אוצריא ממתקין שלפני 9be62e7c7 (DefaultDirName=C:\אוצריא, מנהל, בלי system_install.marker). AppPaths.isWindowsSystemInstall מחזיר false (אין marker ואין Program Files) → האפליקציה משגרת /SILENT /CURRENTUSER; במצב שקט InitializeSetup יוצא מיד ולא מסלים הרשאות, בעוד FindPreviousInstallDir במתקין עצמו מסווג את C:\אוצריא כ-RequiresAdmin. אם הכתיבה ל-C:\אוצריא נכשלת — /SUPPRESSMSGBOXES מסתיר את השגיאה והעדכון "לא קורה". התיקון של #886 (81d71998b) מכסה את המקרה רק כשקיים marker.
+חשד משני: zstd.exe מקבל --patch-from=<קובץ בתיקיית ההתקנה>; ה-CLI של zstd ב-Windows קורא argv כ-ANSI ועלול להיכשל בנתיב עברי במחשב שאזור המערכת שלו אינו עברית — אבל כשל שם נבלע ונופל למתקין המלא, ולכן לבדו אינו מסביר "לא מתעדכן".
+עובדה רלוונטית לבוט: otzaria-updater.log נכתב רק במסלול העדכון המצומצם (%TEMP%\otzaria-updater.log); למתקין המלא האפליקציה אינה מעבירה /LOG, ולכן במסלול הזה אין לוג שהמדווח יכול לשלוח.
+מה דרוש כדי להתקדם: (1) מהמדווח — האם קיים C:\אוצריא\system_install.marker, ומאיזו גרסה עדכן; (2) בדיקה ב-Windows: התקנה ישנה (מנהל, C:\אוצריא, בלי marker) ואז עדכון מהאפליקציה עם /LOG.
+החלטה פתוחה למתחזקים: האם לסווג C:\אוצריא בלי marker כהתקנת מנהל גם באפליקציה (כמו במתקין), והאם להעביר /LOG למתקין השקט.
+ענף: לא נוצר ענף תיקון (אין commit). אין קונפליקטים לבדוק. אין שינוי ויזואלי.
