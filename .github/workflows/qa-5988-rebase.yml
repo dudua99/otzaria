@@ -1,0 +1,168 @@
+name: QA and rebase PR 5988 on current dev
+
+on:
+  push:
+    branches: [chore/qa-5988-rebase-20261124a]
+
+permissions:
+  contents: write
+
+jobs:
+  qa-and-push:
+    if: >-
+      github.repository == 'dudua99/otzaria' &&
+      github.ref == 'refs/heads/chore/qa-5988-rebase-20261124a'
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: 3.47.7
+
+      - name: Rebuild reviewed commits, run Flutter, and push atomically
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          target='fix/host-window-activation-gate-5743-v2'
+          old='eb76ba80e01b01903a52594bbe7311fb60ff1db7'
+          old_test='01bb6f1b377d97796b4a4a0cacda5bf2445b8ec4'
+          base='7d569ff01a576991e06c69abcbee37efd4b77a02'
+          expected_test='c9b8bc209fe238ee098471764c9f0e51f4a07589'
+          expected_head='0af0105035b2eaf3051cfeefba2035604fc9325e'
+          expected_test_tree='ff887f1a7355618884e851c9539d4352ca0e89bb'
+          expected_head_tree='9675023076a97eed85e0fb4e1bd1c0f7fed8be3f'
+          upstream='https://github.com/Otzaria/otzaria.git'
+
+          git fetch --no-tags origin \
+            "+refs/heads/$target:refs/remotes/origin/$target"
+          test "$(git rev-parse refs/remotes/origin/$target)" = "$old"
+          test "$(git rev-parse "$old^")" = "$old_test"
+
+          git fetch --no-tags "$upstream" \
+            "+refs/heads/dev:refs/remotes/review/upstream-dev" \
+            "+refs/pull/5992/head:refs/remotes/review/pr-5992" \
+            "+refs/pull/5740/head:refs/remotes/review/pr-5740"
+          test "$(git rev-parse refs/remotes/review/upstream-dev)" = "$base"
+
+          git show -s --format=%B "$old_test" >/tmp/pr5988-test-message
+          git show -s --format=%B "$old" >/tmp/pr5988-fix-message
+          git config user.name dudua99
+          git config user.email 99@9900.co.il
+          git checkout -B reviewed-pr-5988 "$base"
+
+          git cherry-pick --no-commit "$old_test"
+          GIT_AUTHOR_NAME=dudua99 \
+          GIT_AUTHOR_EMAIL=99@9900.co.il \
+          GIT_AUTHOR_DATE='2026-11-24T19:19:24+02:00' \
+          GIT_COMMITTER_NAME=dudua99 \
+          GIT_COMMITTER_EMAIL=99@9900.co.il \
+          GIT_COMMITTER_DATE='2026-11-24T19:19:24+02:00' \
+            git commit -F /tmp/pr5988-test-message
+          test "$(git rev-parse HEAD)" = "$expected_test"
+
+          git cherry-pick --no-commit "$old"
+          GIT_AUTHOR_NAME=dudua99 \
+          GIT_AUTHOR_EMAIL=99@9900.co.il \
+          GIT_AUTHOR_DATE='2026-11-24T19:19:32+02:00' \
+          GIT_COMMITTER_NAME=dudua99 \
+          GIT_COMMITTER_EMAIL=99@9900.co.il \
+          GIT_COMMITTER_DATE='2026-11-24T19:19:32+02:00' \
+            git commit -F /tmp/pr5988-fix-message
+          new=$(git rev-parse HEAD)
+
+          test "$new" = "$expected_head"
+          test "$(git rev-parse "$expected_test^")" = "$base"
+          test "$(git rev-parse "$new^")" = "$expected_test"
+          test "$(git rev-list --count "$base..$new")" = 2
+          test "$(git show -s --format=%T "$expected_test")" = \
+            "$expected_test_tree"
+          test "$(git show -s --format=%T "$new")" = "$expected_head_tree"
+
+          for commit in "$expected_test" "$new"; do
+            test "$(git show -s --format='%an <%ae>' "$commit")" = \
+              'dudua99 <99@9900.co.il>'
+            test "$(git show -s --format='%cn <%ce>' "$commit")" = \
+              'dudua99 <99@9900.co.il>'
+          done
+
+          expected_files=$(mktemp)
+          printf '%s\n' \
+            '.github/workflows/flutter_tests.yml' \
+            '.gitignore' \
+            'lib/core/windowing/multiview/view_window_native.dart' \
+            'test/core/windowing/multiview/view_window_native_test.dart' \
+            'test/windows/activation_gate_test.cpp' \
+            'windows/runner/activation_gate.h' \
+            'windows/runner/flutter_window.cpp' \
+            'windows/runner/win32_window.cpp' \
+            | sort >"$expected_files"
+          diff -u "$expected_files" <(
+            git diff --name-only "$base..$new" | sort
+          )
+          git diff --check "$base..$new"
+
+          # #5992 overlaps only in the workflow and .gitignore and must merge cleanly.
+          merge_5992=$(git merge-tree --write-tree \
+            "$new" refs/remotes/review/pr-5992 2>&1) || {
+              printf '%s\n' "$merge_5992"
+              exit 1
+            }
+          ! grep -q 'CONFLICT' <<<"$merge_5992"
+
+          # #5740 already conflicts with dev. This fix must not add a new conflict.
+          base_5740=$(git merge-tree --write-tree \
+            "$base" refs/remotes/review/pr-5740 2>&1 || true)
+          new_5740=$(git merge-tree --write-tree \
+            "$new" refs/remotes/review/pr-5740 2>&1 || true)
+          diff -u \
+            <(grep 'CONFLICT' <<<"$base_5740" | sort) \
+            <(grep 'CONFLICT' <<<"$new_5740" | sort)
+
+          flutter pub get --enforce-lockfile
+          git diff --exit-code
+          git diff --cached --exit-code
+          flutter analyze
+
+          c++ -std=c++17 -Wall -Wextra -Werror -I windows/runner \
+            test/windows/window_centering_test.cpp \
+            -o "$RUNNER_TEMP/window_centering_test"
+          "$RUNNER_TEMP/window_centering_test"
+          c++ -std=c++17 -Wall -Wextra -Werror -pthread -I windows/runner \
+            test/windows/native_exception_records_test.cpp \
+            -o "$RUNNER_TEMP/native_exception_records_test"
+          "$RUNNER_TEMP/native_exception_records_test"
+          c++ -std=c++17 -Wall -Wextra -Werror -I windows/runner \
+            test/windows/activation_gate_test.cpp \
+            -o "$RUNNER_TEMP/activation_gate_test"
+          "$RUNNER_TEMP/activation_gate_test"
+
+          flutter test
+          test -z "$(git status --porcelain --untracked-files=no)"
+
+          git push --atomic \
+            "--force-with-lease=refs/heads/$target:$old" \
+            "--force-with-lease=refs/heads/${GITHUB_REF_NAME}:${GITHUB_SHA}" \
+            origin \
+            "$new:refs/heads/$target" \
+            ":refs/heads/${GITHUB_REF_NAME}"
+
+      - name: Remove bootstrap branch after a failed preflight
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git ls-remote --exit-code --heads origin \
+            "refs/heads/${GITHUB_REF_NAME}" >/dev/null 2>&1; then
+            current=$(git ls-remote --heads origin \
+              "refs/heads/${GITHUB_REF_NAME}" | cut -f1)
+            test "$current" = "${GITHUB_SHA}"
+            git push \
+              "--force-with-lease=refs/heads/${GITHUB_REF_NAME}:${GITHUB_SHA}" \
+              origin ":refs/heads/${GITHUB_REF_NAME}"
