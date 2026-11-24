@@ -1,0 +1,1 @@
+claimed 2026-11-24T06:06:59Z UTC: QA #5924 per WORKER.md/QA.md
