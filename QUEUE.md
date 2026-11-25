@@ -87,3 +87,8 @@
 5744 rework   (PR #5823 closed: error state overflow + swallowed SQLite errors — notes/rework-2511.md)
 5502 rework   (PR #5681 closed: author match only as last fallback — notes/rework-2511.md)
 5934 rework   (PR #5980 closed: Dart logical numpad mapping instead of runner extended bit — notes/rework-2511.md)
+4966 bug   (PgUp/PgDn in search results — notes/replies-2511.md)
+4645 bug   (Android SD card free space measured on internal storage — notes/replies-2511.md)
+2457 bug   (restored window bounds cover the taskbar — clamp to work area; notes/replies-2511.md)
+3048 bug   (itur from plugin window: previous query not selected — second bug only; notes/replies-2511.md)
+3975 bug   (reproduce first: touchpad scroll sticks then jumps; NOT READY with evidence if unprovable; notes/replies-2511.md)

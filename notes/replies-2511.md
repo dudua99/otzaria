@@ -1,0 +1,17 @@
+# Reporter answers 24-25.11 → actionable bugs (verify everything; read issue + all comments first)
+
+## 4966 — PageUp/PageDown in the search results list
+Report: expected PgUp/PgDn to jump a screen in search results; it only worked when focus happened to be on one result, then jumped to a place with no result number. Reporter confirmed (24.11): "no PageUp/PageDown jump in search results".
+Find the search results list (lib/search/view/*results*), its focus/keyboard handling. Fix: PgUp/PgDn scroll the results list by one viewport (and move the focused/selected result accordingly, if the list has a selection model) regardless of which child holds focus inside the results pane; keep text fields unaffected. Test: widget test with many results → PgDn moves the scroll offset by ~viewport height; must fail on dev.
+
+## 4645 — Android: library download to SD card reports "no space" with internal free space
+Reporter (25.11): the SD-card option appears, but choosing it says there is not enough space and shows the free space of the DEVICE, not the card (the card has plenty of space and is visible in the file explorer). Find the free-space check for the library location on Android (library download / storage location settings): it probably measures the app's internal dir (or getApplicationDocumentsDirectory) instead of the chosen target path. Fix: measure free space of the chosen target path (StatFs on that path via the existing platform channel / plugin). Test the path selection logic with a fake storage-stats provider. If the free-space API cannot be tested without a device, isolate the logic and test that.
+
+## 3975 — page flipping/scrolling sticks and then jumps
+Reporter (24.11): flips with two-finger touchpad gestures and sometimes arrow keys; happens in all books and in plugins, only in Otzaria; then wrote "it's only with a mouse, not touchpad — and I only have a touchpad" (contradictory). Y-PLONI's diagnosis (3.11) is in the issue. Investigate touchpad two-finger scroll handling (PointerPanZoom events on Windows → smooth_wheel_scroll / progressive scrolling): sticking then jumping suggests accumulated pan deltas applied late or throttled. If a concrete root cause in code cannot be shown with a test, return NOT READY with the exact suspected code path.
+
+## 2457 — the window covers the Windows taskbar
+Reporter (24.11): solved it by dragging/resizing the window. So the restored window bounds were larger than the work area (covering the taskbar), not true fullscreen. Find window bounds restore (lib/core/window_persistence.dart ~208-214, Y-PLONI's diagnosis): clamp restored non-maximized bounds to the monitor work area (rcWork) and never restore a non-maximized window that covers the taskbar. Test the clamp logic as a pure function.
+
+## 3048 (second bug only) — itur/find-ref opened from a plugin window does not select the previous query
+Reporter (24.11): when switching from a plugin window to the floating itur dialog, the previous query is not selected so typing doesn't overwrite it. (The first part — touchpad swipe moving tabs in plugins — belongs to #3640 family, maintainers; do NOT touch.) Find where the itur dialog selects the restored query on open (#5840 related work: restored query selected in regular mode) and why the plugin-window path differs (focus coming from a WebView/HWND). Test: open the dialog from a plugin context → query text fully selected.
