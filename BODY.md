@@ -14,18 +14,19 @@
 Closes #5934
 
 ## בדיקות
-`test/shortcuts/numpad_navigation_keys_test.dart` (7 בדיקות, האירועים נשלחים דרך `PlatformDispatcher.onKeyData` + הודעת ה-raw, כמו ה-engine):
+`test/shortcuts/numpad_navigation_keys_test.dart` (8 בדיקות, האירועים נשלחים דרך `PlatformDispatcher.onKeyData` + הודעת ה-raw, כמו ה-engine):
 - ספרון 8 בלי NumLock: לחיצה/חזרה/שחרור נמסרים כ-`arrowUp`, המקש הפיזי נשאר `numpad8`, ואחרי השחרור אין מקשים לחוצים.
 - כל עשרת מקשי הספרון ממופים למקשי הניווט.
 - ספרון 3 גולל `ListView` כמו PageDown.
 - NumLock דולק: הספרות (וגם Ctrl+ספרון 1) לא משתנות.
 - שחרור אחרי החלפת NumLock מזווג למקש הלוגי של הלחיצה.
 - ספרון 8 והחץ הייעודי נשארים שני מקשים פיזיים נפרדים בלחיצה חופפת.
+- החזקת ספרון 2/8 בקורא (`ProgressiveScroll`) גוללת ברצף כמו החצים ונעצרת בשחרור.
 - מחוץ ל-Windows אין מיפוי.
 
-בלי התיקון 5 מתוך 7 נכשלות (שתי בדיקות השמירה עוברות).
-קבצים קשורים (`test/shortcuts` + כל הבדיקות שמייבאות את `main.dart`), `flutter test -j 1`: בענף 297 עברו / 0 נכשלו / 0 דולגו; ב-dev 290 / 0 / 0 (ההפרש — 7 הבדיקות החדשות).
-`dart analyze` ו-`dart format` נקיים; `ui_lint`: 80 הפרות בענף וב-dev — אין חדשות.
+בלי התיקון 6 מתוך 8 נכשלות (שתי בדיקות השמירה — NumLock דולק ומחוץ ל-Windows — עוברות).
+קבצים קשורים (`test/shortcuts`, `test/widgets/progressive_scrolling*`, `test/text_book/view/reader_page_keys_test.dart` וכל הבדיקות שמייבאות את `main.dart`), `flutter test -j 1`: בענף 350 עברו / 0 נכשלו / 0 דולגו; ב-dev 342 / 0 / 0 (ההפרש — 8 הבדיקות החדשות).
+`dart analyze` ו-`dart format` נקיים; `ui_lint`: 0 הפרות חדשות.
 
 PRs פתוחים שנוגעים באותם תחומים: #4790 (`main.dart`), #5740, #5676, #3036 (`lib/shortcuts`) — כולם מתמזגים בלי קונפליקט חדש.
 
