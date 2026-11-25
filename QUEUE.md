@@ -83,3 +83,7 @@
 5924 bug   (history subtitle shows raw book facet key id:N; resolve via ScopeTree like search_scope_menu _categoryFacetName)
 5925 bug   (reuse _KeepSelectionOnWindowBlurFocusNode from 33eae9ca0 in commentary/links/page-shape SelectionAreas)
 4317 bug   (app self-update fails when installed in a Hebrew path C:\אוצריא — reproduce in the launcher/argument code; notes/4317.md)
+4016 rework   (PR #5673 closed: variants 1/5 collapse under NotoRashiHebrew — notes/rework-2511.md)
+5744 rework   (PR #5823 closed: error state overflow + swallowed SQLite errors — notes/rework-2511.md)
+5502 rework   (PR #5681 closed: author match only as last fallback — notes/rework-2511.md)
+5934 rework   (PR #5980 closed: Dart logical numpad mapping instead of runner extended bit — notes/rework-2511.md)
