@@ -2764,6 +2764,24 @@ void main() {
       );
     }
 
+    // ב-Windows מקשי לוח הספרות מדווחים תמיד כ-numpadN; כש-NumLock כבוי אין
+    // להם תו, והם משמשים כ-End/Home (issue #5212).
+    testWidgets('1/7 בלוח הספרות בלי NumLock קופצים לסוף/תחילת הספר', (
+      tester,
+    ) async {
+      final (tab, _) = await pumpLongBook(tester);
+      await tester.tap(find.byType(ScrollablePositionedList));
+      await tester.pump(kDoubleTapTimeout);
+
+      await tester.sendKeyEvent(LogicalKeyboardKey.numpad1, character: null);
+      await tester.pumpAndSettle();
+      expect(tab.lines.position.value?.visibleLines, contains(199));
+
+      await tester.sendKeyEvent(LogicalKeyboardKey.numpad7, character: null);
+      await tester.pumpAndSettle();
+      expect(tab.index, 0);
+    });
+
     testWidgets('גלילה ידנית מבטלת יעד ניווט ממתין', (tester) async {
       final (tab, state) = await pumpLongBook(tester);
 

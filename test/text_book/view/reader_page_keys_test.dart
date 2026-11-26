@@ -114,6 +114,40 @@ void main() {
     variant: _desktop,
   );
 
+  // ב-Windows מקשי לוח הספרות מדווחים תמיד כ-numpadN, ורק התו מבדיל: כש-NumLock
+  // כבוי אין תו, והמקשים 3/9/2/8 הם PageDown/PageUp/חץ למטה/חץ למעלה
+  // (issue #5212). כש-NumLock דולק (יש תו) הם ספרות ואינם גוללים.
+  testWidgets(
+    'אזור הקריאה: לוח הספרות בלי NumLock גולל כמו מקשי הניווט (issue #5212)',
+    (tester) async {
+      final tab = await _mountReader(tester);
+      final position = tab.lines.itemController.scrollController!.position;
+      final page = position.viewportDimension * 0.8;
+
+      expect(
+        await press(tester, position, LogicalKeyboardKey.numpad3),
+        closeTo(page, 1),
+      );
+      expect(
+        await press(tester, position, LogicalKeyboardKey.numpad9),
+        closeTo(-page, 1),
+      );
+
+      final before = position.pixels;
+      await tester.sendKeyDownEvent(LogicalKeyboardKey.numpad2);
+      await tester.pump(const Duration(milliseconds: 300));
+      await tester.sendKeyUpEvent(LogicalKeyboardKey.numpad2);
+      await tester.pumpAndSettle();
+      expect(position.pixels, greaterThan(before));
+
+      final afterDown = position.pixels;
+      await tester.sendKeyEvent(LogicalKeyboardKey.numpad3, character: '3');
+      await tester.pumpAndSettle();
+      expect(position.pixels, afterDown, reason: 'עם NumLock זו ספרה');
+    },
+    variant: _desktop,
+  );
+
   testWidgets(
     'חלונית המפרשים: PageDown גולל מסך קדימה ו-PageUp חוזר (issue #3272)',
     (tester) async {
