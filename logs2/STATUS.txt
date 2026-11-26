@@ -1,1 +1,0 @@
-Re-verification of head b2d4fb3b in progress. Python layer (A0-A10) and step B done; Gradle validateForDbInputs running. VERDICT.md still describes 9f6a441d until the final commit.

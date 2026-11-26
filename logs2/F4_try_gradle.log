@@ -1,0 +1,370 @@
+Picked up JAVA_TOOL_OPTIONS: -Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts -Djavax.net.ssl.trustStoreType=JKS -Dhttps.proxyHost=127.0.0.1 -Dhttps.proxyPort=39009 -Dhttp.nonProxyHosts=localhost|127.0.0.1|::1|127.*|0.*|::|169.254.*|api.anthropic.com|api-staging.anthropic.com|api-pr-preview.anthropic.com|mcp-proxy.anthropic.com|mcp-proxy-staging.anthropic.com|registry.npmjs.org|jsr.io|npm.jsr.io|pypi.org|files.pythonhosted.org|index.crates.io|proxy.golang.org|host.docker.internal|10.*|172.16.*|172.17.*|172.18.*|172.19.*|172.20.*|172.21.*|172.22.*|172.23.*|172.24.*|172.25.*|172.26.*|172.27.*|172.28.*|172.29.*|172.30.*|172.31.*|192.168.*|100.64.0.0/10|*.svc.cluster.local|*.svc.cluster.local -Djdk.http.auth.tunneling.disabledSchemes= -Djdk.http.auth.proxying.disabledSchemes= -Dstdout.encoding=UTF-8 -Dstderr.encoding=UTF-8 -Dfile.encoding=UTF-8
+Picked up _JAVA_OPTIONS: -XX:+UnlockDiagnosticVMOptions -XX:DisableIntrinsic=_base64_encodeBlock,_base64_decodeBlock
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by net.rubygrapefruit.platform.internal.NativeLibraryLoader in an unnamed module (file:/root/.gradle/wrapper/dists/gradle-9.8.0-bin/3m7h6ceboy5k31n8kzwzuxssm/gradle-9.8.0/lib/native-platform-0.22-milestone-29.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.8.0/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+Calculating task graph as configuration cache cannot be reused because Gradle property 'forDbSha256' has changed.
+> Task :buildSrc:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :buildSrc:compileKotlin UP-TO-DATE
+> Task :buildSrc:compileJava NO-SOURCE
+> Task :buildSrc:compileGroovy NO-SOURCE
+> Task :buildSrc:pluginDescriptors UP-TO-DATE
+> Task :buildSrc:processResources NO-SOURCE
+> Task :buildSrc:classes UP-TO-DATE
+> Task :buildSrc:jar UP-TO-DATE
+
+> Configure project :cli
+Native cleanup transform registered for Linux amd64
+  Keeping: com/sun/jna/linux-x86-64, linux/amd64, org/sqlite/native/Linux/x86_64
+  Removing 67 platform-specific native folders
+
+> Task :core:jvmProcessResources NO-SOURCE
+> Task :core:processJvmMainResources SKIPPED
+> Task :core:kmpPartiallyResolvedDependenciesChecker
+> Task :dao:kmpPartiallyResolvedDependenciesChecker
+> Task :core:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :dao:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :dao:generateCommonMainSeforimDbInterface UP-TO-DATE
+> Task :dao:jvmProcessResources NO-SOURCE
+> Task :dao:processJvmMainResources SKIPPED
+> Task :generator-common:kmpPartiallyResolvedDependenciesChecker
+> Task :generator-common:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :generator-common:jvmProcessResources UP-TO-DATE
+> Task :generator-common:processJvmMainResources SKIPPED
+> Task :sefariasqlite:kmpPartiallyResolvedDependenciesChecker
+> Task :sefariasqlite:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :core:compileKotlinJvm UP-TO-DATE
+> Task :sefariasqlite:jvmProcessResources UP-TO-DATE
+> Task :sefariasqlite:processJvmMainResources SKIPPED
+> Task :core:compileJvmMainJava NO-SOURCE
+> Task :core:jvmMainClasses UP-TO-DATE
+> Task :core:jvmJar UP-TO-DATE
+> Task :dao:compileKotlinJvm UP-TO-DATE
+> Task :dao:compileJvmMainJava NO-SOURCE
+> Task :dao:jvmMainClasses UP-TO-DATE
+> Task :dao:jvmJar UP-TO-DATE
+> Task :generator-common:compileKotlinJvm UP-TO-DATE
+> Task :generator-common:compileJvmMainJava NO-SOURCE
+> Task :generator-common:jvmMainClasses UP-TO-DATE
+> Task :generator-common:jvmJar UP-TO-DATE
+> Task :sefariasqlite:compileKotlinJvm UP-TO-DATE
+> Task :sefariasqlite:compileJvmMainJava NO-SOURCE
+> Task :sefariasqlite:jvmMainClasses UP-TO-DATE
+> Task :sefariasqlite:jvmJar UP-TO-DATE
+
+> Task :sefariasqlite:validateForDbInputs
+Picked up JAVA_TOOL_OPTIONS: -Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts -Djavax.net.ssl.trustStoreType=JKS -Dhttps.proxyHost=127.0.0.1 -Dhttps.proxyPort=39009 -Dhttp.nonProxyHosts=localhost|127.0.0.1|::1|127.*|0.*|::|169.254.*|api.anthropic.com|api-staging.anthropic.com|api-pr-preview.anthropic.com|mcp-proxy.anthropic.com|mcp-proxy-staging.anthropic.com|registry.npmjs.org|jsr.io|npm.jsr.io|pypi.org|files.pythonhosted.org|index.crates.io|proxy.golang.org|host.docker.internal|10.*|172.16.*|172.17.*|172.18.*|172.19.*|172.20.*|172.21.*|172.22.*|172.23.*|172.24.*|172.25.*|172.26.*|172.27.*|172.28.*|172.29.*|172.30.*|172.31.*|192.168.*|100.64.0.0/10|*.svc.cluster.local|*.svc.cluster.local -Djdk.http.auth.tunneling.disabledSchemes= -Djdk.http.auth.proxying.disabledSchemes= -Dstdout.encoding=UTF-8 -Dstderr.encoding=UTF-8 -Dfile.encoding=UTF-8
+Picked up _JAVA_OPTIONS: -XX:+UnlockDiagnosticVMOptions -XX:DisableIntrinsic=_base64_encodeBlock,_base64_decodeBlock
+Info: (ValidateForDbInputs) Reading pinned ForDB archive /root/w2/try_fordb.zip (sha256=9d0cd0701839a9772ba91d3de8a77d0989ba0e6988432ae45d1d69622b58cd83)
+Info: (ValidateForDbInputs) Loaded 86 book move rule(s)
+Info: (ValidateForDbInputs) Loaded 2 category move rule(s)
+Warn: (ValidateForDbInputs) book_info.csv: 2 book(s) have rows with different generations; using 'נתיבות עולם' → אחרונים (אחרונים/ראשונים), 'ספרי דאגדתא על מגילת אסתר' → אחרונים (אחרונים/חז"ל)
+Info: (ValidateForDbInputs) sefaria_author_changes.csv: 363 author rename(s)
+Info: (ValidateForDbInputs) Renamed 'חדושי הרא״ה' (id=357) -> 'חידושי הרא״ה'
+Info: (ValidateForDbInputs) Renamed 'ליקוטי מהריל' (id=1409) -> 'ליקוטי מהרי״ל'
+Info: (ValidateForDbInputs) Renamed 'רמחל' (id=1476) -> 'רמח״ל'
+Info: (ValidateForDbInputs) Renamed 'ראש' (id=1324) -> 'רא״ש'
+Info: (ValidateForDbInputs) Renamed 'מביט' (id=1368) -> 'מבי״ט'
+Info: (ValidateForDbInputs) Renamed 'מהרם שיק' (id=1369) -> 'מהר״ם שיק'
+Info: (ValidateForDbInputs) Renamed 'מהרש' (id=1370) -> 'מהר״ש'
+Info: (ValidateForDbInputs) Renamed 'שות מהרשם' (id=1472) -> 'שו״ת מהרש״ם'
+Info: (ValidateForDbInputs) Renamed 'שות תעלומות לב' (id=1378) -> 'שו״ת תעלומות לב'
+Info: (ValidateForDbInputs) Renamed 'תשובות הראם' (id=1380) -> 'תשובות הרא״ם'
+Info: (ValidateForDbInputs) Renamed 'חידושי המהריט' (id=1398) -> 'חידושי המהרי״ט'
+Info: (ValidateForDbInputs) Renamed 'גליוני השס' (id=1428) -> 'גליוני הש״ס'
+Info: (ValidateForDbInputs) Renamed 'גליוני השס' (id=1462) -> 'גליוני הש״ס'
+Info: (ValidateForDbInputs) Category move 'הלכה/שולחן ערוך הרב' already applied (id=714, dest=הלכה/אחרונים)
+Info: (ValidateForDbInputs) Category move 'תנ״ך/ראשונים/מנחת שי' already applied (id=660, dest=תנ״ך/אחרונים)
+Info: (ValidateForDbInputs) Book rename 'אַקְדָּמוּת מִלִּין' -> 'אקדמות מילין' already applied (1 row(s))
+Info: (ValidateForDbInputs) Book rename 'תשובות משיב דבר' -> 'משיב דבר חלק א ב' already applied (1 row(s))
+Info: (ValidateForDbInputs) Book rename 'ר' סעדיה גאון על בראשית' -> 'רבינו סעדיה גאון על בראשית' already applied (1 row(s))
+Info: (ValidateForDbInputs) Book rename 'ר' סעדיה גאון על נחמיה' -> 'רבינו סעדיה גאון על נחמיה' already applied (1 row(s))
+Info: (ValidateForDbInputs) Book rename 'ר' סעדיה גאון על עזרא' -> 'רבינו סעדיה גאון על עזרא' already applied (1 row(s))
+Info: (ValidateForDbInputs) Book rename 'חומת אנך על דברי הימים א'' -> 'חומת אנך על דברי הימים א' already applied (1 row(s))
+Info: (ValidateForDbInputs) Book rename 'חומת אנך על דברי הימים ב'' -> 'חומת אנך על דברי הימים ב' already applied (1 row(s))
+Info: (ValidateForDbInputs) Book rename 'אדרת אליהו (ר' יוסף חיים)' -> 'אדרת אליהו (ר יוסף חיים)' already applied (1 row(s))
+Info: (ValidateForDbInputs) Book rename 'לְכָה דוֹדִי' -> 'לכה דודי' already applied (1 row(s))
+Info: (ValidateForDbInputs) Book rename 'אור ה'' -> 'אור ה' already applied (1 row(s))
+Info: (ValidateForDbInputs) Book rename 'בית ישראל (רוז'ין)' -> 'בית ישראל (רוזין)' already applied (1 row(s))
+Info: (ValidateForDbInputs) Book rename 'פאר הדור תשובות הרמב"ם' -> 'תשובות הרמב"ם - מהדורת בלאו' already applied (1 row(s))
+Info: (ValidateForDbInputs) Book rename 'טעבעלה באנדי על הגדה של פסח ' -> 'טעבעלה באנדי על הגדה של פסח' already applied (1 row(s))
+Info: (ValidateForDbInputs) Book rename 'גר"א על סדר עולם רבה' -> 'הגר"א על סדר עולם רבה' already applied (1 row(s))
+Info: (ValidateForDbInputs) Book rename 'פסקי הראש על יומא' -> 'פסקי הרא"ש על יומא' already applied (1 row(s))
+Info: (ValidateForDbInputs) Book rename 'פסקי הראש על מנחות' -> 'פסקי הרא"ש על מנחות' already applied (1 row(s))
+Info: (ValidateForDbInputs) Renamed book 'אהל משה' -> 'אהל משה (על משנה תורה)' (1 rows)
+Info: (ValidateForDbInputs) Renamed book 'אהל משה (הורוביץ) חלק א' -> 'אהל משה (על הש"ס)' (1 rows)
+Info: (ValidateForDbInputs) Renamed book 'שו״ת אהל משה' -> 'שו"ת אהל משה (קרינס)' (1 rows)
+Info: (ValidateForDbInputs) Book rename 'גר"א על פרקי אבות' -> 'הגר"א על פרקי אבות' already applied (1 row(s))
+Info: (ValidateForDbInputs) Renamed book 'מהרש"א - חדושי הלכות על סוכה' -> 'מהרש"א - חידושי הלכות על סוכה' (1 rows)
+Info: (ValidateForDbInputs) Renamed book 'מהרש"א - חדושי הלכות על ביצה' -> 'מהרש"א - חידושי הלכות על ביצה' (1 rows)
+Info: (ValidateForDbInputs) Renamed book 'מהרש"א - חדושי הלכות על ראש השנה' -> 'מהרש"א - חידושי הלכות על ראש השנה' (1 rows)
+Info: (ValidateForDbInputs) Renamed book 'מהרש"א - חדושי הלכות על פסחים' -> 'מהרש"א - חידושי הלכות על פסחים' (1 rows)
+Info: (ValidateForDbInputs) Renamed book 'מהרש"א - חדושי הלכות על נדרים' -> 'מהרש"א - חידושי הלכות על נדרים' (1 rows)
+Info: (ValidateForDbInputs) Renamed book 'מהרש"א - חדושי הלכות על יבמות' -> 'מהרש"א - חידושי הלכות על יבמות' (1 rows)
+Info: (ValidateForDbInputs) Renamed book 'מהרש"א - חדושי הלכות על קידושין' -> 'מהרש"א - חידושי הלכות על קידושין' (1 rows)
+Info: (ValidateForDbInputs) Renamed book 'מהרש"א - חדושי הלכות על גיטין' -> 'מהרש"א - חידושי הלכות על גיטין' (1 rows)
+Info: (ValidateForDbInputs) Renamed book 'מהרש"א - חדושי הלכות על סוטה' -> 'מהרש"א - חידושי הלכות על סוטה' (1 rows)
+Info: (ValidateForDbInputs) Renamed book 'מהרש"א - חדושי הלכות על בבא בתרא' -> 'מהרש"א - חידושי הלכות על בבא בתרא' (1 rows)
+Info: (ValidateForDbInputs) Renamed book 'מהרש"א - חדושי הלכות על סנהדרין' -> 'מהרש"א - חידושי הלכות על סנהדרין' (1 rows)
+Info: (ValidateForDbInputs) Renamed book 'מהרש"א - חדושי הלכות על הוריות' -> 'מהרש"א - חידושי הלכות על הוריות' (1 rows)
+Info: (ValidateForDbInputs) Renamed book 'מהרש"א - חדושי הלכות על בבא מציעא' -> 'מהרש"א - חידושי הלכות על בבא מציעא' (1 rows)
+Info: (ValidateForDbInputs) Renamed book 'מהרש"א - חדושי הלכות על שבועות' -> 'מהרש"א - חידושי הלכות על שבועות' (1 rows)
+Info: (ValidateForDbInputs) Renamed book 'מהרש"א - חדושי הלכות על בבא קמא' -> 'מהרש"א - חידושי הלכות על בבא קמא' (1 rows)
+Info: (ValidateForDbInputs) Renamed book 'מהרש"א - חדושי הלכות על מכות' -> 'מהרש"א - חידושי הלכות על מכות' (1 rows)
+Info: (ValidateForDbInputs) Renamed book 'מהרש"א - חדושי הלכות על עבודה זרה' -> 'מהרש"א - חידושי הלכות על עבודה זרה' (1 rows)
+Info: (ValidateForDbInputs) Renamed book 'מהרש"א - חדושי הלכות על בכורות' -> 'מהרש"א - חידושי הלכות על בכורות' (1 rows)
+Info: (ValidateForDbInputs) Renamed book 'מהרש"א - חדושי הלכות על חולין' -> 'מהרש"א - חידושי הלכות על חולין' (1 rows)
+Info: (ValidateForDbInputs) Renamed book 'מהרש"א - חדושי הלכות על מנחות' -> 'מהרש"א - חידושי הלכות על מנחות' (1 rows)
+Info: (ValidateForDbInputs) Renamed book 'חדושי הר"י מיגאש על שבועות' -> 'חידושי הר"י מיגאש על שבועות' (1 rows)
+Info: (ValidateForDbInputs) Renamed book 'חדושי הר"י מיגאש על בבא בתרא' -> 'חידושי הר"י מיגאש על בבא בתרא' (1 rows)
+Info: (ValidateForDbInputs) Renamed book 'חדושי הרא"ה על כתובות' -> 'חידושי הרא"ה על כתובות' (1 rows)
+Info: (ValidateForDbInputs) Renamed book 'תוספות ישנים  על כריתות' -> 'תוספות ישנים על כריתות' (1 rows)
+Info: (ValidateForDbInputs) Book move 'שו"ת מהרש"ם חלק א' already applied (id=5759, dest=שו״ת/אחרונים/שו״ת מהרש״ם)
+Info: (ValidateForDbInputs) Book move 'שו"ת מהרש"ם חלק ב' already applied (id=5761, dest=שו״ת/אחרונים/שו״ת מהרש״ם)
+Info: (ValidateForDbInputs) Book move 'שו"ת מהרש"ם חלק ג' already applied (id=5728, dest=שו״ת/אחרונים/שו״ת מהרש״ם)
+Info: (ValidateForDbInputs) Book move 'גן נעול (אבולעפיה)' already applied (id=3008, dest=קבלה/כתבי רבי אברהם אבולעפיא)
+Info: (ValidateForDbInputs) Book move 'אגרת וזאת ליהודה' already applied (id=3019, dest=קבלה/כתבי רבי אברהם אבולעפיא)
+Info: (ValidateForDbInputs) Book move 'גט השמות' already applied (id=3044, dest=קבלה/כתבי רבי אברהם אבולעפיא)
+Info: (ValidateForDbInputs) Book move 'אור השכל' already applied (id=3053, dest=קבלה/כתבי רבי אברהם אבולעפיא)
+Info: (ValidateForDbInputs) Book move 'ספר החשק' already applied (id=3054, dest=קבלה/כתבי רבי אברהם אבולעפיא)
+Info: (ValidateForDbInputs) Book move 'ילקוט שמעוני על התורה' already applied (id=244, dest=מדרש/אגדה/ילקוט שמעוני)
+Info: (ValidateForDbInputs) Book move 'ילקוט שמעוני על נ"ך' already applied (id=3059, dest=מדרש/אגדה/ילקוט שמעוני)
+Info: (ValidateForDbInputs) Book move 'תנא דבי אליהו רבה' already applied (id=280, dest=מדרש/אגדה/תנא דבי אליהו)
+Info: (ValidateForDbInputs) Book move 'תנא דבי אליהו זוטא' already applied (id=281, dest=מדרש/אגדה/תנא דבי אליהו)
+Info: (ValidateForDbInputs) Book move 'יד רמה על סנהדרין' already applied (id=1957, dest=תלמוד בבלי/ראשונים/יד רמה)
+Info: (ValidateForDbInputs) Book move 'מגילת עיפה' already applied (id=3141, dest=מחשבת ישראל/אחרונים)
+Info: (ValidateForDbInputs) Book move 'נשמת חיים' already applied (id=3140, dest=מחשבת ישראל/אחרונים)
+Info: (ValidateForDbInputs) Book move 'ספר ההגיון' already applied (id=3166, dest=מחשבת ישראל/אחרונים/רמח״ל)
+Info: (ValidateForDbInputs) Book move 'ספר המליצה' already applied (id=3171, dest=מחשבת ישראל/אחרונים/רמח״ל)
+Info: (ValidateForDbInputs) Book move 'דרך ה'' already applied (id=3192, dest=מחשבת ישראל/אחרונים/רמח״ל)
+Info: (ValidateForDbInputs) Book move 'מאמר העיקרים' already applied (id=3194, dest=מחשבת ישראל/אחרונים/רמח״ל)
+Info: (ValidateForDbInputs) Book move 'מורה נבוכים' already applied (id=3153, dest=מחשבת ישראל/ראשונים/מורה נבוכים)
+Info: (ValidateForDbInputs) Book move 'תוספות הרא"ש על מסכת הוריות' already applied (id=2153, dest=תלמוד בבלי/ראשונים/תוספות הרא״ש)
+Info: (ValidateForDbInputs) Book move 'תוספות הרא"ש על מסכת נדה' already applied (id=2154, dest=תלמוד בבלי/ראשונים/תוספות הרא״ש)
+Info: (ValidateForDbInputs) Book move 'רשימות שיעורים על הוריות' already applied (id=2980, dest=תלמוד בבלי/מחברי זמננו/רשימות שיעורים/סדר נזיקין)
+Info: (ValidateForDbInputs) Book move 'רשימות שיעורים על סנהדרין' already applied (id=2988, dest=תלמוד בבלי/מחברי זמננו/רשימות שיעורים/סדר נזיקין)
+Info: (ValidateForDbInputs) Book move 'פרי מגדים על אורח חיים' already applied (id=3875, dest=הלכה/שולחן ערוך/מפרשים/פרי מגדים)
+Info: (ValidateForDbInputs) Book move 'דרכי התלמוד' already applied (id=2484, dest=תלמוד בבלי/כללי הש״ס)
+Info: (ValidateForDbInputs) Book move 'מבוא התלמוד' already applied (id=2485, dest=תלמוד בבלי/כללי הש״ס)
+Info: (ValidateForDbInputs) Book move 'חובת התלמידים' already applied (id=408, dest=חסידות/האדמו״ר מפיאסצנה)
+Info: (ValidateForDbInputs) Book move 'מאמר צפית לישועה' already applied (id=3741, dest=ספרי מוסר/אחרונים)
+Info: (ValidateForDbInputs) Book move 'אור הצפון' already applied (id=3740, dest=ספרי מוסר/אחרונים)
+Info: (ValidateForDbInputs) Book move 'מאמר מזכה הרבים' already applied (id=3742, dest=ספרי מוסר/אחרונים)
+Info: (ValidateForDbInputs) Book move 'פסקי רקנאטי' already applied (id=3806, dest=הלכה/ראשונים)
+Info: (ValidateForDbInputs) Book move 'הלכות גדולות' already applied (id=3941, dest=הלכה/ראשונים)
+Info: (ValidateForDbInputs) Book move 'חכמת אדם' already applied (id=3804, dest=הלכה/אחרונים)
+Info: (ValidateForDbInputs) Book move 'חיי אדם' already applied (id=3876, dest=הלכה/אחרונים)
+Info: (ValidateForDbInputs) Book move 'קיצור שלחן ערוך' already applied (id=3805, dest=הלכה/אחרונים)
+Info: (ValidateForDbInputs) Book move 'ערוך השולחן' already applied (id=3779, dest=הלכה/אחרונים)
+Info: (ValidateForDbInputs) Book move 'ערוך השולחן העתיד' already applied (id=3893, dest=הלכה/אחרונים)
+Info: (ValidateForDbInputs) Book move 'בן איש חי' already applied (id=3803, dest=הלכה/אחרונים)
+Info: (ValidateForDbInputs) Book move 'יד אפרים על שלחן ערוך אורח חיים' already applied (id=3807, dest=הלכה/שולחן ערוך/מפרשים/יד אפרים)
+Info: (ValidateForDbInputs) Book move 'בית מאיר על שולחן ערוך אבן העזר' already applied (id=3871, dest=הלכה/שולחן ערוך/מפרשים/בית מאיר)
+Info: (ValidateForDbInputs) Book move 'שערי אורה' already applied (id=2998, dest=קבלה/רבי יוסף גיקטליה)
+Info: (ValidateForDbInputs) Book move 'שערי צדק' already applied (id=3004, dest=קבלה/רבי יוסף גיקטליה)
+Info: (ValidateForDbInputs) Book move 'עבודת הקודש (גבאי)' already applied (id=2992, dest=קבלה/רבי מאיר בן גבאי)
+Info: (ValidateForDbInputs) Book move 'אברבנאל על מורה נבוכים' already applied (id=3142, dest=מחשבת ישראל/ראשונים/מורה נבוכים/מפרשים)
+Info: (ValidateForDbInputs) Book move 'אפודי על מורה נבוכים' already applied (id=3146, dest=מחשבת ישראל/ראשונים/מורה נבוכים/מפרשים)
+Info: (ValidateForDbInputs) Book move 'נרבוני על מורה נבוכים' already applied (id=3145, dest=מחשבת ישראל/ראשונים/מורה נבוכים/מפרשים)
+Info: (ValidateForDbInputs) Book move 'קרשקש על מורה נבוכים' already applied (id=3144, dest=מחשבת ישראל/ראשונים/מורה נבוכים/מפרשים)
+Info: (ValidateForDbInputs) Book move 'שם טוב על מורה נבוכים' already applied (id=3143, dest=מחשבת ישראל/ראשונים/מורה נבוכים/מפרשים)
+Info: (ValidateForDbInputs) Book move 'חנה אריאל' already applied (id=428, dest=חסידות/חב״ד)
+Info: (ValidateForDbInputs) Book move 'שערי היחוד ואמונה' already applied (id=445, dest=חסידות/חב״ד)
+Info: (ValidateForDbInputs) Book move 'שערי עבודה' already applied (id=453, dest=חסידות/חב״ד)
+Info: (ValidateForDbInputs) Book move 'מלמד להועיל חלק ב' already applied (id=5789, dest=שו״ת/אחרונים/מלמד להועיל)
+Info: (ValidateForDbInputs) Book move 'מלמד להועיל חלק ג' already applied (id=5798, dest=שו״ת/אחרונים/מלמד להועיל)
+Info: (ValidateForDbInputs) Book move 'משיב דבר חלק א ב' already applied (id=5775, dest=שו״ת/אחרונים/משיב דבר)
+Info: (ValidateForDbInputs) Book move 'ערוך לנר על ראש השנה' already applied (id=2979, dest=תלמוד בבלי/אחרונים/ערוך לנר)
+Info: (ValidateForDbInputs) Book move 'ערוך לנר על סנהדרין' already applied (id=2814, dest=תלמוד בבלי/אחרונים/ערוך לנר)
+Info: (ValidateForDbInputs) Book move 'ארץ חמדה' already applied (id=3404, dest=תנ״ך/אחרונים/מלבי״ם)
+Info: (ValidateForDbInputs) Book move 'תורת משה - אלשיך' already applied (id=3505, dest=תנ״ך/אחרונים/אלשיך)
+Info: (ValidateForDbInputs) Book move 'משמיע ישועה' already applied (id=3561, dest=תנ״ך/ראשונים/אברבנאל)
+Info: (ValidateForDbInputs) Book move 'עטרת זקנים' already applied (id=3697, dest=תנ״ך/ראשונים/אברבנאל)
+Info: (ValidateForDbInputs) Book move 'פירושי רד"צ הופמן על ויקרא' already applied (id=3244, dest=תנ״ך/אחרונים)
+Info: (ValidateForDbInputs) Book move 'פירושי רד"צ הופמן על שמות' already applied (id=3245, dest=תנ״ך/אחרונים)
+Info: (ValidateForDbInputs) Book move 'ראב"ד על משנה עדיות' already applied (id=646, dest=משנה/ראשונים/ראב״ד)
+Info: (ValidateForDbInputs) Book move 'ראב"ד על משנה קינים' already applied (id=649, dest=משנה/ראשונים/ראב״ד)
+Info: (ValidateForDbInputs) Book move 'ראב"ד על משנה דמאי' already applied (id=650, dest=משנה/ראשונים/ראב״ד)
+Info: (ValidateForDbInputs) Book move 'רבינו יהונתן מלוניל על עירובין' already applied (id=2392, dest=תלמוד בבלי/ראשונים/רי״ף/מפרשים/רבינו יהונתן מלוניל)
+Info: (ValidateForDbInputs) Book move 'יערות דבש חלק א' already applied (id=3774, dest=ספרי מוסר/אחרונים/יערות דבש)
+Info: (ValidateForDbInputs) Book move 'יערות דבש חלק ב' already applied (id=3765, dest=ספרי מוסר/אחרונים/יערות דבש)
+Info: (ValidateForDbInputs) Book move 'מטה יהונתן על שלחן ערוך יורה דעה' already applied (id=3854, dest=הלכה/שולחן ערוך/מפרשים/מטה יהונתן)
+Info: (ValidateForDbInputs) Book move 'נודע ביהודה מהדורא קמא' already applied (id=5777, dest=שו״ת/אחרונים/נודע ביהודה)
+Info: (ValidateForDbInputs) Book move 'נודע ביהודה מהדורא תנינא' already applied (id=5795, dest=שו״ת/אחרונים/נודע ביהודה)
+Info: (ValidateForDbInputs) Book move 'בעל שם טוב על התורה' already applied (id=434, dest=חסידות/ספרי ראשית)
+Info: (ValidateForDbInputs) Book move 'כתר שם טוב' already applied (id=443, dest=חסידות/ספרי ראשית)
+Info: (ValidateForDbInputs) Book move 'דגל מחנה אפרים' already applied (id=447, dest=חסידות/ספרי ראשית)
+Info: (ValidateForDbInputs) Book move 'דרכי ישרים' already applied (id=454, dest=חסידות/ספרי ראשית)
+Info: (ValidateForDbInputs) Book move 'מדרש פנחס' already applied (id=455, dest=חסידות/ספרי ראשית)
+Info: (ValidateForDbInputs) Book move 'מקור מים חיים על בעל שם טוב' already applied (id=438, dest=חסידות/ספרי ראשית)
+Info: (ValidateForDbInputs) Book move 'אור המאיר' already applied (id=448, dest=חסידות/ספרי ראשית)
+Info: (ValidateForDbInputs) Book move 'בת עין' already applied (id=440, dest=חסידות/ספרי ראשית)
+Info: (ValidateForDbInputs) Book move 'דברי אמת' already applied (id=449, dest=חסידות/ספרי ראשית)
+Info: (ValidateForDbInputs) Book move 'חיים וחסד' already applied (id=425, dest=חסידות/ספרי ראשית)
+Info: (ValidateForDbInputs) Book move 'יושר דברי אמת' already applied (id=459, dest=חסידות/ספרי ראשית)
+Info: (ValidateForDbInputs) Book move 'יקר מפז' already applied (id=452, dest=חסידות/ספרי ראשית)
+Info: (ValidateForDbInputs) Book move 'עבודת ישראל' already applied (id=446, dest=חסידות/ספרי ראשית)
+Info: (ValidateForDbInputs) Book move 'ערבי נחל' already applied (id=458, dest=חסידות/ספרי ראשית)
+Info: (ValidateForDbInputs) Renamed 'חדושי הרא״ה' (id=357) -> 'חידושי הרא״ה'
+Info: (ValidateForDbInputs) Renamed 'ליקוטי מהריל' (id=1409) -> 'ליקוטי מהרי״ל'
+Info: (ValidateForDbInputs) Renamed 'רמחל' (id=1476) -> 'רמח״ל'
+Info: (ValidateForDbInputs) Renamed 'ראש' (id=1324) -> 'רא״ש'
+Info: (ValidateForDbInputs) Renamed 'מביט' (id=1368) -> 'מבי״ט'
+Info: (ValidateForDbInputs) Renamed 'מהרם שיק' (id=1369) -> 'מהר״ם שיק'
+Info: (ValidateForDbInputs) Renamed 'מהרש' (id=1370) -> 'מהר״ש'
+Info: (ValidateForDbInputs) Renamed 'שות מהרשם' (id=1472) -> 'שו״ת מהרש״ם'
+Info: (ValidateForDbInputs) Renamed 'שות תעלומות לב' (id=1378) -> 'שו״ת תעלומות לב'
+Info: (ValidateForDbInputs) Renamed 'תשובות הראם' (id=1380) -> 'תשובות הרא״ם'
+Info: (ValidateForDbInputs) Renamed 'חידושי המהריט' (id=1398) -> 'חידושי המהרי״ט'
+Info: (ValidateForDbInputs) Renamed 'גליוני השס' (id=1428) -> 'גליוני הש״ס'
+Info: (ValidateForDbInputs) Renamed 'גליוני השס' (id=1462) -> 'גליוני הש״ס'
+Info: (ValidateForDbInputs) Category move 'הלכה/שולחן ערוך הרב' already applied (id=714, dest=הלכה/אחרונים)
+Info: (ValidateForDbInputs) Category move 'תנ״ך/ראשונים/מנחת שי' already applied (id=660, dest=תנ״ך/אחרונים)
+Info: (ValidateForDbInputs) Book rename 'אַקְדָּמוּת מִלִּין' -> 'אקדמות מילין' already applied (1 row(s))
+Info: (ValidateForDbInputs) Book rename 'תשובות משיב דבר' -> 'משיב דבר חלק א ב' already applied (1 row(s))
+Info: (ValidateForDbInputs) Book rename 'ר' סעדיה גאון על בראשית' -> 'רבינו סעדיה גאון על בראשית' already applied (1 row(s))
+Info: (ValidateForDbInputs) Book rename 'ר' סעדיה גאון על נחמיה' -> 'רבינו סעדיה גאון על נחמיה' already applied (1 row(s))
+Info: (ValidateForDbInputs) Book rename 'ר' סעדיה גאון על עזרא' -> 'רבינו סעדיה גאון על עזרא' already applied (1 row(s))
+Info: (ValidateForDbInputs) Book rename 'חומת אנך על דברי הימים א'' -> 'חומת אנך על דברי הימים א' already applied (1 row(s))
+Info: (ValidateForDbInputs) Book rename 'חומת אנך על דברי הימים ב'' -> 'חומת אנך על דברי הימים ב' already applied (1 row(s))
+Info: (ValidateForDbInputs) Book rename 'אדרת אליהו (ר' יוסף חיים)' -> 'אדרת אליהו (ר יוסף חיים)' already applied (1 row(s))
+Info: (ValidateForDbInputs) Book rename 'לְכָה דוֹדִי' -> 'לכה דודי' already applied (1 row(s))
+Info: (ValidateForDbInputs) Book rename 'אור ה'' -> 'אור ה' already applied (1 row(s))
+Info: (ValidateForDbInputs) Book rename 'בית ישראל (רוז'ין)' -> 'בית ישראל (רוזין)' already applied (1 row(s))
+Info: (ValidateForDbInputs) Book rename 'פאר הדור תשובות הרמב"ם' -> 'תשובות הרמב"ם - מהדורת בלאו' already applied (1 row(s))
+Info: (ValidateForDbInputs) Book rename 'טעבעלה באנדי על הגדה של פסח ' -> 'טעבעלה באנדי על הגדה של פסח' already applied (1 row(s))
+Info: (ValidateForDbInputs) Book rename 'גר"א על סדר עולם רבה' -> 'הגר"א על סדר עולם רבה' already applied (1 row(s))
+Info: (ValidateForDbInputs) Book rename 'פסקי הראש על יומא' -> 'פסקי הרא"ש על יומא' already applied (1 row(s))
+Info: (ValidateForDbInputs) Book rename 'פסקי הראש על מנחות' -> 'פסקי הרא"ש על מנחות' already applied (1 row(s))
+Info: (ValidateForDbInputs) Renamed book 'אהל משה' -> 'אהל משה (על משנה תורה)' (1 rows)
+Info: (ValidateForDbInputs) Renamed book 'אהל משה (הורוביץ) חלק א' -> 'אהל משה (על הש"ס)' (1 rows)
+Info: (ValidateForDbInputs) Renamed book 'שו״ת אהל משה' -> 'שו"ת אהל משה (קרינס)' (1 rows)
+Info: (ValidateForDbInputs) Book rename 'גר"א על פרקי אבות' -> 'הגר"א על פרקי אבות' already applied (1 row(s))
+Info: (ValidateForDbInputs) Renamed book 'מהרש"א - חדושי הלכות על סוכה' -> 'מהרש"א - חידושי הלכות על סוכה' (1 rows)
+Info: (ValidateForDbInputs) Renamed book 'מהרש"א - חדושי הלכות על ביצה' -> 'מהרש"א - חידושי הלכות על ביצה' (1 rows)
+Info: (ValidateForDbInputs) Renamed book 'מהרש"א - חדושי הלכות על ראש השנה' -> 'מהרש"א - חידושי הלכות על ראש השנה' (1 rows)
+Info: (ValidateForDbInputs) Renamed book 'מהרש"א - חדושי הלכות על פסחים' -> 'מהרש"א - חידושי הלכות על פסחים' (1 rows)
+Info: (ValidateForDbInputs) Renamed book 'מהרש"א - חדושי הלכות על נדרים' -> 'מהרש"א - חידושי הלכות על נדרים' (1 rows)
+Info: (ValidateForDbInputs) Renamed book 'מהרש"א - חדושי הלכות על יבמות' -> 'מהרש"א - חידושי הלכות על יבמות' (1 rows)
+Info: (ValidateForDbInputs) Renamed book 'מהרש"א - חדושי הלכות על קידושין' -> 'מהרש"א - חידושי הלכות על קידושין' (1 rows)
+Info: (ValidateForDbInputs) Renamed book 'מהרש"א - חדושי הלכות על גיטין' -> 'מהרש"א - חידושי הלכות על גיטין' (1 rows)
+Info: (ValidateForDbInputs) Renamed book 'מהרש"א - חדושי הלכות על סוטה' -> 'מהרש"א - חידושי הלכות על סוטה' (1 rows)
+Info: (ValidateForDbInputs) Renamed book 'מהרש"א - חדושי הלכות על בבא בתרא' -> 'מהרש"א - חידושי הלכות על בבא בתרא' (1 rows)
+Info: (ValidateForDbInputs) Renamed book 'מהרש"א - חדושי הלכות על סנהדרין' -> 'מהרש"א - חידושי הלכות על סנהדרין' (1 rows)
+Info: (ValidateForDbInputs) Renamed book 'מהרש"א - חדושי הלכות על הוריות' -> 'מהרש"א - חידושי הלכות על הוריות' (1 rows)
+Info: (ValidateForDbInputs) Renamed book 'מהרש"א - חדושי הלכות על בבא מציעא' -> 'מהרש"א - חידושי הלכות על בבא מציעא' (1 rows)
+Info: (ValidateForDbInputs) Renamed book 'מהרש"א - חדושי הלכות על שבועות' -> 'מהרש"א - חידושי הלכות על שבועות' (1 rows)
+Info: (ValidateForDbInputs) Renamed book 'מהרש"א - חדושי הלכות על בבא קמא' -> 'מהרש"א - חידושי הלכות על בבא קמא' (1 rows)
+Info: (ValidateForDbInputs) Renamed book 'מהרש"א - חדושי הלכות על מכות' -> 'מהרש"א - חידושי הלכות על מכות' (1 rows)
+Info: (ValidateForDbInputs) Renamed book 'מהרש"א - חדושי הלכות על עבודה זרה' -> 'מהרש"א - חידושי הלכות על עבודה זרה' (1 rows)
+Info: (ValidateForDbInputs) Renamed book 'מהרש"א - חדושי הלכות על בכורות' -> 'מהרש"א - חידושי הלכות על בכורות' (1 rows)
+Info: (ValidateForDbInputs) Renamed book 'מהרש"א - חדושי הלכות על חולין' -> 'מהרש"א - חידושי הלכות על חולין' (1 rows)
+Info: (ValidateForDbInputs) Renamed book 'מהרש"א - חדושי הלכות על מנחות' -> 'מהרש"א - חידושי הלכות על מנחות' (1 rows)
+Info: (ValidateForDbInputs) Renamed book 'חדושי הר"י מיגאש על שבועות' -> 'חידושי הר"י מיגאש על שבועות' (1 rows)
+Info: (ValidateForDbInputs) Renamed book 'חדושי הר"י מיגאש על בבא בתרא' -> 'חידושי הר"י מיגאש על בבא בתרא' (1 rows)
+Info: (ValidateForDbInputs) Renamed book 'חדושי הרא"ה על כתובות' -> 'חידושי הרא"ה על כתובות' (1 rows)
+Info: (ValidateForDbInputs) Renamed book 'תוספות ישנים  על כריתות' -> 'תוספות ישנים על כריתות' (1 rows)
+Info: (ValidateForDbInputs) Book move 'שו"ת מהרש"ם חלק א' already applied (id=5759, dest=שו״ת/אחרונים/שו״ת מהרש״ם)
+Info: (ValidateForDbInputs) Book move 'שו"ת מהרש"ם חלק ב' already applied (id=5761, dest=שו״ת/אחרונים/שו״ת מהרש״ם)
+Info: (ValidateForDbInputs) Book move 'שו"ת מהרש"ם חלק ג' already applied (id=5728, dest=שו״ת/אחרונים/שו״ת מהרש״ם)
+Info: (ValidateForDbInputs) Book move 'גן נעול (אבולעפיה)' already applied (id=3008, dest=קבלה/כתבי רבי אברהם אבולעפיא)
+Info: (ValidateForDbInputs) Book move 'אגרת וזאת ליהודה' already applied (id=3019, dest=קבלה/כתבי רבי אברהם אבולעפיא)
+Info: (ValidateForDbInputs) Book move 'גט השמות' already applied (id=3044, dest=קבלה/כתבי רבי אברהם אבולעפיא)
+Info: (ValidateForDbInputs) Book move 'אור השכל' already applied (id=3053, dest=קבלה/כתבי רבי אברהם אבולעפיא)
+Info: (ValidateForDbInputs) Book move 'ספר החשק' already applied (id=3054, dest=קבלה/כתבי רבי אברהם אבולעפיא)
+Info: (ValidateForDbInputs) Book move 'ילקוט שמעוני על התורה' already applied (id=244, dest=מדרש/אגדה/ילקוט שמעוני)
+Info: (ValidateForDbInputs) Book move 'ילקוט שמעוני על נ"ך' already applied (id=3059, dest=מדרש/אגדה/ילקוט שמעוני)
+Info: (ValidateForDbInputs) Book move 'תנא דבי אליהו רבה' already applied (id=280, dest=מדרש/אגדה/תנא דבי אליהו)
+Info: (ValidateForDbInputs) Book move 'תנא דבי אליהו זוטא' already applied (id=281, dest=מדרש/אגדה/תנא דבי אליהו)
+Info: (ValidateForDbInputs) Book move 'יד רמה על סנהדרין' already applied (id=1957, dest=תלמוד בבלי/ראשונים/יד רמה)
+Info: (ValidateForDbInputs) Book move 'מגילת עיפה' already applied (id=3141, dest=מחשבת ישראל/אחרונים)
+Info: (ValidateForDbInputs) Book move 'נשמת חיים' already applied (id=3140, dest=מחשבת ישראל/אחרונים)
+Info: (ValidateForDbInputs) Book move 'ספר ההגיון' already applied (id=3166, dest=מחשבת ישראל/אחרונים/רמח״ל)
+Info: (ValidateForDbInputs) Book move 'ספר המליצה' already applied (id=3171, dest=מחשבת ישראל/אחרונים/רמח״ל)
+Info: (ValidateForDbInputs) Book move 'דרך ה'' already applied (id=3192, dest=מחשבת ישראל/אחרונים/רמח״ל)
+Info: (ValidateForDbInputs) Book move 'מאמר העיקרים' already applied (id=3194, dest=מחשבת ישראל/אחרונים/רמח״ל)
+Info: (ValidateForDbInputs) Book move 'מורה נבוכים' already applied (id=3153, dest=מחשבת ישראל/ראשונים/מורה נבוכים)
+Info: (ValidateForDbInputs) Book move 'תוספות הרא"ש על מסכת הוריות' already applied (id=2153, dest=תלמוד בבלי/ראשונים/תוספות הרא״ש)
+Info: (ValidateForDbInputs) Book move 'תוספות הרא"ש על מסכת נדה' already applied (id=2154, dest=תלמוד בבלי/ראשונים/תוספות הרא״ש)
+Info: (ValidateForDbInputs) Book move 'רשימות שיעורים על הוריות' already applied (id=2980, dest=תלמוד בבלי/מחברי זמננו/רשימות שיעורים/סדר נזיקין)
+Info: (ValidateForDbInputs) Book move 'רשימות שיעורים על סנהדרין' already applied (id=2988, dest=תלמוד בבלי/מחברי זמננו/רשימות שיעורים/סדר נזיקין)
+Info: (ValidateForDbInputs) Book move 'פרי מגדים על אורח חיים' already applied (id=3875, dest=הלכה/שולחן ערוך/מפרשים/פרי מגדים)
+Info: (ValidateForDbInputs) Book move 'דרכי התלמוד' already applied (id=2484, dest=תלמוד בבלי/כללי הש״ס)
+Info: (ValidateForDbInputs) Book move 'מבוא התלמוד' already applied (id=2485, dest=תלמוד בבלי/כללי הש״ס)
+Info: (ValidateForDbInputs) Book move 'חובת התלמידים' already applied (id=408, dest=חסידות/האדמו״ר מפיאסצנה)
+Info: (ValidateForDbInputs) Book move 'מאמר צפית לישועה' already applied (id=3741, dest=ספרי מוסר/אחרונים)
+Info: (ValidateForDbInputs) Book move 'אור הצפון' already applied (id=3740, dest=ספרי מוסר/אחרונים)
+Info: (ValidateForDbInputs) Book move 'מאמר מזכה הרבים' already applied (id=3742, dest=ספרי מוסר/אחרונים)
+Info: (ValidateForDbInputs) Book move 'פסקי רקנאטי' already applied (id=3806, dest=הלכה/ראשונים)
+Info: (ValidateForDbInputs) Book move 'הלכות גדולות' already applied (id=3941, dest=הלכה/ראשונים)
+Info: (ValidateForDbInputs) Book move 'חכמת אדם' already applied (id=3804, dest=הלכה/אחרונים)
+Info: (ValidateForDbInputs) Book move 'חיי אדם' already applied (id=3876, dest=הלכה/אחרונים)
+Info: (ValidateForDbInputs) Book move 'קיצור שלחן ערוך' already applied (id=3805, dest=הלכה/אחרונים)
+Info: (ValidateForDbInputs) Book move 'ערוך השולחן' already applied (id=3779, dest=הלכה/אחרונים)
+Info: (ValidateForDbInputs) Book move 'ערוך השולחן העתיד' already applied (id=3893, dest=הלכה/אחרונים)
+Info: (ValidateForDbInputs) Book move 'בן איש חי' already applied (id=3803, dest=הלכה/אחרונים)
+Info: (ValidateForDbInputs) Book move 'יד אפרים על שלחן ערוך אורח חיים' already applied (id=3807, dest=הלכה/שולחן ערוך/מפרשים/יד אפרים)
+Info: (ValidateForDbInputs) Book move 'בית מאיר על שולחן ערוך אבן העזר' already applied (id=3871, dest=הלכה/שולחן ערוך/מפרשים/בית מאיר)
+Info: (ValidateForDbInputs) Book move 'שערי אורה' already applied (id=2998, dest=קבלה/רבי יוסף גיקטליה)
+Info: (ValidateForDbInputs) Book move 'שערי צדק' already applied (id=3004, dest=קבלה/רבי יוסף גיקטליה)
+Info: (ValidateForDbInputs) Book move 'עבודת הקודש (גבאי)' already applied (id=2992, dest=קבלה/רבי מאיר בן גבאי)
+Info: (ValidateForDbInputs) Book move 'אברבנאל על מורה נבוכים' already applied (id=3142, dest=מחשבת ישראל/ראשונים/מורה נבוכים/מפרשים)
+Info: (ValidateForDbInputs) Book move 'אפודי על מורה נבוכים' already applied (id=3146, dest=מחשבת ישראל/ראשונים/מורה נבוכים/מפרשים)
+Info: (ValidateForDbInputs) Book move 'נרבוני על מורה נבוכים' already applied (id=3145, dest=מחשבת ישראל/ראשונים/מורה נבוכים/מפרשים)
+Info: (ValidateForDbInputs) Book move 'קרשקש על מורה נבוכים' already applied (id=3144, dest=מחשבת ישראל/ראשונים/מורה נבוכים/מפרשים)
+Info: (ValidateForDbInputs) Book move 'שם טוב על מורה נבוכים' already applied (id=3143, dest=מחשבת ישראל/ראשונים/מורה נבוכים/מפרשים)
+Info: (ValidateForDbInputs) Book move 'חנה אריאל' already applied (id=428, dest=חסידות/חב״ד)
+Info: (ValidateForDbInputs) Book move 'שערי היחוד ואמונה' already applied (id=445, dest=חסידות/חב״ד)
+Info: (ValidateForDbInputs) Book move 'שערי עבודה' already applied (id=453, dest=חסידות/חב״ד)
+Info: (ValidateForDbInputs) Book move 'מלמד להועיל חלק ב' already applied (id=5789, dest=שו״ת/אחרונים/מלמד להועיל)
+Info: (ValidateForDbInputs) Book move 'מלמד להועיל חלק ג' already applied (id=5798, dest=שו״ת/אחרונים/מלמד להועיל)
+Info: (ValidateForDbInputs) Book move 'משיב דבר חלק א ב' already applied (id=5775, dest=שו״ת/אחרונים/משיב דבר)
+Info: (ValidateForDbInputs) Book move 'ערוך לנר על ראש השנה' already applied (id=2979, dest=תלמוד בבלי/אחרונים/ערוך לנר)
+Info: (ValidateForDbInputs) Book move 'ערוך לנר על סנהדרין' already applied (id=2814, dest=תלמוד בבלי/אחרונים/ערוך לנר)
+Info: (ValidateForDbInputs) Book move 'ארץ חמדה' already applied (id=3404, dest=תנ״ך/אחרונים/מלבי״ם)
+Info: (ValidateForDbInputs) Book move 'תורת משה - אלשיך' already applied (id=3505, dest=תנ״ך/אחרונים/אלשיך)
+Info: (ValidateForDbInputs) Book move 'משמיע ישועה' already applied (id=3561, dest=תנ״ך/ראשונים/אברבנאל)
+Info: (ValidateForDbInputs) Book move 'עטרת זקנים' already applied (id=3697, dest=תנ״ך/ראשונים/אברבנאל)
+Info: (ValidateForDbInputs) Book move 'פירושי רד"צ הופמן על ויקרא' already applied (id=3244, dest=תנ״ך/אחרונים)
+Info: (ValidateForDbInputs) Book move 'פירושי רד"צ הופמן על שמות' already applied (id=3245, dest=תנ״ך/אחרונים)
+Info: (ValidateForDbInputs) Book move 'ראב"ד על משנה עדיות' already applied (id=646, dest=משנה/ראשונים/ראב״ד)
+Info: (ValidateForDbInputs) Book move 'ראב"ד על משנה קינים' already applied (id=649, dest=משנה/ראשונים/ראב״ד)
+Info: (ValidateForDbInputs) Book move 'ראב"ד על משנה דמאי' already applied (id=650, dest=משנה/ראשונים/ראב״ד)
+Info: (ValidateForDbInputs) Book move 'רבינו יהונתן מלוניל על עירובין' already applied (id=2392, dest=תלמוד בבלי/ראשונים/רי״ף/מפרשים/רבינו יהונתן מלוניל)
+Info: (ValidateForDbInputs) Book move 'יערות דבש חלק א' already applied (id=3774, dest=ספרי מוסר/אחרונים/יערות דבש)
+Info: (ValidateForDbInputs) Book move 'יערות דבש חלק ב' already applied (id=3765, dest=ספרי מוסר/אחרונים/יערות דבש)
+Info: (ValidateForDbInputs) Book move 'מטה יהונתן על שלחן ערוך יורה דעה' already applied (id=3854, dest=הלכה/שולחן ערוך/מפרשים/מטה יהונתן)
+Info: (ValidateForDbInputs) Book move 'נודע ביהודה מהדורא קמא' already applied (id=5777, dest=שו״ת/אחרונים/נודע ביהודה)
+Info: (ValidateForDbInputs) Book move 'נודע ביהודה מהדורא תנינא' already applied (id=5795, dest=שו״ת/אחרונים/נודע ביהודה)
+Info: (ValidateForDbInputs) Book move 'בעל שם טוב על התורה' already applied (id=434, dest=חסידות/ספרי ראשית)
+Info: (ValidateForDbInputs) Book move 'כתר שם טוב' already applied (id=443, dest=חסידות/ספרי ראשית)
+Info: (ValidateForDbInputs) Book move 'דגל מחנה אפרים' already applied (id=447, dest=חסידות/ספרי ראשית)
+Info: (ValidateForDbInputs) Book move 'דרכי ישרים' already applied (id=454, dest=חסידות/ספרי ראשית)
+Info: (ValidateForDbInputs) Book move 'מדרש פנחס' already applied (id=455, dest=חסידות/ספרי ראשית)
+Info: (ValidateForDbInputs) Book move 'מקור מים חיים על בעל שם טוב' already applied (id=438, dest=חסידות/ספרי ראשית)
+Info: (ValidateForDbInputs) Book move 'אור המאיר' already applied (id=448, dest=חסידות/ספרי ראשית)
+Info: (ValidateForDbInputs) Book move 'בת עין' already applied (id=440, dest=חסידות/ספרי ראשית)
+Info: (ValidateForDbInputs) Book move 'דברי אמת' already applied (id=449, dest=חסידות/ספרי ראשית)
+Info: (ValidateForDbInputs) Book move 'חיים וחסד' already applied (id=425, dest=חסידות/ספרי ראשית)
+Info: (ValidateForDbInputs) Book move 'יושר דברי אמת' already applied (id=459, dest=חסידות/ספרי ראשית)
+Info: (ValidateForDbInputs) Book move 'יקר מפז' already applied (id=452, dest=חסידות/ספרי ראשית)
+Info: (ValidateForDbInputs) Book move 'עבודת ישראל' already applied (id=446, dest=חסידות/ספרי ראשית)
+Info: (ValidateForDbInputs) Book move 'ערבי נחל' already applied (id=458, dest=חסידות/ספרי ראשית)
+Warn: (ValidateForDbInputs) Generation CSV has 233 unmatched book title(s) (skipped): אם הבנים שמחה, אם למקרא, בעל שם טוב, הערות על אוצר ההלכה על שולחן ערוך אורח חיים חלק א, הערות על אוצר ההלכה על שולחן ערוך אורח חיים חלק ג, הערות על אוצר ההלכה על שולחן ערוך אורח חיים חלק ד, הערות על אוצר ההלכה על שולחן ערוך אורח חיים חלק ה, הערות על אוצר ההלכה על שולחן ערוך אורח חיים חלק ו, הערות על בית אהרן על בראשית ושמות, הערות על ברכת ראש על מסכת נזיר, הערות על דרשה לראש השנה מאת רבי שלם הכהן בן חניניה, הערות על דרשות וחידושי רבי יוסף פינטו בן רבי אברהם, הערות על חידושי הלכות מהר״ם חריף על בבא בתרא, הערות על חידושי הלכות מהר״ם חריף על בבא מציעא, הערות על חידושי הלכות מהר״ם חריף על בבא קמא, הערות על חידושי הלכות מהר״ם חריף על ביצה, הערות על חידושי הלכות מהר״ם חריף על גיטין, הערות על חידושי הלכות מהר״ם חריף על כתובות, הערות על חידושי הלכות מהר״ם חריף על נדה, הערות על חידושי הלכות מהר״ם חריף על פסחים
+
+[Incubating] Problems report is available at: file:///root/w2/seforim-tool/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.8.0/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 1m 16s
+19 actionable tasks: 5 executed, 14 up-to-date
+Configuration cache entry stored.
+gradle rc=0

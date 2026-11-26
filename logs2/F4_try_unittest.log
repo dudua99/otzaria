@@ -1,0 +1,22 @@
+..........................................................................::warning::ForDB/title_acronyms.txt חסר; שמות התצוגה לפי ה-<h1> בלבד.
+..............................................................................::warning::ForDB/title_acronyms.txt חסר; שמות התצוגה לפי ה-<h1> בלבד.
+.::warning::ForDB/title_acronyms.txt חסר; שמות התצוגה לפי ה-<h1> בלבד.
+.::warning::ForDB/title_acronyms.txt חסר; שמות התצוגה לפי ה-<h1> בלבד.
+.::warning::ForDB/title_acronyms.txt חסר; שמות התצוגה לפי ה-<h1> בלבד.
+.::warning::ForDB/title_acronyms.txt חסר; שמות התצוגה לפי ה-<h1> בלבד.
+.::warning::ForDB/title_acronyms.txt חסר; שמות התצוגה לפי ה-<h1> בלבד.
+.::warning::ForDB/title_acronyms.txt חסר; שמות התצוגה לפי ה-<h1> בלבד.
+...............................................0 lock rows followed (author 1, sefaria_short 0, sefaria_long 0, line2 0)
+.1 lock rows followed (author 0, sefaria_short 0, sefaria_long 0, line2 1)
+/root/w2/trywt/.github/scripts/check_locked_metadata.py:327: ResourceWarning: unclosed file <_io.BufferedReader name=5>
+  lines = read_second_lines(repo, rev, {key for key in keys if key in paths and key in changed})
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+.1 lock rows followed (author 1, sefaria_short 0, sefaria_long 0, line2 0)
+.no fordb_renamed.json and no --base: nothing to follow
+..60dab629299100de5e229d7b263b19eb78759b2e and 779f636771a7cf37a6895937b1c965eb739aea6e ship the same ForDB files
+ForDB differs between 779f636771a7cf37a6895937b1c965eb739aea6e and e0dfdcfcf902d1182e130ffe22e3ff27c44ddf4d: ForDB/book_moves.csv
+......
+----------------------------------------------------------------------
+Ran 216 tests in 18.111s
+
+OK

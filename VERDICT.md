@@ -1,322 +1,128 @@
 NOT READY
 
-# Verification: dudua99/otzaria-library `names/uniform-titles-3209`
+# Re-verification: dudua99/otzaria-library `names/uniform-titles-3209` @ `b2d4fb3b`
 
-- Head: `9f6a441d` (5 commits on Otzaria/otzaria-library main)
-- BASE: `f4b89786530fd6ecd267c50cd15ca9dfa0786cd6` (merge-base with upstream/main)
-- Run date: 2026-11-26. Python 3.12.
+- Head: `b2d4fb3b2f6fde6a77ea698a3c186fcf14ed8ad4` (7 commits on Otzaria/otzaria-library main). The new commits are `1916669d` (F1 fix) and `b2d4fb3b` (F2 fix and two path rows in sefaria_metadata_changes.csv).
+- BASE: `f4b89786530fd6ecd267c50cd15ca9dfa0786cd6` (merge-base). upstream/main is now `d9325ddb` (5 commits ahead of BASE). A trial merge into it has no conflicts (`logs2/C_trial_merge_upstream_main.log`).
+- Run date: 2026-11-26. Python 3.12.3 (the same as the workflow). Oracle JDK 25.0.5.1. SeforimLibrary `otzaria` @ `adb91b28`.
+- Report for the previous head `9f6a441d`: in this branch's history (commit `7a522cc`), logs in `logs/`. Logs for this run are in `logs2/`.
 
 ## Verdict
 
-**NOT READY.** One blocking error was introduced by the branch:
-`ForDB/sefaria_category_changes.csv` record 1243 still points to the old category path. This breaks the unittest step and the name validator on the PR, and it would break the auto-fix on main. A second problem needs a decision: 28 `book_info.csv` identities were renamed by hand with no events in `ForDB/book_info_identity.json`.
+**NOT READY.** F1 and F2 are fixed, and every Python step of the PR job now passes. The runtime layer ran in full for the first time, and it **fails on the branch while it passes on upstream/main**:
 
-The runtime layer (Java/SeforimLibrary) and Step C **could not run here**. The sandbox's network policy blocks `api.adoptium.net` (Java 25), `github.com`/`api.github.com` (the release `seforim.db`, `gh release`), and `www.sefaria.org` (live title list). Those steps say BLOCKED below and are not counted as PASS.
+`./gradlew :sefariasqlite:validateForDbInputs` against release v40 stops with "ForDB validation FAILED: 7 rule(s) cannot apply". When those 7 are worked around, it stops again with `sefaria_category_changes.csv record 624 references missing category 'תלמוד בבלי/אחרונים/ליקוטי מהרי״ל/סדר נשים'`. The cause is the same in both cases (F4 below). The branch renames 11 repo folders (`git mv`, as ForDB/README.md says). The ForDB rows now point to the new folder names, but the released DB still has the old names, and the dry-run has no rule that renames them. This step is part of the PR's `validate` job, so the PR check would be red. `update-fordb.yml` gates ForDB publication with the same task, so after a merge the new ForDB would not be published either.
 
-## Step A — the `pull_request` job of validate-fordb-book-names.yml
+A tested workaround: 11 rows in `category_renames.csv` (`logs2/F4_candidate_fix.patch`). With it, all layers pass: unittest 216/216, validator rc 0, and Gradle BUILD SUCCESSFUL. Read F4 before applying it.
+
+## Steps: the `pull_request` job of validate-fordb-book-names.yml on `b2d4fb3b`
 
 | # | Step | Branch | upstream/main | Notes |
 |---|---|---|---|---|
 | A0 | Hydrate validation inputs from LFS | PASS | PASS | |
-| A1 | Self-test (`python3 -m unittest` with the 11 modules, 216 tests) | **FAIL** (1 failure) | PASS (216 OK) | `CategoryDescriptionPathsTest.test_the_committed_rows_follow_the_committed_renames`: **introduced by the branch** |
-| A2 | `check_author_mirrors.py --base BASE` | PASS (rc 0, warning) | – | "1 new since BASE" is `חידושי הרא״ה על עבודה זרה` ('אהרן הלוי' ≠ 'הרב שלום מאיר יונגרמן'). The same mismatch is on main under the old key `חידושי הראה על עבודה זרה`. It only moved with the rename and is not new. |
-| A3 | `validate_fordb_book_names.py --rename-base BASE` (the PR run, `SEFARIA_FETCH=1`) | BLOCKED (rc 2) | BLOCKED | `www.sefaria.org` 403 from the sandbox proxy. Rerun with `SEFARIA_FETCH=0` and with a Sefaria stand-in (below). |
-| A3' | same, `SEFARIA_FETCH=0`, report-only and `--rename-base BASE` | **FAIL** (rc 1) | FAIL (rc 1) | Offline mode reports every Sefaria title as "not found" on both sides. Branch vs main diff: only the 20 renamed מהרש"א titles (an artifact of offline mode) **plus the new error `sefaria_category_changes.csv` record 1243**. |
-| A3'' | same, with a stand-in Sefaria list (`logs/run_fix_sim.py`) | **FAIL** (rc 1) | **PASS** (rc 0) | The stand-in is every title main's ForDB references that offline mode can't find, plus the 23 new rename sources. Main is fully clean. The branch's only error is record 1243. Rename-follow finds 5 renames, 0 that can't be aligned. |
-| A4 | `follow_lock_renames.py --base BASE` (push-only in the workflow, run here as requested) | PASS | – | "0 lock rows followed". `locked_metadata.tsv` **unchanged**. |
-| A5 | `check_locked_metadata.py --git-rev HEAD --since BASE` | PASS | – | 113 changed books compared, 6621 locked values OK |
-| A6 | `fordb_archive.py build fordb_candidate.zip` | PASS | – | 16 files, sha256 `8fc527cb…` |
-| A7 | Install Java 25 Temurin | BLOCKED | – | api.adoptium.net 403. Only JDK 21 is installed, and the build needs `jvmToolchain = 25`. |
+| A1 | Self-test, unittest with the 11 modules | **PASS** (216/216 OK) | PASS (216, previous run) | F1 test `CategoryDescriptionPathsTest` now passes |
+| A2 | `check_author_mirrors.py --base BASE` | PASS (rc 0, 1 warning) | – | The same "1 new since BASE" (`חידושי הרא״ה על עבודה זרה`) as before. It moved with the rename and is not new (see the previous report). |
+| A3 | `validate_fordb_book_names.py --rename-base BASE`, live `SEFARIA_FETCH=1` | BLOCKED (rc 2) | – | `www.sefaria.org` returns 403 from the sandbox proxy (`logs2/A3_validate_fetch1.log`) |
+| A3' | same, with the Sefaria index from the **pinned export's `table_of_contents.json`** (`logs2/run_with_toc.py`), report-only and `--rename-base BASE` | **PASS** (rc 0 / rc 0) | – | Export `2026-11-23_10-32-45139177019-1` (the one v40 was built from): release_metadata sha256 `dedbf438…` = the provenance value, archive `1226ae7c…` OK, TOC `05f7d137…` = the export manifest. 6610 titles. Rename-follow: 5 renames, 0 that can't be aligned. No errors. |
+| A4 | `follow_lock_renames.py --base BASE` (push-only, run as requested) | PASS | – | 0 lock rows followed. `locked_metadata.tsv` unchanged. |
+| A5 | `check_locked_metadata.py --git-rev HEAD --since BASE` | PASS | – | 113 changed books, 6621 locked values OK |
+| A6 | `fordb_archive.py build fordb_candidate.zip` | PASS | PASS | 16 files, sha256 `611553f1…f9a7`. `book_info_identity.json` is NOT_SHIPPED (by design). |
+| A7 | Java 25 | PASS* | – | *Oracle JDK 25.0.5.1 instead of Temurin (api.adoptium.net is blocked) |
 | A8 | Clone Otzaria/SeforimLibrary@otzaria | PASS | – | `adb91b28` |
-| A9 | Self-test released DB downloads / `select_released_db_tag.sh` / `download_released_fordb_db.sh` | BLOCKED | – | `gh release` needs api.github.com and github.com (403) |
-| A10 | `library_tree.py` base/candidate | PASS* | – | *Ran with BASE vs HEAD, because the release `otzaria_target_commit` is in the blocked build_provenance.json. |
-| A11 | `./gradlew :sefariasqlite:validateForDbInputs …` | BLOCKED | – | needs Java 25 and the release DB. I expect it to fail too: `parseCategoryDescriptionOverrides` reads record 1243 after the category renames (see the comment in the unittest: "aborts SeedAllMetadata mid-build"). |
+| A9a | Self-test released DB downloads (`test_download_released_fordb_db.py`) | PASS | – | 19 tests OK |
+| A9b | `select_released_db_tag.sh` + `download_released_fordb_db.sh` | PASS* | – | *By hand: `gh`/api.github.com are blocked. Tag v40-20261123094345 as instructed. Downloaded with curl from github.com/.../releases/download. Each asset's sha256 = the value in `build_provenance.json` (the API digest is unreachable). Schema 7 → `seforim-schema7.db.zst`. The manifest passed the script's jq contract, then `assemble_split_asset.sh`, then `unzstd --long=31`. Same layout: `seforim.db`, `seforim.db.buildstate`, `build_provenance.json` (`logs2/A9_db_download.log`). |
+| A10 | `library_tree.py` for `otzaria_target_commit` and HEAD | PASS | PASS | BASE_COMMIT = `28976848e5b0…` (from build_provenance.json, an ancestor of HEAD): 2900 files. HEAD: 2909. main: 2917. |
+| A11 | `./gradlew :sefariasqlite:validateForDbInputs` (the workflow's -P arguments) | **FAIL** (rc 1) | **PASS** (BUILD SUCCESSFUL) | See F4. Log: `logs2/A11_gradle_validateForDbInputs.log`. main: `logs2/A11_main_gradle_validateForDbInputs.log`. The first attempt with no changes failed earlier, on the Android plugin from dl.google.com (`logs2/A11_gradle_attempt1_unmodified.log`). |
+| B | `--fix --rename-base BASE` in a scratch worktree (see AUTOFIX.md) | **PASS** (rc 0) | – | Only the expected links changes. The identity ledger is accepted, and `--fix` adds no events. |
 
-Main's A3' fails for the same offline reason. It is an artifact of the blocked Sefaria API, not a fault on main. The real CI on main passes, and A3'' on main gives rc 0.
+### Environment deviations (A7/A11)
+- Oracle JDK 25.0.5.1 (download.oracle.com) instead of Temurin.
+- dl.google.com is blocked. I did what the other run did (branch `prbody/uniform-titles-3209-delta`, "Environment deviations"): I removed the Android plugin, the `android {}` block and `androidMain` from `build.gradle.kts`, `core` and `dao`, and replaced the compileOnly `compose.runtime` (`@Stable`) with a local stub. The full diff is in `logs2/A11_seforim-tool_local_android_strip.patch`. No JVM code changed, and main and the branch ran on the same build.
+- `-Dorg.gradle.jvmargs=-Xmx2g -Pkotlin.daemon.jvmargs=-Xmx3g -PgeneratorHeap=10g --max-workers=2` (15 GB machine; 10g is the default generator heap). `LANG=C.UTF-8` so that the Hebrew in the log is readable.
 
 ## Findings
 
-### F1 — BLOCKING (introduced by this branch): a description row on the old category path
-`ForDB/sefaria_category_changes.csv` record 1243:
+### F1 — fixed ✔
+`1916669d`: record 1243 (`תלמוד בבלי/ראשונים/חידושי הרא״ה`) now uses the new path. A1 passes, and A3' has no error. In the runtime check with the workaround from F4, the category rename `חדושי הרא״ה → חידושי הרא״ה` (id=357) applied and SeedAllMetadata accepted the row, with no merge conflict.
+
+### F2 — fixed ✔
+`b2d4fb3b` adds events 6657–6684 (28 `rename` events). Checked against git (`logs2/B_identity_events_check.txt`):
+- the 28 identities that disappeared from `book_info.csv` between BASE and HEAD each match exactly one event, and each of the 28 new identities is in HEAD;
+- authorName doesn't change in any event;
+- each event's `commit` is in the BASE..HEAD range, and it is exactly the commit where the old identity disappears and the new one appears;
+- ids are contiguous 1..6684, and the BASE prefix (6656 events) is unchanged. upstream/main has no new events since BASE, so no ids collide.
+
+### F4 — BLOCKING (in the branch since `ea836afd`/`ecf2e555`, not found before because A11 couldn't run): runtime dry-run against v40 fails on 11 renamed repo folders
+The branch renames repo folders with `git mv` and changes the ForDB rows that point to them to the new name. That is what ForDB/README.md asks for ("שם של תיקייה מהמאגר… שורות `sefaria_category_changes.csv` ויעדי `book_moves.csv` עוברים לנתיב החדש באותו קומיט"). But `validateForDbInputs` applies ForDB to the **released** DB, where these categories still have their old names, and nothing renames them:
+1. `book_moves.csv` (7 errors). In v40 the books are already in the old folder. That folder is neither the source nor the new destination, so the move fails with `source … matched 0`:
+   `שו"ת מהרש"ם חלק א/ב/ג` → `שו״ת/אחרונים/שו״ת מהרש״ם` (in the DB: `שות מהרשם`, id 1472). `ספר ההגיון`, `ספר המליצה`, `דרך ה'`, `מאמר העיקרים` → `מחשבת ישראל/אחרונים/רמח״ל` (in the DB: `רמחל`, id 1476).
+2. `sefaria_category_changes.csv`. `planCategoryDescriptionOverrides` stops at the first missing path (record 624, `…/ליקוטי מהרי״ל/סדר נשים`). In total, 16 rows changed by the branch point to a path that doesn't exist in v40 (`logs2/F4_unresolved_paths.txt`). Their leaf names: `ליקוטי מהריל`, `רמחל`, `ראש`, `מביט`, `מהרם שיק`, `מהרש`, `שות מהרשם`, `שות תעלומות לב`, `תשובות הראם`, `חידושי המהריט`, `גליוני השס` (×2).
+
+On upstream/main the same task passes against the same DB (`… already applied` for these 7 moves).
+
+**Tested workaround** (`logs2/F4_candidate_fix.patch`): add 11 rows to `ForDB/category_renames.csv`, `<old name>,<new name>`, one for each name above. In v40 each old name appears exactly once (`גליוני השס` twice, and both are renamed), so the name-based rename hits only the intended folders. With the patch, on top of b2d4fb3b: unittest 216/216, validator (pinned TOC) rc 0, `validateForDbInputs` BUILD SUCCESSFUL. The log shows the 12 categories renamed by their ids, and the moves "already applied" (`logs2/F4_try_*.log`). In a fresh build these rows find nothing, which is only an info message ("not found; no rows changed"). Two points need a decision:
+- These rows become dead after the next release (the repo history shows commits that delete rules that "לא תפסו כלום": 2f2c047c, 9a143199). They are probably needed only until the next release.
+- `ראש,רא״ש` and `מהרש,מהר״ש` are short names. If a category with that name ever comes from Sefaria, it will be renamed too. Today each appears only once in the DB.
+
+The alternative is to change the dry-run validator (SeforimLibrary) so that it derives renames of repo folders from base.tree/candidate.tree. That is outside this repo.
+
+Not verified: that a full fresh build passes **without** the workaround. I expect it to, because the Otzaria categories are created from the new folder names. That is the build the other run is doing, and its report is still IN PROGRESS.
+
+### F3 — minor (still there)
+- `sefaria_metadata_changes.csv`: `b2d4fb3b` changed the leaf (`שו״ת שבט סופר`, `שו״ת תעלומות לב`), but the prefix is still `שות/אחרונים/…`. Column 0 isn't read at runtime, so there is no effect.
+- `files_manifest.json` and the `book_title` in `acronym.json`: as in the previous report.
+
+## Last lines per step
+
+### A1
 ```
-"תלמוד בבלי/ראשונים/חדושי הרא״ה","","","חידושי רבנו אהרן הלוי [הרא""ה] על מסכתות כתובות ועבודה זרה.", …
-```
-Commit `ecf2e555` adds `חדושי הרא״ה,חידושי הרא״ה` to `category_renames.csv` but leaves this row on the old path. The validator says: «הקטגוריה «חדושי הרא״ה» משנה את שמה ל«חידושי הרא״ה»; יש לכתוב את הנתיב בשם החדש — הבנייה תיכשל». **Fix:** change the path to `תלמוד בבלי/ראשונים/חידושי הרא״ה`. After the rename the Sefaria category merges with the KSK folder of the same name, and this is the only description row for it, so the merge should not conflict. The runtime merge check (A11) could not run, so this is not confirmed.
-
-### F2 — needs a decision: no identity-ledger events for 28 renamed `book_info.csv` identities
-The branch renames 28 `(bookName, authorName)` identities in `book_info.csv` (23 Sefaria + `תוספות ישנים  על כריתות` + 4 repo books; the list is in `logs/identity_gap.txt`). It adds **no** events to `ForDB/book_info_identity.json`. The auto-fix (Step B) won't add them either: it records events only for rows it renames itself, and here the rows were already renamed. ADDING_BOOKS.md §book_info_identity says the website applies only later events, and that a disappearance with no event needs explicit resolution. The precedent commit `7d1e1d74` (renames for restored gershayim) added rename events 6302–6656 by hand. **Recommendation:** append 28 `rename` events (same `authorName`, `commit` = the commit that made the rename), or confirm it isn't needed.
-
-### F3 — minor/cosmetic
-- `ForDB/sefaria_metadata_changes.csv`: two rows still have a path prefix in folder form, `שות/אחרונים/שות שבט סופר` (שבט סופר חלק ב) and `שות/אחרונים/שות תעלומות לב` (תעלומות לב חלק ג). This is pre-existing (the `שות/` prefix was there on main). Column 0 isn't used at runtime (`parseDescriptionOverrides` reads only title/heShortDesc/heDescNew), so there is no effect on the DB.
-- `files_manifest.json` still lists the old `_links.json` names that the auto-fix renames. `update-library.yml` (the bot) regenerates the manifest.
-- `MoreBooks/.../acronym.json` still has `book_title: "חידושי הראה על עבודה זרה"` (old name). Not a ForDB input.
-
-### Checked and OK
-- 133 moves, all R100 (129 folder renames + 4 file renames). Every folder change matches the commit messages (DELTA.md).
-- No ForDB row points to an old folder path in `sefaria_category_changes.csv`, `book_moves.csv` or `category_moves.csv` (except F1). Same in `sefaria_metadata_changes.csv` (except F3).
-- Lock: `follow_lock_renames` leaves it unchanged, and `check_locked_metadata` passes.
-- Each of the 24 new `book_renames.csv` rows has a unique source (1 row) and a unique target, matches exactly one row in main's `book_info.csv` and `sefaria_metadata_changes.csv`, and the target doesn't already exist. Matching against the real DB was **not** checked (BLOCKED).
-
-## Last 40 lines per step
-
-### A1 unittest (branch)
-```
-/root/w/lib/.github/scripts/check_locked_metadata.py:327: ResourceWarning: unclosed file <_io.BufferedReader name=5>
-  lines = read_second_lines(repo, rev, {key for key in keys if key in paths and key in changed})
-ResourceWarning: Enable tracemalloc to get the object allocation traceback
-ok
-test_rewrites_the_lock_and_lists_it_as_touched (test_follow_lock_renames.MainTest.test_rewrites_the_lock_and_lists_it_as_touched) ... 1 lock rows followed (author 1, sefaria_short 0, sefaria_long 0, line2 0)
-ok
-test_without_a_report_or_base_does_nothing (test_follow_lock_renames.MainTest.test_without_a_report_or_base_does_nothing) ... no fordb_renamed.json and no --base: nothing to follow
-ok
-test_an_unknown_or_missing_file_fails (test_fordb_archive.ArchiveTest.test_an_unknown_or_missing_file_fails) ... ok
-test_same_content_reads_trees_and_ignores_unshipped_files (test_fordb_archive.ArchiveTest.test_same_content_reads_trees_and_ignores_unshipped_files) ... fb34cb4333f080a952952531d94770b498d8f000 and cf57379fafc522a6f3fd44d0c3ab443545f41ae2 ship the same ForDB files
-ForDB differs between cf57379fafc522a6f3fd44d0c3ab443545f41ae2 and 10c8cd99d9be7e0aa56a6a0650eabe37330ef47a: ForDB/book_moves.csv
-ok
-test_ships_exactly_the_consumed_files_in_byte_order (test_fordb_archive.ArchiveTest.test_ships_exactly_the_consumed_files_in_byte_order) ... ok
-test_symlinks_are_refused (test_fordb_archive.ArchiveTest.test_symlinks_are_refused) ... ok
-test_the_digest_depends_only_on_names_and_bytes (test_fordb_archive.ArchiveTest.test_the_digest_depends_only_on_names_and_bytes) ... ok
-test_both_workflows_build_through_this_module (test_fordb_archive.RepositoryArchiveTest.test_both_workflows_build_through_this_module) ... ok
-test_the_committed_fordb_folder_is_covered (test_fordb_archive.RepositoryArchiveTest.test_the_committed_fordb_folder_is_covered) ... ok
-
-======================================================================
-FAIL: test_the_committed_rows_follow_the_committed_renames (test_validate_fordb_book_names.CategoryDescriptionPathsTest.test_the_committed_rows_follow_the_committed_renames)
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "/root/w/lib/.github/scripts/test_validate_fordb_book_names.py", line 320, in test_the_committed_rows_follow_the_committed_renames
-    self.assertEqual(
-AssertionError: Lists differ: [('רשומה 1243', 'תלמוד בבלי/ראשונים/חדושי [85 chars]דש')] != []
-
-First list contains 1 additional elements.
-First extra element 0:
-('רשומה 1243', 'תלמוד בבלי/ראשונים/חדושי הרא״ה', 'הקטגוריה «חדושי הרא״ה» משנה את שמה ל«חידושי הרא״ה»; יש לכתוב את הנתיב בשם החדש')
-
-+ []
-- [('רשומה 1243',
--   'תלמוד בבלי/ראשונים/חדושי הרא״ה',
--   'הקטגוריה «חדושי הרא״ה» משנה את שמה ל«חידושי הרא״ה»; יש לכתוב את הנתיב בשם '
--   'החדש')]
-
-----------------------------------------------------------------------
-Ran 216 tests in 34.605s
-
-FAILED (failures=1)
-```
-
-### A1 unittest (main)
-```
-..........................................................................::warning::ForDB/title_acronyms.txt חסר; שמות התצוגה לפי ה-<h1> בלבד.
-..............................................................................::warning::ForDB/title_acronyms.txt חסר; שמות התצוגה לפי ה-<h1> בלבד.
-.::warning::ForDB/title_acronyms.txt חסר; שמות התצוגה לפי ה-<h1> בלבד.
-.::warning::ForDB/title_acronyms.txt חסר; שמות התצוגה לפי ה-<h1> בלבד.
-.::warning::ForDB/title_acronyms.txt חסר; שמות התצוגה לפי ה-<h1> בלבד.
-.::warning::ForDB/title_acronyms.txt חסר; שמות התצוגה לפי ה-<h1> בלבד.
-.::warning::ForDB/title_acronyms.txt חסר; שמות התצוגה לפי ה-<h1> בלבד.
-.::warning::ForDB/title_acronyms.txt חסר; שמות התצוגה לפי ה-<h1> בלבד.
-...............................................0 lock rows followed (author 1, sefaria_short 0, sefaria_long 0, line2 0)
-.1 lock rows followed (author 0, sefaria_short 0, sefaria_long 0, line2 1)
-/root/w/main/.github/scripts/check_locked_metadata.py:327: ResourceWarning: unclosed file <_io.BufferedReader name=5>
-  lines = read_second_lines(repo, rev, {key for key in keys if key in paths and key in changed})
-ResourceWarning: Enable tracemalloc to get the object allocation traceback
-.1 lock rows followed (author 1, sefaria_short 0, sefaria_long 0, line2 0)
-.no fordb_renamed.json and no --base: nothing to follow
-..b0fa0336645b2eb1d5eb41bcddef43518f613457 and d01b45668fdebeef25178b5e425441aab9bbc97b ship the same ForDB files
-ForDB differs between d01b45668fdebeef25178b5e425441aab9bbc97b and 1cdfaab153c087a2652429087df3fc08aba4c63d: ForDB/book_moves.csv
-......
-----------------------------------------------------------------------
-Ran 216 tests in 19.363s
+Ran 216 tests in 20.864s
 
 OK
 ```
-
-### A2 check_author_mirrors
+### A2
 ```
 ::warning file=all_metadata.json,title=Author mirror differs from metadata.json::חידושי הרא״ה על עבודה זרה: 'אהרן הלוי' != 'הרב שלום מאיר יונגרמן'
 Author mirror differences (metadata.json is the source): ForDB/all_metadata.json: 63, ForDB/book_info.csv: 31, all_metadata.json: 182, all_metadata_with_file_paths.json: 116
 1 new since f4b89786530f
 ```
-
-### A3 validate (SEFARIA_FETCH=1, report-only)
+### A3 (live) / A3' (pinned TOC, --rename-base)
 ```
-[canonical] 2944 שמות מקבצי ספרים נארזים (PACKAGED_PREFIXES)
-[canonical] all_metadata: 5934 ספריא + 1692 אוצריא
-::warning::משיכת השמות מספריא נכשלה (<urlopen error Tunnel connection failed: 403 Forbidden (agent proxy: no rule or network setting allows this host)>).
 ::error::משיכת השמות מספריא נכשלה ו-SEFARIA_FETCH=1 — לא מאמתים מול רשימה חלקית; הריצו שוב.
-```
-
-### A3 validate --rename-base (SEFARIA_FETCH=1)
-```
-[canonical] 2944 שמות מקבצי ספרים נארזים (PACKAGED_PREFIXES)
-[canonical] all_metadata: 5934 ספריא + 1692 אוצריא
-::warning::משיכת השמות מספריא נכשלה (<urlopen error Tunnel connection failed: 403 Forbidden (agent proxy: no rule or network setting allows this host)>).
-::error::משיכת השמות מספריא נכשלה ו-SEFARIA_FETCH=1 — לא מאמתים מול רשימה חלקית; הריצו שוב.
-```
-
-### A3' validate --rename-base (SEFARIA_FETCH=0, branch)
-```
-     - שורה 2829: 'שו"ת במראה הבזק חלק שמיני' (כפי שב-DB: 'שות במראה הבזק חלק שמיני') — לא נמצא
-     - שורה 2830: 'שו"ת במראה הבזק חלק שני' (כפי שב-DB: 'שות במראה הבזק חלק שני') — לא נמצא
-     - שורה 2831: 'שו"ת במראה הבזק חלק תשיעי' (כפי שב-DB: 'שות במראה הבזק חלק תשיעי') — לא נמצא
-     - שורה 2832: 'שו"ת בני בנים' (כפי שב-DB: 'שות בני בנים') — לא נמצא
-     - שורה 2837: 'שיג ושיח מהדורה משפחתית' — לא נמצא
-     - שורה 2838: 'שיג ושיח; מהדורה עברית' — לא נמצא
-     - שורה 2839: 'שיג ושיח; קריאות חדשות בפרשת השבוע, במדבר' — לא נמצא
-     - שורה 2840: 'שיג ושיח; קריאות חדשות בפרשת השבוע, בראשית' — לא נמצא
-     - שורה 2841: 'שיג ושיח; קריאות חדשות בפרשת השבוע, דברים' — לא נמצא
-     - שורה 2842: 'שיג ושיח; קריאות חדשות בפרשת השבוע, ויקרא' — לא נמצא
-     - שורה 2843: 'שיג ושיח; קריאות חדשות בפרשת השבוע, שמות' — לא נמצא
-     - שורה 2877: 'שיעורים בגמרא - שמיטה' — לא נמצא
-     - שורה 2878: 'שיעורים במנהיגות; מהדורה עברית' — לא נמצא
-     - שורה 2879: 'שיעורים במנהיגות; קריאות חדשות בפרשת השבוע' — לא נמצא
-     - שורה 2880: 'שיעורים ברוחניות; קריאות חדשות בפרשת השבוע' — לא נמצא
-     - שורה 2881: 'שלהבות של אמונה' — לא נמצא
-     - שורה 2882: 'שמונה קבצים' — לא נמצא
-     - שורה 2956: 'שפתי כהן על התורה' — לא נמצא
-     - שורה 2958: 'תְּפִלַּת מְנַשֶׁה' (כפי שב-DB: 'תפלת מנשה') — לא נמצא
-     - שורה 2959: 'תהילים קנ"א' (כפי שב-DB: 'תהילים קנא') — לא נמצא
-     - שורה 2960: 'תהלים קנ"ד' (כפי שב-DB: 'תהלים קנד') — לא נמצא
-     - שורה 3094: 'תורת אמך' — לא נמצא
-     - שורה 3095: 'תורת ההגיון בהלכה' — לא נמצא
-     - שורה 3098: 'תנאי בנישואין ובגט' — לא נמצא
-     - שורה 3100: 'תפארת יהונתן על תורה' — לא נמצא
-     - שורה 3108: 'תקות אנוש על איוב' — לא נמצא
-     - שורה 3114: 'תשובות בעת מלחמה (אנגלית)' — לא נמצא
-     - שורה 3116: 'תשובות לקציני דת (אנגלית)' — לא נמצא
-     - שורה 4589: 'מהרש"א - חידושי אגדות על ברכות' (כפי שב-DB: 'מהרשא - חידושי אגדות על ברכות') — לא נמצא
-     - שורה 4590: 'מהרש"א - חידושי אגדות על נזיר' (כפי שב-DB: 'מהרשא - חידושי אגדות על נזיר') — לא נמצא
-     - שורה 5032: 'טעבעלה באנדי על הגדה של פסח' — לא נמצא
-     - שורה 5548: 'מהר"ם שיף על עירובין' (כפי שב-DB: 'מהרם שיף על עירובין') — לא נמצא
-     - שורה 6423: 'פסקי הרא"ש על נדה' (כפי שב-DB: 'פסקי הראש על נדה') — לא נמצא
-     - שורה 6999: 'רד"ק על ישעיהו' (כפי שב-DB: 'רדק על ישעיהו') — לא נמצא
-
-
-❌ 1 בעיות ב-ForDB/sefaria_category_changes.csv; הבנייה תיכשל:
-
-     - רשומה 1243: 'תלמוד בבלי/ראשונים/חדושי הרא״ה' — הקטגוריה «חדושי הרא״ה» משנה את שמה ל«חידושי הרא״ה»; יש לכתוב את הנתיב בשם החדש
-
-```
-
-### A3' validate (SEFARIA_FETCH=0, main)
-```
-     - שורה 2824: 'שו"ת במראה הבזק חלק ראשון' (כפי שב-DB: 'שות במראה הבזק חלק ראשון') — לא נמצא
-     - שורה 2825: 'שו"ת במראה הבזק חלק רביעי' (כפי שב-DB: 'שות במראה הבזק חלק רביעי') — לא נמצא
-     - שורה 2826: 'שו"ת במראה הבזק חלק שביעי' (כפי שב-DB: 'שות במראה הבזק חלק שביעי') — לא נמצא
-     - שורה 2827: 'שו"ת במראה הבזק חלק שישי' (כפי שב-DB: 'שות במראה הבזק חלק שישי') — לא נמצא
-     - שורה 2828: 'שו"ת במראה הבזק חלק שלישי' (כפי שב-DB: 'שות במראה הבזק חלק שלישי') — לא נמצא
-     - שורה 2829: 'שו"ת במראה הבזק חלק שמיני' (כפי שב-DB: 'שות במראה הבזק חלק שמיני') — לא נמצא
-     - שורה 2830: 'שו"ת במראה הבזק חלק שני' (כפי שב-DB: 'שות במראה הבזק חלק שני') — לא נמצא
-     - שורה 2831: 'שו"ת במראה הבזק חלק תשיעי' (כפי שב-DB: 'שות במראה הבזק חלק תשיעי') — לא נמצא
-     - שורה 2832: 'שו"ת בני בנים' (כפי שב-DB: 'שות בני בנים') — לא נמצא
-     - שורה 2837: 'שיג ושיח מהדורה משפחתית' — לא נמצא
-     - שורה 2838: 'שיג ושיח; מהדורה עברית' — לא נמצא
-     - שורה 2839: 'שיג ושיח; קריאות חדשות בפרשת השבוע, במדבר' — לא נמצא
-     - שורה 2840: 'שיג ושיח; קריאות חדשות בפרשת השבוע, בראשית' — לא נמצא
-     - שורה 2841: 'שיג ושיח; קריאות חדשות בפרשת השבוע, דברים' — לא נמצא
-     - שורה 2842: 'שיג ושיח; קריאות חדשות בפרשת השבוע, ויקרא' — לא נמצא
-     - שורה 2843: 'שיג ושיח; קריאות חדשות בפרשת השבוע, שמות' — לא נמצא
-     - שורה 2877: 'שיעורים בגמרא - שמיטה' — לא נמצא
-     - שורה 2878: 'שיעורים במנהיגות; מהדורה עברית' — לא נמצא
-     - שורה 2879: 'שיעורים במנהיגות; קריאות חדשות בפרשת השבוע' — לא נמצא
-     - שורה 2880: 'שיעורים ברוחניות; קריאות חדשות בפרשת השבוע' — לא נמצא
-     - שורה 2881: 'שלהבות של אמונה' — לא נמצא
-     - שורה 2882: 'שמונה קבצים' — לא נמצא
-     - שורה 2956: 'שפתי כהן על התורה' — לא נמצא
-     - שורה 2958: 'תְּפִלַּת מְנַשֶׁה' (כפי שב-DB: 'תפלת מנשה') — לא נמצא
-     - שורה 2959: 'תהילים קנ"א' (כפי שב-DB: 'תהילים קנא') — לא נמצא
-     - שורה 2960: 'תהלים קנ"ד' (כפי שב-DB: 'תהלים קנד') — לא נמצא
-     - שורה 3094: 'תורת אמך' — לא נמצא
-     - שורה 3095: 'תורת ההגיון בהלכה' — לא נמצא
-     - שורה 3098: 'תנאי בנישואין ובגט' — לא נמצא
-     - שורה 3100: 'תפארת יהונתן על תורה' — לא נמצא
-     - שורה 3108: 'תקות אנוש על איוב' — לא נמצא
-     - שורה 3114: 'תשובות בעת מלחמה (אנגלית)' — לא נמצא
-     - שורה 3116: 'תשובות לקציני דת (אנגלית)' — לא נמצא
-     - שורה 4589: 'מהרש"א - חידושי אגדות על ברכות' (כפי שב-DB: 'מהרשא - חידושי אגדות על ברכות') — לא נמצא
-     - שורה 4590: 'מהרש"א - חידושי אגדות על נזיר' (כפי שב-DB: 'מהרשא - חידושי אגדות על נזיר') — לא נמצא
-     - שורה 5032: 'טעבעלה באנדי על הגדה של פסח' — לא נמצא
-     - שורה 5548: 'מהר"ם שיף על עירובין' (כפי שב-DB: 'מהרם שיף על עירובין') — לא נמצא
-     - שורה 6423: 'פסקי הרא"ש על נדה' (כפי שב-DB: 'פסקי הראש על נדה') — לא נמצא
-     - שורה 6999: 'רד"ק על ישעיהו' (כפי שב-DB: 'רדק על ישעיהו') — לא נמצא
-
-```
-
-### A3'' stand-in (branch)
-```
-         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 668
-         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 669
-         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 670
-         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 673
-         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 675
-         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 676
-         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 677
-         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 680
-         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 682
-         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 683
-         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 685
-         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 687
-         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 688
-         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 691
-         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 693
-         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 696
-         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 700
-         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 703
-         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 704
-         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 705
-         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 707
-         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 710
-         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 712
-         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 713
-         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 714
-         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 716
-         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 717
-         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 719
-         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 720
-         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 721
-         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 722
-         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 723
-     - 'חידושי הראה על עבודה זרה' → 'חידושי הרא״ה על עבודה זרה'  (ecf2e5556a)  [איות בלבד]
-         · KSK/links/חידושי הראה על עבודה זרה_links.json: links_file_renamed KSK/links/חידושי הרא״ה על עבודה זרה_links.json
-     - 'חידושי רעא על תלמוד בבלי' → 'חידושי רע״א על תלמוד בבלי'  (9f6a441d6c)  [איות בלבד]
-
-❌ 1 בעיות ב-ForDB/sefaria_category_changes.csv; הבנייה תיכשל:
-
-     - רשומה 1243: 'תלמוד בבלי/ראשונים/חדושי הרא״ה' — הקטגוריה «חדושי הרא״ה» משנה את שמה ל«חידושי הרא״ה»; יש לכתוב את הנתיב בשם החדש
-
-```
-
-### A3'' stand-in (main)
-```
-[sim] stand-in Sefaria list: 476 titles
-[canonical] 2944 שמות מקבצי ספרים נארזים (PACKAGED_PREFIXES)
-[canonical] all_metadata: 5934 ספריא + 1692 אוצריא
-[canonical] נמשכו 476 שמות חיים מספריא; נוספו 475 חדשים (union)
-[canonical] מקור: 9654 | ב-DB: 9303 | סופיים: 9654/9303 (אחרי שינויי שם)
-
+---
+[toc] Sefaria index from pinned export table_of_contents.json: 6610 titles
+[canonical] נמשכו 6610 שמות חיים מספריא; נוספו 687 חדשים (union)
+[canonical] מקור: 9862 | ב-DB: 9511 | סופיים: 9862/9511 (אחרי שינויי שם)
+[renames] בסיס f4b89786530f..HEAD: 134 שינויי קבצי .txt, 5 שינויי-שם ליישור, 0 שלא ניתן ליישר
 ✅ כל שמות הספרים ב-ForDB קיימים ברשימת הספרים הקנונית, מאויתים כפי שייכתבו ל-book.title, אין כפילויות שם בתיקיות הנארזות, ואין דליפת-מקור.
 ```
-
-### A4 follow_lock_renames
+### A4 / A5 / A6
 ```
 0 lock rows followed (author 0, sefaria_short 0, sefaria_long 0, line2 0)
-```
-
-### A5 check_locked_metadata
-```
 line2: 113 changed books compared since f4b89786530f
 lock matches: 6621 locked values checked
+fordb_candidate.zip: 16 files   611553f117f404124a7f4754c6b6531f8faf628121d3c2fad522ca1b8289f9a7
 ```
-
-### A6 fordb_archive build
+### A11 (branch)
 ```
-fordb_candidate.zip: 16 files
+Error: (ValidateForDbInputs) [book_moves.csv] 'שו"ת מהרש"ם חלק א': 'שו״ת/אחרונים' -> 'שו״ת/אחרונים/שו״ת מהרש״ם': Book move 'שו"ת מהרש"ם חלק א' has 1 candidate(s); source 'שו״ת/אחרונים' matched 0
+Error: (ValidateForDbInputs) [book_moves.csv] 'שו"ת מהרש"ם חלק ב': … matched 0
+Error: (ValidateForDbInputs) [book_moves.csv] 'שו"ת מהרש"ם חלק ג': … matched 0
+Error: (ValidateForDbInputs) [book_moves.csv] 'ספר ההגיון': 'מחשבת ישראל/אחרונים' -> 'מחשבת ישראל/אחרונים/רמח״ל': … matched 0
+Error: (ValidateForDbInputs) [book_moves.csv] 'ספר המליצה': … matched 0
+Error: (ValidateForDbInputs) [book_moves.csv] 'דרך ה'': … matched 0
+Error: (ValidateForDbInputs) [book_moves.csv] 'מאמר העיקרים': … matched 0
+Error: (ValidateForDbInputs) ForDB validation FAILED: 7 rule(s) cannot apply against /root/w2/dbdir/seforim.db. Fix the rows above (nothing was modified, nothing may be auto-deleted).
+BUILD FAILED
 ```
-
-### A7/A9/A11 (blocked)
+### A11 (branch + only the 2 rows for מהרשם/רמחל: the next error; that run's log was overwritten by the full run, so this is an excerpt from the transcript)
 ```
-$ curl -sSL https://api.adoptium.net/v3/binary/latest/25/ga/linux/x64/jdk/hotspot/normal/eclipse
-curl: (56) CONNECT tunnel failed, response 403
-$ curl https://github.com/Otzaria/SeforimLibrary/releases   -> 403
-$ curl https://api.github.com/repos/Otzaria/SeforimLibrary/releases -> 403
-$ curl https://www.sefaria.org/api/index/ -> 403
+Exception in thread "main" java.lang.IllegalArgumentException: sefaria_category_changes.csv record 624 references missing category 'תלמוד בבלי/אחרונים/ליקוטי מהרי״ל/סדר נשים'
+	at …SeedAllMetadataPostProcessKt.planCategoryDescriptionOverrides(SeedAllMetadataPostProcess.kt:290)
 ```
-Full logs: `logs/`.
+### A11 (upstream/main d9325ddb) / (branch + the 11-row workaround)
+```
+BUILD SUCCESSFUL in 1m 24s
+---
+BUILD SUCCESSFUL in 1m 16s
+```
