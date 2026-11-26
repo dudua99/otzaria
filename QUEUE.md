@@ -103,3 +103,6 @@
 5989 bug   (CommentaryNotesSection text not selectable (no SelectionArea); add it + Ctrl+C tests for hover/side note; notes/5989.md)
 5212 bug   (verify first: Flutter Windows reports NumLock-off keypad as numpad8 etc.; map to arrows/home/end in reader handlers; notes/5212.md)
 5463 bug   (reproduce first with a real Bereshit line: header on a separate line lost in the HTML flavor (OneNote); if HTML identical to Gemara -> NOT READY with evidence; notes/5463.md)
+2467 bug   (approved by Y-PLONI, assigned Rivka-Or - check her open PRs first; call retirePreviousSemanticGeneration (engine 7.5.3) after a good non-fallback open; notes/2467.md)
+5983 bug   (HebrewBooks dialog closed mid-download -> finished file silently dropped: !mounted return before saveFileWithExtension; notes/5983.md)
+5991 bug   (reproduce first: itur "עז ב"/"בב פג" ranking vs complete acronym; if DB lacks the acronym -> NOT READY, DATA; notes/5991.md)
