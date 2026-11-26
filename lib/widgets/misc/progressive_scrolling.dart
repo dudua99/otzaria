@@ -6,6 +6,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 
 import 'package:positioned_sliver_list/positioned_list.dart';
+import 'package:otzaria/shortcuts/numpad_navigation.dart';
 import 'package:otzaria/theme/app_motion.dart';
 import 'package:otzaria/theme/app_tokens.dart';
 
@@ -311,13 +312,14 @@ class _ProgressiveScrollState extends State<ProgressiveScroll>
         HardwareKeyboard.instance.isMetaPressed;
     if (modified) _stopScrolling();
 
-    final isPageDown = event.logicalKey == LogicalKeyboardKey.pageDown;
-    if (isPageDown || event.logicalKey == LogicalKeyboardKey.pageUp) {
+    final key = navigationKeyOf(event);
+    final isPageDown = key == LogicalKeyboardKey.pageDown;
+    if (isPageDown || key == LogicalKeyboardKey.pageUp) {
       return _handlePageKey(event, forward: isPageDown, modified: modified);
     }
 
-    final isArrowDown = event.logicalKey == LogicalKeyboardKey.arrowDown;
-    final isArrowUp = event.logicalKey == LogicalKeyboardKey.arrowUp;
+    final isArrowDown = key == LogicalKeyboardKey.arrowDown;
+    final isArrowUp = key == LogicalKeyboardKey.arrowUp;
     if (!isArrowDown && !isArrowUp) return KeyEventResult.ignored;
     // קיצורי העריכה יושבים בשורש האפליקציה, ולכן החץ מגיע לכאן לפני שדה טקסט מקונן.
     if (_isEditingText) {

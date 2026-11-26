@@ -86,6 +86,7 @@ import 'package:otzaria/personal_notes/utils/personal_note_source_selection.dart
 import 'package:otzaria/widgets/smart_text/render_settings.dart';
 import 'package:otzaria/shortcuts/keyboard_shortcuts.dart';
 import 'package:otzaria/shortcuts/shortcut_helper.dart';
+import 'package:otzaria/shortcuts/numpad_navigation.dart';
 import 'package:otzaria/shortcuts/shortcut_validator.dart';
 
 import 'package:otzaria/widgets/navigation/responsive_action_bar.dart';
@@ -2979,7 +2980,7 @@ bool _handleGlobalKeyEvent(
       !ShortcutHelper.isAltModifierPressed;
   if ((isCtrlOrCmd || isBareKey) &&
       !isTextInputFocusNode(FocusManager.instance.primaryFocus)) {
-    switch (event.logicalKey) {
+    switch (navigationKeyOf(event)) {
       // Home - תחילת הספר
       case LogicalKeyboardKey.home:
         unawaited(
