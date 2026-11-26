@@ -95,3 +95,6 @@
 6001 bug   (itur from a plugin while typing in the plugin: caret not in the itur box; #3759 path misses WebView-owned text focus — reproduce first; notes/6001.md)
 3657 bug   (reproduce first: unpin textMaxWidth 700 in commentary_card_nested_scroll_test:465 → 7px restore drift at full width; if only test measurement -> NOT READY with numbers; notes/3657.md)
 3975b bug   (narrow: touchpad vertical scroll loses first ~20px per gesture in TabSwipeDetector arena; option א; Refs not Closes; keep #3048/#3972 green; notes/3975b.md)
+3599 bug   (commentary panel: drop the book name already in the group header from item titles, as Y-PLONI's diagnosis says; keep copy text full; notes/3599.md)
+4231b bug   (author link matches the joined "X, Y" author string exactly; match per author + one link per author; merged #5674 left this; notes/4231b.md)
+4490b bug   (tests only: DbReadWorkerBusy in re-download/reset/update flows — user message, retry, latency; section 3 not covered by #5662; notes/4490b.md)
