@@ -106,3 +106,4 @@
 2467 bug   (approved by Y-PLONI, assigned Rivka-Or - check her open PRs first; call retirePreviousSemanticGeneration (engine 7.5.3) after a good non-fallback open; notes/2467.md)
 5983 bug   (HebrewBooks dialog closed mid-download -> finished file silently dropped: !mounted return before saveFileWithExtension; notes/5983.md)
 5991 bug   (reproduce first: itur "עז ב"/"בב פג" ranking vs complete acronym; if DB lacks the acronym -> NOT READY, DATA; notes/5991.md)
+6066 bug   (assigned palmoni5, owner one-time approval 26.11: offline mode must also cut plugin network — evaluatePluginNetworkAccess + resolvePluginNetworkPolicy ignore keyOfflineMode; app update check already gated; notes/6066.md)
