@@ -98,3 +98,8 @@
 3599 bug   (commentary panel: drop the book name already in the group header from item titles, as Y-PLONI's diagnosis says; keep copy text full; notes/3599.md)
 4231b bug   (author link matches the joined "X, Y" author string exactly; match per author + one link per author; merged #5674 left this; notes/4231b.md)
 4490b bug   (tests only: DbReadWorkerBusy in re-download/reset/update flows — user message, retry, latency; section 3 not covered by #5662; notes/4490b.md)
+4135 bug   (in-book search: engine route returns 0 for the book while the local highlights show hits; fall back to the local literal scan when the engine finds nothing; notes/4135.md)
+4497 bug   (PDF outline filter: "ב." matches every title with ב and "קיא."/"קיא:" become equal; rank exact/prefix first and keep the amud mark; notes/4497.md)
+5989 bug   (CommentaryNotesSection text not selectable (no SelectionArea); add it + Ctrl+C tests for hover/side note; notes/5989.md)
+5212 bug   (verify first: Flutter Windows reports NumLock-off keypad as numpad8 etc.; map to arrows/home/end in reader handlers; notes/5212.md)
+5463 bug   (reproduce first with a real Bereshit line: header on a separate line lost in the HTML flavor (OneNote); if HTML identical to Gemara -> NOT READY with evidence; notes/5463.md)
