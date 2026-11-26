@@ -1,1 +1,1 @@
-2026-11-26T11:39:16Z fix of #6001 per FIX.md + notes/6001.md
+done: prbody/6001-fix 5aa71e5a2f03983733877d304dc5e19fcd9e89a1 (2026-11-26T11:44:03Z)
