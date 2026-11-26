@@ -1534,9 +1534,10 @@ void main() {
           expect(body, contains('(PageID = wpWelcome)'));
           expect(body, isNot(contains('wpSelectDir')));
           final wizard = _routine(script, 'procedure InitializeWizard');
+          expect(wizard, contains('or IsAdmin) and'));
           expect(
             wizard,
-            contains("(IsAdmin and not CmdLineParamExists('/CURRENTUSER'))"),
+            contains("not CmdLineParamExists('/CURRENTUSER')) then"),
           );
           expect(wizard, contains('AllUsersModeRadio.Checked := True'));
         },
