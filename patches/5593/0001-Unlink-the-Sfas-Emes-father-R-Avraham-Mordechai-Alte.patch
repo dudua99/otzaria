@@ -1,0 +1,64 @@
+From 994f0811f94c18334d0f73c978e2d031c6475eb9 Mon Sep 17 00:00:00 2001
+From: dudua99 <99@9900.co.il>
+Date: Thu, 26 Nov 2026 19:22:10 +0000
+Subject: [PATCH] Unlink the Sfas Emes' father, R' Avraham Mordechai Alter,
+ from his grandson the Imrei Emes (Q2623065)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Otzaria/otzaria#5593. Two claims name the father of the Sfas Emes (son of the Chiddushei
+HaRim, 1816-1855, per the Wikipedia article of the Chiddushei HaRim) and were linked by name to
+Q2623065, the Imrei Emes (1865/6-1948), who is the Sfas Emes' son:
+- Q2891454 (Sfas Emes) family 'אביו': רבי אברהם מרדכי אלתר
+- Q1810688 (Chiddushei HaRim) family 'בנו': רבי אברהם מרדכי אלתר
+The registry has no entry for the father, so both are unlinked (null override). The Sfas Emes'
+own son claim ('בנו ... בעל אמרי אמת') keeps its link.
+---
+ data/entries/Q1810688.json     | 3 +--
+ data/entries/Q2891454.json     | 3 +--
+ data/review/ref-overrides.json | 4 ++++
+ 3 files changed, 6 insertions(+), 4 deletions(-)
+ create mode 100644 data/review/ref-overrides.json
+
+diff --git a/data/entries/Q1810688.json b/data/entries/Q1810688.json
+index 31329361..26424ded 100644
+--- a/data/entries/Q1810688.json
++++ b/data/entries/Q1810688.json
+@@ -223,8 +223,7 @@
+     },
+     "src": [
+      "wikipedia"
+-    ],
+-    "ref": "Q2623065"
++    ]
+    },
+    {
+     "value": {
+diff --git a/data/entries/Q2891454.json b/data/entries/Q2891454.json
+index 58628cad..dfcb060f 100644
+--- a/data/entries/Q2891454.json
++++ b/data/entries/Q2891454.json
+@@ -177,8 +177,7 @@
+     },
+     "src": [
+      "wikipedia"
+-    ],
+-    "ref": "Q2623065"
++    ]
+    },
+    {
+     "value": {
+diff --git a/data/review/ref-overrides.json b/data/review/ref-overrides.json
+new file mode 100644
+index 00000000..61c3a7e1
+--- /dev/null
++++ b/data/review/ref-overrides.json
+@@ -0,0 +1,4 @@
++{
++ "Q1810688|family|רבי אברהם מרדכי אלתר": null,
++ "Q2891454|family|רבי אברהם מרדכי אלתר": null
++}
+-- 
+2.43.0
+

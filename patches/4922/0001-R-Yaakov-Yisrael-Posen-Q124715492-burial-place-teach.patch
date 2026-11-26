@@ -1,0 +1,127 @@
+From 6eb458afe366a56b6da4da6d851cdcbcaeaabd9f Mon Sep 17 00:00:00 2001
+From: dudua99 <99@9900.co.il>
+Date: Thu, 26 Nov 2026 19:21:25 +0000
+Subject: [PATCH] R' Yaakov Yisrael Posen (Q124715492): burial place, teachers
+ and students from his grandchildren
+
+Correction sent by the grandchildren in Otzaria/otzaria#4922:
+- buried: the cemetery of the Ponevezh yeshiva (the Wikipedia/Wikidata value is kept as alt;
+  the Wikipedia article is also in the category of people buried in the Ponevezh cemetery)
+- teachers: his father R' Eliezer Posen, R' Chaim Greineman, R' Nissim Karelitz
+- students: R' Nachum Gutentag, R' Avraham Attias, R' Shlomo Zalman Grossman
+
+None of the repository's providers carries these facts, so the claims cite editorial and the
+review flags name the report. link_refs.py links R' Nissim Karelitz to Q2903929; the other
+five names are unresolved (added to refs-unresolved.csv).
+---
+ data/entries/Q124715492.json    | 54 ++++++++++++++++++++++++++++++---
+ data/review/refs-unresolved.csv |  5 +++
+ 2 files changed, 55 insertions(+), 4 deletions(-)
+
+diff --git a/data/entries/Q124715492.json b/data/entries/Q124715492.json
+index 24877339..6cbc1ee7 100644
+--- a/data/entries/Q124715492.json
++++ b/data/entries/Q124715492.json
+@@ -90,10 +90,18 @@
+    }
+   },
+   "buried": {
+-   "value": "בית הקברות שומרי שבת",
++   "value": "בית החיים דנציבי ישיבת פונבז'",
+    "src": [
+-    "wikipedia",
+-    "wikidata"
++    "editorial"
++   ],
++   "alt": [
++    {
++     "value": "בית הקברות שומרי שבת",
++     "src": [
++      "wikipedia",
++      "wikidata"
++     ]
++    }
+    ]
+   },
+   "roles": [
+@@ -117,6 +125,25 @@
+      "wikidata"
+     ],
+     "ref": "Q27990411"
++   },
++   {
++    "value": "אביו רבי אליעזר פוזן, דיין בלונדון",
++    "src": [
++     "editorial"
++    ]
++   },
++   {
++    "value": "רבי חיים גריינמן",
++    "src": [
++     "editorial"
++    ]
++   },
++   {
++    "value": "רבי ניסים קרליץ",
++    "src": [
++     "editorial"
++    ],
++    "ref": "Q2903929"
+    }
+   ],
+   "students": [
+@@ -125,6 +152,24 @@
+     "src": [
+      "wikidata"
+     ]
++   },
++   {
++    "value": "הרב נחום גוטנטג, אב\"ד אבן העזר בבית הדין של הגר\"נ קרליץ",
++    "src": [
++     "editorial"
++    ]
++   },
++   {
++    "value": "הרב אברהם אטיאס, דיין בבית הדין של הגר\"נ קרליץ",
++    "src": [
++     "editorial"
++    ]
++   },
++   {
++    "value": "הרב שלמה זלמן גרוסמן, רב העיר אלעד",
++    "src": [
++     "editorial"
++    ]
+    }
+   ],
+   "family": [
+@@ -174,7 +219,8 @@
+  "review": {
+   "status": "draft",
+   "flags": [
+-   "רבו (רבי נתן שולמן), תלמידו (רבי יהושע ענבל) ומקום הפטירה מוויקינתונים בלבד."
++   "רבו (רבי נתן שולמן), תלמידו (רבי יהושע ענבל) ומקום הפטירה מוויקינתונים בלבד.",
++   "תיקון מנכדי הרב (Otzaria/otzaria#4922): מקום הקבורה, שלושה מרבותיו ושלושה מתלמידיו. אין להם ספק במקורות של המאגר, ולכן src=editorial; הערך הקודם של מקום הקבורה (ויקיפדיה, ויקינתונים) נשמר ב-alt. בוויקיפדיה הערך נמצא גם בקטגוריה 'אישים הקבורים בבית הקברות פוניבז''."
+   ],
+   "written": "2026-10-05"
+  }
+diff --git a/data/review/refs-unresolved.csv b/data/review/refs-unresolved.csv
+index acff87bd..9f1992ca 100644
+--- a/data/review/refs-unresolved.csv
++++ b/data/review/refs-unresolved.csv
+@@ -1392,7 +1392,12 @@ Q124434257,family,רבי יהודה אבן רובי,רבי יהודה אבן ר
+ Q124611928,family,יהודה לאופר,יהודה לאופר,
+ Q1247038,family,"רבי ישראל רייך, רבה של בוטריקס ובעל מנחת ישראל",רבי ישראל רייך,
+ Q1247038,family,"רבי מרדכי אפרים פישל זוסמן סופר, ממלא מקומו בבודפשט",רבי מרדכי אפרים פישל זוסמן סופר,
++Q124715492,teachers,"אביו רבי אליעזר פוזן, דיין בלונדון",רבי אליעזר פוזן,
++Q124715492,teachers,רבי חיים גריינמן,רבי חיים גריינמן,
+ Q124715492,students,רבי יהושע ענבל,רבי יהושע ענבל,
++Q124715492,students,"הרב נחום גוטנטג, אב""ד אבן העזר בבית הדין של הגר""נ קרליץ",הרב נחום גוטנטג,
++Q124715492,students,"הרב אברהם אטיאס, דיין בבית הדין של הגר""נ קרליץ",הרב אברהם אטיאס,
++Q124715492,students,"הרב שלמה זלמן גרוסמן, רב העיר אלעד",הרב שלמה זלמן גרוסמן,
+ Q124715492,family,"רבי אליעזר פוזן, דיין",רבי אליעזר פוזן,
+ Q124715492,family,"רבי ראובן פוזן, ממלא מקומו ברבנות זכרון יעקב",רבי ראובן פוזן,
+ Q124715492,family,"רבי אליהו פוזן, אב""ד בבית דין צדק בני ברק",רבי אליהו פוזן,
+-- 
+2.43.0
+
