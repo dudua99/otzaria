@@ -1,0 +1,77 @@
+From dc37f784f7c8069b3a6b6ab1ebb11dd7a4e9d727 Mon Sep 17 00:00:00 2001
+From: dudua99 <99@9900.co.il>
+Date: Thu, 26 Nov 2026 19:31:31 +0000
+Subject: [PATCH 2/2] =?UTF-8?q?fix:=20drop=20citations=20inside=20the=20ge?=
+ =?UTF-8?q?nerator's=20bold=20[=D7=A1=D7=A2=D7=99=D7=A3=20X]=20division=20?=
+ =?UTF-8?q?markers=20(Otzaria/otzaria#6075,=20#5927)?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+SeforimLibrary prints the Shulchan Arukh se'ifim inside the Tur as <b>[סעיף X]</b>. The NER read
+the label as a citation and took its siman from the ibid history, so 621 of the 623 LINKER links
+from the Tur to the Shulchan Arukh in v40 pointed at another siman (Tur, Orach Chayim 217 ->
+Shulchan Arukh, Orach Chayim 79:5-8). A span inside such a marker is now skipped before it can
+become a link or an ibid antecedent.
+---
+ .../output_affecting_fingerprint_changes.json |  5 +++++
+ src/link_books.py                             | 20 +++++++++++++++++++
+ 2 files changed, 25 insertions(+)
+
+diff --git a/baseline/output_affecting_fingerprint_changes.json b/baseline/output_affecting_fingerprint_changes.json
+index 1e63815..4dde9c2 100644
+--- a/baseline/output_affecting_fingerprint_changes.json
++++ b/baseline/output_affecting_fingerprint_changes.json
+@@ -45,6 +45,11 @@
+       "to": "dump=44e55916743983b8;engine_src=bbcf4ff94398e7e8;gpu-server=d9da16119e9c0de64224d7b187cd999b2ead4bad;he_ref_ner=37ff5191562e8655;he_subref_ner=4480a8acec08bae0;python_runtime=d4dc6ca766526322;sefaria=59291d9f8754de0062711bc1cd49214b0e618fc5;sefaria_patch=9417fd1aba7bf248;policy=drop;bavli=0",
+       "review": "PR #16 citation recovery and ownership: retain verified legacy Gemara references when a commentary cannot be safely selected; upgrade named or self citations only with printed work/address and direct available commentary proof. Validate chapter/daf/direction/ibid before display changes, recognize actual numeral/alias boundaries, and preserve own-DH with unique visible opening text while retaining base history. Repair source-owned chapter work guesses and explicitly printed self-address errors without stale antecedents. Full relink required; never adopt the old fingerprint as output-neutral. Exact immutable validation, scope and independent QA are documented in docs/citation-recovery-v36.md. Prefix and postfix writers share a late display upgrade after validated relative reconstruction; scoped chapter ellipsis and unique attached editorial DH/amud corrections use generic grammar and actual text, without source-book or line exceptions.",
+       "from": "dump=44e55916743983b8;engine_src=94e1b594c52357fd;gpu-server=d9da16119e9c0de64224d7b187cd999b2ead4bad;he_ref_ner=37ff5191562e8655;he_subref_ner=4480a8acec08bae0;python_runtime=d4dc6ca766526322;sefaria=59291d9f8754de0062711bc1cd49214b0e618fc5;sefaria_patch=9417fd1aba7bf248;policy=drop;bavli=0"
++    },
++    {
++      "from": "dump=44e55916743983b8;engine_src=bbcf4ff94398e7e8;gpu-server=d9da16119e9c0de64224d7b187cd999b2ead4bad;he_ref_ner=37ff5191562e8655;he_subref_ner=4480a8acec08bae0;python_runtime=d4dc6ca766526322;sefaria=59291d9f8754de0062711bc1cd49214b0e618fc5;sefaria_patch=9417fd1aba7bf248;policy=drop;bavli=0",
++      "to": "dump=44e55916743983b8;engine_src=16f014c7ef01ffbe;gpu-server=d9da16119e9c0de64224d7b187cd999b2ead4bad;he_ref_ner=37ff5191562e8655;he_subref_ner=4480a8acec08bae0;python_runtime=d4dc6ca766526322;sefaria=59291d9f8754de0062711bc1cd49214b0e618fc5;sefaria_patch=9417fd1aba7bf248;policy=drop;bavli=0",
++      "review": "Otzaria/otzaria#6075 and #5927: a citation span inside the generator's bold \"[סעיף X]\" division marker (the Shulchan Arukh se'ifim SeforimLibrary prints inside the Tur, and the Shulchan Arukh HaRav's own markers) is skipped before it becomes a link or an ibid antecedent. Output-affecting: removes the LINKER links on those markers (621 Tur -> Shulchan Arukh links in v40) and can change later ibid resolution in the same books. Full relink required; never adopt the old fingerprint as output-neutral."
+     }
+   ]
+ }
+diff --git a/src/link_books.py b/src/link_books.py
+index 2247cb4..fd60b75 100644
+--- a/src/link_books.py
++++ b/src/link_books.py
+@@ -2247,6 +2247,10 @@ def process_batch(
+                 # marker, not a citation (for example "(נח)" as Parashat Noach).
+                 if end <= marker_end:
+                     continue
++                # So is the generator's bold "[סעיף X]" division marker (the Shulchan
++                # Arukh se'ifim inside the Tur): its siman would come from ibid history.
++                if inside_division_marker(content, start, end):
++                    continue
+                 anchor_text = content[start:end]
+                 relative_direction = None
+                 if ref is not None:
+@@ -5898,6 +5902,22 @@ def has_unproven_code_number(rr, ref) -> bool:
+                for part in getattr(rr.raw_entity, "raw_ref_parts", ()))
+ 
+ 
++# The division markers SeforimLibrary prints in a line: "<b>[סעיף ה]</b>" for a Shulchan
++# Arukh se'if inside the Tur (SefariaTurSeifMarkers), "<b>[סעיפים ב, ג]</b>" for several.
++_DIVISION_MARKER_RE = re.compile(r"<b>\[(?:סעיף|סעיפים)\s[^\[\]<>]{1,40}\]</b>")
++
++
++def inside_division_marker(content: str, start: int, end: int) -> bool:
++    """Is the span [start, end) of the stored line inside a bold "[סעיף X]" division marker?
++
++    The marker labels the line's own division; it names no work, so the NER's reading of
++    "סעיף ה" as a citation takes its siman from the ibid history (Otzaria/otzaria#6075,
++    #5927). A printed reference in plain brackets or without them is untouched.
++    """
++    return any(m.start() <= start and end <= m.end()
++               for m in _DIVISION_MARKER_RE.finditer(content))
++
++
+ def is_implausible_citation_target(target_ref: str, anchor_text: str) -> bool:
+     return (
+         is_abbreviation_misread(target_ref, anchor_text)
+-- 
+2.43.0
+

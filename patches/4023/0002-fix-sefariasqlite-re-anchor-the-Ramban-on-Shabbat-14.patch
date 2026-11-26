@@ -1,0 +1,141 @@
+From ce9d9d936b372041e4777b73368d2b03350f9fc7 Mon Sep 17 00:00:00 2001
+From: dudua99 <99@9900.co.il>
+Date: Thu, 26 Nov 2026 19:34:36 +0000
+Subject: [PATCH 2/2] fix(sefariasqlite): re-anchor the Ramban on Shabbat 141b
+ link to the lines it explains (Otzaria/otzaria#4023)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Sefaria links Chiddushei Ramban on Shabbat 141b:2 ("א"ה מאי איריא אבן אפי' דינר נמי") to
+Shabbat 141b:16 ("...מאי איריא רפוי"), so the Ramban shows only when the whole daf is selected.
+The dibbur explains Shabbat 141b:28 ("אי הכי,") and 142a:1 ("מאי איריא אבן, אפילו דינר נמי!").
+
+New resource corrected_link_citations.tsv (SefariaLinkCitationCorrections): an exact Sefaria row
+whose one side is wrong gets a reviewed replacement before resolution, in either column order. The
+replacement here is the range Shabbat 141b:28-142a:1, so the importer writes the link on 141b:28
+with link_range/link_coverage through 142a:1. A row Sefaria has since changed is left alone and
+logged as an unused correction.
+---
+ .../SefariaLinkCitationCorrections.kt         | 53 +++++++++++++++++++
+ .../sefariasqlite/SefariaLinksImporter.kt     | 12 ++++-
+ .../resources/corrected_link_citations.tsv    | 10 ++++
+ 3 files changed, 73 insertions(+), 2 deletions(-)
+ create mode 100644 generator/sefariasqlite/src/jvmMain/kotlin/io/github/kdroidfilter/seforimlibrary/sefariasqlite/SefariaLinkCitationCorrections.kt
+ create mode 100644 generator/sefariasqlite/src/jvmMain/resources/corrected_link_citations.tsv
+
+diff --git a/generator/sefariasqlite/src/jvmMain/kotlin/io/github/kdroidfilter/seforimlibrary/sefariasqlite/SefariaLinkCitationCorrections.kt b/generator/sefariasqlite/src/jvmMain/kotlin/io/github/kdroidfilter/seforimlibrary/sefariasqlite/SefariaLinkCitationCorrections.kt
+new file mode 100644
+index 00000000..18c481ae
+--- /dev/null
++++ b/generator/sefariasqlite/src/jvmMain/kotlin/io/github/kdroidfilter/seforimlibrary/sefariasqlite/SefariaLinkCitationCorrections.kt
+@@ -0,0 +1,53 @@
++package io.github.kdroidfilter.seforimlibrary.sefariasqlite
++
++import java.util.concurrent.ConcurrentHashMap
++
++/**
++ * Sefaria link rows whose one side names the wrong segment, re-anchored to the reviewed
++ * citation before the row is resolved (Otzaria/otzaria#4023). [RESOURCE] holds, per row, the
++ * side that stays ([Correction.keep]), the wrong side exactly as Sefaria exports it
++ * ([Correction.wrong]) and its replacement ([Correction.corrected]), which may be a range: the
++ * importer then writes link_range and link_coverage for it like for any ranged citation.
++ *
++ * Only the exact pair is touched, in either column order. Once Sefaria fixes or moves the row
++ * the pair no longer occurs, nothing changes, and [unused] names the stale correction.
++ */
++internal class SefariaLinkCitationCorrections(private val corrections: List<Correction>) {
++
++    internal data class Correction(val keep: String, val wrong: String, val corrected: String)
++
++    private val byPair: Map<Pair<String, String>, Correction> =
++        corrections.associateBy { it.keep to it.wrong }
++    private val used = ConcurrentHashMap.newKeySet<Correction>()
++
++    /** The row's two normalized citations, with a listed wrong side replaced. */
++    fun apply(c1: String, c2: String): Pair<String, String> {
++        byPair[c1 to c2]?.let { used += it; return c1 to it.corrected }
++        byPair[c2 to c1]?.let { used += it; return it.corrected to c2 }
++        return c1 to c2
++    }
++
++    /** Corrections no row matched: Sefaria changed the row, so the entry should be reviewed. */
++    fun unused(): List<Correction> = corrections.filter { it !in used }
++
++    companion object {
++        const val RESOURCE = "corrected_link_citations.tsv"
++
++        fun load(classLoader: ClassLoader?): List<Correction> {
++            val stream = classLoader?.getResourceAsStream(RESOURCE)
++                ?: throw IllegalStateException("$RESOURCE missing from the sefariasqlite resources")
++            return stream.bufferedReader(Charsets.UTF_8).useLines(::parse)
++        }
++
++        internal fun parse(lines: Sequence<String>): List<Correction> {
++            val entries = lines.filter { it.isNotBlank() && !it.startsWith("#") }.map { row ->
++                val cols = row.split('\t').map(::normalizeCitation)
++                require(cols.size == 3 && cols.none { it.isBlank() }) { "$RESOURCE: expected 3 columns in '$row'" }
++                require(cols[1] != cols[2] && cols[0] != cols[1]) { "$RESOURCE: row changes nothing: '$row'" }
++                Correction(cols[0], cols[1], cols[2])
++            }.toList()
++            require(entries.map { it.keep to it.wrong }.distinct().size == entries.size) { "$RESOURCE: duplicate row" }
++            return entries
++        }
++    }
++}
+diff --git a/generator/sefariasqlite/src/jvmMain/kotlin/io/github/kdroidfilter/seforimlibrary/sefariasqlite/SefariaLinksImporter.kt b/generator/sefariasqlite/src/jvmMain/kotlin/io/github/kdroidfilter/seforimlibrary/sefariasqlite/SefariaLinksImporter.kt
+index 9f69ac00..563aba3b 100644
+--- a/generator/sefariasqlite/src/jvmMain/kotlin/io/github/kdroidfilter/seforimlibrary/sefariasqlite/SefariaLinksImporter.kt
++++ b/generator/sefariasqlite/src/jvmMain/kotlin/io/github/kdroidfilter/seforimlibrary/sefariasqlite/SefariaLinksImporter.kt
+@@ -35,6 +35,9 @@ internal class SefariaLinksImporter(
+     private val pendingRanges = ConcurrentLinkedQueue<LinkRange>()
+     private val pendingCoverage = ConcurrentLinkedQueue<LinkCoverage>()
+     private val turCommentarySectionLinks = ConcurrentHashMap.newKeySet<Long>()
++    private val citationCorrections = SefariaLinkCitationCorrections(
++        SefariaLinkCitationCorrections.load(SefariaLinkCitationCorrections::class.java.classLoader),
++    )
+ 
+     // Range accounting — surfaced in the end-of-phase summary log.
+     private val rangedRowsSeen = LongAdder()
+@@ -189,6 +192,9 @@ internal class SefariaLinksImporter(
+                 expectedVisibility.requireMatches(observedVisibility.snapshot())
+             }
+ 
++            citationCorrections.unused().forEach {
++                logger.w { "Link citation correction unused (Sefaria changed the row?): ${it.keep} -> ${it.wrong}" }
++            }
+             // Ranges/coverage/suppression reference link ids, so they are
+             // inserted only after every link row exists.
+             insertPendingRangesAndCoverage()
+@@ -452,8 +458,10 @@ internal class SefariaLinksImporter(
+                 // rowsRead counts EVERY parsed data row, before any skip —
+                 // empty-citation rows are read AND dropped.
+                 rowsReadByType.bump(csvConnectionType)
+-                val c1 = normalizeCitation(row.getOrNull(idxC1).orEmpty())
+-                val c2 = normalizeCitation(row.getOrNull(idxC2).orEmpty())
++                val (c1, c2) = citationCorrections.apply(
++                    normalizeCitation(row.getOrNull(idxC1).orEmpty()),
++                    normalizeCitation(row.getOrNull(idxC2).orEmpty()),
++                )
+                 if (c1.isEmpty() || c2.isEmpty()) {
+                     rowsDroppedByType.bump(csvConnectionType)
+                     continue
+diff --git a/generator/sefariasqlite/src/jvmMain/resources/corrected_link_citations.tsv b/generator/sefariasqlite/src/jvmMain/resources/corrected_link_citations.tsv
+new file mode 100644
+index 00000000..7f110f7c
+--- /dev/null
++++ b/generator/sefariasqlite/src/jvmMain/resources/corrected_link_citations.tsv
+@@ -0,0 +1,10 @@
++# Sefaria link rows whose one side names the wrong segment (SefariaLinkCitationCorrections).
++# Columns (tab-separated): the side that stays, the wrong side as Sefaria exports it, the reviewed replacement.
++# A replacement needs textual evidence on both sides; a range gets link_range and link_coverage.
++#
++# Otzaria/otzaria#4023: the Ramban's dibbur "א"ה מאי איריא אבן אפי' דינר נמי" explains
++# "אי הכי," (Shabbat 141b:28) and "מאי איריא אבן, אפילו דינר נמי!..." (Shabbat 142a:1), not
++# "...מאי איריא רפוי? אפילו לא רפוי נמי!" (Shabbat 141b:16), where Sefaria anchors it.
++# https://www.sefaria.org/Chiddushei_Ramban_on_Shabbat.141b.2
++# https://www.sefaria.org/Shabbat.141b.28-142a.1
++Chiddushei Ramban on Shabbat 141b:2	Shabbat 141b:16	Shabbat 141b:28-142a:1
+-- 
+2.43.0
+

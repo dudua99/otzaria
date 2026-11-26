@@ -1,0 +1,89 @@
+From dce0485063446316d1f97c0393fef6187255f089 Mon Sep 17 00:00:00 2001
+From: dudua99 <99@9900.co.il>
+Date: Thu, 26 Nov 2026 19:33:02 +0000
+Subject: [PATCH 1/2] test(sefariasqlite): re-anchor the Ramban on Shabbat 141b
+ link Sefaria puts on the wrong line (Otzaria/otzaria#4023)
+
+Failing test: SefariaLinkCitationCorrections and its resource do not exist yet.
+---
+ .../SefariaLinkCitationCorrectionsTest.kt     | 68 +++++++++++++++++++
+ 1 file changed, 68 insertions(+)
+ create mode 100644 generator/sefariasqlite/src/jvmTest/kotlin/io/github/kdroidfilter/seforimlibrary/sefariasqlite/SefariaLinkCitationCorrectionsTest.kt
+
+diff --git a/generator/sefariasqlite/src/jvmTest/kotlin/io/github/kdroidfilter/seforimlibrary/sefariasqlite/SefariaLinkCitationCorrectionsTest.kt b/generator/sefariasqlite/src/jvmTest/kotlin/io/github/kdroidfilter/seforimlibrary/sefariasqlite/SefariaLinkCitationCorrectionsTest.kt
+new file mode 100644
+index 00000000..9399fb58
+--- /dev/null
++++ b/generator/sefariasqlite/src/jvmTest/kotlin/io/github/kdroidfilter/seforimlibrary/sefariasqlite/SefariaLinkCitationCorrectionsTest.kt
+@@ -0,0 +1,68 @@
++package io.github.kdroidfilter.seforimlibrary.sefariasqlite
++
++import kotlin.test.Test
++import kotlin.test.assertEquals
++import kotlin.test.assertFailsWith
++import kotlin.test.assertNull
++import kotlin.test.assertTrue
++
++// Otzaria/otzaria#4023: a Sefaria link row whose base side names the wrong segment.
++class SefariaLinkCitationCorrectionsTest {
++
++    private val ramban = SefariaLinkCitationCorrections.Correction(
++        keep = "Chiddushei Ramban on Shabbat 141b:2",
++        wrong = "Shabbat 141b:16",
++        corrected = "Shabbat 141b:28-142a:1",
++    )
++
++    @Test
++    fun `resource holds the reviewed Ramban on Shabbat row`() {
++        val entries = SefariaLinkCitationCorrections.load(SefariaLinkCitationCorrections::class.java.classLoader)
++        assertEquals(listOf(ramban), entries)
++    }
++
++    @Test
++    fun `the wrong side of the exact row is replaced, in either column order`() {
++        val corrections = SefariaLinkCitationCorrections(listOf(ramban))
++        assertEquals(
++            "Chiddushei Ramban on Shabbat 141b:2" to "Shabbat 141b:28-142a:1",
++            corrections.apply("Chiddushei Ramban on Shabbat 141b:2", "Shabbat 141b:16"),
++        )
++        assertEquals(
++            "Shabbat 141b:28-142a:1" to "Chiddushei Ramban on Shabbat 141b:2",
++            corrections.apply("Shabbat 141b:16", "Chiddushei Ramban on Shabbat 141b:2"),
++        )
++        assertTrue(corrections.unused().isEmpty())
++    }
++
++    @Test
++    fun `the corrected side is a range the importer widens with link_range and coverage`() {
++        val range = parseCitationRange(canonicalCitation(ramban.corrected))
++        assertEquals("shabbat 141b:28", range?.startCanonical)
++        assertEquals("shabbat 142a:1", range?.endCanonical)
++    }
++
++    @Test
++    fun `any other row is left alone and an unused correction is reported`() {
++        val corrections = SefariaLinkCitationCorrections(listOf(ramban))
++        for ((c1, c2) in listOf(
++            "Chiddushei Ramban on Shabbat 141b:2" to "Shabbat 141b:17", // Sefaria fixed or moved it
++            "Chiddushei Ramban on Shabbat 141b:3" to "Shabbat 141b:16",
++            "Rashi on Shabbat 141b:16:1" to "Shabbat 141b:16",
++        )) {
++            assertEquals(c1 to c2, corrections.apply(c1, c2))
++        }
++        assertEquals(listOf(ramban), corrections.unused())
++    }
++
++    @Test
++    fun `rejects malformed, self-naming and duplicate rows`() {
++        assertFailsWith<IllegalArgumentException> { SefariaLinkCitationCorrections.parse(sequenceOf("a\tb")) }
++        assertFailsWith<IllegalArgumentException> { SefariaLinkCitationCorrections.parse(sequenceOf("a\tb\t ")) }
++        assertFailsWith<IllegalArgumentException> { SefariaLinkCitationCorrections.parse(sequenceOf("a\tb\tb")) }
++        assertFailsWith<IllegalArgumentException> {
++            SefariaLinkCitationCorrections.parse(sequenceOf("a\tb\tc", "a\tb\td"))
++        }
++        assertNull(SefariaLinkCitationCorrections.parse(sequenceOf("# comment", "")).firstOrNull())
++    }
++}
+-- 
+2.43.0
+
