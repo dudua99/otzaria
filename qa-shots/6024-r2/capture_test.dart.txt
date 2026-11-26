@@ -1,0 +1,64 @@
+import 'dart:io';
+import 'dart:ui';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:otzaria/text_book/view/text_book_export_dialog.dart';
+import 'package:otzaria/text_display/models/text_display_profile.dart';
+
+Future<void> _font(String family, List<String> files) async {
+  final l = FontLoader(family);
+  for (final f in files) {
+    l.addFont(Future.value(ByteData.sublistView(File(f).readAsBytesSync())));
+  }
+  await l.load();
+}
+
+void main() {
+  final out = Platform.environment['SHOT_DIR']!;
+  for (final dark in [false, true]) {
+    for (final w in [900.0, 360.0]) {
+      testWidgets('capture ${dark ? 'dark' : 'light'} $w', (tester) async {
+        await tester.runAsync(() async {
+          await _font('Rubik', ['fonts/Rubik-VariableFont_wght.ttf']);
+          await _font('MaterialIcons', ['${Platform.environment['HOME']}/flutter/bin/cache/artifacts/material_fonts/MaterialIcons-Regular.otf']);
+        });
+        tester.view.physicalSize = Size(w, 760);
+        tester.view.devicePixelRatio = 1;
+        addTearDown(tester.view.reset);
+        final key = GlobalKey();
+        await tester.pumpWidget(RepaintBoundary(
+          key: key,
+          child: MaterialApp(
+            theme: ThemeData(
+              fontFamily: 'Rubik',
+              brightness: dark ? Brightness.dark : Brightness.light,
+            ),
+            builder: (c, child) =>
+                Directionality(textDirection: TextDirection.rtl, child: child!),
+            home: Builder(
+              builder: (context) => Scaffold(
+                body: TextButton(
+                  onPressed: () => showTextBookExportDialog(context,
+                      profile: const TextDisplayProfile(), hasDivineNames: true),
+                  child: const Text('ייצוא'),
+                ),
+              ),
+            ),
+          ),
+        ));
+        await tester.tap(find.text('ייצוא'));
+        await tester.pumpAndSettle();
+        await tester.runAsync(() async {
+          final b = key.currentContext!.findRenderObject() as RenderRepaintBoundary;
+          final img = await b.toImage();
+          final data = await img.toByteData(format: ImageByteFormat.png);
+          File('$out/${dark ? 'dark' : 'light'}_w${w.toInt()}.png')
+            ..createSync(recursive: true)
+            ..writeAsBytesSync(data!.buffer.asUint8List());
+        });
+      });
+    }
+  }
+}
