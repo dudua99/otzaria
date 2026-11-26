@@ -8,6 +8,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:otzaria/core/app_paths.dart';
 import 'package:otzaria/indexing/models/index_update_mode.dart';
+import 'package:otzaria/plugins/services/plugin_network_policy.dart';
 import 'package:otzaria/theme/app_fonts.dart';
 import 'package:otzaria/widgets/smart_text/render_settings.dart';
 import 'package:otzaria/widgets/smart_text/smart_text_widget.dart';
@@ -70,6 +71,19 @@ void main() {
       'softwareAndBookUpdatesEnabled': true,
       'personalNotesCollapsedByDefault': true,
     };
+
+    // WebView פתוח של תוסף (גם בריצת רקע) מרענן את חסימת הרשת רק בהודעה
+    // הזו, ולכן החלפת מצב מנותק חייבת לשלוח אותה (issue #6066).
+    test('החלפת מצב מנותק מרעננת את מדיניות הרשת של התוספים', () async {
+      when(mockRepository.updateOfflineMode(any)).thenAnswer((_) async {});
+      final notified = PluginNetworkPolicy.changes.first;
+      settingsBloc.add(const UpdateOfflineMode(true));
+      await expectLater(
+        notified.timeout(const Duration(seconds: 1)),
+        completes,
+      );
+      verify(mockRepository.updateOfflineMode(true)).called(1);
+    });
 
     group('גודל גופן מפרשים', () {
       test('לחיצות רצופות נשמרות לפי הסדר גם בזמן כתיבה איטית', () async {
