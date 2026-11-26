@@ -59,6 +59,7 @@ Future<void> main() async {
     InBookSearchOrigin searchOrigin = InBookSearchOrigin.inBook,
     InBookSearchTemplate? searchTemplate,
     Map<String, Map<String, bool>> initialSearchOptions = const {},
+    Map<int, List<String>> initialAlternativeWords = const {},
     int searchDistance = 0,
     SearchMatchPolicy matchPolicy = SearchMatchPolicy.standard,
     List<String> content = const ['שורה א'],
@@ -121,6 +122,7 @@ Future<void> main() async {
             initialSearchOrigin: origin,
             initialSearchTemplate: template,
             initialSearchOptions: initialSearchOptions,
+            initialAlternativeWords: initialAlternativeWords,
             initialSearchDistance: distance,
             initialMatchPolicy: policy,
             simpleSearchRunner: simpleSearchRunner,
@@ -189,6 +191,62 @@ Future<void> main() async {
     expect(find.text('בראשית, פרק טו'), findsOneWidget);
     expect(find.text('נמצאו 1 תוצאות'), findsOneWidget);
   }, skip: !engineReady);
+
+  testWidgets(
+    'המנוע לא מצא דבר בספר: הסריקה המקומית מציגה את ההתאמות המודגשות',
+    (tester) async {
+      // #4135: אינדקס חסר או ישן לספר — המנוע מחזיר 0, אך הספר מדגיש את
+      // ההתאמות מהתוכן הטעון, והרשימה נשארה ריקה.
+      final repository = _RecordingSearchRepository(results: const []);
+      final harness = await pumpSearchView(
+        tester,
+        searchRepository: repository,
+        initialQuery: 'דרך ביאה',
+        searchMode: SearchMode.advanced,
+        searchDistance: 3,
+        bookTitle: 'קובץ שיטות קמאי בכורות',
+        content: const [
+          'פתיחה',
+          'וזהו דרך ביאה שאמרו',
+          'שורה אחרת',
+          'ועוד דרך ביאה כאן',
+        ],
+      );
+      await harness.settle();
+
+      expect(repository.requests, hasLength(1));
+      expect(find.text('אין תוצאות'), findsNothing);
+      expect(find.text('נמצאו 2 תוצאות'), findsOneWidget);
+    },
+    skip: !engineReady,
+  );
+
+  testWidgets('המנוע לא מצא דבר ויש מילים חלופיות: אין סריקה מקומית', (
+    tester,
+  ) async {
+    final repository = _RecordingSearchRepository(results: const []);
+    var simpleCalls = 0;
+    final harness = await pumpSearchView(
+      tester,
+      searchRepository: repository,
+      initialQuery: 'דרך ביאה',
+      searchMode: SearchMode.advanced,
+      searchDistance: 3,
+      initialAlternativeWords: const {
+        0: ['אורח'],
+      },
+      content: const ['וזהו דרך ביאה שאמרו'],
+      simpleSearchRunner: (_, _) async {
+        simpleCalls++;
+        return const [];
+      },
+    );
+    await harness.settle();
+
+    expect(repository.requests, hasLength(1));
+    expect(simpleCalls, 0);
+    expect(find.text('אין תוצאות'), findsOneWidget);
+  });
 
   for (final inNote in [false, true]) {
     testWidgets('תוצאת מנוע שומרת גבול הערה אחרי חישוב טווחים: inNote=$inNote', (
