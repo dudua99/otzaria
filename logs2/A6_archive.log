@@ -1,0 +1,24 @@
+fordb_candidate.zip: 16 files
+A6 rc=0
+611553f117f404124a7f4754c6b6531f8faf628121d3c2fad522ca1b8289f9a7  fordb_candidate.zip
+Archive:  fordb_candidate.zip
+  Length      Date    Time    Name
+---------  ---------- -----   ----
+  1011932  1980-01-01 00:00   ForDB/all_metadata.json
+   263815  1980-01-01 00:00   ForDB/book_banners.csv
+   905519  1980-01-01 00:00   ForDB/book_info.csv
+     9313  1980-01-01 00:00   ForDB/book_moves.csv
+       99  1980-01-01 00:00   ForDB/book_protection.csv
+     3981  1980-01-01 00:00   ForDB/book_renames.csv
+      158  1980-01-01 00:00   ForDB/category_moves.csv
+      435  1980-01-01 00:00   ForDB/category_renames.csv
+    11117  1980-01-01 00:00   ForDB/commentator_collective_titles.csv
+   111201  1980-01-01 00:00   ForDB/divine_name_overrides.csv
+     1251  1980-01-01 00:00   ForDB/gemara_daf_alt_toc.csv
+      258  1980-01-01 00:00   ForDB/inline_marker_alt_toc.csv
+    25331  1980-01-01 00:00   ForDB/sefaria_author_changes.csv
+   514753  1980-01-01 00:00   ForDB/sefaria_category_changes.csv
+  6036950  1980-01-01 00:00   ForDB/sefaria_metadata_changes.csv
+     1039  1980-01-01 00:00   ForDB/title_acronyms.txt
+---------                     -------
+  8897152                     16 files

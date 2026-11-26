@@ -1,0 +1,22 @@
+# build_provenance.json sha256 (no API digest reachable; asset digests below come from it)
+48c36bfbd35040061fd845c498303491648b13cbe2f93d159185197bef917f81  build_provenance.json
+seforim-schema7.db.zst.manifest.json expected=ab51577bad2f457e24ab5f28082ba830597951ab5738a39652dec821e1dff2e3 actual=ab51577bad2f457e24ab5f28082ba830597951ab5738a39652dec821e1dff2e3 OK
+seforim-schema7.db.zst.part-000 expected=91a9985084e5217b661664c3b53c357aaf354498752bf9f7c55d93581dcc9c33 actual=91a9985084e5217b661664c3b53c357aaf354498752bf9f7c55d93581dcc9c33 OK
+seforim-schema7.db.zst.part-001 expected=a5469c776bae891d49dfcf33986474416b56ee739c4b0fba37ef7eb9ec53af1a actual=a5469c776bae891d49dfcf33986474416b56ee739c4b0fba37ef7eb9ec53af1a OK
+seforim.db.buildstate.zst expected=18a9a6fb4eff312a9362a9a69b3b6758d57e08aa5fc86959866bf4b94f912288 actual=18a9a6fb4eff312a9362a9a69b3b6758d57e08aa5fc86959866bf4b94f912288 OK
+# schema check
+schema=7 asset=seforim-schema7.db.zst
+true
+manifest contract OK
+Reassembled and verified: seforim-schema7.db.zst
+assemble rc=0
+seforim-schema7.db.zst: 4355063808 bytes 
+unzstd db OK
+seforim.db.buildstate.zst: 1495969792 bytes 
+unzstd buildstate OK
+total 5713924
+drwxr-xr-x 2 root root       4096 Nov 26 13:52 .
+drwxr-xr-x 7 root root       4096 Nov 26 13:52 ..
+-rw-r--r-- 1 root root       6773 Nov 26 13:52 build_provenance.json
+-rw-r--r-- 1 root root 4355063808 Nov 26 13:52 seforim.db
+-rw-r--r-- 1 root root 1495969792 Nov 26 13:51 seforim.db.buildstate

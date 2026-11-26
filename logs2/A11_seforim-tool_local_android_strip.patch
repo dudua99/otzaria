@@ -1,0 +1,103 @@
+diff --git a/build.gradle.kts b/build.gradle.kts
+index b585548f..d1d47da3 100644
+--- a/build.gradle.kts
++++ b/build.gradle.kts
+@@ -1,10 +1,8 @@
+ plugins {
+     alias(libs.plugins.multiplatform).apply(false)
+-    alias(libs.plugins.android.library).apply(false)
+     alias(libs.plugins.maven.publish).apply(false)
+     alias(libs.plugins.kotlinx.serialization).apply(false)
+     alias(libs.plugins.sqlDelight).apply(false)
+-    alias(libs.plugins.android.application).apply(false)
+ }
+ 
+ // ─── JDK 25: pre-approve the native access sqlite-jdbc already performs ────
+diff --git a/core/build.gradle.kts b/core/build.gradle.kts
+index 56376722..15abbbc6 100644
+--- a/core/build.gradle.kts
++++ b/core/build.gradle.kts
+@@ -1,7 +1,6 @@
+ 
+ plugins {
+     alias(libs.plugins.multiplatform)
+-    alias(libs.plugins.android.library)
+     alias(libs.plugins.maven.publish)
+     alias(libs.plugins.kotlinx.serialization)
+ }
+@@ -11,11 +10,6 @@ group = "io.github.kdroidfilter.seforimlibrary"
+ kotlin {
+     jvmToolchain(libs.versions.jvmToolchain.get().toInt())
+ 
+-    android {
+-        namespace = "io.github.kdroidfilter.seforimlibrary"
+-        compileSdk = 35
+-        minSdk = 21
+-    }
+     jvm()
+ 
+     sourceSets {
+@@ -23,16 +17,12 @@ kotlin {
+             implementation(libs.kotlinx.serialization.json)
+             implementation(libs.kotlinx.serialization.protobuf)
+             // Compose runtime for @Stable annotation (used by consuming Compose apps)
+-            compileOnly(libs.compose.runtime)
+         }
+ 
+         commonTest.dependencies {
+             implementation(kotlin("test"))
+         }
+ 
+-        androidMain.dependencies {
+-
+-        }
+ 
+         jvmMain.dependencies {
+ 
+diff --git a/core/src/commonMain/kotlin/androidx/compose/runtime/Stable.kt b/core/src/commonMain/kotlin/androidx/compose/runtime/Stable.kt
+new file mode 100644
+index 00000000..532f92ab
+--- /dev/null
++++ b/core/src/commonMain/kotlin/androidx/compose/runtime/Stable.kt
+@@ -0,0 +1,6 @@
++package androidx.compose.runtime
++
++// Local stub (verification only): Google Maven is unreachable from this sandbox.
++@Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION, AnnotationTarget.PROPERTY_GETTER, AnnotationTarget.PROPERTY)
++@Retention(AnnotationRetention.BINARY)
++annotation class Stable
+diff --git a/dao/build.gradle.kts b/dao/build.gradle.kts
+index c8e42a0a..ca898fcd 100644
+--- a/dao/build.gradle.kts
++++ b/dao/build.gradle.kts
+@@ -1,7 +1,6 @@
+ 
+ plugins {
+     alias(libs.plugins.multiplatform)
+-    alias(libs.plugins.android.library)
+     alias(libs.plugins.maven.publish)
+     alias(libs.plugins.kotlinx.serialization)
+     alias(libs.plugins.sqlDelight)
+@@ -13,11 +12,6 @@ group = "io.github.kdroidfilter.seforimlibrary"
+ kotlin {
+     jvmToolchain(libs.versions.jvmToolchain.get().toInt())
+ 
+-    android {
+-        namespace = "io.github.kdroidfilter.seforimlibrary"
+-        compileSdk = 35
+-        minSdk = 21
+-    }
+     jvm()
+ 
+     sourceSets {
+@@ -38,10 +32,6 @@ kotlin {
+             implementation(libs.sqlDelight.driver.sqlite)
+         }
+ 
+-        androidMain.dependencies {
+-            implementation(libs.kotlinx.coroutines.android)
+-            implementation(libs.sqlDelight.driver.android)
+-        }
+ 
+         jvmMain.dependencies {
+             implementation(libs.kotlinx.coroutines.swing)

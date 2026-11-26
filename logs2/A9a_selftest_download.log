@@ -1,0 +1,24 @@
+test_buildstate_must_match_release_digest (test_download_released_fordb_db.ReleasedForDbDownloadTest.test_buildstate_must_match_release_digest) ... ok
+test_corrupt_split_part_fails_without_publishing_outputs (test_download_released_fordb_db.ReleasedForDbDownloadTest.test_corrupt_split_part_fails_without_publishing_outputs) ... ok
+test_duplicate_part_name_rejected_before_download (test_download_released_fordb_db.ReleasedForDbDownloadTest.test_duplicate_part_name_rejected_before_download) ... ok
+test_final_release_without_a_db_is_skipped (test_download_released_fordb_db.ReleasedForDbDownloadTest.test_final_release_without_a_db_is_skipped) ... ok
+test_highest_schema_wins_over_compatibility_archive (test_download_released_fordb_db.ReleasedForDbDownloadTest.test_highest_schema_wins_over_compatibility_archive) ... ok
+test_invalid_compression_never_publishes_a_partial_database (test_download_released_fordb_db.ReleasedForDbDownloadTest.test_invalid_compression_never_publishes_a_partial_database) ... ok
+test_manifest_archive_name_must_match_selected_asset (test_download_released_fordb_db.ReleasedForDbDownloadTest.test_manifest_archive_name_must_match_selected_asset) ... ok
+test_missing_single_archive_digest_fails_closed (test_download_released_fordb_db.ReleasedForDbDownloadTest.test_missing_single_archive_digest_fails_closed) ... ok
+test_missing_split_part_fails_without_publishing_outputs (test_download_released_fordb_db.ReleasedForDbDownloadTest.test_missing_split_part_fails_without_publishing_outputs) ... ok
+test_partial_download_is_removed (test_download_released_fordb_db.ReleasedForDbDownloadTest.test_partial_download_is_removed) ... ok
+test_provenance_must_match_release_digest (test_download_released_fordb_db.ReleasedForDbDownloadTest.test_provenance_must_match_release_digest) ... ok
+test_provenance_schema_must_match_archive (test_download_released_fordb_db.ReleasedForDbDownloadTest.test_provenance_schema_must_match_archive) ... ok
+test_schema6_and_schema7_single_and_split (test_download_released_fordb_db.ReleasedForDbDownloadTest.test_schema6_and_schema7_single_and_split) ... ok
+test_selector_fails_when_no_release_has_a_db (test_download_released_fordb_db.ReleasedForDbDownloadTest.test_selector_fails_when_no_release_has_a_db) ... ok
+test_selector_skips_releases_missing_any_required_asset (test_download_released_fordb_db.ReleasedForDbDownloadTest.test_selector_skips_releases_missing_any_required_asset) ... ok
+test_single_archive_must_match_release_digest (test_download_released_fordb_db.ReleasedForDbDownloadTest.test_single_archive_must_match_release_digest) ... ok
+test_split_manifest_must_match_release_digest (test_download_released_fordb_db.ReleasedForDbDownloadTest.test_split_manifest_must_match_release_digest) ... ok
+test_unsafe_part_name_rejected_before_download (test_download_released_fordb_db.ReleasedForDbDownloadTest.test_unsafe_part_name_rejected_before_download) ... ok
+test_whole_split_archive_digest_is_checked (test_download_released_fordb_db.ReleasedForDbDownloadTest.test_whole_split_archive_digest_is_checked) ... ok
+
+----------------------------------------------------------------------
+Ran 19 tests in 12.515s
+
+OK

@@ -1,0 +1,9 @@
+identities gone: 28, added: 28, new events: 28
+events kinds: {'rename'} | ids contiguous: True
+gone without event: []
+event old not gone: []
+added without event: []
+event new not in HEAD: []
+author changed in an event: []
+bad commit provenance: []
+all ids sequential from 1: True

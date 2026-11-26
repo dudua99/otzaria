@@ -1,0 +1,10 @@
+BASE_COMMIT=28976848e5b0da77f8a2670abcf6655d8f482cc4
+commit present
+ancestor of HEAD
+28976848e5b0da77f8a2670abcf6655d8f482cc4: 2900 packaged library files -> /root/w2/dbdir/base.tree
+base rc=0
+HEAD: 2909 packaged library files -> /root/w2/dbdir/candidate.tree
+cand rc=0
+     0 /root/w2/dbdir/base.tree
+     0 /root/w2/dbdir/candidate.tree
+     0 total

@@ -1,0 +1,4 @@
+ci(fordb): follow book renames
+
+- חוות דעת חדושים → חוות דעת חידושים (renamed in ecf2e5556a)
+- חידושי הראה על עבודה זרה → חידושי הרא״ה על עבודה זרה (renamed in ecf2e5556a)

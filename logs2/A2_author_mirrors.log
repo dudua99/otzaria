@@ -1,0 +1,3 @@
+::warning file=all_metadata.json,title=Author mirror differs from metadata.json::חידושי הרא״ה על עבודה זרה: 'אהרן הלוי' != 'הרב שלום מאיר יונגרמן'
+Author mirror differences (metadata.json is the source): ForDB/all_metadata.json: 63, ForDB/book_info.csv: 31, all_metadata.json: 182, all_metadata_with_file_paths.json: 116
+1 new since f4b89786530f
