@@ -1,1 +1,1 @@
-2026-11-26T12:05:01Z fix of #3599 (shorten item titles under group header) per FIX.md + notes/3599.md
+2026-11-26T13:29:23Z done: prbody/3599-fix 1b616aa69ef9df34233663168e1a395fdae30555 (work branch fix/commentary-title-without-book-3599 @ 1bc2e9c53)
