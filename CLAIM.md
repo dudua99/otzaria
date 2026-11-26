@@ -1,1 +1,1 @@
-2026-11-26T12:34:53Z fix of #5983 (HebrewBooks download dropped when dialog closed) per FIX.md + notes/5983.md
+2026-11-26T12:49:26Z done: prbody/5983-fix 028e2d563227070d42bb65ef9432ec5021897bd5 (fix branch head 05b3a0d29085f72af9249e8b9d8bf68ea624274d)
