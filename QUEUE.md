@@ -1,6 +1,8 @@
 # Work queue (top = next). One line per item: <issue> <kind> [note]
 # kind: feature = FEATURE in milestone 0.9.99 (implement per notes/<N>.md); feature-default = maintainers undecided, implement the DEFAULT option written in notes/<N>.md and say so clearly in BODY.md
 # bug = regular bug fix (FIX.md flow) per notes/<N>.md
+5040b bug   (verification only: does engine 7.5.3 (#97) reclaim index space? notes/5040b.md)
+3640c bug   (rework of closed #5706: gesture-scoped DOM answer per the maintainer review; notes/3640c.md)
 6081 bug   (verify first: portable install stores an absolute library path; notes/6081.md)
 3170 feature
 4919 feature
