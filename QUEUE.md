@@ -93,3 +93,5 @@
 6062 bug   (Android: tools panel requestFocus opens keyboard; gate like shouldAutofocusLibrarySearch c222d5ac7)
 6048 bug   (reproduce first: Shift+Down after one-line mouse selection drops it; if pure Flutter -> NOT READY with evidence)
 6001 bug   (itur from a plugin while typing in the plugin: caret not in the itur box; #3759 path misses WebView-owned text focus — reproduce first; notes/6001.md)
+3657 bug   (reproduce first: unpin textMaxWidth 700 in commentary_card_nested_scroll_test:465 → 7px restore drift at full width; if only test measurement -> NOT READY with numbers; notes/3657.md)
+3975b bug   (narrow: touchpad vertical scroll loses first ~20px per gesture in TabSwipeDetector arena; option א; Refs not Closes; keep #3048/#3972 green; notes/3975b.md)
