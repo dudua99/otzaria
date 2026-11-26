@@ -1,0 +1,4 @@
+[canonical] 2944 שמות מקבצי ספרים נארזים (PACKAGED_PREFIXES)
+[canonical] all_metadata: 5934 ספריא + 1692 אוצריא
+::warning::משיכת השמות מספריא נכשלה (<urlopen error Tunnel connection failed: 403 Forbidden (agent proxy: no rule or network setting allows this host)>).
+::error::משיכת השמות מספריא נכשלה ו-SEFARIA_FETCH=1 — לא מאמתים מול רשימה חלקית; הריצו שוב.

@@ -1,0 +1,960 @@
+[canonical] 2944 שמות מקבצי ספרים נארזים (PACKAGED_PREFIXES)
+[canonical] all_metadata: 5934 ספריא + 1692 אוצריא
+[canonical] משיכת ספריא מושבתת (SEFARIA_FETCH=0)
+[canonical] מקור: 9192 | ב-DB: 8828 | סופיים: 9192/8828 (אחרי שינויי שם)
+[renames] בסיס f4b89786530f..HEAD: 134 שינויי קבצי .txt, 3 שינויי-שם ליישור, 0 שלא ניתן ליישר
+
+🔁 3 ספרים ששמם שונה — הרשומות שלהם ייושרו אוטומטית במיזוג ל-main לשם החדש:
+     - 'חדושי הרי מיגאש על בבא מציעא' → 'חידושי הר״י מיגאש על בבא מציעא'  (ecf2e5556a)
+     - 'חדושי רעא על תלמוד בבלי' → 'חידושי רע״א על תלמוד בבלי'  (ecf2e5556a)
+     - 'חוות דעת חדושים' → 'חוות דעת חידושים'  (ecf2e5556a)
+         · MoreBooks/links/חוות דעת חדושים_links.json: links_file_renamed MoreBooks/links/חוות דעת חידושים_links.json
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 7
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 9
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 10
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 11
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 12
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 13
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 15
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 17
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 18
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 19
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 20
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 22
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 26
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 27
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 29
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 30
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 33
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 46
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 47
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 48
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 51
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 53
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 55
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 58
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 60
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 61
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 62
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 70
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 72
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 74
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 76
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 78
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 84
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 92
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 93
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 96
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 105
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 108
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 109
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 110
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 115
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 116
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 119
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 122
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 126
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 127
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 128
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 130
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 133
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 134
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 137
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 139
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 143
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 146
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 148
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 150
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 152
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 153
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 155
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 158
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 160
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 166
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 167
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 177
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 181
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 182
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 184
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 188
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 189
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 191
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 193
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 194
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 195
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 197
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 198
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 200
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 201
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 202
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 204
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 205
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 207
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 209
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 210
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 212
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 215
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 222
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 224
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 225
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 226
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 227
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 230
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 231
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 233
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 236
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 237
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 255
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 257
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 258
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 261
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 263
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 265
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 266
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 267
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 269
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 270
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 271
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 273
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 275
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 277
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 279
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 280
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 285
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 290
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 293
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 296
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 298
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 300
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 301
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 302
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 304
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 306
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 311
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 314
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 315
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 316
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 318
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 319
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 323
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 326
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 329
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 330
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 333
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 334
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 336
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 337
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 338
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 339
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 341
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 342
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 345
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 346
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 348
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 349
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 351
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 352
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 353
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 356
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 357
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 358
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 359
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 361
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 363
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 365
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 366
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 367
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 371
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 373
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 375
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 379
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 380
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 382
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 383
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 384
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 387
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 388
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 389
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 390
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 391
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 394
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 396
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 398
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 400
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 401
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 403
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 405
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 407
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 413
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 418
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 419
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 421
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 423
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 424
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 425
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 427
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 429
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 430
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 431
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 433
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 435
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 436
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 438
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 439
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 446
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 447
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 448
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 450
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 451
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 453
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 456
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 458
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 459
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 461
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 465
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 468
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 472
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 473
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 475
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 478
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 479
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 481
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 483
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 485
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 486
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 488
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 489
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 490
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 495
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 497
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 498
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 499
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 502
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 505
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 506
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 509
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 510
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 511
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 513
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 514
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 515
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 517
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 518
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 520
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 521
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 522
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 523
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 525
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 527
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 528
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 531
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 532
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 535
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 536
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 537
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 539
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 540
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 542
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 544
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 546
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 549
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 552
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 554
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 555
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 556
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 559
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 561
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 562
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 564
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 565
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 566
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 568
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 569
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 572
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 577
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 579
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 582
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 583
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 587
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 588
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 590
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 591
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 592
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 594
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 599
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 601
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 603
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 608
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 609
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 611
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 613
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 618
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 622
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 624
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 625
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 630
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 631
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 633
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 636
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 637
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 639
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 642
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 643
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 644
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 645
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 648
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 650
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 651
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 652
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 654
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 656
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 657
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 659
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 660
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 661
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 663
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 664
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 666
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 668
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 669
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 670
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 673
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 675
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 676
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 677
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 680
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 682
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 683
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 685
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 687
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 688
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 691
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 693
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 696
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 700
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 703
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 704
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 705
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 707
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 710
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 712
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 713
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 714
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 716
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 717
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 719
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 720
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 721
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 722
+         · MoreBooks/links/שולחן ערוך, יורה דעה_links.json: links_ref רשומה 723
+
+❌ נמצאו 595 שמות ספרים ב-ForDB שאינם קיימים ברשימת הספרים הקנונית:
+
+  📄 ForDB/book_info.csv (108):
+     - שורה 479: 'אמרי דעת על משלי' — לא נמצא
+     - שורה 567: 'באורי מהר"י קורקוס והרדב"ז על משנה תורה, הלכות כלי המקדש והעובדין בו' (כפי שב-DB: 'באורי מהרי קורקוס והרדבז על משנה תורה, הלכות כלי המקדש והעובדין בו') — לא נמצא
+     - שורה 996: 'בעל שם טוב על התורה' — לא נמצא
+     - שורה 1365: 'דור רביעי על חולין' — לא נמצא
+     - שורה 1402: 'דרך פקודך' — לא נמצא
+     - שורה 2190: 'חומת אנך על ישעיהו' — לא נמצא
+     - שורה 2763: 'טעבעלה באנדי על הגדה של פסח' — לא נמצא
+     - שורה 3029: 'ים של שלמה על ביצה' — לא נמצא
+     - שורה 3030: 'ים של שלמה על גיטין' — לא נמצא
+     - שורה 3031: 'ים של שלמה על חולין' — לא נמצא
+     - שורה 3033: 'ים של שלמה על כתובות' — לא נמצא
+     - שורה 3034: 'ים של שלמה על קידושין' — לא נמצא
+     - שורה 3045: 'יערות דבש חלק א' — לא נמצא
+     - שורה 3046: 'יערות דבש חלק ב' — לא נמצא
+     - שורה 3233: 'כלי חמדה על התורה' — לא נמצא
+     - שורה 3595: 'ליקוטי הלכות' — לא נמצא
+     - שורה 3680: 'מאירי על תהלים' — לא נמצא
+     - שורה 3815: 'מדרש אגדה' — לא נמצא
+     - שורה 3908: 'מהר"ם שיף על עירובין' (כפי שב-DB: 'מהרם שיף על עירובין') — לא נמצא
+     - שורה 3930: 'מהרש"א - חידושי הלכות על בבא בתרא' (כפי שב-DB: 'מהרשא - חידושי הלכות על בבא בתרא') — לא נמצא
+     - שורה 3931: 'מהרש"א - חידושי הלכות על בבא מציעא' (כפי שב-DB: 'מהרשא - חידושי הלכות על בבא מציעא') — לא נמצא
+     - שורה 3932: 'מהרש"א - חידושי הלכות על בבא קמא' (כפי שב-DB: 'מהרשא - חידושי הלכות על בבא קמא') — לא נמצא
+     - שורה 3933: 'מהרש"א - חידושי הלכות על ביצה' (כפי שב-DB: 'מהרשא - חידושי הלכות על ביצה') — לא נמצא
+     - שורה 3934: 'מהרש"א - חידושי הלכות על בכורות' (כפי שב-DB: 'מהרשא - חידושי הלכות על בכורות') — לא נמצא
+     - שורה 3935: 'מהרש"א - חידושי הלכות על גיטין' (כפי שב-DB: 'מהרשא - חידושי הלכות על גיטין') — לא נמצא
+     - שורה 3936: 'מהרש"א - חידושי הלכות על הוריות' (כפי שב-DB: 'מהרשא - חידושי הלכות על הוריות') — לא נמצא
+     - שורה 3937: 'מהרש"א - חידושי הלכות על חולין' (כפי שב-DB: 'מהרשא - חידושי הלכות על חולין') — לא נמצא
+     - שורה 3938: 'מהרש"א - חידושי הלכות על יבמות' (כפי שב-DB: 'מהרשא - חידושי הלכות על יבמות') — לא נמצא
+     - שורה 3939: 'מהרש"א - חידושי הלכות על מכות' (כפי שב-DB: 'מהרשא - חידושי הלכות על מכות') — לא נמצא
+     - שורה 3940: 'מהרש"א - חידושי הלכות על מנחות' (כפי שב-DB: 'מהרשא - חידושי הלכות על מנחות') — לא נמצא
+     - שורה 3941: 'מהרש"א - חידושי הלכות על נדרים' (כפי שב-DB: 'מהרשא - חידושי הלכות על נדרים') — לא נמצא
+     - שורה 3942: 'מהרש"א - חידושי הלכות על סוטה' (כפי שב-DB: 'מהרשא - חידושי הלכות על סוטה') — לא נמצא
+     - שורה 3943: 'מהרש"א - חידושי הלכות על סוכה' (כפי שב-DB: 'מהרשא - חידושי הלכות על סוכה') — לא נמצא
+     - שורה 3944: 'מהרש"א - חידושי הלכות על סנהדרין' (כפי שב-DB: 'מהרשא - חידושי הלכות על סנהדרין') — לא נמצא
+     - שורה 3945: 'מהרש"א - חידושי הלכות על עבודה זרה' (כפי שב-DB: 'מהרשא - חידושי הלכות על עבודה זרה') — לא נמצא
+     - שורה 3946: 'מהרש"א - חידושי הלכות על פסחים' (כפי שב-DB: 'מהרשא - חידושי הלכות על פסחים') — לא נמצא
+     - שורה 3947: 'מהרש"א - חידושי הלכות על קידושין' (כפי שב-DB: 'מהרשא - חידושי הלכות על קידושין') — לא נמצא
+     - שורה 3948: 'מהרש"א - חידושי הלכות על ראש השנה' (כפי שב-DB: 'מהרשא - חידושי הלכות על ראש השנה') — לא נמצא
+     - שורה 3949: 'מהרש"א - חידושי הלכות על שבועות' (כפי שב-DB: 'מהרשא - חידושי הלכות על שבועות') — לא נמצא
+     - שורה 3950: 'מהרש"א - חידושי אגדות על בבא בתרא' (כפי שב-DB: 'מהרשא - חידושי אגדות על בבא בתרא') — לא נמצא
+     - שורה 3951: 'מהרש"א - חידושי אגדות על בבא מציעא' (כפי שב-DB: 'מהרשא - חידושי אגדות על בבא מציעא') — לא נמצא
+     - שורה 3952: 'מהרש"א - חידושי אגדות על בבא קמא' (כפי שב-DB: 'מהרשא - חידושי אגדות על בבא קמא') — לא נמצא
+     - שורה 3953: 'מהרש"א - חידושי אגדות על ביצה' (כפי שב-DB: 'מהרשא - חידושי אגדות על ביצה') — לא נמצא
+     - שורה 3954: 'מהרש"א - חידושי אגדות על בכורות' (כפי שב-DB: 'מהרשא - חידושי אגדות על בכורות') — לא נמצא
+     - שורה 3955: 'מהרש"א - חידושי אגדות על ברכות' (כפי שב-DB: 'מהרשא - חידושי אגדות על ברכות') — לא נמצא
+     - שורה 3956: 'מהרש"א - חידושי אגדות על גיטין' (כפי שב-DB: 'מהרשא - חידושי אגדות על גיטין') — לא נמצא
+     - שורה 3957: 'מהרש"א - חידושי אגדות על הוריות' (כפי שב-DB: 'מהרשא - חידושי אגדות על הוריות') — לא נמצא
+     - שורה 3958: 'מהרש"א - חידושי אגדות על זבחים' (כפי שב-DB: 'מהרשא - חידושי אגדות על זבחים') — לא נמצא
+     - שורה 3959: 'מהרש"א - חידושי אגדות על חגיגה' (כפי שב-DB: 'מהרשא - חידושי אגדות על חגיגה') — לא נמצא
+     - שורה 3960: 'מהרש"א - חידושי אגדות על חולין' (כפי שב-DB: 'מהרשא - חידושי אגדות על חולין') — לא נמצא
+     - שורה 3961: 'מהרש"א - חידושי אגדות על יבמות' (כפי שב-DB: 'מהרשא - חידושי אגדות על יבמות') — לא נמצא
+     - שורה 3962: 'מהרש"א - חידושי אגדות על יומא' (כפי שב-DB: 'מהרשא - חידושי אגדות על יומא') — לא נמצא
+     - שורה 3963: 'מהרש"א - חידושי אגדות על כריתות' (כפי שב-DB: 'מהרשא - חידושי אגדות על כריתות') — לא נמצא
+     - שורה 3964: 'מהרש"א - חידושי אגדות על כתובות' (כפי שב-DB: 'מהרשא - חידושי אגדות על כתובות') — לא נמצא
+     - שורה 3965: 'מהרש"א - חידושי אגדות על מגילה' (כפי שב-DB: 'מהרשא - חידושי אגדות על מגילה') — לא נמצא
+     - שורה 3966: 'מהרש"א - חידושי אגדות על מועד קטן' (כפי שב-DB: 'מהרשא - חידושי אגדות על מועד קטן') — לא נמצא
+     - שורה 3967: 'מהרש"א - חידושי אגדות על מכות' (כפי שב-DB: 'מהרשא - חידושי אגדות על מכות') — לא נמצא
+     - שורה 3968: 'מהרש"א - חידושי אגדות על מנחות' (כפי שב-DB: 'מהרשא - חידושי אגדות על מנחות') — לא נמצא
+     - שורה 3969: 'מהרש"א - חידושי אגדות על מעילה' (כפי שב-DB: 'מהרשא - חידושי אגדות על מעילה') — לא נמצא
+     - שורה 3970: 'מהרש"א - חידושי אגדות על נדה' (כפי שב-DB: 'מהרשא - חידושי אגדות על נדה') — לא נמצא
+     - שורה 3971: 'מהרש"א - חידושי אגדות על נדרים' (כפי שב-DB: 'מהרשא - חידושי אגדות על נדרים') — לא נמצא
+     - שורה 3972: 'מהרש"א - חידושי אגדות על נזיר' (כפי שב-DB: 'מהרשא - חידושי אגדות על נזיר') — לא נמצא
+     - שורה 3973: 'מהרש"א - חידושי אגדות על סוטה' (כפי שב-DB: 'מהרשא - חידושי אגדות על סוטה') — לא נמצא
+     - שורה 3974: 'מהרש"א - חידושי אגדות על סוכה' (כפי שב-DB: 'מהרשא - חידושי אגדות על סוכה') — לא נמצא
+     - שורה 3975: 'מהרש"א - חידושי אגדות על סנהדרין' (כפי שב-DB: 'מהרשא - חידושי אגדות על סנהדרין') — לא נמצא
+     - שורה 3976: 'מהרש"א - חידושי אגדות על עבודה זרה' (כפי שב-DB: 'מהרשא - חידושי אגדות על עבודה זרה') — לא נמצא
+     - שורה 3977: 'מהרש"א - חידושי אגדות על עירובין' (כפי שב-DB: 'מהרשא - חידושי אגדות על עירובין') — לא נמצא
+     - שורה 3978: 'מהרש"א - חידושי אגדות על ערכין' (כפי שב-DB: 'מהרשא - חידושי אגדות על ערכין') — לא נמצא
+     - שורה 3979: 'מהרש"א - חידושי אגדות על פסחים' (כפי שב-DB: 'מהרשא - חידושי אגדות על פסחים') — לא נמצא
+     - שורה 3980: 'מהרש"א - חידושי אגדות על קידושין' (כפי שב-DB: 'מהרשא - חידושי אגדות על קידושין') — לא נמצא
+     - שורה 3981: 'מהרש"א - חידושי אגדות על ראש השנה' (כפי שב-DB: 'מהרשא - חידושי אגדות על ראש השנה') — לא נמצא
+     - שורה 3982: 'מהרש"א - חידושי אגדות על שבועות' (כפי שב-DB: 'מהרשא - חידושי אגדות על שבועות') — לא נמצא
+     - שורה 3983: 'מהרש"א - חידושי אגדות על שבת' (כפי שב-DB: 'מהרשא - חידושי אגדות על שבת') — לא נמצא
+     - שורה 3984: 'מהרש"א - חידושי אגדות על תמורה' (כפי שב-DB: 'מהרשא - חידושי אגדות על תמורה') — לא נמצא
+     - שורה 3985: 'מהרש"א - חידושי אגדות על תמיד' (כפי שב-DB: 'מהרשא - חידושי אגדות על תמיד') — לא נמצא
+     - שורה 3986: 'מהרש"א - חידושי אגדות על תענית' (כפי שב-DB: 'מהרשא - חידושי אגדות על תענית') — לא נמצא
+     - שורה 3987: 'מהרש"א - חידושי הלכות על ברכות' (כפי שב-DB: 'מהרשא - חידושי הלכות על ברכות') — לא נמצא
+     - שורה 3988: 'מהרש"א - חידושי הלכות על חגיגה' (כפי שב-DB: 'מהרשא - חידושי הלכות על חגיגה') — לא נמצא
+     - שורה 3989: 'מהרש"א - חידושי הלכות על יומא' (כפי שב-DB: 'מהרשא - חידושי הלכות על יומא') — לא נמצא
+     - שורה 3990: 'מהרש"א - חידושי הלכות על מגילה' (כפי שב-DB: 'מהרשא - חידושי הלכות על מגילה') — לא נמצא
+     - שורה 3991: 'מהרש"א - חידושי הלכות על מועד קטן' (כפי שב-DB: 'מהרשא - חידושי הלכות על מועד קטן') — לא נמצא
+     - שורה 3992: 'מהרש"א - חידושי הלכות על מסכת כתובות' (כפי שב-DB: 'מהרשא - חידושי הלכות על מסכת כתובות') — לא נמצא
+     - שורה 3993: 'מהרש"א - חידושי הלכות על מסכת נדה' (כפי שב-DB: 'מהרשא - חידושי הלכות על מסכת נדה') — לא נמצא
+     - שורה 3994: 'מהרש"א - חידושי הלכות על עירובין' (כפי שב-DB: 'מהרשא - חידושי הלכות על עירובין') — לא נמצא
+     - שורה 3995: 'מהרש"א - חידושי הלכות על שבת' (כפי שב-DB: 'מהרשא - חידושי הלכות על שבת') — לא נמצא
+     - שורה 3996: 'מהרש"א - חידושי הלכות על תענית' (כפי שב-DB: 'מהרשא - חידושי הלכות על תענית') — לא נמצא
+     - שורה 3997: 'מהרש"א - יבמות מהדורא בתרא' (כפי שב-DB: 'מהרשא - יבמות מהדורא בתרא') — לא נמצא
+     - שורה 4291: 'מנחת עני על התורה' — לא נמצא
+     - שורה 4391: 'מעדני יום טוב על מנחות' — לא נמצא
+     - שורה 4702: 'מראות הצובאות על יהושע' — לא נמצא
+     - שורה 4703: 'מראות הצובאות על מלכים א' — לא נמצא
+     - שורה 4704: 'מראות הצובאות על מלכים ב' — לא נמצא
+     - שורה 4705: 'מראות הצובאות על שופטים' — לא נמצא
+     - שורה 4706: 'מראות הצובאות על שמואל א' — לא נמצא
+     - שורה 4707: 'מראות הצובאות על שמואל ב' — לא נמצא
+     - שורה 5349: 'ספר הבחור' — לא נמצא
+     - שורה 5401: 'ספר חרדים' — לא נמצא
+     - שורה 5465: 'עוד יוסף חי; דרשות' — לא נמצא
+     - שורה 5466: 'עוד יוסף חי; הלכות' — לא נמצא
+     - שורה 5940: 'פסקי הרא"ש על נדה' (כפי שב-DB: 'פסקי הראש על נדה') — לא נמצא
+     - שורה 6021: 'פרי מגדים על אורח חיים' — לא נמצא
+     - שורה 6406: 'קונטרס ההתפעלות' — לא נמצא
+     - שורה 6793: 'רד"ק על ישעיהו' (כפי שב-DB: 'רדק על ישעיהו') — לא נמצא
+     - שורה 7260: 'שומר אמונים' — לא נמצא
+     - שורה 7862: 'שפתי כהן על התורה' — לא נמצא
+     - שורה 8229: 'תוספתא ראש השנה' — לא נמצא
+     - שורה 8344: 'תפארת יהונתן על תורה' — לא נמצא
+     - שורה 8377: 'תקות אנוש על איוב' — לא נמצא
+
+  📄 ForDB/book_moves.csv (4):
+     - שורה 26: 'פרי מגדים על אורח חיים' — לא נמצא
+     - שורה 69: 'יערות דבש חלק א' — לא נמצא
+     - שורה 70: 'יערות דבש חלק ב' — לא נמצא
+     - שורה 74: 'בעל שם טוב על התורה' — לא נמצא
+
+  📄 ForDB/book_renames.csv (21):
+     - שורה 13 (שם מקור): 'טעבעלה באנדי על הגדה של פסח ' (כפי שב-DB: 'טעבעלה באנדי על הגדה של פסח') — לא נמצא
+     - שורה 21 (שם מקור): 'מהרש"א - חדושי הלכות על סוכה' (כפי שב-DB: 'מהרשא - חדושי הלכות על סוכה') — לא נמצא
+     - שורה 22 (שם מקור): 'מהרש"א - חדושי הלכות על ביצה' (כפי שב-DB: 'מהרשא - חדושי הלכות על ביצה') — לא נמצא
+     - שורה 23 (שם מקור): 'מהרש"א - חדושי הלכות על ראש השנה' (כפי שב-DB: 'מהרשא - חדושי הלכות על ראש השנה') — לא נמצא
+     - שורה 24 (שם מקור): 'מהרש"א - חדושי הלכות על פסחים' (כפי שב-DB: 'מהרשא - חדושי הלכות על פסחים') — לא נמצא
+     - שורה 25 (שם מקור): 'מהרש"א - חדושי הלכות על נדרים' (כפי שב-DB: 'מהרשא - חדושי הלכות על נדרים') — לא נמצא
+     - שורה 26 (שם מקור): 'מהרש"א - חדושי הלכות על יבמות' (כפי שב-DB: 'מהרשא - חדושי הלכות על יבמות') — לא נמצא
+     - שורה 27 (שם מקור): 'מהרש"א - חדושי הלכות על קידושין' (כפי שב-DB: 'מהרשא - חדושי הלכות על קידושין') — לא נמצא
+     - שורה 28 (שם מקור): 'מהרש"א - חדושי הלכות על גיטין' (כפי שב-DB: 'מהרשא - חדושי הלכות על גיטין') — לא נמצא
+     - שורה 29 (שם מקור): 'מהרש"א - חדושי הלכות על סוטה' (כפי שב-DB: 'מהרשא - חדושי הלכות על סוטה') — לא נמצא
+     - שורה 30 (שם מקור): 'מהרש"א - חדושי הלכות על בבא בתרא' (כפי שב-DB: 'מהרשא - חדושי הלכות על בבא בתרא') — לא נמצא
+     - שורה 31 (שם מקור): 'מהרש"א - חדושי הלכות על סנהדרין' (כפי שב-DB: 'מהרשא - חדושי הלכות על סנהדרין') — לא נמצא
+     - שורה 32 (שם מקור): 'מהרש"א - חדושי הלכות על הוריות' (כפי שב-DB: 'מהרשא - חדושי הלכות על הוריות') — לא נמצא
+     - שורה 33 (שם מקור): 'מהרש"א - חדושי הלכות על בבא מציעא' (כפי שב-DB: 'מהרשא - חדושי הלכות על בבא מציעא') — לא נמצא
+     - שורה 34 (שם מקור): 'מהרש"א - חדושי הלכות על שבועות' (כפי שב-DB: 'מהרשא - חדושי הלכות על שבועות') — לא נמצא
+     - שורה 35 (שם מקור): 'מהרש"א - חדושי הלכות על בבא קמא' (כפי שב-DB: 'מהרשא - חדושי הלכות על בבא קמא') — לא נמצא
+     - שורה 36 (שם מקור): 'מהרש"א - חדושי הלכות על מכות' (כפי שב-DB: 'מהרשא - חדושי הלכות על מכות') — לא נמצא
+     - שורה 37 (שם מקור): 'מהרש"א - חדושי הלכות על עבודה זרה' (כפי שב-DB: 'מהרשא - חדושי הלכות על עבודה זרה') — לא נמצא
+     - שורה 38 (שם מקור): 'מהרש"א - חדושי הלכות על בכורות' (כפי שב-DB: 'מהרשא - חדושי הלכות על בכורות') — לא נמצא
+     - שורה 39 (שם מקור): 'מהרש"א - חדושי הלכות על חולין' (כפי שב-DB: 'מהרשא - חדושי הלכות על חולין') — לא נמצא
+     - שורה 40 (שם מקור): 'מהרש"א - חדושי הלכות על מנחות' (כפי שב-DB: 'מהרשא - חדושי הלכות על מנחות') — לא נמצא
+
+  📄 ForDB/sefaria_metadata_changes.csv (462):
+     - שורה 988: 'אֲהֵבוּךָ עַד מָוֶת' (כפי שב-DB: 'אהבוך עד מות') — לא נמצא
+     - שורה 992: 'אגדות היהודים' — לא נמצא
+     - שורה 993: 'אגרת אריסטיאס' — לא נמצא
+     - שורה 994: 'אדם מן האדמה' — לא נמצא
+     - שורה 995: 'אוהב גר' — לא נמצא
+     - שורה 996: 'אור לישרים על תלמוד ירושלמי ביצה' — לא נמצא
+     - שורה 997: 'אור לישרים על תלמוד ירושלמי ברכות' — לא נמצא
+     - שורה 998: 'אור לישרים על תלמוד ירושלמי חגיגה' — לא נמצא
+     - שורה 999: 'אור לישרים על תלמוד ירושלמי יומא' — לא נמצא
+     - שורה 1000: 'אור לישרים על תלמוד ירושלמי מגילה' — לא נמצא
+     - שורה 1001: 'אור לישרים על תלמוד ירושלמי מועד קטן' — לא נמצא
+     - שורה 1002: 'אור לישרים על תלמוד ירושלמי סוכה' — לא נמצא
+     - שורה 1003: 'אור לישרים על תלמוד ירושלמי סנהדרין' — לא נמצא
+     - שורה 1004: 'אור לישרים על תלמוד ירושלמי פאה' — לא נמצא
+     - שורה 1005: 'אור לישרים על תלמוד ירושלמי ראש השנה' — לא נמצא
+     - שורה 1006: 'אור לישרים על תלמוד ירושלמי שקלים' — לא נמצא
+     - שורה 1007: 'אור לישרים על תלמוד ירושלמי תענית' — לא נמצא
+     - שורה 1009: 'אורות' — לא נמצא
+     - שורה 1010: 'אורות הקודש' — לא נמצא
+     - שורה 1011: 'אורות התורה' — לא נמצא
+     - שורה 1012: 'אורות התשובה' — לא נמצא
+     - שורה 1014: 'אמונה בעתיד' — לא נמצא
+     - שורה 1015: 'אמרי דעת על משלי' — לא נמצא
+     - שורה 1017: 'אני מאמין; קריאה שבועית בפרשת השבוע' — לא נמצא
+     - שורה 1030: 'בדי הארון - שביעית' — לא נמצא
+     - שורה 1093: 'ביאור יש"ר על התורה' (כפי שב-DB: 'ביאור ישר על התורה') — לא נמצא
+     - שורה 1095: 'ביאור ראובן על בבא קמא' — לא נמצא
+     - שורה 1096: 'ביאור שטיינזלץ על איוב' — לא נמצא
+     - שורה 1097: 'ביאור שטיינזלץ על איכה' — לא נמצא
+     - שורה 1098: 'ביאור שטיינזלץ על אסתר' — לא נמצא
+     - שורה 1099: 'ביאור שטיינזלץ על בבא בתרא' — לא נמצא
+     - שורה 1100: 'ביאור שטיינזלץ על בבא מציעא' — לא נמצא
+     - שורה 1101: 'ביאור שטיינזלץ על בבא קמא' — לא נמצא
+     - שורה 1102: 'ביאור שטיינזלץ על ביצה' — לא נמצא
+     - שורה 1103: 'ביאור שטיינזלץ על בכורות' — לא נמצא
+     - שורה 1104: 'ביאור שטיינזלץ על במדבר' — לא נמצא
+     - שורה 1105: 'ביאור שטיינזלץ על בראשית' — לא נמצא
+     - שורה 1106: 'ביאור שטיינזלץ על ברכות' — לא נמצא
+     - שורה 1107: 'ביאור שטיינזלץ על גיטין' — לא נמצא
+     - שורה 1108: 'ביאור שטיינזלץ על דברי הימים א' — לא נמצא
+     - שורה 1109: 'ביאור שטיינזלץ על דברי הימים ב' — לא נמצא
+     - שורה 1110: 'ביאור שטיינזלץ על דברים' — לא נמצא
+     - שורה 1111: 'ביאור שטיינזלץ על דניאל' — לא נמצא
+     - שורה 1112: 'ביאור שטיינזלץ על הוריות' — לא נמצא
+     - שורה 1113: 'ביאור שטיינזלץ על הושע' — לא נמצא
+     - שורה 1114: 'ביאור שטיינזלץ על ויקרא' — לא נמצא
+     - שורה 1115: 'ביאור שטיינזלץ על זבחים' — לא נמצא
+     - שורה 1116: 'ביאור שטיינזלץ על זכריה' — לא נמצא
+     - שורה 1117: 'ביאור שטיינזלץ על חבקוק' — לא נמצא
+     - שורה 1118: 'ביאור שטיינזלץ על חגי' — לא נמצא
+     - שורה 1119: 'ביאור שטיינזלץ על חגיגה' — לא נמצא
+     - שורה 1120: 'ביאור שטיינזלץ על חולין' — לא נמצא
+     - שורה 1121: 'ביאור שטיינזלץ על יבמות' — לא נמצא
+     - שורה 1122: 'ביאור שטיינזלץ על יהושע' — לא נמצא
+     - שורה 1123: 'ביאור שטיינזלץ על יואל' — לא נמצא
+     - שורה 1124: 'ביאור שטיינזלץ על יומא' — לא נמצא
+     - שורה 1125: 'ביאור שטיינזלץ על יונה' — לא נמצא
+     - שורה 1126: 'ביאור שטיינזלץ על יחזקאל' — לא נמצא
+     - שורה 1127: 'ביאור שטיינזלץ על ירמיהו' — לא נמצא
+     - שורה 1128: 'ביאור שטיינזלץ על ישעיהו' — לא נמצא
+     - שורה 1129: 'ביאור שטיינזלץ על כתובות' — לא נמצא
+     - שורה 1130: 'ביאור שטיינזלץ על מגילה' — לא נמצא
+     - שורה 1131: 'ביאור שטיינזלץ על מועד קטן' — לא נמצא
+     - שורה 1132: 'ביאור שטיינזלץ על מיכה' — לא נמצא
+     - שורה 1133: 'ביאור שטיינזלץ על מכות' — לא נמצא
+     - שורה 1134: 'ביאור שטיינזלץ על מלאכי' — לא נמצא
+     - שורה 1135: 'ביאור שטיינזלץ על מלכים א' — לא נמצא
+     - שורה 1136: 'ביאור שטיינזלץ על מלכים ב' — לא נמצא
+     - שורה 1137: 'ביאור שטיינזלץ על מעילה' — לא נמצא
+     - שורה 1138: 'ביאור שטיינזלץ על משלי' — לא נמצא
+     - שורה 1139: 'ביאור שטיינזלץ על משנה תורה הלכות סוטה' — לא נמצא
+     - שורה 1140: 'ביאור שטיינזלץ על משנה תורה, הלכות אבל' — לא נמצא
+     - שורה 1141: 'ביאור שטיינזלץ על משנה תורה, הלכות איסורי ביאה' — לא נמצא
+     - שורה 1142: 'ביאור שטיינזלץ על משנה תורה, הלכות איסורי המזבח' — לא נמצא
+     - שורה 1143: 'ביאור שטיינזלץ על משנה תורה, הלכות אישות' — לא נמצא
+     - שורה 1144: 'ביאור שטיינזלץ על משנה תורה, הלכות ביאת מקדש' — לא נמצא
+     - שורה 1145: 'ביאור שטיינזלץ על משנה תורה, הלכות ביכורים ושאר מתנות כהונה שבגבולין' — לא נמצא
+     - שורה 1146: 'ביאור שטיינזלץ על משנה תורה, הלכות בית הבחירה' — לא נמצא
+     - שורה 1147: 'ביאור שטיינזלץ על משנה תורה, הלכות בכורות' — לא נמצא
+     - שורה 1148: 'ביאור שטיינזלץ על משנה תורה, הלכות ברכות' — לא נמצא
+     - שורה 1149: 'ביאור שטיינזלץ על משנה תורה, הלכות גזילה ואבידה' — לא נמצא
+     - שורה 1150: 'ביאור שטיינזלץ על משנה תורה, הלכות גירושין' — לא נמצא
+     - שורה 1151: 'ביאור שטיינזלץ על משנה תורה, הלכות גניבה' — לא נמצא
+     - שורה 1152: 'ביאור שטיינזלץ על משנה תורה, הלכות דעות' — לא נמצא
+     - שורה 1153: 'ביאור שטיינזלץ על משנה תורה, הלכות זכייה ומתנה' — לא נמצא
+     - שורה 1154: 'ביאור שטיינזלץ על משנה תורה, הלכות חגיגה' — לא נמצא
+     - שורה 1155: 'ביאור שטיינזלץ על משנה תורה, הלכות חובל ומזיק' — לא נמצא
+     - שורה 1156: 'ביאור שטיינזלץ על משנה תורה, הלכות חמץ ומצה' — לא נמצא
+     - שורה 1157: 'ביאור שטיינזלץ על משנה תורה, הלכות טומאת אוכלים' — לא נמצא
+     - שורה 1158: 'ביאור שטיינזלץ על משנה תורה, הלכות טומאת מת' — לא נמצא
+     - שורה 1159: 'ביאור שטיינזלץ על משנה תורה, הלכות טומאת צרעת' — לא נמצא
+     - שורה 1160: 'ביאור שטיינזלץ על משנה תורה, הלכות טוען ונטען' — לא נמצא
+     - שורה 1161: 'ביאור שטיינזלץ על משנה תורה, הלכות יבום וחליצה' — לא נמצא
+     - שורה 1162: 'ביאור שטיינזלץ על משנה תורה, הלכות יסודי התורה' — לא נמצא
+     - שורה 1163: 'ביאור שטיינזלץ על משנה תורה, הלכות כלאים' — לא נמצא
+     - שורה 1164: 'ביאור שטיינזלץ על משנה תורה, הלכות כלי המקדש והעובדין בו' — לא נמצא
+     - שורה 1165: 'ביאור שטיינזלץ על משנה תורה, הלכות כלים' — לא נמצא
+     - שורה 1166: 'ביאור שטיינזלץ על משנה תורה, הלכות מאכלות אסורות' — לא נמצא
+     - שורה 1167: 'ביאור שטיינזלץ על משנה תורה, הלכות מגילה וחנוכה' — לא נמצא
+     - שורה 1168: 'ביאור שטיינזלץ על משנה תורה, הלכות מחוסרי כפרה' — לא נמצא
+     - שורה 1169: 'ביאור שטיינזלץ על משנה תורה, הלכות מטמאי משכב ומושב' — לא נמצא
+     - שורה 1170: 'ביאור שטיינזלץ על משנה תורה, הלכות מילה' — לא נמצא
+     - שורה 1171: 'ביאור שטיינזלץ על משנה תורה, הלכות מכירה' — לא נמצא
+     - שורה 1172: 'ביאור שטיינזלץ על משנה תורה, הלכות מלווה ולווה' — לא נמצא
+     - שורה 1173: 'ביאור שטיינזלץ על משנה תורה, הלכות מלכים ומלחמות' — לא נמצא
+     - שורה 1174: 'ביאור שטיינזלץ על משנה תורה, הלכות ממרים' — לא נמצא
+     - שורה 1175: 'ביאור שטיינזלץ על משנה תורה, הלכות מעילה' — לא נמצא
+     - שורה 1176: 'ביאור שטיינזלץ על משנה תורה, הלכות מעשה הקרבנות' — לא נמצא
+     - שורה 1177: 'ביאור שטיינזלץ על משנה תורה, הלכות מעשר שני ונטע רבעי' — לא נמצא
+     - שורה 1178: 'ביאור שטיינזלץ על משנה תורה, הלכות מעשרות' — לא נמצא
+     - שורה 1179: 'ביאור שטיינזלץ על משנה תורה, הלכות מקואות' — לא נמצא
+     - שורה 1180: 'ביאור שטיינזלץ על משנה תורה, הלכות מתנות עניים' — לא נמצא
+     - שורה 1181: 'ביאור שטיינזלץ על משנה תורה, הלכות נדרים' — לא נמצא
+     - שורה 1182: 'ביאור שטיינזלץ על משנה תורה, הלכות נזירות' — לא נמצא
+     - שורה 1183: 'ביאור שטיינזלץ על משנה תורה, הלכות נזקי ממון' — לא נמצא
+     - שורה 1184: 'ביאור שטיינזלץ על משנה תורה, הלכות נחלות' — לא נמצא
+     - שורה 1185: 'ביאור שטיינזלץ על משנה תורה, הלכות נערה בתולה' — לא נמצא
+     - שורה 1186: 'ביאור שטיינזלץ על משנה תורה, הלכות סנהדרין והעונשין המסורין להם' — לא נמצא
+     - שורה 1187: 'ביאור שטיינזלץ על משנה תורה, הלכות עבדים' — לא נמצא
+     - שורה 1188: 'ביאור שטיינזלץ על משנה תורה, הלכות עבודה זרה וחוקות הגויים' — לא נמצא
+     - שורה 1189: 'ביאור שטיינזלץ על משנה תורה, הלכות עבודת יום הכפורים' — לא נמצא
+     - שורה 1190: 'ביאור שטיינזלץ על משנה תורה, הלכות עדות' — לא נמצא
+     - שורה 1191: 'ביאור שטיינזלץ על משנה תורה, הלכות עירובין' — לא נמצא
+     - שורה 1192: 'ביאור שטיינזלץ על משנה תורה, הלכות ערכים וחרמין' — לא נמצא
+     - שורה 1193: 'ביאור שטיינזלץ על משנה תורה, הלכות פסולי המוקדשין' — לא נמצא
+     - שורה 1194: 'ביאור שטיינזלץ על משנה תורה, הלכות פרה אדומה' — לא נמצא
+     - שורה 1195: 'ביאור שטיינזלץ על משנה תורה, הלכות ציצית' — לא נמצא
+     - שורה 1196: 'ביאור שטיינזלץ על משנה תורה, הלכות קידוש החודש' — לא נמצא
+     - שורה 1197: 'ביאור שטיינזלץ על משנה תורה, הלכות קרבן פסח' — לא נמצא
+     - שורה 1198: 'ביאור שטיינזלץ על משנה תורה, הלכות קריאת שמע' — לא נמצא
+     - שורה 1199: 'ביאור שטיינזלץ על משנה תורה, הלכות רוצח ושמירת נפש' — לא נמצא
+     - שורה 1200: 'ביאור שטיינזלץ על משנה תורה, הלכות שאלה ופיקדון' — לא נמצא
+     - שורה 1201: 'ביאור שטיינזלץ על משנה תורה, הלכות שאר אבות הטומאות' — לא נמצא
+     - שורה 1202: 'ביאור שטיינזלץ על משנה תורה, הלכות שבועות' — לא נמצא
+     - שורה 1203: 'ביאור שטיינזלץ על משנה תורה, הלכות שביתת יום טוב' — לא נמצא
+     - שורה 1204: 'ביאור שטיינזלץ על משנה תורה, הלכות שביתת עשור' — לא נמצא
+     - שורה 1205: 'ביאור שטיינזלץ על משנה תורה, הלכות שבת' — לא נמצא
+     - שורה 1206: 'ביאור שטיינזלץ על משנה תורה, הלכות שגגות' — לא נמצא
+     - שורה 1207: 'ביאור שטיינזלץ על משנה תורה, הלכות שופר וסוכה ולולב' — לא נמצא
+     - שורה 1208: 'ביאור שטיינזלץ על משנה תורה, הלכות שחיטה' — לא נמצא
+     - שורה 1209: 'ביאור שטיינזלץ על משנה תורה, הלכות שכירות' — לא נמצא
+     - שורה 1210: 'ביאור שטיינזלץ על משנה תורה, הלכות שכנים' — לא נמצא
+     - שורה 1211: 'ביאור שטיינזלץ על משנה תורה, הלכות שלוחין ושותפין' — לא נמצא
+     - שורה 1212: 'ביאור שטיינזלץ על משנה תורה, הלכות שמיטה ויובל' — לא נמצא
+     - שורה 1213: 'ביאור שטיינזלץ על משנה תורה, הלכות שקלים' — לא נמצא
+     - שורה 1214: 'ביאור שטיינזלץ על משנה תורה, הלכות תלמוד תורה' — לא נמצא
+     - שורה 1215: 'ביאור שטיינזלץ על משנה תורה, הלכות תמורה' — לא נמצא
+     - שורה 1216: 'ביאור שטיינזלץ על משנה תורה, הלכות תמידים ומוספין' — לא נמצא
+     - שורה 1217: 'ביאור שטיינזלץ על משנה תורה, הלכות תעניות' — לא נמצא
+     - שורה 1218: 'ביאור שטיינזלץ על משנה תורה, הלכות תפילה וברכת כהנים' — לא נמצא
+     - שורה 1219: 'ביאור שטיינזלץ על משנה תורה, הלכות תפילין ומזוזה וספר תורה' — לא נמצא
+     - שורה 1220: 'ביאור שטיינזלץ על משנה תורה, הלכות תרומות' — לא נמצא
+     - שורה 1221: 'ביאור שטיינזלץ על משנה תורה, הלכות תשובה' — לא נמצא
+     - שורה 1222: 'ביאור שטיינזלץ על נדרים' — לא נמצא
+     - שורה 1223: 'ביאור שטיינזלץ על נזיר' — לא נמצא
+     - שורה 1224: 'ביאור שטיינזלץ על נחום' — לא נמצא
+     - שורה 1225: 'ביאור שטיינזלץ על נחמיה' — לא נמצא
+     - שורה 1226: 'ביאור שטיינזלץ על סוטה' — לא נמצא
+     - שורה 1227: 'ביאור שטיינזלץ על סוכה' — לא נמצא
+     - שורה 1228: 'ביאור שטיינזלץ על סנהדרין' — לא נמצא
+     - שורה 1229: 'ביאור שטיינזלץ על עבודה זרה' — לא נמצא
+     - שורה 1230: 'ביאור שטיינזלץ על עובדיה' — לא נמצא
+     - שורה 1231: 'ביאור שטיינזלץ על עזרא' — לא נמצא
+     - שורה 1232: 'ביאור שטיינזלץ על עירובין' — לא נמצא
+     - שורה 1233: 'ביאור שטיינזלץ על עמוס' — לא נמצא
+     - שורה 1234: 'ביאור שטיינזלץ על ערכין' — לא נמצא
+     - שורה 1235: 'ביאור שטיינזלץ על פסחים' — לא נמצא
+     - שורה 1236: 'ביאור שטיינזלץ על צפניה' — לא נמצא
+     - שורה 1237: 'ביאור שטיינזלץ על קהלת' — לא נמצא
+     - שורה 1238: 'ביאור שטיינזלץ על קידושין' — לא נמצא
+     - שורה 1239: 'ביאור שטיינזלץ על ראש השנה' — לא נמצא
+     - שורה 1240: 'ביאור שטיינזלץ על רות' — לא נמצא
+     - שורה 1241: 'ביאור שטיינזלץ על שבועות' — לא נמצא
+     - שורה 1242: 'ביאור שטיינזלץ על שבת' — לא נמצא
+     - שורה 1243: 'ביאור שטיינזלץ על שופטים' — לא נמצא
+     - שורה 1244: 'ביאור שטיינזלץ על שיר השירים' — לא נמצא
+     - שורה 1245: 'ביאור שטיינזלץ על שמואל א' — לא נמצא
+     - שורה 1246: 'ביאור שטיינזלץ על שמואל ב' — לא נמצא
+     - שורה 1247: 'ביאור שטיינזלץ על שמות' — לא נמצא
+     - שורה 1248: 'ביאור שטיינזלץ על תהילים' — לא נמצא
+     - שורה 1249: 'ביאור שטיינזלץ על תמורה' — לא נמצא
+     - שורה 1250: 'ביאור שטיינזלץ על תמיד' — לא נמצא
+     - שורה 1251: 'ביאור שטיינזלץ על תענית' — לא נמצא
+     - שורה 1252: 'ביאור שטיינזלץ, הקדמות למשנה תורה' — לא נמצא
+     - שורה 1253: 'ביאור שטיינזלץ, הקדמות לתנ"ך' (כפי שב-DB: 'ביאור שטיינזלץ, הקדמות לתנך') — לא נמצא
+     - שורה 1254: 'בין אתמול למחר' — לא נמצא
+     - שורה 1255: 'בין המצרים; השראה יומית לשלשת השבועות' — לא נמצא
+     - שורה 1257: 'ביקורת יהודית על הגותו של מרטין בובר' — לא נמצא
+     - שורה 1259: 'בלשון עתיד; חזון ליהודים וליהדות בתרבות הגלובלית' — לא נמצא
+     - שורה 1260: 'במצולות ספר יונה' — לא נמצא
+     - שורה 1344: 'בעיות הלכתיות עכשוויות, כרך א' — לא נמצא
+     - שורה 1345: 'בעיות הלכתיות עכשוויות, כרך ב' — לא נמצא
+     - שורה 1346: 'בעיות הלכתיות עכשוויות, כרך ג' — לא נמצא
+     - שורה 1347: 'בעיות הלכתיות עכשוויות, כרך ד' — לא נמצא
+     - שורה 1348: 'בעיות הלכתיות עכשוויות, כרך ה' — לא נמצא
+     - שורה 1349: 'בעיות הלכתיות עכשוויות, כרך ו' — לא נמצא
+     - שורה 1350: 'בעל שם טוב על התורה' — לא נמצא
+     - שורה 1351: 'בפרדס החסידות והקבלה' — לא נמצא
+     - שורה 1352: 'בראון-דרייבר-בריגס' — לא נמצא
+     - שורה 1366: 'ברכת אשר על התורה' — לא נמצא
+     - שורה 1380: "גיור 'כהלכתו' - מהו?" (כפי שב-DB: 'גיור כהלכתו - מהו') — לא נמצא
+     - שורה 1381: 'גילוי וכיסוי בלשון' — לא נמצא
+     - שורה 1382: 'גן נעול' — לא נמצא
+     - שורה 1406: 'דברי שלום ואמת' — לא נמצא
+     - שורה 1409: 'דור רביעי על חולין' — לא נמצא
+     - שורה 1416: 'דרך פקודך' — לא נמצא
+     - שורה 1417: 'דרכה של תורה' — לא נמצא
+     - שורה 1420: 'דרכי משה (עמיאל)' — לא נמצא
+     - שורה 1421: 'דרשוני כרך א' — לא נמצא
+     - שורה 1422: 'דרשוני כרך ב' — לא נמצא
+     - שורה 1423: 'האדם ויוצרו' — לא נמצא
+     - שורה 1424: 'האם יהיו לנו נכדים יהודים? המשכיות יהודית והדרך אליה' (כפי שב-DB: 'האם יהיו לנו נכדים יהודים המשכיות יהודית והדרך אליה') — לא נמצא
+     - שורה 1425: 'הבית שאנו בונים ביחד; בנייה מחדש של החברה' — לא נמצא
+     - שורה 1426: 'הגדת הרב יונתן זקס' — לא נמצא
+     - שורה 1428: 'הגיונות אל עמי' — לא נמצא
+     - שורה 1429: 'הגיוני עוזיאל' — לא נמצא
+     - שורה 1430: 'ההלכה כוחה ותפקידה' — לא נמצא
+     - שורה 1431: 'היהדות; מאובנת או תוססת?' (כפי שב-DB: 'היהדות; מאובנת או תוססת') — לא נמצא
+     - שורה 1432: 'הלכה ואגדה' — לא נמצא
+     - שורה 1433: 'המידות לחקר ההלכה' — לא נמצא
+     - שורה 1436: 'הערות מאת חיים גוגנהיימר על תלמוד ירושלמי' — לא נמצא
+     - שורה 1438: 'הצדק הסוציאלי והצדק המשפטי והמוסרי שלנו' — לא נמצא
+     - שורה 1439: 'הקדמות לתלמוד הבבלי' — לא נמצא
+     - שורה 1522: 'השפעה; הלימוד המרכזי של הקבלה' — לא נמצא
+     - שורה 1523: 'השקפת העולם המדעית והדתית' — לא נמצא
+     - שורה 1524: 'התורה: פירושן של נשים' (כפי שב-DB: 'התורה פירושן של נשים') — לא נמצא
+     - שורה 1526: 'זכור ושמור' — לא נמצא
+     - שורה 1527: 'זכרון ליום ראשון' — לא נמצא
+     - שורה 1530: 'מהרש"א - חידושי הלכות על בבא בתרא' (כפי שב-DB: 'מהרשא - חידושי הלכות על בבא בתרא') — לא נמצא
+     - שורה 1531: 'מהרש"א - חידושי הלכות על בבא מציעא' (כפי שב-DB: 'מהרשא - חידושי הלכות על בבא מציעא') — לא נמצא
+     - שורה 1532: 'מהרש"א - חידושי הלכות על בבא קמא' (כפי שב-DB: 'מהרשא - חידושי הלכות על בבא קמא') — לא נמצא
+     - שורה 1533: 'מהרש"א - חידושי הלכות על ביצה' (כפי שב-DB: 'מהרשא - חידושי הלכות על ביצה') — לא נמצא
+     - שורה 1534: 'מהרש"א - חידושי הלכות על בכורות' (כפי שב-DB: 'מהרשא - חידושי הלכות על בכורות') — לא נמצא
+     - שורה 1535: 'מהרש"א - חידושי הלכות על גיטין' (כפי שב-DB: 'מהרשא - חידושי הלכות על גיטין') — לא נמצא
+     - שורה 1536: 'מהרש"א - חידושי הלכות על הוריות' (כפי שב-DB: 'מהרשא - חידושי הלכות על הוריות') — לא נמצא
+     - שורה 1537: 'מהרש"א - חידושי הלכות על חולין' (כפי שב-DB: 'מהרשא - חידושי הלכות על חולין') — לא נמצא
+     - שורה 1538: 'מהרש"א - חידושי הלכות על יבמות' (כפי שב-DB: 'מהרשא - חידושי הלכות על יבמות') — לא נמצא
+     - שורה 1539: 'מהרש"א - חידושי הלכות על מכות' (כפי שב-DB: 'מהרשא - חידושי הלכות על מכות') — לא נמצא
+     - שורה 1540: 'מהרש"א - חידושי הלכות על מנחות' (כפי שב-DB: 'מהרשא - חידושי הלכות על מנחות') — לא נמצא
+     - שורה 1541: 'מהרש"א - חידושי הלכות על נדרים' (כפי שב-DB: 'מהרשא - חידושי הלכות על נדרים') — לא נמצא
+     - שורה 1542: 'מהרש"א - חידושי הלכות על סוטה' (כפי שב-DB: 'מהרשא - חידושי הלכות על סוטה') — לא נמצא
+     - שורה 1543: 'מהרש"א - חידושי הלכות על סוכה' (כפי שב-DB: 'מהרשא - חידושי הלכות על סוכה') — לא נמצא
+     - שורה 1544: 'מהרש"א - חידושי הלכות על סנהדרין' (כפי שב-DB: 'מהרשא - חידושי הלכות על סנהדרין') — לא נמצא
+     - שורה 1545: 'מהרש"א - חידושי הלכות על עבודה זרה' (כפי שב-DB: 'מהרשא - חידושי הלכות על עבודה זרה') — לא נמצא
+     - שורה 1546: 'מהרש"א - חידושי הלכות על פסחים' (כפי שב-DB: 'מהרשא - חידושי הלכות על פסחים') — לא נמצא
+     - שורה 1547: 'מהרש"א - חידושי הלכות על קידושין' (כפי שב-DB: 'מהרשא - חידושי הלכות על קידושין') — לא נמצא
+     - שורה 1548: 'מהרש"א - חידושי הלכות על ראש השנה' (כפי שב-DB: 'מהרשא - חידושי הלכות על ראש השנה') — לא נמצא
+     - שורה 1549: 'מהרש"א - חידושי הלכות על שבועות' (כפי שב-DB: 'מהרשא - חידושי הלכות על שבועות') — לא נמצא
+     - שורה 1550: 'חובות הלבבות (תקציר)' — לא נמצא
+     - שורה 1551: 'חומש קה"ת; ביאורי חסידות' (כפי שב-DB: 'חומש קהת; ביאורי חסידות') — לא נמצא
+     - שורה 1567: 'חומת אנך על ישעיהו' — לא נמצא
+     - שורה 1587: 'מהרש"א - חידושי אגדות על בבא בתרא' (כפי שב-DB: 'מהרשא - חידושי אגדות על בבא בתרא') — לא נמצא
+     - שורה 1588: 'מהרש"א - חידושי אגדות על בבא מציעא' (כפי שב-DB: 'מהרשא - חידושי אגדות על בבא מציעא') — לא נמצא
+     - שורה 1589: 'מהרש"א - חידושי אגדות על בבא קמא' (כפי שב-DB: 'מהרשא - חידושי אגדות על בבא קמא') — לא נמצא
+     - שורה 1590: 'מהרש"א - חידושי אגדות על ביצה' (כפי שב-DB: 'מהרשא - חידושי אגדות על ביצה') — לא נמצא
+     - שורה 1591: 'מהרש"א - חידושי אגדות על בכורות' (כפי שב-DB: 'מהרשא - חידושי אגדות על בכורות') — לא נמצא
+     - שורה 1592: 'מהרש"א - חידושי אגדות על גיטין' (כפי שב-DB: 'מהרשא - חידושי אגדות על גיטין') — לא נמצא
+     - שורה 1593: 'מהרש"א - חידושי אגדות על הוריות' (כפי שב-DB: 'מהרשא - חידושי אגדות על הוריות') — לא נמצא
+     - שורה 1594: 'מהרש"א - חידושי אגדות על זבחים' (כפי שב-DB: 'מהרשא - חידושי אגדות על זבחים') — לא נמצא
+     - שורה 1595: 'מהרש"א - חידושי אגדות על חגיגה' (כפי שב-DB: 'מהרשא - חידושי אגדות על חגיגה') — לא נמצא
+     - שורה 1596: 'מהרש"א - חידושי אגדות על חולין' (כפי שב-DB: 'מהרשא - חידושי אגדות על חולין') — לא נמצא
+     - שורה 1597: 'מהרש"א - חידושי אגדות על יבמות' (כפי שב-DB: 'מהרשא - חידושי אגדות על יבמות') — לא נמצא
+     - שורה 1598: 'מהרש"א - חידושי אגדות על יומא' (כפי שב-DB: 'מהרשא - חידושי אגדות על יומא') — לא נמצא
+     - שורה 1599: 'מהרש"א - חידושי אגדות על כריתות' (כפי שב-DB: 'מהרשא - חידושי אגדות על כריתות') — לא נמצא
+     - שורה 1600: 'מהרש"א - חידושי אגדות על כתובות' (כפי שב-DB: 'מהרשא - חידושי אגדות על כתובות') — לא נמצא
+     - שורה 1601: 'מהרש"א - חידושי אגדות על מגילה' (כפי שב-DB: 'מהרשא - חידושי אגדות על מגילה') — לא נמצא
+     - שורה 1602: 'מהרש"א - חידושי אגדות על מועד קטן' (כפי שב-DB: 'מהרשא - חידושי אגדות על מועד קטן') — לא נמצא
+     - שורה 1603: 'מהרש"א - חידושי אגדות על מכות' (כפי שב-DB: 'מהרשא - חידושי אגדות על מכות') — לא נמצא
+     - שורה 1604: 'מהרש"א - חידושי אגדות על מנחות' (כפי שב-DB: 'מהרשא - חידושי אגדות על מנחות') — לא נמצא
+     - שורה 1605: 'מהרש"א - חידושי אגדות על מעילה' (כפי שב-DB: 'מהרשא - חידושי אגדות על מעילה') — לא נמצא
+     - שורה 1606: 'מהרש"א - חידושי אגדות על נדה' (כפי שב-DB: 'מהרשא - חידושי אגדות על נדה') — לא נמצא
+     - שורה 1607: 'מהרש"א - חידושי אגדות על נדרים' (כפי שב-DB: 'מהרשא - חידושי אגדות על נדרים') — לא נמצא
+     - שורה 1608: 'מהרש"א - חידושי אגדות על סוטה' (כפי שב-DB: 'מהרשא - חידושי אגדות על סוטה') — לא נמצא
+     - שורה 1609: 'מהרש"א - חידושי אגדות על סוכה' (כפי שב-DB: 'מהרשא - חידושי אגדות על סוכה') — לא נמצא
+     - שורה 1610: 'מהרש"א - חידושי אגדות על סנהדרין' (כפי שב-DB: 'מהרשא - חידושי אגדות על סנהדרין') — לא נמצא
+     - שורה 1611: 'מהרש"א - חידושי אגדות על עבודה זרה' (כפי שב-DB: 'מהרשא - חידושי אגדות על עבודה זרה') — לא נמצא
+     - שורה 1612: 'מהרש"א - חידושי אגדות על עירובין' (כפי שב-DB: 'מהרשא - חידושי אגדות על עירובין') — לא נמצא
+     - שורה 1613: 'מהרש"א - חידושי אגדות על ערכין' (כפי שב-DB: 'מהרשא - חידושי אגדות על ערכין') — לא נמצא
+     - שורה 1614: 'מהרש"א - חידושי אגדות על פסחים' (כפי שב-DB: 'מהרשא - חידושי אגדות על פסחים') — לא נמצא
+     - שורה 1615: 'מהרש"א - חידושי אגדות על קידושין' (כפי שב-DB: 'מהרשא - חידושי אגדות על קידושין') — לא נמצא
+     - שורה 1616: 'מהרש"א - חידושי אגדות על ראש השנה' (כפי שב-DB: 'מהרשא - חידושי אגדות על ראש השנה') — לא נמצא
+     - שורה 1617: 'מהרש"א - חידושי אגדות על שבועות' (כפי שב-DB: 'מהרשא - חידושי אגדות על שבועות') — לא נמצא
+     - שורה 1618: 'מהרש"א - חידושי אגדות על שבת' (כפי שב-DB: 'מהרשא - חידושי אגדות על שבת') — לא נמצא
+     - שורה 1619: 'מהרש"א - חידושי אגדות על תמורה' (כפי שב-DB: 'מהרשא - חידושי אגדות על תמורה') — לא נמצא
+     - שורה 1620: 'מהרש"א - חידושי אגדות על תמיד' (כפי שב-DB: 'מהרשא - חידושי אגדות על תמיד') — לא נמצא
+     - שורה 1621: 'מהרש"א - חידושי אגדות על תענית' (כפי שב-DB: 'מהרשא - חידושי אגדות על תענית') — לא נמצא
+     - שורה 1622: 'מהרש"א - חידושי הלכות על ברכות' (כפי שב-DB: 'מהרשא - חידושי הלכות על ברכות') — לא נמצא
+     - שורה 1623: 'מהרש"א - חידושי הלכות על חגיגה' (כפי שב-DB: 'מהרשא - חידושי הלכות על חגיגה') — לא נמצא
+     - שורה 1624: 'מהרש"א - חידושי הלכות על יומא' (כפי שב-DB: 'מהרשא - חידושי הלכות על יומא') — לא נמצא
+     - שורה 1625: 'מהרש"א - חידושי הלכות על מגילה' (כפי שב-DB: 'מהרשא - חידושי הלכות על מגילה') — לא נמצא
+     - שורה 1626: 'מהרש"א - חידושי הלכות על מועד קטן' (כפי שב-DB: 'מהרשא - חידושי הלכות על מועד קטן') — לא נמצא
+     - שורה 1627: 'מהרש"א - חידושי הלכות על מסכת כתובות' (כפי שב-DB: 'מהרשא - חידושי הלכות על מסכת כתובות') — לא נמצא
+     - שורה 1628: 'מהרש"א - חידושי הלכות על מסכת נדה' (כפי שב-DB: 'מהרשא - חידושי הלכות על מסכת נדה') — לא נמצא
+     - שורה 1629: 'מהרש"א - חידושי הלכות על עירובין' (כפי שב-DB: 'מהרשא - חידושי הלכות על עירובין') — לא נמצא
+     - שורה 1630: 'מהרש"א - חידושי הלכות על שבת' (כפי שב-DB: 'מהרשא - חידושי הלכות על שבת') — לא נמצא
+     - שורה 1631: 'מהרש"א - חידושי הלכות על תענית' (כפי שב-DB: 'מהרשא - חידושי הלכות על תענית') — לא נמצא
+     - שורה 1641: 'חמשה חומשי תורה, מהדורת אוורט פוקס' — לא נמצא
+     - שורה 1643: 'חשבון הנפש' — לא נמצא
+     - שורה 1649: 'מהרש"א - יבמות מהדורא בתרא' (כפי שב-DB: 'מהרשא - יבמות מהדורא בתרא') — לא נמצא
+     - שורה 1723: 'יין הטוב' — לא נמצא
+     - שורה 1792: 'יערות דבש חלק א' — לא נמצא
+     - שורה 1793: 'יערות דבש חלק ב' — לא נמצא
+     - שורה 1796: 'כלי חמדה על התורה' — לא נמצא
+     - שורה 1883: 'לַכְּלָל וְלַפְּרָט' (כפי שב-DB: 'לכלל ולפרט') — לא נמצא
+     - שורה 1884: 'לא בשם האל; אל מול האלימות הדתית' — לא נמצא
+     - שורה 1966: 'לכבוד השוני; כיצד נוכל למנוע את התנגשות התרבויות?' (כפי שב-DB: 'לכבוד השוני; כיצד נוכל למנוע את התנגשות התרבויות') — לא נמצא
+     - שורה 1967: 'לפשוטו של מדרש' — לא נמצא
+     - שורה 1968: 'לנבוכי הדור' — לא נמצא
+     - שורה 1969: 'לנבוכי התקופה' — לא נמצא
+     - שורה 1970: 'לרפא עולם שבור; החיים כקריאה לאחריות' — לא נמצא
+     - שורה 1971: 'לשוב; השראה יומית לעשרת ימי תשובה' — לא נמצא
+     - שורה 1972: 'מאירי על תהלים' — לא נמצא
+     - שורה 1974: 'מאמר הדור' — לא נמצא
+     - שורה 1975: 'מאמרים על אתיקה; קריאות חדשות בפרשת השבוע' — לא נמצא
+     - שורה 1978: 'מגילת רות; ממהומה למלוכה' — לא נמצא
+     - שורה 1980: 'מדבר שור' — לא נמצא
+     - שורה 1981: 'מדוד ועד לחורבן' — לא נמצא
+     - שורה 1982: 'מדריך להלכות טהרת המשפחה' — לא נמצא
+     - שורה 1991: 'מדרשי פילון' — לא נמצא
+     - שורה 1992: 'מוספיה תשובות הגאונים' — לא נמצא
+     - שורה 1993: 'מוסריות; שיקום הטוב המשותף בעידן מפולג' — לא נמצא
+     - שורה 1994: 'מועדים לשיחה; מהדורה משפחתית' — לא נמצא
+     - שורה 1995: 'מועדים לשיחה; קריאות חדשות בחגי ישראל' — לא נמצא
+     - שורה 1996: 'מורה נבוכי הזמן' — לא נמצא
+     - שורה 1999: 'מחלוקת לשם שמים' — לא נמצא
+     - שורה 2001: 'מידות הראי"ה' (כפי שב-DB: 'מידות הראיה') — לא נמצא
+     - שורה 2002: 'מילון יסטרוב' — לא נמצא
+     - שורה 2003: 'מילון קליין' — לא נמצא
+     - שורה 2170: 'מלחמות השם יחיא קאפח' — לא נמצא
+     - שורה 2171: 'מנהיגות בשממה; סמכות ואנרכיה בספר במדבר' — לא נמצא
+     - שורה 2172: 'מנחת עני על הגדה של פסח' — לא נמצא
+     - שורה 2173: 'מנחת עני על התורה' — לא נמצא
+     - שורה 2209: 'מסורת בעידן לא מסורתי' — לא נמצא
+     - שורה 2243: 'מסיני לאתיופיה' — לא נמצא
+     - שורה 2244: 'מעשה טוביה' — לא נמצא
+     - שורה 2377: 'מראות הצובאות על יהושע' — לא נמצא
+     - שורה 2378: 'מראות הצובאות על מלכים א' — לא נמצא
+     - שורה 2379: 'מראות הצובאות על מלכים ב' — לא נמצא
+     - שורה 2380: 'מראות הצובאות על שופטים' — לא נמצא
+     - שורה 2381: 'מראות הצובאות על שמואל א' — לא נמצא
+     - שורה 2382: 'מראות הצובאות על שמואל ב' — לא נמצא
+     - שורה 2385: 'משבר ואמונה' — לא נמצא
+     - שורה 2386: 'משבר וברית; מחשבה יהודית מודרנית ופוסט מודרנית' — לא נמצא
+     - שורה 2387: 'משה; חיי בן אנוש' — לא נמצא
+     - שורה 2388: 'משנת ארץ ישראל על משנה אבות' — לא נמצא
+     - שורה 2389: 'משנת ארץ ישראל על משנה אהלות' — לא נמצא
+     - שורה 2390: 'משנת ארץ ישראל על משנה ביכורים' — לא נמצא
+     - שורה 2391: 'משנת ארץ ישראל על משנה ביצה' — לא נמצא
+     - שורה 2392: 'משנת ארץ ישראל על משנה ברכות' — לא נמצא
+     - שורה 2393: 'משנת ארץ ישראל על משנה גיטין' — לא נמצא
+     - שורה 2394: 'משנת ארץ ישראל על משנה דמאי' — לא נמצא
+     - שורה 2395: 'משנת ארץ ישראל על משנה זבחים' — לא נמצא
+     - שורה 2396: 'משנת ארץ ישראל על משנה זבים' — לא נמצא
+     - שורה 2397: 'משנת ארץ ישראל על משנה חגיגה' — לא נמצא
+     - שורה 2398: 'משנת ארץ ישראל על משנה חלה' — לא נמצא
+     - שורה 2399: 'משנת ארץ ישראל על משנה טבול יום' — לא נמצא
+     - שורה 2400: 'משנת ארץ ישראל על משנה טהרות' — לא נמצא
+     - שורה 2401: 'משנת ארץ ישראל על משנה יבמות' — לא נמצא
+     - שורה 2402: 'משנת ארץ ישראל על משנה ידיים' — לא נמצא
+     - שורה 2403: 'משנת ארץ ישראל על משנה יומא' — לא נמצא
+     - שורה 2404: 'משנת ארץ ישראל על משנה כלאים' — לא נמצא
+     - שורה 2405: 'משנת ארץ ישראל על משנה כתובות' — לא נמצא
+     - שורה 2406: 'משנת ארץ ישראל על משנה מגילה' — לא נמצא
+     - שורה 2407: 'משנת ארץ ישראל על משנה מדות' — לא נמצא
+     - שורה 2408: 'משנת ארץ ישראל על משנה מועד קטן' — לא נמצא
+     - שורה 2409: 'משנת ארץ ישראל על משנה מעשר שני' — לא נמצא
+     - שורה 2410: 'משנת ארץ ישראל על משנה מעשרות' — לא נמצא
+     - שורה 2411: 'משנת ארץ ישראל על משנה מקואות' — לא נמצא
+     - שורה 2412: 'משנת ארץ ישראל על משנה נגעים' — לא נמצא
+     - שורה 2413: 'משנת ארץ ישראל על משנה נדה' — לא נמצא
+     - שורה 2414: 'משנת ארץ ישראל על משנה נדרים' — לא נמצא
+     - שורה 2415: 'משנת ארץ ישראל על משנה נזיר' — לא נמצא
+     - שורה 2416: 'משנת ארץ ישראל על משנה סוטה' — לא נמצא
+     - שורה 2417: 'משנת ארץ ישראל על משנה סוכה' — לא נמצא
+     - שורה 2418: 'משנת ארץ ישראל על משנה סנהדרין' — לא נמצא
+     - שורה 2419: 'משנת ארץ ישראל על משנה עוקצין' — לא נמצא
+     - שורה 2420: 'משנת ארץ ישראל על משנה ערלה' — לא נמצא
+     - שורה 2421: 'משנת ארץ ישראל על משנה פאה' — לא נמצא
+     - שורה 2422: 'משנת ארץ ישראל על משנה פסחים' — לא נמצא
+     - שורה 2423: 'משנת ארץ ישראל על משנה פרה' — לא נמצא
+     - שורה 2424: 'משנת ארץ ישראל על משנה ראש השנה' — לא נמצא
+     - שורה 2425: 'משנת ארץ ישראל על משנה שבועות' — לא נמצא
+     - שורה 2426: 'משנת ארץ ישראל על משנה שביעית' — לא נמצא
+     - שורה 2427: 'משנת ארץ ישראל על משנה שבת' — לא נמצא
+     - שורה 2428: 'משנת ארץ ישראל על משנה שקלים' — לא נמצא
+     - שורה 2429: 'משנת ארץ ישראל על משנה תמורה' — לא נמצא
+     - שורה 2430: 'משנת ארץ ישראל על משנה תמיד' — לא נמצא
+     - שורה 2431: 'משנת ארץ ישראל על משנה תענית' — לא נמצא
+     - שורה 2432: 'משנת ארץ ישראל על משנה תרומות' — לא נמצא
+     - שורה 2433: 'נושאים מרכזיים בפילוסופיה היהודית המודרנית' — לא נמצא
+     - שורה 2439: 'נחלת השבטים' — לא נמצא
+     - שורה 2440: 'נימוקי רבי אליהו בחור על ספר השרשים' — לא נמצא
+     - שורה 2443: 'נשים בדיון הלכתי' — לא נמצא
+     - שורה 2445: 'נשמת הבית' — לא נמצא
+     - שורה 2447: 'ספר דניאל; הגלות כהזדמנות' — לא נמצא
+     - שורה 2449: 'ספר השרשים' — לא נמצא
+     - שורה 2451: 'ספר יסודי התורה' — לא נמצא
+     - שורה 2452: 'ספר מקבים ב' — לא נמצא
+     - שורה 2453: 'ספר פוע"ה' (כפי שב-DB: 'ספר פועה') — לא נמצא
+     - שורה 2455: 'ספרי זוטא; מדרשה של לוד' — לא נמצא
+     - שורה 2456: 'עוד יוסף חי; דרשות' — לא נמצא
+     - שורה 2457: 'עוד יוסף חי; הלכות' — לא נמצא
+     - שורה 2458: 'עולת ראיה' — לא נמצא
+     - שורה 2459: 'עומדות שוב בסיני; יהדות מנקודת מבט פמיניסטית' — לא נמצא
+     - שורה 2472: 'על כפות המנעול; דרשות לימי התשובה וליום הכיפורים' — לא נמצא
+     - שורה 2473: 'עם אחד? מסורת, מודרניות ואחדות יהודית' (כפי שב-DB: 'עם אחד מסורת, מודרניות ואחדות יהודית') — לא נמצא
+     - שורה 2511: 'עמנואל הרומי על אסתר' — לא נמצא
+     - שורה 2512: 'עמנואל הרומי על משלי' — לא נמצא
+     - שורה 2513: 'ענקי הרוח שלנו' — לא נמצא
+     - שורה 2520: 'פור הוא הגורל; דרשות\xa0לפורים' — לא נמצא
+     - שורה 2585: 'פני שביעית נקבלה' — לא נמצא
+     - שורה 2586: 'פניך אבקש' — לא נמצא
+     - שורה 2587: 'פסח על שום מה? הגדת הרב יונתן זקס; מאמרים' (כפי שב-DB: 'פסח על שום מה הגדת הרב יונתן זקס; מאמרים') — לא נמצא
+     - שורה 2588: 'פרי מגדים על אורח חיים' — לא נמצא
+     - שורה 2655: 'צוואות השבטים' — לא נמצא
+     - שורה 2667: 'קהילה של אמונה' — לא נמצא
+     - שורה 2670: 'קונטרס ההתפעלות' — לא נמצא
+     - שורה 2671: 'קונטרס חיבה יתירה' — לא נמצא
+     - שורה 2715: 'רדיקלית אז, רדיקלית עכשיו' — לא נמצא
+     - שורה 2818: 'רעיונות משני חיים; קריאות חדשות בפרשת השבוע' — לא נמצא
+     - שורה 2821: 'שבת הארץ' — לא נמצא
+     - שורה 2822: 'שו"ת במראה הבזק חלק חמישי' (כפי שב-DB: 'שות במראה הבזק חלק חמישי') — לא נמצא
+     - שורה 2823: 'שו"ת במראה הבזק חלק עשירי' (כפי שב-DB: 'שות במראה הבזק חלק עשירי') — לא נמצא
+     - שורה 2824: 'שו"ת במראה הבזק חלק ראשון' (כפי שב-DB: 'שות במראה הבזק חלק ראשון') — לא נמצא
+     - שורה 2825: 'שו"ת במראה הבזק חלק רביעי' (כפי שב-DB: 'שות במראה הבזק חלק רביעי') — לא נמצא
+     - שורה 2826: 'שו"ת במראה הבזק חלק שביעי' (כפי שב-DB: 'שות במראה הבזק חלק שביעי') — לא נמצא
+     - שורה 2827: 'שו"ת במראה הבזק חלק שישי' (כפי שב-DB: 'שות במראה הבזק חלק שישי') — לא נמצא
+     - שורה 2828: 'שו"ת במראה הבזק חלק שלישי' (כפי שב-DB: 'שות במראה הבזק חלק שלישי') — לא נמצא
+     - שורה 2829: 'שו"ת במראה הבזק חלק שמיני' (כפי שב-DB: 'שות במראה הבזק חלק שמיני') — לא נמצא
+     - שורה 2830: 'שו"ת במראה הבזק חלק שני' (כפי שב-DB: 'שות במראה הבזק חלק שני') — לא נמצא
+     - שורה 2831: 'שו"ת במראה הבזק חלק תשיעי' (כפי שב-DB: 'שות במראה הבזק חלק תשיעי') — לא נמצא
+     - שורה 2832: 'שו"ת בני בנים' (כפי שב-DB: 'שות בני בנים') — לא נמצא
+     - שורה 2837: 'שיג ושיח מהדורה משפחתית' — לא נמצא
+     - שורה 2838: 'שיג ושיח; מהדורה עברית' — לא נמצא
+     - שורה 2839: 'שיג ושיח; קריאות חדשות בפרשת השבוע, במדבר' — לא נמצא
+     - שורה 2840: 'שיג ושיח; קריאות חדשות בפרשת השבוע, בראשית' — לא נמצא
+     - שורה 2841: 'שיג ושיח; קריאות חדשות בפרשת השבוע, דברים' — לא נמצא
+     - שורה 2842: 'שיג ושיח; קריאות חדשות בפרשת השבוע, ויקרא' — לא נמצא
+     - שורה 2843: 'שיג ושיח; קריאות חדשות בפרשת השבוע, שמות' — לא נמצא
+     - שורה 2877: 'שיעורים בגמרא - שמיטה' — לא נמצא
+     - שורה 2878: 'שיעורים במנהיגות; מהדורה עברית' — לא נמצא
+     - שורה 2879: 'שיעורים במנהיגות; קריאות חדשות בפרשת השבוע' — לא נמצא
+     - שורה 2880: 'שיעורים ברוחניות; קריאות חדשות בפרשת השבוע' — לא נמצא
+     - שורה 2881: 'שלהבות של אמונה' — לא נמצא
+     - שורה 2882: 'שמונה קבצים' — לא נמצא
+     - שורה 2956: 'שפתי כהן על התורה' — לא נמצא
+     - שורה 2958: 'תְּפִלַּת מְנַשֶׁה' (כפי שב-DB: 'תפלת מנשה') — לא נמצא
+     - שורה 2959: 'תהילים קנ"א' (כפי שב-DB: 'תהילים קנא') — לא נמצא
+     - שורה 2960: 'תהלים קנ"ד' (כפי שב-DB: 'תהלים קנד') — לא נמצא
+     - שורה 3094: 'תורת אמך' — לא נמצא
+     - שורה 3095: 'תורת ההגיון בהלכה' — לא נמצא
+     - שורה 3098: 'תנאי בנישואין ובגט' — לא נמצא
+     - שורה 3100: 'תפארת יהונתן על תורה' — לא נמצא
+     - שורה 3108: 'תקות אנוש על איוב' — לא נמצא
+     - שורה 3114: 'תשובות בעת מלחמה (אנגלית)' — לא נמצא
+     - שורה 3116: 'תשובות לקציני דת (אנגלית)' — לא נמצא
+     - שורה 4589: 'מהרש"א - חידושי אגדות על ברכות' (כפי שב-DB: 'מהרשא - חידושי אגדות על ברכות') — לא נמצא
+     - שורה 4590: 'מהרש"א - חידושי אגדות על נזיר' (כפי שב-DB: 'מהרשא - חידושי אגדות על נזיר') — לא נמצא
+     - שורה 5032: 'טעבעלה באנדי על הגדה של פסח' — לא נמצא
+     - שורה 5548: 'מהר"ם שיף על עירובין' (כפי שב-DB: 'מהרם שיף על עירובין') — לא נמצא
+     - שורה 6423: 'פסקי הרא"ש על נדה' (כפי שב-DB: 'פסקי הראש על נדה') — לא נמצא
+     - שורה 6999: 'רד"ק על ישעיהו' (כפי שב-DB: 'רדק על ישעיהו') — לא נמצא
+
+
+❌ 1 בעיות ב-ForDB/sefaria_category_changes.csv; הבנייה תיכשל:
+
+     - רשומה 1243: 'תלמוד בבלי/ראשונים/חדושי הרא״ה' — הקטגוריה «חדושי הרא״ה» משנה את שמה ל«חידושי הרא״ה»; יש לכתוב את הנתיב בשם החדש
+

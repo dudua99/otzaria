@@ -1,0 +1,2 @@
+ForDB/sefaria_metadata_changes.csv:8085 col0: 'שות/אחרונים/שות שבט סופר' (old folder 'שות/אחרונים/שות שבט סופר') | שו״ת שבט סופר חלק ב
+ForDB/sefaria_metadata_changes.csv:8086 col0: 'שות/אחרונים/שות תעלומות לב' (old folder 'שות/אחרונים/שות תעלומות לב') | שו״ת תעלומות לב חלק ג
