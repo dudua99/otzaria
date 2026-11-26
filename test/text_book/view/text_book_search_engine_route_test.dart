@@ -315,7 +315,10 @@ Future<void> main() async {
   testWidgets('שאילתה חיצונית מעדכנת ניתוב בשני הכיוונים בלי שינוי בהגדרות', (
     tester,
   ) async {
-    final repository = _RecordingSearchRepository(results: const []);
+    // תוצאה מהמנוע, כדי שהמסלול המקומי לא ירוץ כגיבוי למנוע ריק (#4135).
+    final repository = _RecordingSearchRepository(
+      results: [_result(title: 'ספר בדיקה', reference: 'פרק', segment: 0)],
+    );
     final simpleQueries = <String>[];
     final harness = await pumpSearchView(
       tester,
