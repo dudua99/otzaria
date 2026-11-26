@@ -1,0 +1,1 @@
+Re-verification of head b2d4fb3b in progress (started 2026-11-26). VERDICT.md below still describes the old head 9f6a441d until this run finishes.
