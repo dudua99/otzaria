@@ -130,9 +130,9 @@ class PortablePaths {
   }
 
   /// הבסיס שזז יחד עם שורש הנתונים: [oldRoot] ו-[newRoot] בלי רכיבי
-  /// הסיום המשותפים (תיקיית הנתונים ותיקיית האפליקציה). כשרק אות הכונן
-  /// התחלפה — שורשי הכוננים עצמם. null כשאין רכיב משותף מעבר לתיקיית
-  /// הנתונים, או כשהבסיס לא השתנה.
+  /// הסיום המשותפים (תיקיית הנתונים ותיקיית האפליקציה, אם שמה לא השתנה).
+  /// כשרק אות הכונן התחלפה — שורשי הכוננים עצמם. null כשאין רכיב סיום
+  /// משותף, או כשהבסיס לא השתנה.
   static ({String from, String to})? _movedBase(
     String oldRoot,
     String newRoot,
@@ -148,7 +148,7 @@ class PortablePaths {
         )) {
       common++;
     }
-    if (common < 2) return null;
+    if (common == 0) return null;
     final from = p.joinAll(oldParts.take(oldParts.length - common));
     final to = p.joinAll(newParts.take(newParts.length - common));
     return p.equals(from, to) ? null : (from: from, to: to);

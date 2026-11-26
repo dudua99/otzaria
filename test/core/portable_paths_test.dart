@@ -257,10 +257,15 @@ void main() {
 
     /// כונן נייד שבמחשב הקודם נקרא [oldDrive]: תיקיית האפליקציה וספרייה
     /// אחות לה יושבות עליו, והספרייה מחוץ לתיקיית הנתונים.
-    Future<({Directory drive, String oldDrive})> setUpMovedDrive() async {
+    /// [appFolder] null — האפליקציה חולצה ישירות לשורש הכונן.
+    Future<({Directory drive, String oldDrive})> setUpMovedDrive({
+      String? appFolder = 'אוצריא נייד',
+    }) async {
       final drive = await Directory.systemTemp.createTemp('otzaria_drive_');
       addTearDown(() => drive.delete(recursive: true));
-      final appDir = Directory(p.join(drive.path, 'אוצריא נייד'))..createSync();
+      final appDir = appFolder == null
+          ? drive
+          : (Directory(p.join(drive.path, appFolder))..createSync());
       final exePath = p.join(appDir.path, 'otzaria.exe');
       File(exePath).writeAsStringSync('fake exe');
       File(
@@ -271,13 +276,33 @@ void main() {
       dataRoot = await AppPaths.getDataRootPath();
       await Directory(dataRoot).create(recursive: true);
       final oldDrive = '${drive.path}_old';
-      await writeRootRecord(p.join(oldDrive, 'אוצריא נייד', 'otzaria_data'));
+      await writeRootRecord(
+        p.join(oldDrive, appFolder ?? '', 'otzaria_data'),
+      );
       return (drive: drive, oldDrive: oldDrive);
     }
 
     test('כונן נייד שהחליף אות — ספרייה על הכונן מחוץ לתיקיית הנתונים '
         'נמצאת (issue #6081)', () async {
       final moved = await setUpMovedDrive();
+      final library = Directory(p.join(moved.drive.path, 'ספרייה'))
+        ..createSync();
+      await Settings.setValue(
+        SettingsRepository.keyLibraryPath,
+        p.join(moved.oldDrive, 'ספרייה'),
+      );
+
+      await PortablePaths.migrateIfMoved();
+
+      expect(
+        Settings.getValue<String>(SettingsRepository.keyLibraryPath),
+        library.path,
+      );
+    });
+
+    test('כונן נייד שהחליף אות, האפליקציה בשורש הכונן — ספרייה על הכונן '
+        'נמצאת (issue #6081)', () async {
+      final moved = await setUpMovedDrive(appFolder: null);
       final library = Directory(p.join(moved.drive.path, 'ספרייה'))
         ..createSync();
       await Settings.setValue(
