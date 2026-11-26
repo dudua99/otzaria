@@ -1,0 +1,1 @@
+Run: git fetch origin cloud-notes && git show FETCH_HEAD:WORKER.md — then follow WORKER.md exactly (one unit of work, claim before working, GIT IDENTITY dudua99 / 99@9900.co.il, no Co-Authored-By / AI attribution anywhere). If `flutter pub get` fails on a git pin: `cd ~/.pub-cache/git/cache/<package>-* && git fetch origin <sha>` and retry.
