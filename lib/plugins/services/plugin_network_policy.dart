@@ -5,6 +5,7 @@ import 'package:otzaria/plugins/models/plugin_network_allowlist.dart';
 import 'package:otzaria/plugins/models/plugin_network_permission_mode.dart';
 import 'package:otzaria/plugins/repository/plugin_registry_repository.dart';
 import 'package:otzaria/plugins/services/plugin_network_access_resolver.dart';
+import 'package:otzaria/plugins/services/plugin_network_gate.dart';
 
 /// היעדים שתוסף רשאי לפנות אליהם, כרשימה מחושבת מראש.
 ///
@@ -45,13 +46,14 @@ Future<PluginNetworkPolicy> resolvePluginNetworkPolicy({
   PluginNetworkAccessResolver? resolver,
 }) async {
   if (!manifest.networkEnabled) return PluginNetworkPolicy.none;
-  final remoteGranted =
+  final accessGranted =
       await registry.getPermission(pluginId, 'network.access') == true;
+  final remoteGranted = accessGranted && !isPluginNetworkOffline();
   // אותה הכרעה כמו ב-evaluatePluginNetworkAccess: בתקופת המעבר גם
   // network.access מתירה יעד מקומי.
   final loopbackGranted =
       await registry.getPermission(pluginId, 'network.localhost') == true ||
-      (remoteGranted && !await PluginNetworkPermissionMode.isStrict());
+      (accessGranted && !await PluginNetworkPermissionMode.isStrict());
 
   final officialResolver = resolver ?? PluginNetworkAccessResolver.instance;
   final cachedOfficial = officialResolver.cachedOfficialAllowlist;

@@ -8871,6 +8871,11 @@ class PluginBridgeAdapter {
                     'פורט, אבל "localhost" ו-"127.0.0.1" נבדלים)'
               : 'error.forbidden: הכתובת אינה ברשימת ההיתר לגישת רשת של תוספים',
         );
+      case PluginNetworkDecision.offlineMode:
+        throw Exception(
+          'error.unavailable: אוצריא במצב מנותק, וגישה לאינטרנט חסומה עד '
+          'לחזרה למצב מקוון.',
+        );
     }
   }
 

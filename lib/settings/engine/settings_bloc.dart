@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:otzaria/core/download_network_policy.dart';
+import 'package:otzaria/plugins/services/plugin_network_policy.dart';
 
 import 'package:otzaria/indexing/models/indexing_resource_policy.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
@@ -321,6 +322,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   ) async {
     await _repository.updateOfflineMode(event.isOfflineMode);
     emit(state.copyWith(isOfflineMode: event.isOfflineMode));
+    PluginNetworkPolicy.notifyChanged();
   }
 
   Future<void> _onUpdateSoftwareAndBookUpdatesEnabled(
