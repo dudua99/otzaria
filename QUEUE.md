@@ -3,6 +3,9 @@
 # bug = regular bug fix (FIX.md flow) per notes/<N>.md
 1692c refactor   (owner approved 26.11; behavior-preserving: commit 1 = characterization tests that PASS on dev (overrides FIX.md's failing-test rule), commit 2 = refactor; net-negative; Refs #1692; notes/1692c.md)
 perfscout scout   (SCOUT only, no fix branch: measure, write notes/perf<k>.md + QUEUE lines on cloud-notes, VERDICT first line 'SCOUT DONE'; notes/perfscout.md)
+perf1 perf   (measured: in-book search next/prev result rebuilds all ~30 visible rows, 16143 -> 3850 builds per 20 presses, 490 -> 361 ms; notes/perf1.md)
+perf2 perf   (measured: selecting a reader line rebuilds all ~37 visible items, 1498 builds / ~110 ms per click, ~98% waste; notes/perf2.md)
+perf3 perf   (measured: TOC active-heading change while reading rebuilds all ~43 visible rows, ~1550 builds / ~100 ms; notes/perf3.md)
 2543c bug   (OWNER DECISION 26.11: update draft PR #5646 on its OWN branch feat/open-books-scope-2543 — merge dev (no rebase/force), PDF+text dedup fix, Nathaniel's no-subtitle design, REPLY.md; do not stop on Y-PLONI's close suggestion; notes/2543c.md)
 5040b bug   (verification only: does engine 7.5.3 (#97) reclaim index space? notes/5040b.md)
 3640c bug   (rework of closed #5706: gesture-scoped DOM answer per the maintainer review; notes/3640c.md)
