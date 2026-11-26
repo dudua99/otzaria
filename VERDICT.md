@@ -32,6 +32,8 @@ Branch under test: dudua99/otzaria-library `names/uniform-titles-3209` @ 9f6a441
 - JDK: Oracle JDK 25.0.5.1 (download.oracle.com). Temurin is not reachable (api.adoptium.net and github.com/adoptium blocked by the proxy).
 - Google Maven (dl.google.com) is blocked: the Android plugin and androidx compose-runtime cannot resolve. Locally removed the Android targets from build.gradle.kts / core / dao and replaced the compileOnly `androidx.compose.runtime.Stable` annotation with a local stub. JVM generator code is unchanged.
 - `:packaging:downloadLexicalDb` excluded (api.github.com for kdroidFilter is blocked; lexical.db is not part of seforim.db).
+- Acronymizer DB: `api.github.com`/release assets of Otzaria/SeforimAcronymizer are blocked, so `:otzariasqlite:downloadAcronymizer` cannot fetch "latest". The release that was latest when v40 was built is tag `20261119.68` (next release is 20261125); rebuilt it from that tag's `data/acronymizer.sql` (7324 books / 37736 acronyms / 43928 links, sha256 2893cd1b…12c8) and placed it at `generator/otzariasqlite/build/acronymizer/acronymizer.db`, which the task uses as-is.
+- `textimages.sefaria.org` is blocked: Sefaria images are not embedded (identical on both sides).
 - Heaps: generatorHeap=10g, Gradle 2g, --max-workers=2 (4 cores / 15 GB).
 
 ## Status
