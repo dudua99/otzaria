@@ -9,6 +9,7 @@ import 'package:otzaria/tabs/models/tab.dart';
 import 'package:otzaria/tabs/models/pdf_tab.dart';
 import 'package:otzaria/tabs/utils/tab_content_vertical_drag_recognizer.dart';
 import 'package:otzaria/tabs/utils/tab_swipe_direction.dart';
+import 'package:otzaria/tabs/utils/tab_swipe_hold.dart';
 import 'package:otzaria/tabs/utils/tab_swipe_log.dart';
 import 'package:otzaria/tabs/utils/tab_swipe_settle.dart';
 import 'package:otzaria/tabs/utils/touch_tab_swipe_recognizer.dart';
@@ -41,6 +42,10 @@ class TabSwipeDetector extends StatefulWidget {
 
   final Widget child;
 
+  /// המחוות שתוכן הכרטיסייה מעכב עד שיענה אם הן שלו (issue #3640).
+  static TabSwipeHold? maybeHoldOf(BuildContext context) =>
+      context.findAncestorStateOfType<_TabSwipeDetectorState>()?._hold;
+
   @override
   State<TabSwipeDetector> createState() => _TabSwipeDetectorState();
 }
@@ -57,6 +62,8 @@ class _TabSwipeDetectorState extends State<TabSwipeDetector> {
 
   /// מחווה חדשה מחליפה את ההתיישבות הקודמת; רק האחרונה משחררת את הדיכוי.
   int _generation = 0;
+
+  final _hold = TabSwipeHold();
 
   @override
   void dispose() {
@@ -87,7 +94,7 @@ class _TabSwipeDetectorState extends State<TabSwipeDetector> {
               ),
           TrackpadTabSwipeRecognizer:
               GestureRecognizerFactoryWithHandlers<TrackpadTabSwipeRecognizer>(
-                TrackpadTabSwipeRecognizer.new,
+                () => TrackpadTabSwipeRecognizer(hold: _hold),
                 (recognizer) {
                   _configure(recognizer);
                   recognizer.onPinchAfterAcceptance = () => _settle(
@@ -104,6 +111,7 @@ class _TabSwipeDetectorState extends State<TabSwipeDetector> {
                     final tab = context.read<TabsBloc>().state.currentTab;
                     return tab is PdfBookTab && tab.canPanHorizontally;
                   },
+                  hold: _hold,
                 ),
                 _configure,
               ),

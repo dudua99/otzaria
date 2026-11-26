@@ -1,4 +1,5 @@
 import 'package:flutter/gestures.dart';
+import 'package:otzaria/tabs/utils/tab_swipe_hold.dart';
 
 /// החלקה בין כרטיסיות במסך מגע בדסקטופ.
 ///
@@ -7,11 +8,15 @@ import 'package:flutter/gestures.dart';
 class TouchTabSwipeRecognizer extends HorizontalDragGestureRecognizer {
   TouchTabSwipeRecognizer({
     required this.singleFingerPansContent,
+    this.hold,
     super.debugOwner,
   }) : super(supportedDevices: const {PointerDeviceKind.touch});
 
   /// האם אצבע אחת מזיזה כעת את התוכן לרוחב (למשל PDF מוגדל).
   final bool Function() singleFingerPansContent;
+
+  /// מחוות שהתוכן עוד לא ענה עליהן אינן עוברות כרטיסייה.
+  final TabSwipeHold? hold;
 
   final Map<int, Offset> _downPointers = {};
 
@@ -49,6 +54,7 @@ class TouchTabSwipeRecognizer extends HorizontalDragGestureRecognizer {
     PointerDeviceKind pointerDeviceKind,
     double? deviceTouchSlop,
   ) =>
+      !_downPointers.keys.any((pointer) => hold?.holds(pointer) ?? false) &&
       super.hasSufficientGlobalDistanceToAccept(
         pointerDeviceKind,
         deviceTouchSlop,

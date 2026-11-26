@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,6 +16,7 @@ import '../../test_helpers/stub_tabs_bloc.dart';
 /// שהגיעה (ולא לפי התשובה על המחווה הזו) מעבירה כרטיסייה מעל תוכן גולל או
 /// חוסמת מעבר מעל תוכן סטטי. בדף כאן תפריט שנגלל לרוחב בחצי השמאלי ותוכן
 /// סטטי בימני; הדף עונה 10 מילישניות אחרי תחילת המחווה, כמו ה-bridge.
+/// ההחלקה ממתינה לתשובה על המחווה הזו, כך שאין ערך ישן שאפשר לטעות בו.
 void main() {
   const answerDelay = Duration(milliseconds: 10);
   const menu = Offset(300, 400);
@@ -28,19 +27,13 @@ void main() {
 
   bool scrollsAt(Offset position) => position.dx < 600;
 
-  Future<void> pumpPluginTabs(
-    WidgetTester tester, {
-    required bool stale,
-  }) async {
+  Future<void> pumpPluginTabs(WidgetTester tester) async {
     tester.view.physicalSize = const Size(1200, 800);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
     webViewPans = [];
     webViewTouchMoves = 0;
-    var reported = stale;
-    void report(Offset position) =>
-        Timer(answerDelay, () => reported = scrollsAt(position));
     controller = PageController(initialPage: 1);
     addTearDown(controller.dispose);
     final tabs = [
@@ -60,14 +53,15 @@ void main() {
                 for (var i = 0; i < 3; i++)
                   buildPluginTabBody(
                     webView: Listener(
-                      onPointerDown: (e) => report(e.localPosition),
-                      onPointerPanZoomStart: (e) => report(e.localPosition),
                       onPointerPanZoomUpdate: (e) => webViewPans.add(e.pan),
                       onPointerMove: (_) => webViewTouchMoves++,
                       child: const ColoredBox(color: Colors.white),
                     ),
                     loading: false,
-                    contentScrollsHorizontally: () => reported,
+                    scrollsHorizontallyAt: (position) => Future.delayed(
+                      answerDelay,
+                      () => scrollsAt(position),
+                    ),
                   ),
               ],
             ),
@@ -120,7 +114,7 @@ void main() {
   testWidgets(
     'trackpad: תשובה ישנה "לא נגלל" אינה מעבירה כרטיסייה מעל תפריט גולל',
     (tester) async {
-      await pumpPluginTabs(tester, stale: false);
+      await pumpPluginTabs(tester);
       await trackpadSwipe(tester, menu);
       expect(controller.page, 1);
       expect(webViewPans, isNotEmpty);
@@ -131,7 +125,7 @@ void main() {
   testWidgets(
     'מגע: תשובה ישנה "לא נגלל" אינה מעבירה כרטיסייה מעל תפריט גולל',
     (tester) async {
-      await pumpPluginTabs(tester, stale: false);
+      await pumpPluginTabs(tester);
       await touchSwipe(tester, menu);
       expect(controller.page, 1);
       expect(webViewTouchMoves, greaterThan(0));
@@ -142,7 +136,7 @@ void main() {
   testWidgets(
     'trackpad: תשובה ישנה "נגלל" אינה חוסמת מעבר מעל תוכן סטטי',
     (tester) async {
-      await pumpPluginTabs(tester, stale: true);
+      await pumpPluginTabs(tester);
       await trackpadSwipe(tester, staticText);
       expect(controller.page, 2);
     },
@@ -152,7 +146,7 @@ void main() {
   testWidgets(
     'מגע: תשובה ישנה "נגלל" אינה חוסמת מעבר מעל תוכן סטטי',
     (tester) async {
-      await pumpPluginTabs(tester, stale: true);
+      await pumpPluginTabs(tester);
       await touchSwipe(tester, staticText);
       expect(controller.page, 2);
     },
@@ -162,7 +156,7 @@ void main() {
   testWidgets(
     'תשובה על המחווה הקודמת (תפריט) אינה חוסמת את הבאה (תוכן סטטי)',
     (tester) async {
-      await pumpPluginTabs(tester, stale: false);
+      await pumpPluginTabs(tester);
       await trackpadSwipe(tester, menu);
       expect(controller.page, 1);
       await trackpadSwipe(tester, staticText);

@@ -149,45 +149,44 @@ const String _hostShortcutsJs = r'''
 ''';
 
 // ב-Windows וב-Linux ה-WebView אינו משתתף בזירת המחוות של Flutter ואינו
-// מחזיר לו אם הדף השתמש בגלילה. לכן מדווחים מראש (בריחוף, בלחיצה ובגלגלת) אם
-// מתחת לסמן יש אלמנט שנגלל לרוחב — גם תפריט מקונן — כדי שרק אז הגלילה
-// האופקית תישאר בתוסף ולא תעביר כרטיסייה (issue #3640).
-const String _horizontalScrollReportJs = r'''
+// מחזיר לו אם הדף השתמש בגלילה. לכן Flutter שואל בתחילת כל מחווה אם מתחת
+// לנקודה שבה היא התחילה יש אלמנט שנגלל לרוחב — גם תפריט מקונן — ורק אז
+// הגלילה האופקית נשארת בתוסף ולא מעבירה כרטיסייה (issue #3640).
+const String _horizontalScrollQueryJs = r'''
 
-  var _scrollsX = false;
-  function _reportScrollsX(e) {
-    var path = e.composedPath ? e.composedPath() : [];
-    var scrolls = false;
-    for (var i = 0; i < path.length && !scrolls; i++) {
-      var el = path[i];
-      if (!el || el.nodeType !== 1 || el.scrollWidth <= el.clientWidth) continue;
-      var overflow = getComputedStyle(el).overflowX;
-      if (el !== document.scrollingElement) {
-        scrolls = overflow === 'auto' || overflow === 'scroll';
-        continue;
-      }
-      // overflow של body עובר לחלון כשזה של השורש visible.
-      if (overflow === 'visible' && document.body) {
-        overflow = getComputedStyle(document.body).overflowX;
-      }
-      scrolls = overflow !== 'hidden' && overflow !== 'clip';
+  function _scrollsX(el) {
+    if (el.scrollWidth <= el.clientWidth) return false;
+    var overflow = getComputedStyle(el).overflowX;
+    if (el !== document.scrollingElement) {
+      return overflow === 'auto' || overflow === 'scroll';
     }
-    if (scrolls === _scrollsX || !window.flutter_inappwebview) return;
-    _scrollsX = scrolls;
-    window.flutter_inappwebview.callHandler('otzaria_scrolls_x', scrolls);
+    // overflow של body עובר לחלון כשזה של השורש visible.
+    if (overflow === 'visible' && document.body) {
+      overflow = getComputedStyle(document.body).overflowX;
+    }
+    return overflow !== 'hidden' && overflow !== 'clip';
   }
-  ['pointermove', 'pointerdown', 'wheel'].forEach(function (type) {
-    window.addEventListener(type, _reportScrollsX, { capture: true, passive: true });
-  });
+  window.__otzariaScrollsXAt = function (x, y) {
+    var el = document.elementFromPoint(x, y);
+    while (el && el.shadowRoot && el.shadowRoot.elementFromPoint) {
+      var inner = el.shadowRoot.elementFromPoint(x, y);
+      if (!inner || inner === el) break;
+      el = inner;
+    }
+    for (var node = el; node; node = node.parentNode || node.host) {
+      if (node.nodeType === 1 && _scrollsX(node)) return true;
+    }
+    return false;
+  };
 ''';
 
 /// ה-stub של מופע רקע.
 const String pluginBackgroundSdkStubScript =
     '(function () {\n$_sdkStubCore})();\n';
 
-/// ה-stub של לשונית תוסף, שמעביר גם מקשים וגלילה אופקית ל-Flutter.
+/// ה-stub של לשונית תוסף, שמעביר גם מקשים ל-Flutter ועונה על גלילה אופקית.
 const String pluginSdkStubScript =
-    '(function () {\n$_sdkStubCore$_hostShortcutsJs$_horizontalScrollReportJs})();\n';
+    '(function () {\n$_sdkStubCore$_hostShortcutsJs$_horizontalScrollQueryJs})();\n';
 
 /// מרכיב את הסקריפט עם הגופנים מחוץ ל-UI, בלי ללכוד State או משאבי פלטפורמה.
 Future<String> buildPluginBootScriptWithFonts({

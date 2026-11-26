@@ -1,10 +1,15 @@
 import 'package:flutter/gestures.dart';
+import 'package:otzaria/tabs/utils/tab_swipe_hold.dart';
 import 'package:otzaria/widgets/misc/touch_pinch_scale_recognizer.dart';
 
 /// החלקה בין כרטיסיות בלוח מגע, שזוכרת גם את התזוזה האנכית של המחווה.
 class TrackpadTabSwipeRecognizer extends HorizontalDragGestureRecognizer {
-  TrackpadTabSwipeRecognizer({super.debugOwner})
+  TrackpadTabSwipeRecognizer({this.hold, super.debugOwner})
     : super(supportedDevices: const {PointerDeviceKind.trackpad});
+
+  /// מחוות שהתוכן עוד לא ענה עליהן אינן עוברות כרטיסייה.
+  final TabSwipeHold? hold;
+  int? _pointer;
 
   /// התזוזה המצטברת של המחווה האחרונה בשני הצירים.
   Offset get pan => _pan;
@@ -18,8 +23,20 @@ class TrackpadTabSwipeRecognizer extends HorizontalDragGestureRecognizer {
   void addAllowedPointerPanZoom(PointerPanZoomStartEvent event) {
     _pan = Offset.zero;
     _accepted = false;
+    _pointer = event.pointer;
     super.addAllowedPointerPanZoom(event);
   }
+
+  @override
+  bool hasSufficientGlobalDistanceToAccept(
+    PointerDeviceKind pointerDeviceKind,
+    double? deviceTouchSlop,
+  ) =>
+      !(hold?.holds(_pointer ?? -1) ?? false) &&
+      super.hasSufficientGlobalDistanceToAccept(
+        pointerDeviceKind,
+        deviceTouchSlop,
+      );
 
   @override
   void handleEvent(PointerEvent event) {

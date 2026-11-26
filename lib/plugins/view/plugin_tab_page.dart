@@ -55,6 +55,8 @@ import 'package:otzaria/plugins/services/plugin_webview_settings_updater.dart';
 import 'package:otzaria/settings/settings_exports.dart';
 import 'package:otzaria/utils/ui/fullscreen_helper.dart';
 import 'package:otzaria/tabs/models/text_tab.dart';
+import 'package:otzaria/tabs/utils/tab_swipe_hold.dart';
+import 'package:otzaria/tabs/view/tab_swipe_detector.dart';
 import 'package:otzaria/plugins/services/plugin_text_reader_registry.dart';
 import 'package:otzaria/widgets/feedback/loading_indicator.dart';
 
@@ -131,31 +133,34 @@ Set<Factory<OneSequenceGestureRecognizer>>? pluginTabWebViewGestureRecognizers({
 ///
 /// ב-Windows וב-Linux ה-WebView מקבל את הגלילה דרך Listener ולא מתחרה בזירת
 /// המחוות, ולכן החלקת הכרטיסיות זכתה גם בגלילה אופקית בתוך התוסף (issue #3640).
-/// כשהדף דיווח שמתחת לסמן יש אלמנט שנגלל לרוחב
-/// ([contentScrollsHorizontally]), המזהה כאן זוכה לפניה, כמו רכיב Flutter
-/// שנגלל לרוחב. מעל תוכן אחר ההחלקה עוברת כרטיסייה כרגיל.
+/// בתחילת כל מחווה נשאל הדף ([scrollsHorizontallyAt]) אם מתחת לנקודה יש אלמנט
+/// שנגלל לרוחב, וההחלקה ממתינה לתשובה על המחווה הזו. כן — המזהה כאן זוכה
+/// במקומה, כמו רכיב Flutter שנגלל לרוחב; לא — ההחלקה עוברת כרטיסייה כרגיל.
 @visibleForTesting
 Widget buildPluginTabBody({
   required Widget webView,
   required bool loading,
-  bool Function() contentScrollsHorizontally = _never,
+  Future<bool> Function(Offset position)? scrollsHorizontallyAt,
 }) => Stack(
   fit: StackFit.passthrough,
   children: [
-    switch (defaultTargetPlatform) {
-      TargetPlatform.windows || TargetPlatform.linux => RawGestureDetector(
-        gestures: {
-          _PluginHorizontalScrollRecognizer:
-              GestureRecognizerFactoryWithHandlers<
-                _PluginHorizontalScrollRecognizer
-              >(
-                () => _PluginHorizontalScrollRecognizer(
-                  contentScrollsHorizontally,
-                ),
-                (recognizer) => recognizer.onStart = (_) {},
-              ),
+    switch ((defaultTargetPlatform, scrollsHorizontallyAt)) {
+      (TargetPlatform.windows || TargetPlatform.linux, final query?) => Builder(
+        builder: (context) {
+          final hold = TabSwipeDetector.maybeHoldOf(context);
+          return RawGestureDetector(
+            gestures: {
+              _PluginHorizontalScrollRecognizer:
+                  GestureRecognizerFactoryWithHandlers<
+                    _PluginHorizontalScrollRecognizer
+                  >(
+                    () => _PluginHorizontalScrollRecognizer(query, hold),
+                    (recognizer) => recognizer.onStart = (_) {},
+                  ),
+            },
+            child: webView,
+          );
         },
-        child: webView,
       ),
       _ => webView,
     },
@@ -163,11 +168,9 @@ Widget buildPluginTabBody({
   ],
 );
 
-bool _never() => false;
-
 class _PluginHorizontalScrollRecognizer
     extends HorizontalDragGestureRecognizer {
-  _PluginHorizontalScrollRecognizer(this.contentScrollsHorizontally)
+  _PluginHorizontalScrollRecognizer(this.scrollsHorizontallyAt, this.hold)
     : super(
         supportedDevices: const {
           PointerDeviceKind.trackpad,
@@ -175,18 +178,71 @@ class _PluginHorizontalScrollRecognizer
         },
       );
 
-  final bool Function() contentScrollsHorizontally;
+  final Future<bool> Function(Offset position) scrollsHorizontallyAt;
+  final TabSwipeHold? hold;
+
+  /// התשובה לכל מצביע של המחווה הנוכחית; `null` = עוד לא הגיעה. תשובה
+  /// שמגיעה אחרי שהמחווה הסתיימה אינה נמצאת כאן ונזרקת.
+  final Map<int, bool?> _answers = {};
+
+  @override
+  void addAllowedPointer(PointerDownEvent event) {
+    super.addAllowedPointer(event);
+    _ask(event.pointer, event.localPosition);
+  }
+
+  @override
+  void addAllowedPointerPanZoom(PointerPanZoomStartEvent event) {
+    super.addAllowedPointerPanZoom(event);
+    _ask(event.pointer, event.localPosition);
+  }
+
+  void _ask(int pointer, Offset position) {
+    _answers[pointer] = null;
+    hold?.hold(pointer);
+    scrollsHorizontallyAt(position).then(
+      (scrolls) => _answered(pointer, scrolls),
+      onError: (_) => _answered(pointer, false),
+    );
+  }
+
+  void _answered(int pointer, bool scrolls) {
+    if (!_answers.containsKey(pointer) || _answers[pointer] != null) return;
+    _answers[pointer] = scrolls;
+    if (scrolls) return;
+    hold?.release(pointer);
+    resolvePointer(pointer, GestureDisposition.rejected);
+  }
 
   @override
   bool hasSufficientGlobalDistanceToAccept(
     PointerDeviceKind pointerDeviceKind,
     double? deviceTouchSlop,
   ) =>
-      contentScrollsHorizontally() &&
+      _answers.containsValue(true) &&
       super.hasSufficientGlobalDistanceToAccept(
         pointerDeviceKind,
         deviceTouchSlop,
       );
+
+  void _releaseAll() {
+    for (final pointer in _answers.keys) {
+      hold?.release(pointer);
+    }
+    _answers.clear();
+  }
+
+  @override
+  void didStopTrackingLastPointer(int pointer) {
+    _releaseAll();
+    super.didStopTrackingLastPointer(pointer);
+  }
+
+  @override
+  void dispose() {
+    _releaseAll();
+    super.dispose();
+  }
 }
 
 class PluginTabPage extends StatefulWidget {
@@ -250,13 +306,12 @@ class _PluginTabPageState extends State<PluginTabPage> with PluginWebViewHost {
 
   late String localHtmlPath;
 
+  /// מונה המסמכים שנטענו ב-WebView, לשיוך תשובות הדף למסמך שנשאל.
+  int _document = 0;
+
   /// נבדק פעם אחת, אסינכרונית (null עד לתשובה): existsSync על דיסק איטי עוצר את
   /// ה-UI לשניות, וכשל חולף בכל build היה מפיל את ה-WebView.
   bool? _entrypointMissing;
-
-  /// הדף דיווח שמתחת לסמן יש אלמנט שנגלל לרוחב (issue #3640). דף חדש מתחיל
-  /// בלי דיווח.
-  bool _contentScrollsX = false;
 
   /// צורת העץ של build ננעלת לכל חיי ה-State: מעבר FutureBuilder ↔ ישיר
   /// היה מייצר הורה חדש ל-WebView והורס אותו.
@@ -859,10 +914,6 @@ class _PluginTabPageState extends State<PluginTabPage> with PluginWebViewHost {
             },
           );
           controller.addJavaScriptHandler(
-            handlerName: 'otzaria_scrolls_x',
-            callback: (args) => _contentScrollsX = args.firstOrNull == true,
-          );
-          controller.addJavaScriptHandler(
             handlerName: 'otzaria_host_shortcut',
             callback: (args) {
               if (!mounted || args.isEmpty) return;
@@ -904,7 +955,7 @@ class _PluginTabPageState extends State<PluginTabPage> with PluginWebViewHost {
         if (!currentAttempt()) return;
         _loadGeneration.invalidate();
         adapter.releaseBookContentPage();
-        _contentScrollsX = false;
+        _document++;
       },
       onLoadStop: (controller, url) async {
         if (!currentAttempt()) return;
@@ -1100,10 +1151,23 @@ class _PluginTabPageState extends State<PluginTabPage> with PluginWebViewHost {
         child: buildPluginTabBody(
           webView: webView,
           loading: _awaitingFirstBoot,
-          contentScrollsHorizontally: () => _contentScrollsX,
+          scrollsHorizontallyAt: _scrollsHorizontallyAt,
         ),
       ),
     );
+  }
+
+  /// שואל את הדף אם בנקודה יש אלמנט שנגלל לרוחב (issue #3640). תשובה מדף
+  /// שהחליף את זה שבו התחילה המחווה אינה שלה.
+  Future<bool> _scrollsHorizontallyAt(Offset position) async {
+    final controller = webViewController;
+    if (controller == null) return false;
+    final document = _document;
+    final scrolls = await controller.evaluateJavascript(
+      source:
+          'window.__otzariaScrollsXAt?.(${position.dx}, ${position.dy}) === true',
+    );
+    return scrolls == true && _document == document;
   }
 
   static bool get _needsWebViewPrerequisites {

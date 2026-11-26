@@ -49,6 +49,7 @@ void main() {
                       child: const ColoredBox(color: Colors.white),
                     ),
                     loading: false,
+                    scrollsHorizontallyAt: (_) async => false,
                   ),
               ],
             ),

@@ -14,9 +14,9 @@ import 'package:otzaria/tabs/view/tab_swipe_detector.dart';
 
 import '../../test_helpers/stub_tabs_bloc.dart';
 
-/// מריץ את ה-stub ב-node עם DOM מזויף, משגר pointermove מעל כל נתיב ומחזיר
-/// את הדיווחים שהגיעו ל-Flutter. `null` = אין node.
-Future<List<Object?>?> runScrollReports(
+/// מריץ את ה-stub ב-node עם DOM מזויף ושואל את הדף על כל נתיב (מהאלמנט
+/// שבנקודה ועד השורש). `null` = אין node.
+Future<List<Object?>?> runScrollQueries(
   List<List<Map<String, Object>>> paths,
 ) async {
   ProcessResult? probe;
@@ -28,33 +28,27 @@ Future<List<Object?>?> runScrollReports(
   if (probe == null || probe.exitCode != 0) return null;
   final harness =
       '''
-var reports = [];
 var target = new EventTarget();
-var document = { scrollingElement: null, body: null };
+var document = { scrollingElement: null, body: null, elementFromPoint: null };
 var window = {
   addEventListener: function (type, cb, options) {
     target.addEventListener(type, cb);
   },
   removeEventListener: function () {},
   dispatchEvent: function () {},
-  flutter_inappwebview: {
-    callHandler: function (name, arg) {
-      if (name === 'otzaria_scrolls_x') reports.push(arg);
-    }
-  }
+  flutter_inappwebview: { callHandler: function () {} }
 };
 function getComputedStyle(el) { return { overflowX: el.overflowX }; }
 var CustomEvent = function () {};
 $pluginSdkStubScript
-${jsonEncode(paths)}.forEach(function (path) {
-  path.forEach(function (el) {
-    if (el.root) document.scrollingElement = el;
-  });
-  var e = new Event('pointermove');
-  e.composedPath = function () { return path; };
-  target.dispatchEvent(e);
-});
-console.log(JSON.stringify(reports));
+console.log(JSON.stringify(${jsonEncode(paths)}.map(function (path) {
+  for (var i = 0; i < path.length; i++) {
+    path[i].parentNode = path[i + 1] || null;
+    if (path[i].root) document.scrollingElement = path[i];
+  }
+  document.elementFromPoint = function () { return path[0]; };
+  return window.__otzariaScrollsXAt(10, 10);
+})));
 ''';
   final result = await Process.run('node', ['-e', harness]);
   if (result.exitCode != 0) fail('node failed: ${result.stderr}');
@@ -64,8 +58,8 @@ console.log(JSON.stringify(reports));
 /// issue #3640: גלילה אופקית בתפריט של תוסף גררה גם את הכרטיסייה כולה.
 ///
 /// ה-WebView בדסקטופ מעביר את הגלילה לדף דרך Listener ואינו מתחרה בזירת
-/// המחוות, ולכן ה-[Listener] כאן מחליף אותו נאמנה. הדף מדווח מראש (בריחוף
-/// ובלחיצה) אם מתחת לסמן יש אלמנט שנגלל לרוחב.
+/// המחוות, ולכן ה-[Listener] כאן מחליף אותו נאמנה. בתחילת כל מחווה נשאל הדף
+/// אם בנקודה יש אלמנט שנגלל לרוחב.
 void main() {
   late PageController controller;
   late List<Offset> webViewPans;
@@ -105,7 +99,7 @@ void main() {
                       child: const ColoredBox(color: Colors.white),
                     ),
                     loading: false,
-                    contentScrollsHorizontally: () =>
+                    scrollsHorizontallyAt: (_) async =>
                         contentScrollsHorizontally,
                   ),
               ],
@@ -188,7 +182,7 @@ void main() {
     variant: desktop,
   );
 
-  test('הדף מדווח רק כשמתחת לסמן יש אלמנט שנגלל לרוחב', () async {
+  test('הדף עונה "נגלל" רק כשבנקודה יש אלמנט שנגלל לרוחב', () async {
     Map<String, Object> el(
       int scrollWidth,
       int clientWidth,
@@ -202,22 +196,22 @@ void main() {
       'root': root,
     };
     final page = el(800, 800, 'visible', root: true);
-    final reports = await runScrollReports([
+    final answers = await runScrollQueries([
       // תוכן סטטי.
       [el(100, 100, 'visible'), el(300, 300, 'auto'), page],
       // תפריט מקונן שנגלל לרוחב, מתחת לפריט שבו הסמן.
       [el(80, 80, 'visible'), el(900, 300, 'auto'), page],
-      // אותו מצב — אין דיווח חוזר.
+      // overflow-x: scroll.
       [el(900, 300, 'scroll'), page],
       // תוכן שגולש אך חתוך (overflow-x: hidden) אינו נגלל.
       [el(900, 300, 'hidden'), page],
       // הדף כולו רחב מהחלון.
       [el(100, 100, 'visible'), el(1600, 800, 'visible', root: true)],
     ]);
-    if (reports == null) {
+    if (answers == null) {
       markTestSkipped('node אינו מותקן');
       return;
     }
-    expect(reports, [true, false, true]);
+    expect(answers, [false, true, true, false, true]);
   });
 }
