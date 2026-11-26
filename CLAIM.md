@@ -1,1 +1,1 @@
-claim qa-perf1 at 2026-11-26T19:56:51Z: QA of prbody/perf1-fix per QA.md
+done: prbody/perf1-qa 56f2528ec8dfcc69f081bcde8b0767a5d04d9409 (2026-11-26T20:12:34Z)
