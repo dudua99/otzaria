@@ -1,1 +1,1 @@
-2026-11-26T12:38:18Z fix of #6066 per FIX.md + notes/6066.md
+2026-11-26T12:56:42Z done: prbody/6066-fix 10978e36d402ad9121690644a9c6b24bc71f1c6f (fix/plugin-network-offline-mode-6066 @ c675b1bdc)
