@@ -1,6 +1,6 @@
 # libdata-2611 delta — progress
 
-updated: 2026-11-26T19:52:40Z
+updated: 2026-11-26T20:22:43Z
 
 ## phases
 ```
@@ -12,34 +12,50 @@ current: `2026-11-26T19:52:35Z PHASE v1_sefaria`
 
 ## last log lines (filtered)
 ```
-2026-11-26T19:52:35Z PHASE start
-/dev/vda        252G   20G   50G  29% /
-               total        used        free      shared  buff/cache   available
-Mem:              15           0           4           0          10          15
-2026-11-26T19:52:35Z PHASE v1_sefaria
-Welcome to Gradle 9.8.0!
-Here are the highlights of this release:
- - Java 27 support
- - Maven mirror settings reuse
- - Linked problem locations in build output
-For more details see https://docs.gradle.org/9.8.0/release-notes.html
-To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.8.0/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
-Daemon will be stopped at the end of the build 
-Calculating task graph as no cached configuration is available for tasks: :sefariasqlite:generateSefariaSqlite
+Info: (SefariaDirect) Processed 2600/5818 books
+Info: (SefariaDirect) Processed 2700/5818 books
+Info: (SefariaDirect) Processed 2800/5818 books
+Info: (SefariaDirect) Processed 2900/5818 books
+Info: (SefariaDirect) Processed 3000/5818 books
+Info: (SefariaDirect) Processed 3100/5818 books
+Info: (SefariaDirect) Processed 3200/5818 books
+Info: (SefariaDirect) Processed 3300/5818 books
+Info: (SefariaDirect) Processed 3400/5818 books
+Info: (SefariaDirect) Processed 3500/5818 books
+Info: (SefariaDirect) Processed 3600/5818 books
+Info: (SefariaDirect) Processed 3700/5818 books
+Info: (SefariaDirect) Processed 3800/5818 books
+Info: (SefariaDirect) Processed 3900/5818 books
+Info: (SefariaDirect) Processed 4000/5818 books
+Info: (SefariaDirect) Processed 4100/5818 books
+Info: (SefariaDirect) Processed 4200/5818 books
+Info: (SefariaDirect) Processed 4300/5818 books
+Info: (SefariaDirect) Processed 4400/5818 books
+Info: (SefariaDirect) Processed 4500/5818 books
+Info: (SefariaDirect) Processed 4600/5818 books
+Info: (SefariaDirect) Processed 4700/5818 books
+Info: (SefariaDirect) Processed 4800/5818 books
+Info: (SefariaDirect) Processed 4900/5818 books
+Info: (SefariaDirect) Processed 5000/5818 books
+Info: (SefariaDirect) Alt-structure name fix: Rif Megillah 'Rif Megillah 7a:4-11b:5' 'הקורא עומד' → 'בני העיר'
+Info: (SefariaDirect) Alt-structure name fix: Rif Megillah 'Rif Megillah 11b:6-16b:9' 'בני העיר' → 'הקורא עומד'
+Info: (SefariaDirect) Processed 5100/5818 books
+Info: (SefariaDirect) Processed 5200/5818 books
+Info: (SefariaDirect) Processed 5300/5818 books
 ```
 
 ## memory
 ```
                total        used        free      shared  buff/cache   available
-Mem:           16087        1234        4074          12       11120       14852
+Mem:           16087        6805        1738          12        7886        9281
 Swap:              0           0           0
 ```
 ## disk
 ```
-/dev/vda        252G   20G   50G  29% /
+/dev/vda        252G   22G   47G  32% /
 4.0K	/home/user/work/out
 4.0K	/home/user/work/snap
-78M	/home/user/work/SL/build
+2.8G	/home/user/work/SL/build
 78M	/home/user/work/SL2/build
 ```
 pipeline running: yes
