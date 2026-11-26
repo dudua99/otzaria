@@ -1,3 +1,2 @@
-CLAIM qa-3640c
-2026-11-26T15:27:57 UTC
-QA of prbody/3640c-fix (fix/plugin-horizontal-scroll-tab-swipe-3640-v3)
+done: prbody/3640c-qa 8d49958c4a94053fd79ada20b4f11749d5109255
+2026-11-26T15:50:31 UTC
