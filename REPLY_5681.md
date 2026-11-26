@@ -1,0 +1,1 @@
+עודכן מול dev: מוזג dev (קומיט מיזוג, 7ec1616af). הקונפליקט ב-`search_dialog.dart` נפתר על בסיס המבנה החדש של dev (ספר נעול ובדיקת כיסוי וקטורים); סינון ספרי המחבר (`facetsKeepingAuthors`) רץ עכשיו עם אותו פרדיקט כולל `isCoveredFacet`. analyze/format/ui_lint נקיים; test/search + test/semantic_search: 1769 עברו (dev: 1759), אותו כישלון סביבתי יחיד כמו ב-dev.
