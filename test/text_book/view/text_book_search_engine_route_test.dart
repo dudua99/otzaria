@@ -63,6 +63,7 @@ Future<void> main() async {
     int searchDistance = 0,
     SearchMatchPolicy matchPolicy = SearchMatchPolicy.standard,
     List<String> content = const ['שורה א'],
+    Future<List<String>> Function()? contentLoader,
     bool bookLoaded = true,
     Future<List<TextSearchResult>> Function(List<String>, String)?
     simpleSearchRunner,
@@ -112,7 +113,7 @@ Future<void> main() async {
         ],
         child: Scaffold(
           body: TextBookSearchView(
-            contentLoader: () async => content,
+            contentLoader: contentLoader ?? () async => content,
             lines: lines,
             focusNode: focusNode,
             closeLeftPaneCallback: () {},
@@ -245,6 +246,24 @@ Future<void> main() async {
 
     expect(repository.requests, hasLength(1));
     expect(simpleCalls, 0);
+    expect(find.text('אין תוצאות'), findsOneWidget);
+  });
+
+  testWidgets('המנוע לא מצא דבר וטעינת התוכן נכשלה: "אין תוצאות" ולא שגיאה', (
+    tester,
+  ) async {
+    final repository = _RecordingSearchRepository(results: const []);
+    final harness = await pumpSearchView(
+      tester,
+      searchRepository: repository,
+      initialQuery: 'דרך ביאה',
+      searchMode: SearchMode.advanced,
+      searchDistance: 3,
+      contentLoader: () async => throw StateError('טעינה נכשלה'),
+    );
+    await harness.settle();
+
+    expect(repository.requests, hasLength(1));
     expect(find.text('אין תוצאות'), findsOneWidget);
   });
 

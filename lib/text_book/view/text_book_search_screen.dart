@@ -628,10 +628,15 @@ class TextBookSearchViewState extends State<TextBookSearchView>
       if (results.isEmpty &&
           !InBookSearchRouting.hasAlternativeWords(_alternativeWords) &&
           !InBookSearchRouting.hasSpacingValues(_spacingValues)) {
-        final content = await _ensureContent();
+        final content = await _ensureContent().then<List<String>?>(
+          (lines) => lines,
+          onError: (Object e) => null,
+        );
         if (!mounted || requestId != _activeSearchRequestId) return;
-        await _scanContent(content, query, section, requestId);
-        return;
+        if (content != null) {
+          await _scanContent(content, query, section, requestId);
+          return;
+        }
       }
 
       if (mounted && requestId == _activeSearchRequestId) {
