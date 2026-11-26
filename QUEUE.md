@@ -88,3 +88,7 @@
 2457 bug   (restored window bounds cover the taskbar — clamp to work area; notes/replies-2511.md)
 3048 bug   (itur from plugin window: previous query not selected — second bug only; notes/replies-2511.md)
 3975 bug   (reproduce first: touchpad scroll sticks then jumps; NOT READY with evidence if unprovable; notes/replies-2511.md)
+6022 bug   (arrow next/prev section starts from tab.index (top line) instead of selectedIndex; regression 9c79c5f14; keep #5904 tests green)
+6024 bug   (export dialog: move "בחר פורמט לייצוא" below the holy-names card, next to the buttons; layout only)
+6062 bug   (Android: tools panel requestFocus opens keyboard; gate like shouldAutofocusLibrarySearch c222d5ac7)
+6048 bug   (reproduce first: Shift+Down after one-line mouse selection drops it; if pure Flutter -> NOT READY with evidence)
