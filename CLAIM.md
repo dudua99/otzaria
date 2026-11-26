@@ -1,1 +1,1 @@
-claimed 2026-11-26T20:41:33Z UTC: QA of prbody/1692c-fix (branch refactor/in-book-search-state-1692)
+done: prbody/1692c-qa dd55aa67e800d64a8f81301d6ba05982d13f3d7e (body d27602bf13700c9de61ecb1b4f6e6dcc5b95fb51)
