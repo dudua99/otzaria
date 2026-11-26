@@ -894,6 +894,31 @@ Future<void> main() async {
       expect(lastOptions(repository).searchOrigin, InBookSearchOrigin.inBook);
       expect(InBookSearchPreferences.loadWholeWord(), isTrue);
     });
+
+    testWidgets('שאילתה חיצונית קוראת מחדש את ההעדפה שהשתנתה בטאב אחר', (
+      tester,
+    ) async {
+      final incoming = ValueNotifier<ReadingTabSearchState?>(null);
+      addTearDown(incoming.dispose);
+      await pumpPdfSearch(
+        tester,
+        query: 'שמים',
+        searchMode: SearchMode.exact,
+        searchDistance: 0,
+        incomingSearchConfiguration: incoming,
+      );
+      expect(find.byIcon(OtzariaIcons.alef_mix_24_regular), findsOneWidget);
+
+      await InBookSearchPreferences.saveWholeWord(true);
+      incoming.value = const ReadingTabSearchState(
+        searchText: 'ארץ',
+        searchMode: SearchMode.exact,
+        searchDistance: 0,
+      );
+      await tester.pump(const Duration(milliseconds: 800));
+
+      expect(find.byIcon(OtzariaIcons.alef_24_regular), findsOneWidget);
+    });
   });
 }
 
