@@ -92,3 +92,4 @@
 6024 bug   (export dialog: move "בחר פורמט לייצוא" below the holy-names card, next to the buttons; layout only)
 6062 bug   (Android: tools panel requestFocus opens keyboard; gate like shouldAutofocusLibrarySearch c222d5ac7)
 6048 bug   (reproduce first: Shift+Down after one-line mouse selection drops it; if pure Flutter -> NOT READY with evidence)
+6001 bug   (itur from a plugin while typing in the plugin: caret not in the itur box; #3759 path misses WebView-owned text focus — reproduce first; notes/6001.md)
