@@ -6,10 +6,12 @@ import 'package:otzaria/update/install_mode_switch.dart';
 void main() {
   late List<List<String>> launches;
   late int quits;
+  late int pins;
 
   setUp(() {
     launches = [];
     quits = 0;
+    pins = 0;
   });
 
   InstallModeSwitcher switcher(
@@ -22,6 +24,7 @@ void main() {
       launches.add([path, ...arguments]);
       return launchSucceeds;
     },
+    keepDataPaths: () async => pins++,
   );
 
   test('the other scope is offered', () {
@@ -47,6 +50,7 @@ void main() {
         [File('otzaria-1.0.0.exe').absolute.path, '/SWITCHMODE=allusers'],
       ]);
       expect(quits, 1);
+      expect(pins, 1, reason: 'נתיב האינדקס נקבע לפני ההחלפה');
     },
   );
 

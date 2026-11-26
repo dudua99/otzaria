@@ -364,10 +364,12 @@ begin
   // /CURRENTUSER = שיגור-מחדש מתהליך מורם שבחר במפורש התקנת משתמש.
   if CmdLineParamExists('/PORTABLE') then
     PortableModeRadio.Checked := True
-  else if SwitchModeTarget() = 'currentuser' then
+  // /ALLUSERS ו-/CURRENTUSER של שיגור-מחדש גוברים על /SWITCHMODE — אחרת
+  // בחירה הפוכה באשף מסומנת שוב על ההיקף המבוקש ונתקעת בלולאת שיגור.
+  else if (SwitchModeTarget() = 'currentuser') and not IsAdminInstallMode then
     CurrentUserModeRadio.Checked := True
-  else if (SwitchModeTarget() = 'allusers') or IsAdminInstallMode or
-    (IsAdmin and not CmdLineParamExists('/CURRENTUSER')) then
+  else if IsAdminInstallMode or (((SwitchModeTarget() = 'allusers') or IsAdmin) and
+    not CmdLineParamExists('/CURRENTUSER')) then
     AllUsersModeRadio.Checked := True;
   // בהתקנה שקטה המצב נקבע ב-InitializeSetup בלבד, ו-/DIR חייב להישמר.
   if not WizardSilent then

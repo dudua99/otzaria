@@ -5719,11 +5719,17 @@ void main() {
         expect(
           wizard,
           contains(
-            "SwitchModeTarget() = 'currentuser' then\n"
+            "(SwitchModeTarget() = 'currentuser') and not IsAdminInstallMode then\n"
             '${name == _full ? '      ' : '    '}CurrentUserModeRadio.Checked := True',
           ),
         );
-        expect(wizard, contains("(SwitchModeTarget() = 'allusers') or"));
+        // דגל המצב של שיגור-מחדש (בחירה הפוכה באשף) גובר על /SWITCHMODE.
+        expect(
+          wizard,
+          contains(
+            "IsAdminInstallMode or (((SwitchModeTarget() = 'allusers') or IsAdmin) and",
+          ),
+        );
         final skip = _routine(script, 'function ShouldSkipPage(');
         expect(skip, contains("(SwitchModeTarget() <> '')"));
       });
