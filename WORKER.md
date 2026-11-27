@@ -4,6 +4,8 @@ You are one of several identical workers started on a schedule. The coordinator'
 
 Rules: follow `FIX.md` / `QA.md` from this branch (they include GIT IDENTITY: dudua99 / 99@9900.co.il, NO Co-Authored-By / AI attribution anywhere, no force push, no PRs, no GitHub comments). AGENTS.md from upstream/dev overrides everything.
 
+**NO NEW SETTINGS (owner's permanent rule, 27.11.2026):** no item may add a new user setting (toggle/option/preference, Settings key) — see FIX.md/QA.md; such an item ends NOT READY.
+
 Before taking any item: `git show FETCH_HEAD:HOLD.md` (if it exists) and skip every issue number listed there — for fix AND for QA.
 
 **Commit signing (owner decision 23.11):** before the first commit run `git config commit.gpgsign false && git config tag.gpgsign false` in every repo you commit to, so commits are unsigned (the cloud signing key is unknown to GitHub and shows "Unverified").

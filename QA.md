@@ -4,6 +4,8 @@ Independent QA of one bug-fix branch for the Flutter app Otzaria. Upstream https
 
 Hard rules: do NOT open PRs or comment; NEVER force-push or rewrite history — fixes only as NEW commits on top, pushed normally to the same branch; Hebrew commit subjects; no Co-Authored-By / AI attribution; prefer fewer lines; no new bugs.
 
+**NO NEW SETTINGS (owner's permanent rule, 27.11.2026):** if the branch adds a new user setting (a new toggle/option/preference in the settings screens, a new Settings key or preference field), the verdict is `NOT READY` — say which setting and suggest how to do it without one. Using, merging or removing an EXISTING setting is fine.
+
 Setup: `git remote add upstream https://github.com/Otzaria/otzaria && git fetch upstream dev`; `git fetch origin <branch> && git checkout -B qa FETCH_HEAD`; install Flutter 3.47.7 stable (linux tarball from storage.googleapis.com/flutter_infra_release; `git config --global --add safe.directory <dir>`); `flutter pub get`. Read AGENTS.md, CONTRIBUTING*.md; read the issue + comments via `curl -s https://api.github.com/repos/Otzaria/otzaria/issues/<N>` and `/comments` (gh is unauthenticated). RECHECK: closed / maintainer decision / an open PR already fixing it → stop and report. Open PRs: `curl -s 'https://api.github.com/repos/Otzaria/otzaria/pulls?state=open&per_page=100'`.
 
 Check:

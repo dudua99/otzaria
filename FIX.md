@@ -4,6 +4,8 @@ Fix one bug of the Flutter app Otzaria from scratch. Upstream: https://github.co
 
 Hard rules: do NOT open PRs or comment on GitHub; NEVER force-push; no Co-Authored-By / AI attribution anywhere; Hebrew commit messages and PR body; root fix, not a wrapper; PREFER removing lines, add only what's needed, never create new bugs.
 
+**NO NEW SETTINGS (owner's permanent rule, 27.11.2026):** never add a new user setting — no new toggle/option/preference in the settings screens, no new Settings key or preference field. Implement ONE correct behavior without a switch (feature-default included: never "default + a setting to change it"). If the fix really cannot be done without a new setting, STOP: VERDICT `NOT READY` with the reason. Using, merging or removing an EXISTING setting is allowed.
+
 Setup: `git remote add upstream https://github.com/Otzaria/otzaria && git fetch upstream dev`; `git checkout -b <branch> upstream/dev` (branch name: `fix/<short-english-slug>-<N>`); install Flutter 3.47.7 stable (linux tarball from storage.googleapis.com/flutter_infra_release; `git config --global --add safe.directory <dir>`); `flutter pub get`. Read AGENTS.md and CONTRIBUTING*.md.
 Reading GitHub: the REST API for Otzaria/otzaria is blocked in this session — use `gh api -X GET search/issues -f q='repo:Otzaria/otzaria is:issue <N>'` (works) and `gh api repos/Otzaria/otzaria/issues/<N>/comments` if it works, else the public page. RECHECK: if the issue is closed, or a maintainer said fixed / rejected / handled in an open PR, or an open PR already fixes it (`gh api -X GET search/issues -f q='repo:Otzaria/otzaria is:pr is:open <N>'` and list open PRs) — stop and report.
 
