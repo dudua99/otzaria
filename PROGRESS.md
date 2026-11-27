@@ -1,4 +1,4 @@
-# combined delta 2711 — progress (2026-11-27T09:47:14Z)
+# combined delta 2711 — progress (2026-11-27T10:17:16Z)
 
 ## markers
 ```
@@ -13,36 +13,36 @@
 - v2a build will start only after the v2b patch is produced (avoids running two 8g JVMs on the 15 GB box).
 ## tail of v1.rest.log
 ```
-Info: (DatabaseGenerator) Book 6401 'גנזי יוסף': 3000/6127 lines (48%)
-Info: (DatabaseGenerator) Book 6401 'גנזי יוסף': 4000/6127 lines (65%)
-Info: (DatabaseGenerator) Book 6401 'גנזי יוסף': 5000/6127 lines (81%)
-Info: (DatabaseGenerator) Book 6401 'גנזי יוסף': 6000/6127 lines (97%)
-Info: (DatabaseGenerator) Book 6418 'חק לישראל - בראשית': 1000/5523 lines (18%)
-Info: (DatabaseGenerator) Book 6418 'חק לישראל - בראשית': 2000/5523 lines (36%)
-Info: (DatabaseGenerator) Book 6418 'חק לישראל - בראשית': 3000/5523 lines (54%)
-Info: (DatabaseGenerator) Book 6418 'חק לישראל - בראשית': 4000/5523 lines (72%)
-Info: (DatabaseGenerator) Book 6418 'חק לישראל - בראשית': 5000/5523 lines (90%)
-Info: (DatabaseGenerator) books 601/2814 (21.3%) · lines 1.0M · toc 205.5K · elapsed 31:14 · eta ~1:55:00
-Info: (DatabaseGenerator) books 701/2814 (24.9%) · lines 1.0M · toc 207.7K · elapsed 31:42 · eta ~1:35:32
-Info: (DatabaseGenerator) ⏭️ Skipping already-processed priority book: מדרש/אגדה/מדרש זוטא.txt
-Info: (IdAllocator) Category key 'מחשבת ישראל/אחרונים/רמחל' now holds 1476 (was unset)
-Info: (DatabaseGenerator) books 782/2814 (27.7%) · lines 1.0M · toc 210.4K · elapsed 32:42 · eta ~1:24:58
-Info: (DatabaseGenerator) Book 6642 'אספקלריה אותיות א - מ': 14000/135957 lines (10%)
-Info: (DatabaseGenerator) Book 6642 'אספקלריה אותיות א - מ': 28000/135957 lines (20%)
-Info: (DatabaseGenerator) Book 6642 'אספקלריה אותיות א - מ': 42000/135957 lines (30%)
-Info: (DatabaseGenerator) Book 6642 'אספקלריה אותיות א - מ': 56000/135957 lines (41%)
-Info: (DatabaseGenerator) Book 6642 'אספקלריה אותיות א - מ': 70000/135957 lines (51%)
-Info: (DatabaseGenerator) Book 6642 'אספקלריה אותיות א - מ': 84000/135957 lines (61%)
-Info: (DatabaseGenerator) Book 6642 'אספקלריה אותיות א - מ': 98000/135957 lines (72%)
-Info: (DatabaseGenerator) Book 6642 'אספקלריה אותיות א - מ': 112000/135957 lines (82%)
-Info: (DatabaseGenerator) Book 6642 'אספקלריה אותיות א - מ': 126000/135957 lines (92%)
-Info: (DatabaseGenerator) books 824/2814 (29.2%) · lines 1.2M · toc 243.3K · elapsed 37:30 · eta ~1:30:34
-Info: (DatabaseGenerator) Book 6643 'אספקלריה אותיות נ - ת': 10000/90850 lines (11%)
+Info: (DatabaseGenerator) books 1225/2814 (43.5%) · lines 1.8M · toc 358.0K · elapsed 56:41 · eta ~1:13:32
+Info: (DatabaseGenerator) books 1255/2814 (44.5%) · lines 1.8M · toc 362.7K · elapsed 57:43 · eta ~1:11:41
+Info: (IdAllocator) Category key 'שו״ת/אחרונים/משיב דבר' now holds 1483 (was unset)
+Info: (DatabaseGenerator) books 1286/2814 (45.7%) · lines 1.9M · toc 366.8K · elapsed 58:44 · eta ~1:09:46
+Info: (DatabaseGenerator) Book 7119 'עין יצחק חלק א': 1000/5649 lines (17%)
+Info: (DatabaseGenerator) Book 7119 'עין יצחק חלק א': 2000/5649 lines (35%)
+Info: (DatabaseGenerator) Book 7119 'עין יצחק חלק א': 3000/5649 lines (53%)
+Info: (DatabaseGenerator) Book 7119 'עין יצחק חלק א': 4000/5649 lines (70%)
+Info: (DatabaseGenerator) Book 7119 'עין יצחק חלק א': 5000/5649 lines (88%)
+Info: (DatabaseGenerator) books 1313/2814 (46.6%) · lines 1.9M · toc 372.5K · elapsed 59:45 · eta ~1:08:17
+Info: (DatabaseGenerator) books 1351/2814 (48.0%) · lines 1.9M · toc 377.0K · elapsed 1:00:46 · eta ~1:05:48
+Info: (DatabaseGenerator) books 1383/2814 (49.1%) · lines 2.0M · toc 380.7K · elapsed 1:01:47 · eta ~1:03:56
+Info: (IdAllocator) Category key 'שו״ת/אחרונים/שות מהרשם' now holds 1472 (was unset)
+Info: (DatabaseGenerator) books 1418/2814 (50.3%) · lines 2.0M · toc 385.0K · elapsed 1:02:51 · eta ~1:01:51
+Info: (DatabaseGenerator) Book 7245 'שו״ת פרי עץ חיים': 3000/21920 lines (13%)
+Info: (DatabaseGenerator) Book 7245 'שו״ת פרי עץ חיים': 6000/21920 lines (27%)
+Info: (DatabaseGenerator) Book 7245 'שו״ת פרי עץ חיים': 9000/21920 lines (41%)
+Info: (DatabaseGenerator) Book 7245 'שו״ת פרי עץ חיים': 12000/21920 lines (54%)
+Info: (DatabaseGenerator) Book 7245 'שו״ת פרי עץ חיים': 15000/21920 lines (68%)
+Info: (DatabaseGenerator) Book 7245 'שו״ת פרי עץ חיים': 18000/21920 lines (82%)
+Info: (DatabaseGenerator) Book 7245 'שו״ת פרי עץ חיים': 21000/21920 lines (95%)
+Info: (DatabaseGenerator) books 1430/2814 (50.8%) · lines 2.1M · toc 387.0K · elapsed 1:03:51 · eta ~1:01:47
+Info: (DatabaseGenerator) books 1457/2814 (51.7%) · lines 2.1M · toc 389.9K · elapsed 1:04:51 · eta ~1:00:24
+Info: (DatabaseGenerator) books 1487/2814 (52.8%) · lines 2.1M · toc 394.4K · elapsed 1:05:53 · eta ~58:47
+Info: (DatabaseGenerator) books 1500/2814 (53.3%) · lines 2.2M · toc 397.2K · elapsed 1:06:55 · eta ~58:37
 ```
 ## machine
 ```
                total        used        free      shared  buff/cache   available
-Mem:           16087        6230        1754          12        8547        9857
-/dev/vda        252G   36G   33G  53% /
- 09:47:14 up  1:36,  0 user,  load average: 1.20, 1.14, 1.18
+Mem:           16087        6505        1708          12        8320        9581
+/dev/vda        252G   38G   32G  54% /
+ 10:17:16 up  2:06,  0 user,  load average: 1.23, 1.11, 1.10
 ```
