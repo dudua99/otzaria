@@ -1,4 +1,4 @@
-# combined delta 2711 — progress (2026-11-27T17:47:49Z)
+# combined delta 2711 — progress (2026-11-27T18:17:52Z)
 
 ## markers
 ```
@@ -20,6 +20,7 @@
 2026-11-27T16:58:20Z ANALYZE v2b rc=0
 2026-11-27T16:59:39Z v2a START sefaria phase fordb=9bf3ab1cd0b2959962e688caf59fd8a90d32e8b1b7dc545823b21f49fa0d9911 code=c5e28010
 2026-11-27T17:47:44Z v2a DONE sefaria; snapshot
+2026-11-27T17:47:50Z v2a START rest
 ```
 ## notes
 - 08:15Z v1 started (v40 inputs verified by sha256; SeforimLibrary c5e2801 + local workarounds).
@@ -33,38 +34,39 @@
 - 16:05Z v1 compressed. My delta.sh edit had a syntax error -> v2b compress not started; fixed and restarted 16:1xZ.
 - 16:58Z v2b patch verified (target hash 8be6a1a8…); analysis done; v2b.db removed for disk; v2a build released.
 - 17:05Z v2b result pushed: prbody/libdata-2611-delta @112c4568 (READY).
-## tail of v2a.sefaria.log
+- 17:47Z v2a Sefaria phase done (48 min); rest started.
+## tail of v2a.rest.log
 ```
-Info: (SefariaDirect) Inline anchors: 173700 anchors from 83579 itag-carrying lines (594 label-only tags re-aligned to their printed comment)
-Warn: (SefariaDirect) Inline anchors skipped tags — no commentary book for tag: 143167 (e.g. Notes and Corrections on Midrash Lekach Tov on Midrash Lekach Tov on Esther, Introduction,  2); tag without order/label: 141327 (e.g. Notes by Heinrich Guggenheimer on Jerusalem Talmud Berakhot 1:5:13); co
-Info: (SefariaDirect) Printed-marker anchors: 385 inserted (513 markers unmatched, 0 ambiguous)
-Info: (SefariaDirect) Resolving char-level anchors (charLevelData, 47784 cells)...
-Info: (SefariaDirect) Char-level anchors: 6542 inserted from 47784 CSV cells
-Info: (SefariaDirect) Char-level anchors skipped — word-based offsets: 23892; version mismatch: 9817; multi-version book: 7555; offsets out of bounds: 2; known incorrect quotation offset: 2; line modified by cleaning: 3
-Info: (SefariaDirect) Demoting cross-corpus dependant links per Sefaria categorisation...
-Info: (SefariaDirect) Recorded source hashes for 5818 / 6220 Sefaria books
-Warn: (SefariaDirect) source hashes: 402 of 6220 Sefaria books have no source hash — they are fully reprocessed every cycle
-Warn: (SefariaDirect) source hashes: 402 not recorded — skipped by the book/author blacklist (אֲהֵבוּךָ עַד מָוֶת, אגרת אריסטיאס, אדם מן האדמה, אוהב גר, אור לישרים על תלמוד ירושלמי ביצה, אור לישרים על תלמוד י�
-Info: (SefariaDirect) report written to /work/SL/build/generator-reports/sefaria-source-hashes-not-recorded.json
-Info: (SefariaDirect) Category descriptions: parsed=152, used=125, unused=27
-Info: (SefariaDirect) Direct Sefaria import completed.
-Info: (SefariaSqlite) Link-import metrics report written to /work/SL/build/seforim.db.link-import-metrics.json
-Info: (IdAllocator) build_state.db snapshot written to /work/SL/build/seforim.db.buildstate in 161.8s (books=8259, lines=7925185, tocEntries=1676654, links=4454493)
-Info: (IdAllocator) IdAllocator snapshot: source(reused=1, fresh=0), author(reused=5177, fresh=0), pub_date(reused=5400, fresh=0), connection_type(reused=3908913, fresh=0), category(reused=1169, fresh=0), tocText(reused=912753, fresh=0), book_version(reused=6734, fresh=0), book(reused=5818, fresh=0)
-Info: (SefariaSqlite) build_state verified against /work/SL/build/seforim.db: 15 counters ahead of the DB
-Info: (SefariaSqlite) Sefaria -> SQLite completed. DB at /work/SL/build/seforim.db
-[Incubating] Problems report is available at: file:///work/SL/build/reports/problems/problems-report.html
-Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
-You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
-For more on this, please refer to https://docs.gradle.org/9.8.0/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
-BUILD SUCCESSFUL in 48m 4s
-19 actionable tasks: 5 executed, 14 up-to-date
-Configuration cache entry stored.
+Info: (DatabaseGenerator) Book 6364 'ערך שי': 5000/6118 lines (81%)
+Info: (DatabaseGenerator) Book 6364 'ערך שי': 6000/6118 lines (98%)
+Info: (DatabaseGenerator) books 548/2814 (19.4%) · lines 930.1K · toc 189.6K · elapsed 26:28 · eta ~1:49:29
+Info: (DatabaseGenerator) Book 6371 'שושנת יעקב': 1000/9125 lines (10%)
+Info: (DatabaseGenerator) Book 6371 'שושנת יעקב': 2000/9125 lines (21%)
+Info: (DatabaseGenerator) Book 6371 'שושנת יעקב': 3000/9125 lines (32%)
+Info: (DatabaseGenerator) Book 6371 'שושנת יעקב': 4000/9125 lines (43%)
+Info: (DatabaseGenerator) Book 6371 'שושנת יעקב': 5000/9125 lines (54%)
+Info: (DatabaseGenerator) Book 6371 'שושנת יעקב': 6000/9125 lines (65%)
+Info: (DatabaseGenerator) Book 6371 'שושנת יעקב': 7000/9125 lines (76%)
+Info: (DatabaseGenerator) Book 6371 'שושנת יעקב': 8000/9125 lines (87%)
+Info: (DatabaseGenerator) Book 6371 'שושנת יעקב': 9000/9125 lines (98%)
+Info: (DatabaseGenerator) Book 6394 'דברי יואל על המועדים': 2000/19912 lines (10%)
+Info: (DatabaseGenerator) Book 6394 'דברי יואל על המועדים': 4000/19912 lines (20%)
+Info: (DatabaseGenerator) Book 6394 'דברי יואל על המועדים': 6000/19912 lines (30%)
+Info: (DatabaseGenerator) Book 6394 'דברי יואל על המועדים': 8000/19912 lines (40%)
+Info: (DatabaseGenerator) Book 6394 'דברי יואל על המועדים': 10000/19912 lines (50%)
+Info: (DatabaseGenerator) Book 6394 'דברי יואל על המועדים': 12000/19912 lines (60%)
+Info: (DatabaseGenerator) Book 6394 'דברי יואל על המועדים': 14000/19912 lines (70%)
+Info: (DatabaseGenerator) Book 6394 'דברי יואל על המועדים': 16000/19912 lines (80%)
+Info: (DatabaseGenerator) Book 6394 'דברי יואל על המועדים': 18000/19912 lines (90%)
+Info: (DatabaseGenerator) books 576/2814 (20.4%) · lines 979.9K · toc 198.4K · elapsed 27:51 · eta ~1:48:12
+Info: (DatabaseGenerator) Book 6395 'דברי יואל על התורה': 2000/17411 lines (11%)
+Info: (DatabaseGenerator) Book 6395 'דברי יואל על התורה': 4000/17411 lines (22%)
+Info: (DatabaseGenerator) Book 6395 'דברי יואל על התורה': 6000/17411 lines (34%)
 ```
 ## machine
 ```
                total        used        free      shared  buff/cache   available
-Mem:           16087         824        4365          12       11359       15262
-/dev/vda        252G   43G   27G  62% /
- 17:47:49 up  9:37,  0 user,  load average: 1.19, 2.10, 1.97
+Mem:           16087        6664        1883          12        7968        9422
+/dev/vda        252G   50G   20G  73% /
+ 18:17:52 up 10:07,  0 user,  load average: 1.07, 1.06, 1.19
 ```
