@@ -1,4 +1,4 @@
-# combined delta 2711 — progress (2026-11-27T12:47:27Z)
+# combined delta 2711 — progress (2026-11-27T13:17:29Z)
 
 ## markers
 ```
@@ -8,6 +8,8 @@
 2026-11-27T11:59:24Z v1 DONE build -> /work/db/v1.db
 2026-11-27T11:59:35Z PIPE waiting for /work/v2b/READY
 2026-11-27T11:59:38Z v2b START sefaria phase fordb=b5ceef29ee3f84c6682846d4f76e1bc7d53b689c606d06b2ea3b430d3dbf9a35 code=1ed6179a
+2026-11-27T12:49:59Z v2b DONE sefaria; snapshot
+2026-11-27T12:50:05Z v2b START rest
 ```
 ## notes
 - 08:15Z v1 started (v40 inputs verified by sha256; SeforimLibrary c5e2801 + local workarounds).
@@ -16,38 +18,39 @@
 - v2a build will start only after the v2b patch is produced (avoids running two 8g JVMs on the 15 GB box).
 - 11:59Z v1 DONE (Sefaria 51 min, rest 2h52m). v1.db 10.3 GB. v2b build started.
 - v1 sanity: books 8259 / lines 7925185 = v40 library_stats exactly; links 4,454,493 vs v40 7,001,824 — the LINKER (GPU relink) links are not produced by a local build; identical on every local build, so they cancel in the deltas.
-## tail of v2b.sefaria.log
+- 12:50Z v2b Sefaria phase done (50 min). Early check: Sefaria link 1064034 (שבת קמא:, טז ↔ חידושי רמב"ן קמא:, ב) gone, new link 4454494 (שבת קמא:, כח → same Ramban line), link_range rows Shabbat↔Ramban 4→5 (#4023 as expected).
+## tail of v2b.rest.log
 ```
-type=SUMMARY csvRowsRead=1 csvDropped=1 csvResolvedPairs=0 storedWritten=0
-type=SUPER_COMMENTARY csvRowsRead=24886 csvDropped=0 csvResolvedPairs=24886 storedWritten=24886
-type=TARGUM csvRowsRead=34728 csvDropped=0 csvResolvedPairs=34728 storedWritten=34729
-totals csvRowsRead=5192640 csvDropped=1283772 csvResolvedPairs=3911556 storedWritten=3896061 (resolvedPairs-written=15495: pairs dropped by the heading/self-link filters or collapsed by INSERT OR IGNORE)
-Info: (SefariaDirect) Suppressed link sides: 300201 hidden of 7792122 sides carrying a verdict (7491921 cleared by a visible contribution)
-Info: (SefariaDirect) Anchored 3448 lines of book 563 to its base text
-Info: (SefariaDirect) Derived 279 commentary links from Sefaria segment addresses
-Info: (SefariaDirect) Wrote 2 of 2 curated commentary links
-Info: (SefariaDirect) Linked 39 sections of parallel books
-Info: (SefariaDirect) Links processed
-Info: (SefariaDirect) Resolving inline commentary anchors (itags)...
-Info: (SefariaDirect) Inline anchors: 173700 anchors from 83579 itag-carrying lines (594 label-only tags re-aligned to their printed comment)
-Warn: (SefariaDirect) Inline anchors skipped tags — no commentary book for tag: 143167 (e.g. Notes and Corrections on Midrash Lekach Tov on Midrash Lekach Tov on Esther, Introduction,  2); tag without order/label: 141327 (e.g. Notes by Heinrich Guggenheimer on Jerusalem Talmud Berakhot 1:5:13); co
-Info: (SefariaDirect) Printed-marker anchors: 385 inserted (513 markers unmatched, 0 ambiguous)
-Info: (SefariaDirect) Resolving char-level anchors (charLevelData, 47784 cells)...
-Info: (SefariaDirect) Char-level anchors: 6542 inserted from 47784 CSV cells
-Info: (SefariaDirect) Char-level anchors skipped — word-based offsets: 23892; version mismatch: 9817; multi-version book: 7555; offsets out of bounds: 2; known incorrect quotation offset: 2; line modified by cleaning: 3
-Info: (SefariaDirect) Demoting cross-corpus dependant links per Sefaria categorisation...
-Info: (SefariaDirect) Recorded source hashes for 5818 / 6220 Sefaria books
-Warn: (SefariaDirect) source hashes: 402 of 6220 Sefaria books have no source hash — they are fully reprocessed every cycle
-Warn: (SefariaDirect) source hashes: 402 not recorded — skipped by the book/author blacklist (אֲהֵבוּךָ עַד מָוֶת, אגרת אריסטיאס, אדם מן האדמה, אוהב גר, אור לישרים על תלמוד ירושלמי ביצה, אור לישרים על תלמוד י�
-Info: (SefariaDirect) report written to /work/SLb/build/generator-reports/sefaria-source-hashes-not-recorded.json
-Info: (SefariaDirect) Category descriptions: parsed=152, used=125, unused=27
-Info: (SefariaDirect) Direct Sefaria import completed.
-Info: (SefariaSqlite) Link-import metrics report written to /work/SLb/build/seforim.db.link-import-metrics.json
+Info: (DatabaseGenerator) Book 6249 'אבני חושן': 8000/8006 lines (99%)
+Info: (DatabaseGenerator) books 431/2814 (15.3%) · lines 712.1K · toc 144.4K · elapsed 20:55 · eta ~1:55:44
+Info: (DatabaseGenerator) Book 6253 'אולם המשפט': 1000/6119 lines (16%)
+Info: (DatabaseGenerator) Book 6253 'אולם המשפט': 2000/6119 lines (32%)
+Info: (DatabaseGenerator) Book 6253 'אולם המשפט': 3000/6119 lines (49%)
+Info: (DatabaseGenerator) Book 6253 'אולם המשפט': 4000/6119 lines (65%)
+Info: (DatabaseGenerator) Book 6253 'אולם המשפט': 5000/6119 lines (81%)
+Info: (DatabaseGenerator) Book 6253 'אולם המשפט': 6000/6119 lines (98%)
+Info: (DatabaseGenerator) books 448/2814 (15.9%) · lines 746.5K · toc 151.0K · elapsed 21:59 · eta ~1:56:10
+Info: (DatabaseGenerator) Book 6281 'ברכי יוסף על אורח חיים': 1000/8784 lines (11%)
+Info: (DatabaseGenerator) Book 6281 'ברכי יוסף על אורח חיים': 2000/8784 lines (22%)
+Info: (DatabaseGenerator) Book 6281 'ברכי יוסף על אורח חיים': 3000/8784 lines (34%)
+Info: (DatabaseGenerator) Book 6281 'ברכי יוסף על אורח חיים': 4000/8784 lines (45%)
+Info: (DatabaseGenerator) Book 6281 'ברכי יוסף על אורח חיים': 5000/8784 lines (56%)
+Info: (DatabaseGenerator) Book 6281 'ברכי יוסף על אורח חיים': 6000/8784 lines (68%)
+Info: (DatabaseGenerator) Book 6281 'ברכי יוסף על אורח חיים': 7000/8784 lines (79%)
+Info: (DatabaseGenerator) Book 6281 'ברכי יוסף על אורח חיים': 8000/8784 lines (91%)
+Info: (DatabaseGenerator) books 463/2814 (16.4%) · lines 776.6K · toc 161.8K · elapsed 23:04 · eta ~1:57:09
+Info: (DatabaseGenerator) Book 6287 'דברי המשפט': 1000/5578 lines (17%)
+Info: (DatabaseGenerator) Book 6287 'דברי המשפט': 2000/5578 lines (35%)
+Info: (DatabaseGenerator) Book 6287 'דברי המשפט': 3000/5578 lines (53%)
+Info: (DatabaseGenerator) Book 6287 'דברי המשפט': 4000/5578 lines (71%)
+Info: (DatabaseGenerator) Book 6287 'דברי המשפט': 5000/5578 lines (89%)
+Info: (DatabaseGenerator) books 482/2814 (17.1%) · lines 810.1K · toc 168.0K · elapsed 24:05 · eta ~1:56:31
+Info: (DatabaseGenerator) books 506/2814 (17.9%) · lines 844.5K · toc 176.7K · elapsed 25:07 · eta ~1:54:37
 ```
 ## machine
 ```
                total        used        free      shared  buff/cache   available
-Mem:           16087       10758        1816          12        3936        5328
-/dev/vda        252G   47G   22G  69% /
- 12:47:27 up  4:36,  0 user,  load average: 1.56, 2.19, 1.77
+Mem:           16087        6535        1745          12        8264        9551
+/dev/vda        252G   58G   11G  85% /
+ 13:17:29 up  5:07,  0 user,  load average: 1.39, 1.19, 1.21
 ```
