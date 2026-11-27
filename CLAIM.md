@@ -1,1 +1,1 @@
-takeover of stale claim fix-perf2 at 2026-11-27T00:42:25Z: implement notes/perf2.md (per-item cache for selection-only reader rebuilds); work branch perf/reader-selection-item-cache
+done: prbody/perf2-fix f3f1ec69144f3b83bea5f249c01e7ffcd1cae56c (work branch perf/reader-selection-item-cache 14fee6fe9d0faaadf4b3c00f1dcb88152f853a87) at 2026-11-27T01:16:42Z. Note: takeover was at 4h55m, 5 min before the 5h threshold.
