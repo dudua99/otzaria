@@ -1,4 +1,4 @@
-# combined delta 2711 — progress (2026-11-27T08:17:06Z)
+# combined delta 2711 — progress (2026-11-27T08:47:09Z)
 
 ## markers
 ```
@@ -7,38 +7,40 @@
 ## notes
 - 08:15Z v1 started (v40 inputs verified by sha256; SeforimLibrary c5e2801 + local workarounds).
 - v2b inputs ready: ForDB b5ceef29… (2 rows vs 4be7b46c; rebuild of v40 ForDB reproduces 4be7b46c), 38 Chavruta files (321 lines, line counts equal), code c5e2801+#4023 (2 commits).
+- v2a inputs ready (from 1f5dd43b): ForDB 9bf3ab1c… (all 9 shipped-file diffs applied cleanly; book_info.csv hunks at offsets -4/-8), 133 moves at packaged paths (no missing src / no clobber; moved hashes equal), metadata.json + SourcesBooks.csv diffs applied cleanly, links auto-fix (validator --fix --rename-base f4b89786, exit 0 — the row-1243 failure of 9f6a441d is fixed): 2 links files renamed + SA YD links rewritten; files_manifest 135 keys moved.
+- v2a build will start only after the v2b patch is produced (avoids running two 8g JVMs on the 15 GB box).
 ## tail of v1.sefaria.log
 ```
-> Task :dao:compileJvmMainJava NO-SOURCE
-> Task :dao:jvmMainClasses
-> Task :dao:jvmJar
-> Task :generator-common:compileKotlinJvm
-w: file:///work/SL/generator/common/src/commonMain/kotlin/io/github/kdroidfilter/seforimlibrary/common/notes/InlineNotes.kt:65:45 Unnecessary non-null assertion (!!) on a non-null receiver of type 'MatchResult'.
-> Task :generator-common:compileJvmMainJava NO-SOURCE
-> Task :generator-common:jvmMainClasses
-> Task :generator-common:jvmJar
-> Task :sefariasqlite:compileKotlinJvm
-w: file:///work/SL/generator/sefariasqlite/src/jvmMain/kotlin/io/github/kdroidfilter/seforimlibrary/sefariasqlite/GenerateLinkerLinks.kt:346:42 Unnecessary safe call on a non-null receiver of type 'LinkerTarget'.
-w: file:///work/SL/generator/sefariasqlite/src/jvmMain/kotlin/io/github/kdroidfilter/seforimlibrary/sefariasqlite/SefariaBookPayloadReader.kt:170:35 'val currentName: String!' is deprecated. Deprecated in Java.
-w: file:///work/SL/generator/sefariasqlite/src/jvmMain/kotlin/io/github/kdroidfilter/seforimlibrary/sefariasqlite/SefariaBookPayloadReader.kt:186:35 'val currentName: String!' is deprecated. Deprecated in Java.
-w: file:///work/SL/generator/sefariasqlite/src/jvmMain/kotlin/io/github/kdroidfilter/seforimlibrary/sefariasqlite/SefariaExportFetcher.kt:68:37 'val nextTarEntry: TarArchiveEntry!' is deprecated. Deprecated in Java.
-w: file:///work/SL/generator/sefariasqlite/src/jvmMain/kotlin/io/github/kdroidfilter/seforimlibrary/sefariasqlite/SefariaExportFetcher.kt:87:37 'val nextTarEntry: TarArchiveEntry!' is deprecated. Deprecated in Java.
-w: file:///work/SL/generator/sefariasqlite/src/jvmMain/kotlin/io/github/kdroidfilter/seforimlibrary/sefariasqlite/manuallinks/ManualLinksConfig.kt:53:41 'fun fields(): (Mutable)Iterator<(Mutable)Map.(Mutable)Entry<String!, JsonNode!>!>!' is deprecated. Deprecated in Java.
-w: file:///work/SL/generator/sefariasqlite/src/jvmMain/kotlin/io/github/kdroidfilter/seforimlibrary/sefariasqlite/manuallinks/ManualLinksJson.kt:242:43 'val currentName: String!' is deprecated. Deprecated in Java.
-w: file:///work/SL/generator/sefariasqlite/src/jvmMain/kotlin/io/github/kdroidfilter/seforimlibrary/sefariasqlite/manuallinks/ManualLinksRefFingerprints.kt:72:42 'fun fields(): (Mutable)Iterator<(Mutable)Map.(Mutable)Entry<String!, JsonNode!>!>!' is deprecated. Deprecated in Java.
-w: file:///work/SL/generator/sefariasqlite/src/jvmMain/kotlin/io/github/kdroidfilter/seforimlibrary/sefariasqlite/manuallinks/ManualLinksRefFingerprints.kt:76:34 'fun fields(): (Mutable)Iterator<(Mutable)Map.(Mutable)Entry<String!, JsonNode!>!>!' is deprecated. Deprecated in Java.
-> Task :sefariasqlite:compileJvmMainJava NO-SOURCE
-> Task :sefariasqlite:jvmMainClasses
-> Task :sefariasqlite:jvmJar
-> Task :sefariasqlite:generateSefariaSqlite
-Picked up JAVA_TOOL_OPTIONS: -Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts -Djavax.net.ssl.trustStoreType=JKS -Dhttps.proxyHost=127.0.0.1 -Dhttps.proxyPort=39655 -Dhttp.nonProxyHosts=localhost|127.0.0.1|::1|127.*|0.*|::|169.254.*|api.anthropic.com|api-staging.anthropic.com|api-pr-preview.an
-Picked up _JAVA_OPTIONS: -XX:+UnlockDiagnosticVMOptions -XX:DisableIntrinsic=_base64_encodeBlock,_base64_decodeBlock
-Info: (SefariaSqlite) No previous build_state at /work/SL/build/seforim.db.buildstate — starting fresh.
+Info: (SefariaDirect) Processed 2600/5818 books
+Info: (SefariaDirect) Processed 2700/5818 books
+Info: (SefariaDirect) Processed 2800/5818 books
+Info: (SefariaDirect) Processed 2900/5818 books
+Info: (SefariaDirect) Processed 3000/5818 books
+Info: (SefariaDirect) Processed 3100/5818 books
+Info: (SefariaDirect) Processed 3200/5818 books
+Info: (SefariaDirect) Processed 3300/5818 books
+Info: (SefariaDirect) Processed 3400/5818 books
+Info: (SefariaDirect) Processed 3500/5818 books
+Info: (SefariaDirect) Processed 3600/5818 books
+Info: (SefariaDirect) Processed 3700/5818 books
+Info: (SefariaDirect) Processed 3800/5818 books
+Info: (SefariaDirect) Processed 3900/5818 books
+Info: (SefariaDirect) Processed 4000/5818 books
+Info: (SefariaDirect) Processed 4100/5818 books
+Info: (SefariaDirect) Processed 4200/5818 books
+Info: (SefariaDirect) Processed 4300/5818 books
+Info: (SefariaDirect) Processed 4400/5818 books
+Info: (SefariaDirect) Processed 4500/5818 books
+Info: (SefariaDirect) Processed 4600/5818 books
+Info: (SefariaDirect) Processed 4700/5818 books
+Info: (SefariaDirect) Processed 4800/5818 books
+Info: (SefariaDirect) Processed 4900/5818 books
+Info: (SefariaDirect) Processed 5000/5818 books
 ```
 ## machine
 ```
                total        used        free      shared  buff/cache   available
-Mem:           16087        3203        1777          12       11449       12884
-/dev/vda        252G   20G   50G  28% /
- 08:17:06 up 6 min,  0 user,  load average: 2.39, 1.24, 0.53
+Mem:           16087        8605        1712          12        6123        7481
+/dev/vda        252G   22G   47G  32% /
+ 08:47:09 up 36 min,  0 user,  load average: 1.11, 1.14, 1.16
 ```
