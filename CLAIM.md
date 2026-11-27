@@ -1,1 +1,1 @@
-claimed 2026-11-27T11:41:45Z UTC: QA of 2543r (feat/open-books-scope-2543-v2) per QA.md + notes/2543r.md
+done: prbody/2543r-qa 23fbc133ade2e4fd6071608926091fe1127a78b8 (2026-11-27T12:11:19Z UTC)
