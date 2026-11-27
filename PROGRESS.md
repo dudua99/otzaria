@@ -1,4 +1,4 @@
-# combined delta 2711 — progress (2026-11-27T14:47:35Z)
+# combined delta 2711 — progress (2026-11-27T15:17:37Z)
 
 ## markers
 ```
@@ -19,38 +19,39 @@
 - 11:59Z v1 DONE (Sefaria 51 min, rest 2h52m). v1.db 10.3 GB. v2b build started.
 - v1 sanity: books 8259 / lines 7925185 = v40 library_stats exactly; links 4,454,493 vs v40 7,001,824 — the LINKER (GPU relink) links are not produced by a local build; identical on every local build, so they cancel in the deltas.
 - 12:50Z v2b Sefaria phase done (50 min). Early check: Sefaria link 1064034 (שבת קמא:, טז ↔ חידושי רמב"ן קמא:, ב) gone, new link 4454494 (שבת קמא:, כח → same Ramban line), link_range rows Shabbat↔Ramban 4→5 (#4023 as expected).
+- 15:05Z disk nearly full during v2b links phase (DbPublish writes a full seforim.db.candidate copy, +9.7 GB). Deleted /work/db/v1.pristine.db (v1.db itself was still uncompressed and identical).
 ## tail of v2b.rest.log
 ```
-Info: (DatabaseGenerator) Book 8013 'קובץ שיטות קמאי על בכורות': 16000/17069 lines (93%)
-Info: (DatabaseGenerator) books 2195/2814 (78.0%) · lines 3.9M · toc 759.2K · elapsed 1:52:54 · eta ~31:50
-Info: (DatabaseGenerator) Book 8014 'קובץ שיטות קמאי על חולין': 4000/31364 lines (12%)
-Info: (DatabaseGenerator) Book 8014 'קובץ שיטות קמאי על חולין': 8000/31364 lines (25%)
-Info: (DatabaseGenerator) Book 8014 'קובץ שיטות קמאי על חולין': 12000/31364 lines (38%)
-Info: (DatabaseGenerator) Book 8014 'קובץ שיטות קמאי על חולין': 16000/31364 lines (51%)
-Info: (DatabaseGenerator) Book 8014 'קובץ שיטות קמאי על חולין': 20000/31364 lines (63%)
-Info: (DatabaseGenerator) Book 8014 'קובץ שיטות קמאי על חולין': 24000/31364 lines (76%)
-Info: (DatabaseGenerator) Book 8014 'קובץ שיטות קמאי על חולין': 28000/31364 lines (89%)
-Info: (DatabaseGenerator) books 2196/2814 (78.0%) · lines 3.9M · toc 774.1K · elapsed 1:53:59 · eta ~32:04
-Info: (DatabaseGenerator) Book 8015 'קובץ שיטות קמאי על כריתות': 1000/6261 lines (15%)
-Info: (DatabaseGenerator) Book 8015 'קובץ שיטות קמאי על כריתות': 2000/6261 lines (31%)
-Info: (DatabaseGenerator) Book 8015 'קובץ שיטות קמאי על כריתות': 3000/6261 lines (47%)
-Info: (DatabaseGenerator) Book 8015 'קובץ שיטות קמאי על כריתות': 4000/6261 lines (63%)
-Info: (DatabaseGenerator) Book 8015 'קובץ שיטות קמאי על כריתות': 5000/6261 lines (79%)
-Info: (DatabaseGenerator) Book 8015 'קובץ שיטות קמאי על כריתות': 6000/6261 lines (95%)
-Info: (DatabaseGenerator) Book 8017 'קובץ שיטות קמאי על מנחות': 4000/35105 lines (11%)
-Info: (DatabaseGenerator) Book 8017 'קובץ שיטות קמאי על מנחות': 8000/35105 lines (22%)
-Info: (DatabaseGenerator) Book 8017 'קובץ שיטות קמאי על מנחות': 12000/35105 lines (34%)
-Info: (DatabaseGenerator) Book 8017 'קובץ שיטות קמאי על מנחות': 16000/35105 lines (45%)
-Info: (DatabaseGenerator) Book 8017 'קובץ שיטות קמאי על מנחות': 20000/35105 lines (56%)
-Info: (DatabaseGenerator) Book 8017 'קובץ שיטות קמאי על מנחות': 24000/35105 lines (68%)
-Info: (DatabaseGenerator) Book 8017 'קובץ שיטות קמאי על מנחות': 28000/35105 lines (79%)
-Info: (DatabaseGenerator) Book 8017 'קובץ שיטות קמאי על מנחות': 32000/35105 lines (91%)
-Info: (DatabaseGenerator) books 2199/2814 (78.1%) · lines 4.0M · toc 792.7K · elapsed 1:55:21 · eta ~32:15
+Info: (GemaraDafAltToc)   רי"ף כתובות: 147 entries
+Info: (GemaraDafAltToc)   רי"ף מגילה: 35 entries
+Info: (GemaraDafAltToc)   רי"ף מועד קטן: 25 entries
+Info: (GemaraDafAltToc)   רי"ף מכות: 18 entries
+Info: (GemaraDafAltToc)   רי"ף נדרים: 100 entries
+Info: (GemaraDafAltToc)   רי"ף סוכה: 58 entries
+Info: (GemaraDafAltToc)   רי"ף סנהדרין: 49 entries
+Info: (GemaraDafAltToc)   רי"ף עבודה זרה: 73 entries
+Info: (GemaraDafAltToc)   רי"ף עירובין: 104 entries
+Info: (GemaraDafAltToc)   רי"ף פסחים: 50 entries
+Info: (GemaraDafAltToc)   רי"ף קידושין: 81 entries
+Info: (GemaraDafAltToc)   רי"ף ראש השנה: 18 entries
+Info: (GemaraDafAltToc)   רי"ף שבועות: 34 entries
+Info: (GemaraDafAltToc)   רי"ף שבת: 125 entries
+Info: (GemaraDafAltToc)   רי"ף תענית: 40 entries
+Info: (BuildStateVerifier) build_state verified against /work/SLb/build/seforim.db: 15 counters ahead of the DB
+> Task :generator-common:buildLineRefIndex
+Picked up JAVA_TOOL_OPTIONS: -Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts -Djavax.net.ssl.trustStoreType=JKS -Dhttps.proxyHost=127.0.0.1 -Dhttps.proxyPort=39655 -Dhttp.nonProxyHosts=localhost|127.0.0.1|::1|127.*|0.*|::|169.254.*|api.anthropic.com|api-staging.anthropic.com|api-pr-preview.an
+Picked up _JAVA_OPTIONS: -XX:+UnlockDiagnosticVMOptions -XX:DisableIntrinsic=_base64_encodeBlock,_base64_decodeBlock
+Info: (BuildLineRefIndexCli) line_ref: 1000 books, 897006 keys
+Info: (BuildLineRefIndexCli) line_ref: 2000 books, 947896 keys
+Info: (BuildLineRefIndexCli) line_ref: 3000 books, 1437555 keys
+Info: (BuildLineRefIndexCli) line_ref: 4000 books, 1655069 keys
+Info: (BuildLineRefIndexCli) line_ref: 5000 books, 2018162 keys
+Info: (BuildLineRefIndexCli) line_ref: 6000 books, 3316822 keys
 ```
 ## machine
 ```
                total        used        free      shared  buff/cache   available
-Mem:           16087        7172        1757          12        7618        8914
-/dev/vda        252G   62G  7.5G  90% /
- 14:47:35 up  6:37,  0 user,  load average: 1.08, 1.11, 1.09
+Mem:           16087        2044        4489          12        9895       14042
+/dev/vda        252G   48G   22G  70% /
+ 15:17:37 up  7:07,  0 user,  load average: 1.56, 1.31, 1.18
 ```
