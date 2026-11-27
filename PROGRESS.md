@@ -1,4 +1,4 @@
-# combined delta 2711 — progress (2026-11-27T09:17:11Z)
+# combined delta 2711 — progress (2026-11-27T09:47:14Z)
 
 ## markers
 ```
@@ -13,36 +13,36 @@
 - v2a build will start only after the v2b patch is produced (avoids running two 8g JVMs on the 15 GB box).
 ## tail of v1.rest.log
 ```
-Info: (DatabaseGenerator) Book 5833 'חזון איש, יורה דעה': 6000/7912 lines (75%)
-Info: (DatabaseGenerator) Book 5833 'חזון איש, יורה דעה': 7000/7912 lines (88%)
-Info: (DatabaseGenerator) books 46/2814 (1.6%) · lines 75.7K · toc 15.4K · elapsed 02:14 · eta ~2:15:21
-Info: (DatabaseGenerator) Book 5866 'דור המלקטים - עניינים כלליים': 1000/5598 lines (17%)
-Info: (DatabaseGenerator) Book 5866 'דור המלקטים - עניינים כלליים': 2000/5598 lines (35%)
-Info: (DatabaseGenerator) Book 5866 'דור המלקטים - עניינים כלליים': 3000/5598 lines (53%)
-Info: (DatabaseGenerator) Book 5866 'דור המלקטים - עניינים כלליים': 4000/5598 lines (71%)
-Info: (DatabaseGenerator) Book 5866 'דור המלקטים - עניינים כלליים': 5000/5598 lines (89%)
-Info: (DatabaseGenerator) Book 5868 'דור המלקטים על אבן העזר': 1000/6491 lines (15%)
-Info: (DatabaseGenerator) Book 5868 'דור המלקטים על אבן העזר': 2000/6491 lines (30%)
-Info: (DatabaseGenerator) Book 5868 'דור המלקטים על אבן העזר': 3000/6491 lines (46%)
-Info: (DatabaseGenerator) Book 5868 'דור המלקטים על אבן העזר': 4000/6491 lines (61%)
-Info: (DatabaseGenerator) Book 5868 'דור המלקטים על אבן העזר': 5000/6491 lines (77%)
-Info: (DatabaseGenerator) Book 5868 'דור המלקטים על אבן העזר': 6000/6491 lines (92%)
-Info: (DatabaseGenerator) Book 5869 'דור המלקטים על אורח חיים': 20000/190453 lines (10%)
-Info: (DatabaseGenerator) Book 5869 'דור המלקטים על אורח חיים': 40000/190453 lines (21%)
-Info: (DatabaseGenerator) Book 5869 'דור המלקטים על אורח חיים': 60000/190453 lines (31%)
-Info: (DatabaseGenerator) Book 5869 'דור המלקטים על אורח חיים': 80000/190453 lines (42%)
-Info: (DatabaseGenerator) Book 5869 'דור המלקטים על אורח חיים': 100000/190453 lines (52%)
-Info: (DatabaseGenerator) Book 5869 'דור המלקטים על אורח חיים': 120000/190453 lines (63%)
-Info: (DatabaseGenerator) Book 5869 'דור המלקטים על אורח חיים': 140000/190453 lines (73%)
-Info: (DatabaseGenerator) Book 5869 'דור המלקטים על אורח חיים': 160000/190453 lines (84%)
-Info: (DatabaseGenerator) Book 5869 'דור המלקטים על אורח חיים': 180000/190453 lines (94%)
-Info: (DatabaseGenerator) books 51/2814 (1.8%) · lines 279.3K · toc 16.3K · elapsed 07:11 · eta ~6:29:40
-Info: (DatabaseGenerator) Book 5871 'דור המלקטים על יורה דעה': 12000/118905 lines (10%)
+Info: (DatabaseGenerator) Book 6401 'גנזי יוסף': 3000/6127 lines (48%)
+Info: (DatabaseGenerator) Book 6401 'גנזי יוסף': 4000/6127 lines (65%)
+Info: (DatabaseGenerator) Book 6401 'גנזי יוסף': 5000/6127 lines (81%)
+Info: (DatabaseGenerator) Book 6401 'גנזי יוסף': 6000/6127 lines (97%)
+Info: (DatabaseGenerator) Book 6418 'חק לישראל - בראשית': 1000/5523 lines (18%)
+Info: (DatabaseGenerator) Book 6418 'חק לישראל - בראשית': 2000/5523 lines (36%)
+Info: (DatabaseGenerator) Book 6418 'חק לישראל - בראשית': 3000/5523 lines (54%)
+Info: (DatabaseGenerator) Book 6418 'חק לישראל - בראשית': 4000/5523 lines (72%)
+Info: (DatabaseGenerator) Book 6418 'חק לישראל - בראשית': 5000/5523 lines (90%)
+Info: (DatabaseGenerator) books 601/2814 (21.3%) · lines 1.0M · toc 205.5K · elapsed 31:14 · eta ~1:55:00
+Info: (DatabaseGenerator) books 701/2814 (24.9%) · lines 1.0M · toc 207.7K · elapsed 31:42 · eta ~1:35:32
+Info: (DatabaseGenerator) ⏭️ Skipping already-processed priority book: מדרש/אגדה/מדרש זוטא.txt
+Info: (IdAllocator) Category key 'מחשבת ישראל/אחרונים/רמחל' now holds 1476 (was unset)
+Info: (DatabaseGenerator) books 782/2814 (27.7%) · lines 1.0M · toc 210.4K · elapsed 32:42 · eta ~1:24:58
+Info: (DatabaseGenerator) Book 6642 'אספקלריה אותיות א - מ': 14000/135957 lines (10%)
+Info: (DatabaseGenerator) Book 6642 'אספקלריה אותיות א - מ': 28000/135957 lines (20%)
+Info: (DatabaseGenerator) Book 6642 'אספקלריה אותיות א - מ': 42000/135957 lines (30%)
+Info: (DatabaseGenerator) Book 6642 'אספקלריה אותיות א - מ': 56000/135957 lines (41%)
+Info: (DatabaseGenerator) Book 6642 'אספקלריה אותיות א - מ': 70000/135957 lines (51%)
+Info: (DatabaseGenerator) Book 6642 'אספקלריה אותיות א - מ': 84000/135957 lines (61%)
+Info: (DatabaseGenerator) Book 6642 'אספקלריה אותיות א - מ': 98000/135957 lines (72%)
+Info: (DatabaseGenerator) Book 6642 'אספקלריה אותיות א - מ': 112000/135957 lines (82%)
+Info: (DatabaseGenerator) Book 6642 'אספקלריה אותיות א - מ': 126000/135957 lines (92%)
+Info: (DatabaseGenerator) books 824/2814 (29.2%) · lines 1.2M · toc 243.3K · elapsed 37:30 · eta ~1:30:34
+Info: (DatabaseGenerator) Book 6643 'אספקלריה אותיות נ - ת': 10000/90850 lines (11%)
 ```
 ## machine
 ```
                total        used        free      shared  buff/cache   available
-Mem:           16087        6181        1707          12        8647        9906
-/dev/vda        252G   35G   35G  51% /
- 09:17:11 up  1:06,  0 user,  load average: 1.14, 1.33, 1.63
+Mem:           16087        6230        1754          12        8547        9857
+/dev/vda        252G   36G   33G  53% /
+ 09:47:14 up  1:36,  0 user,  load average: 1.20, 1.14, 1.18
 ```
