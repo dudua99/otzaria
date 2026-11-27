@@ -1,4 +1,4 @@
-# combined delta 2711 — progress (2026-11-27T13:17:29Z)
+# combined delta 2711 — progress (2026-11-27T13:47:31Z)
 
 ## markers
 ```
@@ -21,36 +21,36 @@
 - 12:50Z v2b Sefaria phase done (50 min). Early check: Sefaria link 1064034 (שבת קמא:, טז ↔ חידושי רמב"ן קמא:, ב) gone, new link 4454494 (שבת קמא:, כח → same Ramban line), link_range rows Shabbat↔Ramban 4→5 (#4023 as expected).
 ## tail of v2b.rest.log
 ```
-Info: (DatabaseGenerator) Book 6249 'אבני חושן': 8000/8006 lines (99%)
-Info: (DatabaseGenerator) books 431/2814 (15.3%) · lines 712.1K · toc 144.4K · elapsed 20:55 · eta ~1:55:44
-Info: (DatabaseGenerator) Book 6253 'אולם המשפט': 1000/6119 lines (16%)
-Info: (DatabaseGenerator) Book 6253 'אולם המשפט': 2000/6119 lines (32%)
-Info: (DatabaseGenerator) Book 6253 'אולם המשפט': 3000/6119 lines (49%)
-Info: (DatabaseGenerator) Book 6253 'אולם המשפט': 4000/6119 lines (65%)
-Info: (DatabaseGenerator) Book 6253 'אולם המשפט': 5000/6119 lines (81%)
-Info: (DatabaseGenerator) Book 6253 'אולם המשפט': 6000/6119 lines (98%)
-Info: (DatabaseGenerator) books 448/2814 (15.9%) · lines 746.5K · toc 151.0K · elapsed 21:59 · eta ~1:56:10
-Info: (DatabaseGenerator) Book 6281 'ברכי יוסף על אורח חיים': 1000/8784 lines (11%)
-Info: (DatabaseGenerator) Book 6281 'ברכי יוסף על אורח חיים': 2000/8784 lines (22%)
-Info: (DatabaseGenerator) Book 6281 'ברכי יוסף על אורח חיים': 3000/8784 lines (34%)
-Info: (DatabaseGenerator) Book 6281 'ברכי יוסף על אורח חיים': 4000/8784 lines (45%)
-Info: (DatabaseGenerator) Book 6281 'ברכי יוסף על אורח חיים': 5000/8784 lines (56%)
-Info: (DatabaseGenerator) Book 6281 'ברכי יוסף על אורח חיים': 6000/8784 lines (68%)
-Info: (DatabaseGenerator) Book 6281 'ברכי יוסף על אורח חיים': 7000/8784 lines (79%)
-Info: (DatabaseGenerator) Book 6281 'ברכי יוסף על אורח חיים': 8000/8784 lines (91%)
-Info: (DatabaseGenerator) books 463/2814 (16.4%) · lines 776.6K · toc 161.8K · elapsed 23:04 · eta ~1:57:09
-Info: (DatabaseGenerator) Book 6287 'דברי המשפט': 1000/5578 lines (17%)
-Info: (DatabaseGenerator) Book 6287 'דברי המשפט': 2000/5578 lines (35%)
-Info: (DatabaseGenerator) Book 6287 'דברי המשפט': 3000/5578 lines (53%)
-Info: (DatabaseGenerator) Book 6287 'דברי המשפט': 4000/5578 lines (71%)
-Info: (DatabaseGenerator) Book 6287 'דברי המשפט': 5000/5578 lines (89%)
-Info: (DatabaseGenerator) books 482/2814 (17.1%) · lines 810.1K · toc 168.0K · elapsed 24:05 · eta ~1:56:31
-Info: (DatabaseGenerator) books 506/2814 (17.9%) · lines 844.5K · toc 176.7K · elapsed 25:07 · eta ~1:54:37
+Info: (DatabaseGenerator) Book 6907 'אבני נזר אורח חיים': 5000/9930 lines (50%)
+Info: (DatabaseGenerator) Book 6907 'אבני נזר אורח חיים': 6000/9930 lines (60%)
+Info: (DatabaseGenerator) Book 6907 'אבני נזר אורח חיים': 7000/9930 lines (70%)
+Info: (DatabaseGenerator) Book 6907 'אבני נזר אורח חיים': 8000/9930 lines (80%)
+Info: (DatabaseGenerator) Book 6907 'אבני נזר אורח חיים': 9000/9930 lines (90%)
+Info: (DatabaseGenerator) Book 6909 'אבני נזר יורה דעה': 1000/5461 lines (18%)
+Info: (DatabaseGenerator) Book 6909 'אבני נזר יורה דעה': 2000/5461 lines (36%)
+Info: (DatabaseGenerator) Book 6909 'אבני נזר יורה דעה': 3000/5461 lines (54%)
+Info: (DatabaseGenerator) Book 6909 'אבני נזר יורה דעה': 4000/5461 lines (73%)
+Info: (DatabaseGenerator) Book 6909 'אבני נזר יורה דעה': 5000/5461 lines (91%)
+Info: (DatabaseGenerator) books 1112/2814 (39.5%) · lines 1.7M · toc 341.6K · elapsed 50:13 · eta ~1:16:52
+Info: (DatabaseGenerator) Book 6958 'שו״ת בית יצחק': 1000/5310 lines (18%)
+Info: (DatabaseGenerator) Book 6958 'שו״ת בית יצחק': 2000/5310 lines (37%)
+Info: (DatabaseGenerator) Book 6958 'שו״ת בית יצחק': 3000/5310 lines (56%)
+Info: (DatabaseGenerator) Book 6958 'שו״ת בית יצחק': 4000/5310 lines (75%)
+Info: (DatabaseGenerator) Book 6958 'שו״ת בית יצחק': 5000/5310 lines (94%)
+Info: (DatabaseGenerator) Book 6962 'בית שערים אורח חיים': 1000/5744 lines (17%)
+Info: (DatabaseGenerator) Book 6962 'בית שערים אורח חיים': 2000/5744 lines (34%)
+Info: (DatabaseGenerator) Book 6962 'בית שערים אורח חיים': 3000/5744 lines (52%)
+Info: (DatabaseGenerator) Book 6962 'בית שערים אורח חיים': 4000/5744 lines (69%)
+Info: (DatabaseGenerator) Book 6962 'בית שערים אורח חיים': 5000/5744 lines (87%)
+Info: (DatabaseGenerator) books 1144/2814 (40.6%) · lines 1.7M · toc 345.7K · elapsed 51:20 · eta ~1:14:55
+Info: (DatabaseGenerator) books 1172/2814 (41.6%) · lines 1.7M · toc 351.0K · elapsed 52:21 · eta ~1:13:20
+Info: (DatabaseGenerator) books 1208/2814 (42.9%) · lines 1.8M · toc 354.8K · elapsed 53:22 · eta ~1:10:55
+Info: (DatabaseGenerator) books 1246/2814 (44.2%) · lines 1.8M · toc 360.8K · elapsed 54:24 · eta ~1:08:28
 ```
 ## machine
 ```
                total        used        free      shared  buff/cache   available
-Mem:           16087        6535        1745          12        8264        9551
-/dev/vda        252G   58G   11G  85% /
- 13:17:29 up  5:07,  0 user,  load average: 1.39, 1.19, 1.21
+Mem:           16087        6741        1743          12        8062        9345
+/dev/vda        252G   60G  9.6G  87% /
+ 13:47:31 up  5:37,  0 user,  load average: 1.23, 1.14, 1.10
 ```
