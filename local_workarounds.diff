@@ -1,0 +1,137 @@
+diff --git a/build.gradle.kts b/build.gradle.kts
+index b585548f..d1d47da3 100644
+--- a/build.gradle.kts
++++ b/build.gradle.kts
+@@ -1,10 +1,8 @@
+ plugins {
+     alias(libs.plugins.multiplatform).apply(false)
+-    alias(libs.plugins.android.library).apply(false)
+     alias(libs.plugins.maven.publish).apply(false)
+     alias(libs.plugins.kotlinx.serialization).apply(false)
+     alias(libs.plugins.sqlDelight).apply(false)
+-    alias(libs.plugins.android.application).apply(false)
+ }
+ 
+ // ─── JDK 25: pre-approve the native access sqlite-jdbc already performs ────
+diff --git a/core/build.gradle.kts b/core/build.gradle.kts
+index 56376722..15abbbc6 100644
+--- a/core/build.gradle.kts
++++ b/core/build.gradle.kts
+@@ -1,7 +1,6 @@
+ 
+ plugins {
+     alias(libs.plugins.multiplatform)
+-    alias(libs.plugins.android.library)
+     alias(libs.plugins.maven.publish)
+     alias(libs.plugins.kotlinx.serialization)
+ }
+@@ -11,11 +10,6 @@ group = "io.github.kdroidfilter.seforimlibrary"
+ kotlin {
+     jvmToolchain(libs.versions.jvmToolchain.get().toInt())
+ 
+-    android {
+-        namespace = "io.github.kdroidfilter.seforimlibrary"
+-        compileSdk = 35
+-        minSdk = 21
+-    }
+     jvm()
+ 
+     sourceSets {
+@@ -23,16 +17,12 @@ kotlin {
+             implementation(libs.kotlinx.serialization.json)
+             implementation(libs.kotlinx.serialization.protobuf)
+             // Compose runtime for @Stable annotation (used by consuming Compose apps)
+-            compileOnly(libs.compose.runtime)
+         }
+ 
+         commonTest.dependencies {
+             implementation(kotlin("test"))
+         }
+ 
+-        androidMain.dependencies {
+-
+-        }
+ 
+         jvmMain.dependencies {
+ 
+diff --git a/dao/build.gradle.kts b/dao/build.gradle.kts
+index c8e42a0a..ca898fcd 100644
+--- a/dao/build.gradle.kts
++++ b/dao/build.gradle.kts
+@@ -1,7 +1,6 @@
+ 
+ plugins {
+     alias(libs.plugins.multiplatform)
+-    alias(libs.plugins.android.library)
+     alias(libs.plugins.maven.publish)
+     alias(libs.plugins.kotlinx.serialization)
+     alias(libs.plugins.sqlDelight)
+@@ -13,11 +12,6 @@ group = "io.github.kdroidfilter.seforimlibrary"
+ kotlin {
+     jvmToolchain(libs.versions.jvmToolchain.get().toInt())
+ 
+-    android {
+-        namespace = "io.github.kdroidfilter.seforimlibrary"
+-        compileSdk = 35
+-        minSdk = 21
+-    }
+     jvm()
+ 
+     sourceSets {
+@@ -38,10 +32,6 @@ kotlin {
+             implementation(libs.sqlDelight.driver.sqlite)
+         }
+ 
+-        androidMain.dependencies {
+-            implementation(libs.kotlinx.coroutines.android)
+-            implementation(libs.sqlDelight.driver.android)
+-        }
+ 
+         jvmMain.dependencies {
+             implementation(libs.kotlinx.coroutines.swing)
+diff --git a/generator/otzariasqlite/build.gradle.kts b/generator/otzariasqlite/build.gradle.kts
+index 75ba020c..493ab609 100644
+--- a/generator/otzariasqlite/build.gradle.kts
++++ b/generator/otzariasqlite/build.gradle.kts
+@@ -211,7 +211,7 @@ tasks.register<JavaExec>("appendOtzariaLines") {
+     val persistDb = if (project.hasProperty("persistDb")) project.property("persistDb") as String else baseDb
+ 
+     // Use in-memory DB for speed; seed from baseDb; persist to persistDb (can equal baseDb)
+-    args(":memory:")
++    args(persistDb)
+     systemProperty("appendExistingDb", "true")
+     systemProperty("baseDb", baseDb)
+     systemProperty("persistDb", persistDb)
+@@ -261,7 +261,7 @@ tasks.register<JavaExec>("appendOtzariaLinks") {
+     }
+     val persistDb = if (project.hasProperty("persistDb")) project.property("persistDb") as String else baseDb
+ 
+-    args(":memory:")
++    args(persistDb)
+     // baseDb == persistDb on purpose: phase 2 appends links to the DB phase 1
+     // produced and publishes it back over the same path (atomically — see
+     // DbPublish). GenerateLinks refuses to run when that file is missing.
+
+--- new file core/src/commonMain/kotlin/androidx/compose/runtime/Stable.kt
+package androidx.compose.runtime
+
+annotation class Stable
+--- ~/.gradle/gradle.properties
+org.gradle.jvmargs=-Xmx1536m
+kotlin.compiler.execution.strategy=in-process
+generatorHeap=8g
+linkerHeap=8g
+--- ~/.gradle/init.d/mirror.gradle.kts
+val mirror = "https://maven-central.storage-download.googleapis.com/maven2/"
+fun org.gradle.api.artifacts.dsl.RepositoryHandler.mirrorFirst() {
+    maven { name = "gcsCentralMirror"; url = uri(mirror) }
+}
+beforeSettings {
+    pluginManagement.repositories.mirrorFirst()
+    pluginManagement.repositories.gradlePluginPortal()
+    dependencyResolutionManagement.repositories.mirrorFirst()
+}
+allprojects {
+    buildscript.repositories.mirrorFirst()
+    repositories.mirrorFirst()
+}
