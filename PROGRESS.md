@@ -1,4 +1,4 @@
-# combined delta 2711 — progress (2026-11-27T15:47:40Z)
+# combined delta 2711 — progress (2026-11-27T16:17:42Z)
 
 ## markers
 ```
@@ -25,18 +25,6 @@
 - 15:05Z disk nearly full during v2b links phase (DbPublish writes a full seforim.db.candidate copy, +9.7 GB). Deleted /work/db/v1.pristine.db (v1.db itself was still uncompressed and identical).
 ## tail of delta-v2b.log
 ```
-> Task :dao:kmpPartiallyResolvedDependenciesChecker
-> Task :core:checkKotlinGradlePluginConfigurationErrors SKIPPED
-> Task :dao:checkKotlinGradlePluginConfigurationErrors SKIPPED
-> Task :dao:generateCommonMainSeforimDbInterface UP-TO-DATE
-> Task :dao:jvmProcessResources NO-SOURCE
-> Task :dao:processJvmMainResources SKIPPED
-> Task :generator-common:kmpPartiallyResolvedDependenciesChecker
-> Task :generator-common:checkKotlinGradlePluginConfigurationErrors SKIPPED
-> Task :generator-common:jvmProcessResources UP-TO-DATE
-> Task :generator-common:processJvmMainResources SKIPPED
-> Task :core:compileKotlinJvm UP-TO-DATE
-> Task :core:compileJvmMainJava NO-SOURCE
 > Task :core:jvmMainClasses UP-TO-DATE
 > Task :core:jvmJar UP-TO-DATE
 > Task :dao:compileKotlinJvm UP-TO-DATE
@@ -50,11 +38,23 @@
 > Task :generator-common:compressLineContent
 Picked up JAVA_TOOL_OPTIONS: -Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts -Djavax.net.ssl.trustStoreType=JKS -Dhttps.proxyHost=127.0.0.1 -Dhttps.proxyPort=39655 -Dhttp.nonProxyHosts=localhost|127.0.0.1|::1|127.*|0.*|::|169.254.*|api.anthropic.com|api-staging.anthropic.com|api-pr-preview.an
 Picked up _JAVA_OPTIONS: -XX:+UnlockDiagnosticVMOptions -XX:DisableIntrinsic=_base64_encodeBlock,_base64_decodeBlock
+Info: (CompressLineContentCli) line_content: 7925185 rows compressed
+Info: (CompressLineContentCli) version_line: 426518 rows compressed
+Info: (CompressLineContentCli) line_note: 288202 rows compressed
+Info: (CompressLineContentCli) line text compression done: line_content=7925185 version_line=426518 line_note=288202 rows, 6073541102 → 1631190481 bytes, 8639905 frames decoded
+Info: (CompressLineContentCli) Compressed /work/db/v1.db in 2058411 ms
+[Incubating] Problems report is available at: file:///work/SL/build/reports/problems/problems-report.html
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+For more on this, please refer to https://docs.gradle.org/9.8.0/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+BUILD SUCCESSFUL in 34m 28s
+15 actionable tasks: 4 executed, 11 up-to-date
+Configuration cache entry stored.
 ```
 ## machine
 ```
                total        used        free      shared  buff/cache   available
-Mem:           16087        1748        1771          12       12910       14338
+Mem:           16087         609       15546          12         204       15477
 /dev/vda        252G   44G   26G  63% /
- 15:47:40 up  7:37,  0 user,  load average: 2.36, 2.23, 1.82
+ 16:17:42 up  8:07,  0 user,  load average: 0.00, 0.16, 0.85
 ```
