@@ -1,4 +1,4 @@
-# combined delta 2711 — progress (2026-11-27T19:17:57Z)
+# combined delta 2711 — progress (2026-11-27T19:47:59Z)
 
 ## markers
 ```
@@ -37,36 +37,36 @@
 - 17:47Z v2a Sefaria phase done (48 min); rest started.
 ## tail of v2a.rest.log
 ```
-Info: (DatabaseGenerator) books 2079/2814 (73.8%) · lines 3.0M · toc 534.8K · elapsed 1:25:45 · eta ~30:19
-Info: (DatabaseGenerator) Book 7898 'משנתם סדורה - בבא מציעא פרק איזהו נשך': 1000/7010 lines (14%)
-Info: (DatabaseGenerator) Book 7898 'משנתם סדורה - בבא מציעא פרק איזהו נשך': 2000/7010 lines (28%)
-Info: (DatabaseGenerator) Book 7898 'משנתם סדורה - בבא מציעא פרק איזהו נשך': 3000/7010 lines (42%)
-Info: (DatabaseGenerator) Book 7898 'משנתם סדורה - בבא מציעא פרק איזהו נשך': 4000/7010 lines (57%)
-Info: (DatabaseGenerator) Book 7898 'משנתם סדורה - בבא מציעא פרק איזהו נשך': 5000/7010 lines (71%)
-Info: (DatabaseGenerator) Book 7898 'משנתם סדורה - בבא מציעא פרק איזהו נשך': 6000/7010 lines (85%)
-Info: (DatabaseGenerator) Book 7898 'משנתם סדורה - בבא מציעא פרק איזהו נשך': 7000/7010 lines (99%)
-Info: (DatabaseGenerator) Book 7900 'משנתם סדורה - ביצה מלאכות יום טוב': 1000/5805 lines (17%)
-Info: (DatabaseGenerator) Book 7900 'משנתם סדורה - ביצה מלאכות יום טוב': 2000/5805 lines (34%)
-Info: (DatabaseGenerator) Book 7900 'משנתם סדורה - ביצה מלאכות יום טוב': 3000/5805 lines (51%)
-Info: (DatabaseGenerator) Book 7900 'משנתם סדורה - ביצה מלאכות יום טוב': 4000/5805 lines (68%)
-Info: (DatabaseGenerator) Book 7900 'משנתם סדורה - ביצה מלאכות יום טוב': 5000/5805 lines (86%)
-Info: (DatabaseGenerator) books 2086/2814 (74.1%) · lines 3.1M · toc 546.5K · elapsed 1:26:46 · eta ~30:17
-Info: (DatabaseGenerator) Book 7908 'משנתם סדורה - כתובות פרק ראשון': 1000/5762 lines (17%)
-Info: (DatabaseGenerator) Book 7908 'משנתם סדורה - כתובות פרק ראשון': 2000/5762 lines (34%)
-Info: (DatabaseGenerator) Book 7908 'משנתם סדורה - כתובות פרק ראשון': 3000/5762 lines (52%)
-Info: (DatabaseGenerator) Book 7908 'משנתם סדורה - כתובות פרק ראשון': 4000/5762 lines (69%)
-Info: (DatabaseGenerator) Book 7908 'משנתם סדורה - כתובות פרק ראשון': 5000/5762 lines (86%)
-Info: (DatabaseGenerator) books 2093/2814 (74.3%) · lines 3.1M · toc 559.4K · elapsed 1:27:47 · eta ~30:14
-Info: (DatabaseGenerator) Book 7912 'משנתם סדורה - שבת מוקצה בפרק כירה': 1000/5862 lines (17%)
-Info: (DatabaseGenerator) Book 7912 'משנתם סדורה - שבת מוקצה בפרק כירה': 2000/5862 lines (34%)
-Info: (DatabaseGenerator) Book 7912 'משנתם סדורה - שבת מוקצה בפרק כירה': 3000/5862 lines (51%)
-Info: (DatabaseGenerator) Book 7912 'משנתם סדורה - שבת מוקצה בפרק כירה': 4000/5862 lines (68%)
-Info: (DatabaseGenerator) Book 7912 'משנתם סדורה - שבת מוקצה בפרק כירה': 5000/5862 lines (85%)
+Info: (DatabaseGenerator) Book 8019 'קובץ שיטות קמאי על ערכין': 7000/8051 lines (86%)
+Info: (DatabaseGenerator) Book 8019 'קובץ שיטות קמאי על ערכין': 8000/8051 lines (99%)
+Info: (DatabaseGenerator) Book 8021 'קובץ שיטות קמאי על תמורה': 1000/5450 lines (18%)
+Info: (DatabaseGenerator) Book 8021 'קובץ שיטות קמאי על תמורה': 2000/5450 lines (36%)
+Info: (DatabaseGenerator) Book 8021 'קובץ שיטות קמאי על תמורה': 3000/5450 lines (55%)
+Info: (DatabaseGenerator) Book 8021 'קובץ שיטות קמאי על תמורה': 4000/5450 lines (73%)
+Info: (DatabaseGenerator) Book 8021 'קובץ שיטות קמאי על תמורה': 5000/5450 lines (91%)
+Info: (DatabaseGenerator) books 2227/2814 (79.1%) · lines 4.0M · toc 803.5K · elapsed 1:54:48 · eta ~30:15
+Info: (DatabaseGenerator) books 2307/2814 (81.9%) · lines 4.0M · toc 809.0K · elapsed 1:55:48 · eta ~25:27
+Info: (DatabaseGenerator) Book 8136 'כלי יקר על נביאים': 1000/8457 lines (11%)
+Info: (DatabaseGenerator) Book 8136 'כלי יקר על נביאים': 2000/8457 lines (23%)
+Info: (DatabaseGenerator) Book 8136 'כלי יקר על נביאים': 3000/8457 lines (35%)
+Info: (DatabaseGenerator) Book 8136 'כלי יקר על נביאים': 4000/8457 lines (47%)
+Info: (DatabaseGenerator) Book 8136 'כלי יקר על נביאים': 5000/8457 lines (59%)
+Info: (DatabaseGenerator) Book 8136 'כלי יקר על נביאים': 6000/8457 lines (70%)
+Info: (DatabaseGenerator) Book 8136 'כלי יקר על נביאים': 7000/8457 lines (82%)
+Info: (DatabaseGenerator) Book 8136 'כלי יקר על נביאים': 8000/8457 lines (94%)
+Info: (DatabaseGenerator) Book 8148 'עזרה להבין': 1000/6050 lines (16%)
+Info: (DatabaseGenerator) Book 8148 'עזרה להבין': 2000/6050 lines (33%)
+Info: (DatabaseGenerator) Book 8148 'עזרה להבין': 3000/6050 lines (49%)
+Info: (DatabaseGenerator) Book 8148 'עזרה להבין': 4000/6050 lines (66%)
+Info: (DatabaseGenerator) Book 8148 'עזרה להבין': 5000/6050 lines (82%)
+Info: (DatabaseGenerator) Book 8148 'עזרה להבין': 6000/6050 lines (99%)
+Info: (DatabaseGenerator) books 2334/2814 (82.9%) · lines 4.1M · toc 818.4K · elapsed 1:56:52 · eta ~24:01
+Info: (DatabaseGenerator) books 2388/2814 (84.8%) · lines 4.1M · toc 822.5K · elapsed 1:57:53 · eta ~21:01
 ```
 ## machine
 ```
                total        used        free      shared  buff/cache   available
-Mem:           16087        6830        1885          12        7805        9256
-/dev/vda        252G   52G   17G  76% /
- 19:17:57 up 11:07,  0 user,  load average: 1.04, 1.08, 1.08
+Mem:           16087        7007        1875          12        7640        9079
+/dev/vda        252G   53G   16G  78% /
+ 19:47:59 up 11:37,  0 user,  load average: 1.04, 1.09, 1.08
 ```
