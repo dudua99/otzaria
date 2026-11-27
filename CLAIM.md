@@ -1,1 +1,1 @@
-claimed 2026-11-27T21:11:07Z UTC: QA of prbody/3599-fix (fix/commentary-title-without-book-3599)
+done: nothing to do — prbody/3599-qa already existed (READY, 26.11) and the branch was merged upstream as #6096 (79bd11fec)
