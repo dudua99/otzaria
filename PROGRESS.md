@@ -1,4 +1,4 @@
-# combined delta 2711 — progress (2026-11-27T18:47:55Z)
+# combined delta 2711 — progress (2026-11-27T19:17:57Z)
 
 ## markers
 ```
@@ -37,36 +37,36 @@
 - 17:47Z v2a Sefaria phase done (48 min); rest started.
 ## tail of v2a.rest.log
 ```
-Info: (DatabaseGenerator) Book 6958 'שו״ת בית יצחק': 5000/5310 lines (94%)
-Info: (DatabaseGenerator) Book 6962 'בית שערים אורח חיים': 1000/5744 lines (17%)
-Info: (DatabaseGenerator) Book 6962 'בית שערים אורח חיים': 2000/5744 lines (34%)
-Info: (DatabaseGenerator) Book 6962 'בית שערים אורח חיים': 3000/5744 lines (52%)
-Info: (DatabaseGenerator) Book 6962 'בית שערים אורח חיים': 4000/5744 lines (69%)
-Info: (DatabaseGenerator) Book 6962 'בית שערים אורח חיים': 5000/5744 lines (87%)
-Info: (DatabaseGenerator) books 1144/2814 (40.6%) · lines 1.7M · toc 345.7K · elapsed 49:36 · eta ~1:12:25
-Info: (DatabaseGenerator) books 1174/2814 (41.7%) · lines 1.7M · toc 351.2K · elapsed 50:36 · eta ~1:10:41
-Info: (DatabaseGenerator) books 1212/2814 (43.0%) · lines 1.8M · toc 356.0K · elapsed 51:42 · eta ~1:08:19
-Info: (DatabaseGenerator) books 1249/2814 (44.3%) · lines 1.8M · toc 361.4K · elapsed 52:42 · eta ~1:06:02
-Info: (DatabaseGenerator) books 1283/2814 (45.5%) · lines 1.9M · toc 365.8K · elapsed 53:43 · eta ~1:04:05
-Info: (DatabaseGenerator) Book 7119 'עין יצחק חלק א': 1000/5649 lines (17%)
-Info: (DatabaseGenerator) Book 7119 'עין יצחק חלק א': 2000/5649 lines (35%)
-Info: (DatabaseGenerator) Book 7119 'עין יצחק חלק א': 3000/5649 lines (53%)
-Info: (DatabaseGenerator) Book 7119 'עין יצחק חלק א': 4000/5649 lines (70%)
-Info: (DatabaseGenerator) Book 7119 'עין יצחק חלק א': 5000/5649 lines (88%)
-Info: (DatabaseGenerator) books 1312/2814 (46.6%) · lines 1.9M · toc 372.5K · elapsed 54:44 · eta ~1:02:39
-Info: (DatabaseGenerator) books 1355/2814 (48.1%) · lines 1.9M · toc 377.6K · elapsed 55:45 · eta ~1:00:00
-Info: (DatabaseGenerator) books 1392/2814 (49.4%) · lines 2.0M · toc 382.0K · elapsed 56:48 · eta ~58:01
-Info: (DatabaseGenerator) Book 7245 'שו״ת פרי עץ חיים': 3000/21920 lines (13%)
-Info: (DatabaseGenerator) Book 7245 'שו״ת פרי עץ חיים': 6000/21920 lines (27%)
-Info: (DatabaseGenerator) Book 7245 'שו״ת פרי עץ חיים': 9000/21920 lines (41%)
-Info: (DatabaseGenerator) Book 7245 'שו״ת פרי עץ חיים': 12000/21920 lines (54%)
-Info: (DatabaseGenerator) Book 7245 'שו״ת פרי עץ חיים': 15000/21920 lines (68%)
-Info: (DatabaseGenerator) Book 7245 'שו״ת פרי עץ חיים': 18000/21920 lines (82%)
+Info: (DatabaseGenerator) books 2079/2814 (73.8%) · lines 3.0M · toc 534.8K · elapsed 1:25:45 · eta ~30:19
+Info: (DatabaseGenerator) Book 7898 'משנתם סדורה - בבא מציעא פרק איזהו נשך': 1000/7010 lines (14%)
+Info: (DatabaseGenerator) Book 7898 'משנתם סדורה - בבא מציעא פרק איזהו נשך': 2000/7010 lines (28%)
+Info: (DatabaseGenerator) Book 7898 'משנתם סדורה - בבא מציעא פרק איזהו נשך': 3000/7010 lines (42%)
+Info: (DatabaseGenerator) Book 7898 'משנתם סדורה - בבא מציעא פרק איזהו נשך': 4000/7010 lines (57%)
+Info: (DatabaseGenerator) Book 7898 'משנתם סדורה - בבא מציעא פרק איזהו נשך': 5000/7010 lines (71%)
+Info: (DatabaseGenerator) Book 7898 'משנתם סדורה - בבא מציעא פרק איזהו נשך': 6000/7010 lines (85%)
+Info: (DatabaseGenerator) Book 7898 'משנתם סדורה - בבא מציעא פרק איזהו נשך': 7000/7010 lines (99%)
+Info: (DatabaseGenerator) Book 7900 'משנתם סדורה - ביצה מלאכות יום טוב': 1000/5805 lines (17%)
+Info: (DatabaseGenerator) Book 7900 'משנתם סדורה - ביצה מלאכות יום טוב': 2000/5805 lines (34%)
+Info: (DatabaseGenerator) Book 7900 'משנתם סדורה - ביצה מלאכות יום טוב': 3000/5805 lines (51%)
+Info: (DatabaseGenerator) Book 7900 'משנתם סדורה - ביצה מלאכות יום טוב': 4000/5805 lines (68%)
+Info: (DatabaseGenerator) Book 7900 'משנתם סדורה - ביצה מלאכות יום טוב': 5000/5805 lines (86%)
+Info: (DatabaseGenerator) books 2086/2814 (74.1%) · lines 3.1M · toc 546.5K · elapsed 1:26:46 · eta ~30:17
+Info: (DatabaseGenerator) Book 7908 'משנתם סדורה - כתובות פרק ראשון': 1000/5762 lines (17%)
+Info: (DatabaseGenerator) Book 7908 'משנתם סדורה - כתובות פרק ראשון': 2000/5762 lines (34%)
+Info: (DatabaseGenerator) Book 7908 'משנתם סדורה - כתובות פרק ראשון': 3000/5762 lines (52%)
+Info: (DatabaseGenerator) Book 7908 'משנתם סדורה - כתובות פרק ראשון': 4000/5762 lines (69%)
+Info: (DatabaseGenerator) Book 7908 'משנתם סדורה - כתובות פרק ראשון': 5000/5762 lines (86%)
+Info: (DatabaseGenerator) books 2093/2814 (74.3%) · lines 3.1M · toc 559.4K · elapsed 1:27:47 · eta ~30:14
+Info: (DatabaseGenerator) Book 7912 'משנתם סדורה - שבת מוקצה בפרק כירה': 1000/5862 lines (17%)
+Info: (DatabaseGenerator) Book 7912 'משנתם סדורה - שבת מוקצה בפרק כירה': 2000/5862 lines (34%)
+Info: (DatabaseGenerator) Book 7912 'משנתם סדורה - שבת מוקצה בפרק כירה': 3000/5862 lines (51%)
+Info: (DatabaseGenerator) Book 7912 'משנתם סדורה - שבת מוקצה בפרק כירה': 4000/5862 lines (68%)
+Info: (DatabaseGenerator) Book 7912 'משנתם סדורה - שבת מוקצה בפרק כירה': 5000/5862 lines (85%)
 ```
 ## machine
 ```
                total        used        free      shared  buff/cache   available
-Mem:           16087        6781        1889          12        7849        9306
-/dev/vda        252G   52G   18G  75% /
- 18:47:55 up 10:37,  0 user,  load average: 1.07, 1.10, 1.09
+Mem:           16087        6830        1885          12        7805        9256
+/dev/vda        252G   52G   17G  76% /
+ 19:17:57 up 11:07,  0 user,  load average: 1.04, 1.08, 1.08
 ```
