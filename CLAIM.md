@@ -1,1 +1,1 @@
-claim fix-perf2 at 2026-11-26T19:47:35Z: implement notes/perf2.md (reader selection rebuilds all visible items)
+takeover of stale claim fix-perf2 at 2026-11-27T00:42:25Z: implement notes/perf2.md (per-item cache for selection-only reader rebuilds); work branch perf/reader-selection-item-cache
