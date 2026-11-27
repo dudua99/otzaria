@@ -1,4 +1,4 @@
-# combined delta 2711 — progress (2026-11-27T17:17:46Z)
+# combined delta 2711 — progress (2026-11-27T17:47:49Z)
 
 ## markers
 ```
@@ -19,6 +19,7 @@
 2026-11-27T16:58:20Z ANALYZE v2b
 2026-11-27T16:58:20Z ANALYZE v2b rc=0
 2026-11-27T16:59:39Z v2a START sefaria phase fordb=9bf3ab1cd0b2959962e688caf59fd8a90d32e8b1b7dc545823b21f49fa0d9911 code=c5e28010
+2026-11-27T17:47:44Z v2a DONE sefaria; snapshot
 ```
 ## notes
 - 08:15Z v1 started (v40 inputs verified by sha256; SeforimLibrary c5e2801 + local workarounds).
@@ -34,36 +35,36 @@
 - 17:05Z v2b result pushed: prbody/libdata-2611-delta @112c4568 (READY).
 ## tail of v2a.sefaria.log
 ```
-Info: (SefariaDirect) Processed 200/5818 books
-Info: (SefariaDirect) Processed 300/5818 books
-Info: (SefariaDirect) Processed 400/5818 books
-Info: (SefariaDirect) Processed 500/5818 books
-Info: (SefariaDirect) Processed 600/5818 books
-Info: (SefariaDirect) Processed 700/5818 books
-Info: (SefariaDirect) Processed 800/5818 books
-Info: (SefariaDirect) Processed 900/5818 books
-Info: (SefariaDirect) Processed 1000/5818 books
-Info: (SefariaDirect) Processed 1100/5818 books
-Info: (SefariaDirect) Processed 1200/5818 books
-Info: (SefariaDirect) Processed 1300/5818 books
-Info: (SefariaDirect) Processed 1400/5818 books
-Info: (SefariaDirect) Processed 1500/5818 books
-Info: (SefariaDirect) Processed 1600/5818 books
-Info: (SefariaDirect) Processed 1700/5818 books
-Info: (SefariaDirect) Processed 1800/5818 books
-Info: (SefariaDirect) Processed 1900/5818 books
-Info: (SefariaDirect) Processed 2000/5818 books
-Info: (SefariaDirect) Processed 2100/5818 books
-Info: (SefariaDirect) Processed 2200/5818 books
-Info: (SefariaDirect) Processed 2300/5818 books
-Info: (SefariaDirect) Processed 2400/5818 books
-Info: (SefariaDirect) Processed 2500/5818 books
-Info: (SefariaDirect) Processed 2600/5818 books
+Info: (SefariaDirect) Inline anchors: 173700 anchors from 83579 itag-carrying lines (594 label-only tags re-aligned to their printed comment)
+Warn: (SefariaDirect) Inline anchors skipped tags — no commentary book for tag: 143167 (e.g. Notes and Corrections on Midrash Lekach Tov on Midrash Lekach Tov on Esther, Introduction,  2); tag without order/label: 141327 (e.g. Notes by Heinrich Guggenheimer on Jerusalem Talmud Berakhot 1:5:13); co
+Info: (SefariaDirect) Printed-marker anchors: 385 inserted (513 markers unmatched, 0 ambiguous)
+Info: (SefariaDirect) Resolving char-level anchors (charLevelData, 47784 cells)...
+Info: (SefariaDirect) Char-level anchors: 6542 inserted from 47784 CSV cells
+Info: (SefariaDirect) Char-level anchors skipped — word-based offsets: 23892; version mismatch: 9817; multi-version book: 7555; offsets out of bounds: 2; known incorrect quotation offset: 2; line modified by cleaning: 3
+Info: (SefariaDirect) Demoting cross-corpus dependant links per Sefaria categorisation...
+Info: (SefariaDirect) Recorded source hashes for 5818 / 6220 Sefaria books
+Warn: (SefariaDirect) source hashes: 402 of 6220 Sefaria books have no source hash — they are fully reprocessed every cycle
+Warn: (SefariaDirect) source hashes: 402 not recorded — skipped by the book/author blacklist (אֲהֵבוּךָ עַד מָוֶת, אגרת אריסטיאס, אדם מן האדמה, אוהב גר, אור לישרים על תלמוד ירושלמי ביצה, אור לישרים על תלמוד י�
+Info: (SefariaDirect) report written to /work/SL/build/generator-reports/sefaria-source-hashes-not-recorded.json
+Info: (SefariaDirect) Category descriptions: parsed=152, used=125, unused=27
+Info: (SefariaDirect) Direct Sefaria import completed.
+Info: (SefariaSqlite) Link-import metrics report written to /work/SL/build/seforim.db.link-import-metrics.json
+Info: (IdAllocator) build_state.db snapshot written to /work/SL/build/seforim.db.buildstate in 161.8s (books=8259, lines=7925185, tocEntries=1676654, links=4454493)
+Info: (IdAllocator) IdAllocator snapshot: source(reused=1, fresh=0), author(reused=5177, fresh=0), pub_date(reused=5400, fresh=0), connection_type(reused=3908913, fresh=0), category(reused=1169, fresh=0), tocText(reused=912753, fresh=0), book_version(reused=6734, fresh=0), book(reused=5818, fresh=0)
+Info: (SefariaSqlite) build_state verified against /work/SL/build/seforim.db: 15 counters ahead of the DB
+Info: (SefariaSqlite) Sefaria -> SQLite completed. DB at /work/SL/build/seforim.db
+[Incubating] Problems report is available at: file:///work/SL/build/reports/problems/problems-report.html
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+For more on this, please refer to https://docs.gradle.org/9.8.0/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+BUILD SUCCESSFUL in 48m 4s
+19 actionable tasks: 5 executed, 14 up-to-date
+Configuration cache entry stored.
 ```
 ## machine
 ```
                total        used        free      shared  buff/cache   available
-Mem:           16087       10031        1887          12        4528        6056
-/dev/vda        252G   36G   34G  52% /
- 17:17:46 up  9:07,  0 user,  load average: 1.12, 1.23, 1.33
+Mem:           16087         824        4365          12       11359       15262
+/dev/vda        252G   43G   27G  62% /
+ 17:47:49 up  9:37,  0 user,  load average: 1.19, 2.10, 1.97
 ```
