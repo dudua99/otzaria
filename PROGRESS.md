@@ -1,4 +1,4 @@
-# combined delta 2711 — progress (2026-11-27T14:17:33Z)
+# combined delta 2711 — progress (2026-11-27T14:47:35Z)
 
 ## markers
 ```
@@ -21,36 +21,36 @@
 - 12:50Z v2b Sefaria phase done (50 min). Early check: Sefaria link 1064034 (שבת קמא:, טז ↔ חידושי רמב"ן קמא:, ב) gone, new link 4454494 (שבת קמא:, כח → same Ramban line), link_range rows Shabbat↔Ramban 4→5 (#4023 as expected).
 ## tail of v2b.rest.log
 ```
-Info: (DatabaseGenerator) Book 7867 'איזהו מקומן על ערכין': 7000/8422 lines (83%)
-Info: (DatabaseGenerator) Book 7867 'איזהו מקומן על ערכין': 8000/8422 lines (94%)
-Info: (DatabaseGenerator) books 2049/2814 (72.8%) · lines 2.9M · toc 496.1K · elapsed 1:22:49 · eta ~30:55
-Info: (DatabaseGenerator) Book 7868 'איזהו מקומן על שבת': 3000/24207 lines (12%)
-Info: (DatabaseGenerator) Book 7868 'איזהו מקומן על שבת': 6000/24207 lines (24%)
-Info: (DatabaseGenerator) Book 7868 'איזהו מקומן על שבת': 9000/24207 lines (37%)
-Info: (DatabaseGenerator) Book 7868 'איזהו מקומן על שבת': 12000/24207 lines (49%)
-Info: (DatabaseGenerator) Book 7868 'איזהו מקומן על שבת': 15000/24207 lines (61%)
-Info: (DatabaseGenerator) Book 7868 'איזהו מקומן על שבת': 18000/24207 lines (74%)
-Info: (DatabaseGenerator) Book 7868 'איזהו מקומן על שבת': 21000/24207 lines (86%)
-Info: (DatabaseGenerator) Book 7868 'איזהו מקומן על שבת': 24000/24207 lines (99%)
-Info: (DatabaseGenerator) books 2056/2814 (73.0%) · lines 2.9M · toc 502.0K · elapsed 1:23:52 · eta ~30:54
-Info: (DatabaseGenerator) Book 7875 'וזה לשונו - סוכה וארבע מינים [הלכה]': 1000/6415 lines (15%)
-Info: (DatabaseGenerator) Book 7875 'וזה לשונו - סוכה וארבע מינים [הלכה]': 2000/6415 lines (31%)
-Info: (DatabaseGenerator) Book 7875 'וזה לשונו - סוכה וארבע מינים [הלכה]': 3000/6415 lines (46%)
-Info: (DatabaseGenerator) Book 7875 'וזה לשונו - סוכה וארבע מינים [הלכה]': 4000/6415 lines (62%)
-Info: (DatabaseGenerator) Book 7875 'וזה לשונו - סוכה וארבע מינים [הלכה]': 5000/6415 lines (77%)
-Info: (DatabaseGenerator) Book 7875 'וזה לשונו - סוכה וארבע מינים [הלכה]': 6000/6415 lines (93%)
-Info: (DatabaseGenerator) Book 7885 'משנתם בלשונם - ביצה מלאכות יום טוב': 1000/6663 lines (15%)
-Info: (DatabaseGenerator) Book 7885 'משנתם בלשונם - ביצה מלאכות יום טוב': 2000/6663 lines (30%)
-Info: (DatabaseGenerator) Book 7885 'משנתם בלשונם - ביצה מלאכות יום טוב': 3000/6663 lines (45%)
-Info: (DatabaseGenerator) Book 7885 'משנתם בלשונם - ביצה מלאכות יום טוב': 4000/6663 lines (60%)
-Info: (DatabaseGenerator) Book 7885 'משנתם בלשונם - ביצה מלאכות יום טוב': 5000/6663 lines (75%)
-Info: (DatabaseGenerator) Book 7885 'משנתם בלשונם - ביצה מלאכות יום טוב': 6000/6663 lines (90%)
-Info: (DatabaseGenerator) books 2067/2814 (73.4%) · lines 3.0M · toc 511.9K · elapsed 1:25:02 · eta ~30:43
+Info: (DatabaseGenerator) Book 8013 'קובץ שיטות קמאי על בכורות': 16000/17069 lines (93%)
+Info: (DatabaseGenerator) books 2195/2814 (78.0%) · lines 3.9M · toc 759.2K · elapsed 1:52:54 · eta ~31:50
+Info: (DatabaseGenerator) Book 8014 'קובץ שיטות קמאי על חולין': 4000/31364 lines (12%)
+Info: (DatabaseGenerator) Book 8014 'קובץ שיטות קמאי על חולין': 8000/31364 lines (25%)
+Info: (DatabaseGenerator) Book 8014 'קובץ שיטות קמאי על חולין': 12000/31364 lines (38%)
+Info: (DatabaseGenerator) Book 8014 'קובץ שיטות קמאי על חולין': 16000/31364 lines (51%)
+Info: (DatabaseGenerator) Book 8014 'קובץ שיטות קמאי על חולין': 20000/31364 lines (63%)
+Info: (DatabaseGenerator) Book 8014 'קובץ שיטות קמאי על חולין': 24000/31364 lines (76%)
+Info: (DatabaseGenerator) Book 8014 'קובץ שיטות קמאי על חולין': 28000/31364 lines (89%)
+Info: (DatabaseGenerator) books 2196/2814 (78.0%) · lines 3.9M · toc 774.1K · elapsed 1:53:59 · eta ~32:04
+Info: (DatabaseGenerator) Book 8015 'קובץ שיטות קמאי על כריתות': 1000/6261 lines (15%)
+Info: (DatabaseGenerator) Book 8015 'קובץ שיטות קמאי על כריתות': 2000/6261 lines (31%)
+Info: (DatabaseGenerator) Book 8015 'קובץ שיטות קמאי על כריתות': 3000/6261 lines (47%)
+Info: (DatabaseGenerator) Book 8015 'קובץ שיטות קמאי על כריתות': 4000/6261 lines (63%)
+Info: (DatabaseGenerator) Book 8015 'קובץ שיטות קמאי על כריתות': 5000/6261 lines (79%)
+Info: (DatabaseGenerator) Book 8015 'קובץ שיטות קמאי על כריתות': 6000/6261 lines (95%)
+Info: (DatabaseGenerator) Book 8017 'קובץ שיטות קמאי על מנחות': 4000/35105 lines (11%)
+Info: (DatabaseGenerator) Book 8017 'קובץ שיטות קמאי על מנחות': 8000/35105 lines (22%)
+Info: (DatabaseGenerator) Book 8017 'קובץ שיטות קמאי על מנחות': 12000/35105 lines (34%)
+Info: (DatabaseGenerator) Book 8017 'קובץ שיטות קמאי על מנחות': 16000/35105 lines (45%)
+Info: (DatabaseGenerator) Book 8017 'קובץ שיטות קמאי על מנחות': 20000/35105 lines (56%)
+Info: (DatabaseGenerator) Book 8017 'קובץ שיטות קמאי על מנחות': 24000/35105 lines (68%)
+Info: (DatabaseGenerator) Book 8017 'קובץ שיטות קמאי על מנחות': 28000/35105 lines (79%)
+Info: (DatabaseGenerator) Book 8017 'קובץ שיטות קמאי על מנחות': 32000/35105 lines (91%)
+Info: (DatabaseGenerator) books 2199/2814 (78.1%) · lines 4.0M · toc 792.7K · elapsed 1:55:21 · eta ~32:15
 ```
 ## machine
 ```
                total        used        free      shared  buff/cache   available
-Mem:           16087        7160        1724          12        7662        8926
-/dev/vda        252G   61G  8.4G  88% /
- 14:17:33 up  6:07,  0 user,  load average: 1.07, 1.08, 1.08
+Mem:           16087        7172        1757          12        7618        8914
+/dev/vda        252G   62G  7.5G  90% /
+ 14:47:35 up  6:37,  0 user,  load average: 1.08, 1.11, 1.09
 ```
