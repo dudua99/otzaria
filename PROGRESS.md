@@ -1,4 +1,4 @@
-# combined delta 2711 — progress (2026-11-27T19:47:59Z)
+# combined delta 2711 — progress (2026-11-27T20:18:01Z)
 
 ## markers
 ```
@@ -35,38 +35,39 @@
 - 16:58Z v2b patch verified (target hash 8be6a1a8…); analysis done; v2b.db removed for disk; v2a build released.
 - 17:05Z v2b result pushed: prbody/libdata-2611-delta @112c4568 (READY).
 - 17:47Z v2a Sefaria phase done (48 min); rest started.
+- 20:1xZ deleted v2a Sefaria snapshot to leave room for the links-phase candidate copy.
 ## tail of v2a.rest.log
 ```
-Info: (DatabaseGenerator) Book 8019 'קובץ שיטות קמאי על ערכין': 7000/8051 lines (86%)
-Info: (DatabaseGenerator) Book 8019 'קובץ שיטות קמאי על ערכין': 8000/8051 lines (99%)
-Info: (DatabaseGenerator) Book 8021 'קובץ שיטות קמאי על תמורה': 1000/5450 lines (18%)
-Info: (DatabaseGenerator) Book 8021 'קובץ שיטות קמאי על תמורה': 2000/5450 lines (36%)
-Info: (DatabaseGenerator) Book 8021 'קובץ שיטות קמאי על תמורה': 3000/5450 lines (55%)
-Info: (DatabaseGenerator) Book 8021 'קובץ שיטות קמאי על תמורה': 4000/5450 lines (73%)
-Info: (DatabaseGenerator) Book 8021 'קובץ שיטות קמאי על תמורה': 5000/5450 lines (91%)
-Info: (DatabaseGenerator) books 2227/2814 (79.1%) · lines 4.0M · toc 803.5K · elapsed 1:54:48 · eta ~30:15
-Info: (DatabaseGenerator) books 2307/2814 (81.9%) · lines 4.0M · toc 809.0K · elapsed 1:55:48 · eta ~25:27
-Info: (DatabaseGenerator) Book 8136 'כלי יקר על נביאים': 1000/8457 lines (11%)
-Info: (DatabaseGenerator) Book 8136 'כלי יקר על נביאים': 2000/8457 lines (23%)
-Info: (DatabaseGenerator) Book 8136 'כלי יקר על נביאים': 3000/8457 lines (35%)
-Info: (DatabaseGenerator) Book 8136 'כלי יקר על נביאים': 4000/8457 lines (47%)
-Info: (DatabaseGenerator) Book 8136 'כלי יקר על נביאים': 5000/8457 lines (59%)
-Info: (DatabaseGenerator) Book 8136 'כלי יקר על נביאים': 6000/8457 lines (70%)
-Info: (DatabaseGenerator) Book 8136 'כלי יקר על נביאים': 7000/8457 lines (82%)
-Info: (DatabaseGenerator) Book 8136 'כלי יקר על נביאים': 8000/8457 lines (94%)
-Info: (DatabaseGenerator) Book 8148 'עזרה להבין': 1000/6050 lines (16%)
-Info: (DatabaseGenerator) Book 8148 'עזרה להבין': 2000/6050 lines (33%)
-Info: (DatabaseGenerator) Book 8148 'עזרה להבין': 3000/6050 lines (49%)
-Info: (DatabaseGenerator) Book 8148 'עזרה להבין': 4000/6050 lines (66%)
-Info: (DatabaseGenerator) Book 8148 'עזרה להבין': 5000/6050 lines (82%)
-Info: (DatabaseGenerator) Book 8148 'עזרה להבין': 6000/6050 lines (99%)
-Info: (DatabaseGenerator) books 2334/2814 (82.9%) · lines 4.1M · toc 818.4K · elapsed 1:56:52 · eta ~24:01
-Info: (DatabaseGenerator) books 2388/2814 (84.8%) · lines 4.1M · toc 822.5K · elapsed 1:57:53 · eta ~21:01
+Info: (BuildLineDhIndexCli) line_dh: dropping noisy book 7813 'שפת אמת על שבת' (distinct=0.09, oneWord=0.71, opener=0.10, hits=689)
+Info: (BuildLineDhIndexCli) line_dh: dropping noisy book 7814 'שפת אמת על בכורות' (distinct=0.14, oneWord=1.00, opener=0.03, hits=74)
+Info: (BuildLineDhIndexCli) line_dh: dropping noisy book 7815 'שפת אמת על זבחים' (distinct=0.09, oneWord=1.00, opener=0.04, hits=343)
+Info: (BuildLineDhIndexCli) line_dh: dropping noisy book 7816 'שפת אמת על כריתות' (distinct=0.12, oneWord=1.00, opener=0.11, hits=65)
+Info: (BuildLineDhIndexCli) line_dh: dropping noisy book 7817 'שפת אמת על מנחות' (distinct=0.12, oneWord=1.00, opener=0.12, hits=353)
+Info: (BuildLineDhIndexCli) line_dh: dropping noisy book 7818 'שפת אמת על מעילה' (distinct=0.20, oneWord=1.00, opener=0.07, hits=44)
+Info: (BuildLineDhIndexCli) line_dh: dropping noisy book 7819 'שפת אמת על ערכין' (distinct=0.19, oneWord=1.00, opener=0.13, hits=75)
+Info: (BuildLineDhIndexCli) line_dh: dropping noisy book 7820 'שפת אמת על תמורה' (distinct=0.16, oneWord=1.00, opener=0.10, hits=86)
+Info: (BuildLineDhIndexCli) line_dh: dropping noisy book 7833 'תפארת יעקב על גיטין' (distinct=0.06, oneWord=1.00, opener=0.49, hits=2642)
+Info: (BuildLineDhIndexCli) line_dh: dropping noisy book 8032 'חידושי הר״ן (מיוחס לו) על שבת' (distinct=0.49, oneWord=1.00, opener=0.20, hits=1823)
+Info: (BuildLineDhIndexCli) line_dh: dropping noisy book 8045 'אור הישר (ירושלמי)' (distinct=0.03, oneWord=1.00, opener=0.02, hits=1145)
+Info: (BuildLineDhIndexCli) line_dh: dropping noisy book 8105 'שקל הקדש על ירושלמי שקלים' (distinct=0.25, oneWord=1.00, opener=0.52, hits=677)
+Info: (BuildLineDhIndexCli) line_dh: dropping noisy book 8158 'תורת נתנאל על התורה' (distinct=0.53, oneWord=0.98, opener=0.38, hits=217)
+Info: (BuildLineDhIndexCli) line_dh: 1271986 dibburim over 2630 bold-format (35 of them lead-bold) + 107 dash-format books (2143 books below threshold, 294 books dropped as non-dibbur marking; eligible=4892 metadata + 282 reviewed overrides, unreviewed=3085)
+> Task :sefariasqlite:buildLineDivineNameIndex
+Picked up JAVA_TOOL_OPTIONS: -Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts -Djavax.net.ssl.trustStoreType=JKS -Dhttps.proxyHost=127.0.0.1 -Dhttps.proxyPort=39655 -Dhttp.nonProxyHosts=localhost|127.0.0.1|::1|127.*|0.*|::|169.254.*|api.anthropic.com|api-staging.anthropic.com|api-pr-preview.an
+Picked up _JAVA_OPTIONS: -XX:+UnlockDiagnosticVMOptions -XX:DisableIntrinsic=_base64_encodeBlock,_base64_decodeBlock
+Info: (BuildLineDivineNames) Reading pinned ForDB archive /work/v2a/fordb_latest.zip (sha256=9bf3ab1cd0b2959962e688caf59fd8a90d32e8b1b7dc545823b21f49fa0d9911)
+Info: (BuildLineDivineNames) line_divine_name: 500000 lines, 22568 spans
+Info: (BuildLineDivineNames) line_divine_name: 1000000 lines, 27007 spans
+Info: (BuildLineDivineNames) line_divine_name: 1500000 lines, 33077 spans
+Info: (BuildLineDivineNames) line_divine_name: 2000000 lines, 45503 spans
+Info: (BuildLineDivineNames) line_divine_name: 2500000 lines, 50461 spans
+Info: (BuildLineDivineNames) line_divine_name: 3000000 lines, 52239 spans
+Info: (BuildLineDivineNames) line_divine_name: 3500000 lines, 116193 spans
 ```
 ## machine
 ```
                total        used        free      shared  buff/cache   available
-Mem:           16087        7007        1875          12        7640        9079
-/dev/vda        252G   53G   16G  78% /
- 19:47:59 up 11:37,  0 user,  load average: 1.04, 1.09, 1.08
+Mem:           16087        1916        4616          12        9896       14170
+/dev/vda        252G   44G   26G  63% /
+ 20:18:01 up 12:07,  0 user,  load average: 1.09, 1.14, 1.11
 ```
