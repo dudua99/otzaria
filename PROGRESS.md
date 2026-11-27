@@ -1,4 +1,4 @@
-# combined delta 2711 — progress (2026-11-27T10:47:18Z)
+# combined delta 2711 — progress (2026-11-27T11:17:20Z)
 
 ## markers
 ```
@@ -13,36 +13,36 @@
 - v2a build will start only after the v2b patch is produced (avoids running two 8g JVMs on the 15 GB box).
 ## tail of v1.rest.log
 ```
-Info: (DatabaseGenerator) Book 7921 'שלמי כהן גיטין': 3000/9088 lines (33%)
-Info: (DatabaseGenerator) Book 7921 'שלמי כהן גיטין': 4000/9088 lines (44%)
-Info: (DatabaseGenerator) Book 7921 'שלמי כהן גיטין': 5000/9088 lines (55%)
-Info: (DatabaseGenerator) Book 7921 'שלמי כהן גיטין': 6000/9088 lines (66%)
-Info: (DatabaseGenerator) Book 7921 'שלמי כהן גיטין': 7000/9088 lines (77%)
-Info: (DatabaseGenerator) Book 7921 'שלמי כהן גיטין': 8000/9088 lines (88%)
-Info: (DatabaseGenerator) Book 7921 'שלמי כהן גיטין': 9000/9088 lines (99%)
-Info: (DatabaseGenerator) Book 7922 'שלמי כהן יבמות': 1000/9736 lines (10%)
-Info: (DatabaseGenerator) Book 7922 'שלמי כהן יבמות': 2000/9736 lines (20%)
-Info: (DatabaseGenerator) Book 7922 'שלמי כהן יבמות': 3000/9736 lines (30%)
-Info: (DatabaseGenerator) Book 7922 'שלמי כהן יבמות': 4000/9736 lines (41%)
-Info: (DatabaseGenerator) Book 7922 'שלמי כהן יבמות': 5000/9736 lines (51%)
-Info: (DatabaseGenerator) Book 7922 'שלמי כהן יבמות': 6000/9736 lines (61%)
-Info: (DatabaseGenerator) Book 7922 'שלמי כהן יבמות': 7000/9736 lines (71%)
-Info: (DatabaseGenerator) Book 7922 'שלמי כהן יבמות': 8000/9736 lines (82%)
-Info: (DatabaseGenerator) Book 7922 'שלמי כהן יבמות': 9000/9736 lines (92%)
-Info: (DatabaseGenerator) books 2104/2814 (74.7%) · lines 3.2M · toc 573.8K · elapsed 1:37:23 · eta ~32:51
-Info: (DatabaseGenerator) Book 7924 'שלמי כהן כתובות': 1000/8590 lines (11%)
-Info: (DatabaseGenerator) Book 7924 'שלמי כהן כתובות': 2000/8590 lines (23%)
-Info: (DatabaseGenerator) Book 7924 'שלמי כהן כתובות': 3000/8590 lines (34%)
-Info: (DatabaseGenerator) Book 7924 'שלמי כהן כתובות': 4000/8590 lines (46%)
-Info: (DatabaseGenerator) Book 7924 'שלמי כהן כתובות': 5000/8590 lines (58%)
-Info: (DatabaseGenerator) Book 7924 'שלמי כהן כתובות': 6000/8590 lines (69%)
-Info: (DatabaseGenerator) Book 7924 'שלמי כהן כתובות': 7000/8590 lines (81%)
-Info: (DatabaseGenerator) Book 7924 'שלמי כהן כתובות': 8000/8590 lines (93%)
+Info: (DatabaseGenerator) Book 8136 'כלי יקר על נביאים': 1000/8457 lines (11%)
+Info: (DatabaseGenerator) Book 8136 'כלי יקר על נביאים': 2000/8457 lines (23%)
+Info: (DatabaseGenerator) Book 8136 'כלי יקר על נביאים': 3000/8457 lines (35%)
+Info: (DatabaseGenerator) Book 8136 'כלי יקר על נביאים': 4000/8457 lines (47%)
+Info: (DatabaseGenerator) Book 8136 'כלי יקר על נביאים': 5000/8457 lines (59%)
+Info: (DatabaseGenerator) Book 8136 'כלי יקר על נביאים': 6000/8457 lines (70%)
+Info: (DatabaseGenerator) Book 8136 'כלי יקר על נביאים': 7000/8457 lines (82%)
+Info: (DatabaseGenerator) Book 8136 'כלי יקר על נביאים': 8000/8457 lines (94%)
+Info: (DatabaseGenerator) books 2326/2814 (82.6%) · lines 4.1M · toc 814.0K · elapsed 2:05:50 · eta ~26:24
+Info: (DatabaseGenerator) Book 8148 'עזרה להבין': 1000/6050 lines (16%)
+Info: (DatabaseGenerator) Book 8148 'עזרה להבין': 2000/6050 lines (33%)
+Info: (DatabaseGenerator) Book 8148 'עזרה להבין': 3000/6050 lines (49%)
+Info: (DatabaseGenerator) Book 8148 'עזרה להבין': 4000/6050 lines (66%)
+Info: (DatabaseGenerator) Book 8148 'עזרה להבין': 5000/6050 lines (82%)
+Info: (DatabaseGenerator) Book 8148 'עזרה להבין': 6000/6050 lines (99%)
+Info: (DatabaseGenerator) books 2363/2814 (83.9%) · lines 4.1M · toc 821.1K · elapsed 2:06:51 · eta ~24:12
+Info: (DatabaseGenerator) Book 8210 'ליקוטי חבר בן חיים ה': 1000/8158 lines (12%)
+Info: (DatabaseGenerator) Book 8210 'ליקוטי חבר בן חיים ה': 2000/8158 lines (24%)
+Info: (DatabaseGenerator) Book 8210 'ליקוטי חבר בן חיים ה': 3000/8158 lines (36%)
+Info: (DatabaseGenerator) Book 8210 'ליקוטי חבר בן חיים ה': 4000/8158 lines (49%)
+Info: (DatabaseGenerator) Book 8210 'ליקוטי חבר בן חיים ה': 5000/8158 lines (61%)
+Info: (DatabaseGenerator) Book 8210 'ליקוטי חבר בן חיים ה': 6000/8158 lines (73%)
+Info: (DatabaseGenerator) Book 8210 'ליקוטי חבר בן חיים ה': 7000/8158 lines (85%)
+Info: (DatabaseGenerator) Book 8210 'ליקוטי חבר בן חיים ה': 8000/8158 lines (98%)
+Info: (DatabaseGenerator) books 2392/2814 (85.0%) · lines 4.1M · toc 823.1K · elapsed 2:07:54 · eta ~22:33
 ```
 ## machine
 ```
                total        used        free      shared  buff/cache   available
-Mem:           16087        6570        1693          12        8270        9516
-/dev/vda        252G   38G   31G  56% /
- 10:47:18 up  2:36,  0 user,  load average: 1.03, 1.08, 1.08
+Mem:           16087        6933        1708          12        7892        9154
+/dev/vda        252G   39G   30G  57% /
+ 11:17:20 up  3:06,  0 user,  load average: 1.14, 1.14, 1.10
 ```
