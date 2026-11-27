@@ -4,7 +4,7 @@ You are one of several identical workers started on a schedule. The coordinator'
 
 Rules: follow `FIX.md` / `QA.md` from this branch (they include GIT IDENTITY: dudua99 / 99@9900.co.il, NO Co-Authored-By / AI attribution anywhere, no force push, no PRs, no GitHub comments). AGENTS.md from upstream/dev overrides everything.
 
-**NO NEW SETTINGS (owner's permanent rule, 27.11.2026):** no item may add a new user setting (toggle/option/preference, Settings key) — see FIX.md/QA.md; such an item ends NOT READY.
+**NO NEW SETTINGS (owner's permanent rule, 27.11.2026):** no item may add a new user setting (toggle/option/preference, Settings key). If one seems needed, stop with `NOT READY` / `OWNER DECISION: new setting` (see FIX.md/QA.md) — the owner decides.
 
 Before taking any item: `git show FETCH_HEAD:HOLD.md` (if it exists) and skip every issue number listed there — for fix AND for QA.
 
