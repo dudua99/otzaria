@@ -1,4 +1,4 @@
-# combined delta 2711 — progress (2026-11-27T15:17:37Z)
+# combined delta 2711 — progress (2026-11-27T15:47:40Z)
 
 ## markers
 ```
@@ -10,6 +10,9 @@
 2026-11-27T11:59:38Z v2b START sefaria phase fordb=b5ceef29ee3f84c6682846d4f76e1bc7d53b689c606d06b2ea3b430d3dbf9a35 code=1ed6179a
 2026-11-27T12:49:59Z v2b DONE sefaria; snapshot
 2026-11-27T12:50:05Z v2b START rest
+2026-11-27T15:30:33Z v2b DONE build -> /work/db/v2b.db
+2026-11-27T15:30:33Z PIPE waiting for /work/v2a/READY
+2026-11-27T15:30:43Z DELTA v2b compress v1
 ```
 ## notes
 - 08:15Z v1 started (v40 inputs verified by sha256; SeforimLibrary c5e2801 + local workarounds).
@@ -20,38 +23,38 @@
 - v1 sanity: books 8259 / lines 7925185 = v40 library_stats exactly; links 4,454,493 vs v40 7,001,824 — the LINKER (GPU relink) links are not produced by a local build; identical on every local build, so they cancel in the deltas.
 - 12:50Z v2b Sefaria phase done (50 min). Early check: Sefaria link 1064034 (שבת קמא:, טז ↔ חידושי רמב"ן קמא:, ב) gone, new link 4454494 (שבת קמא:, כח → same Ramban line), link_range rows Shabbat↔Ramban 4→5 (#4023 as expected).
 - 15:05Z disk nearly full during v2b links phase (DbPublish writes a full seforim.db.candidate copy, +9.7 GB). Deleted /work/db/v1.pristine.db (v1.db itself was still uncompressed and identical).
-## tail of v2b.rest.log
+## tail of delta-v2b.log
 ```
-Info: (GemaraDafAltToc)   רי"ף כתובות: 147 entries
-Info: (GemaraDafAltToc)   רי"ף מגילה: 35 entries
-Info: (GemaraDafAltToc)   רי"ף מועד קטן: 25 entries
-Info: (GemaraDafAltToc)   רי"ף מכות: 18 entries
-Info: (GemaraDafAltToc)   רי"ף נדרים: 100 entries
-Info: (GemaraDafAltToc)   רי"ף סוכה: 58 entries
-Info: (GemaraDafAltToc)   רי"ף סנהדרין: 49 entries
-Info: (GemaraDafAltToc)   רי"ף עבודה זרה: 73 entries
-Info: (GemaraDafAltToc)   רי"ף עירובין: 104 entries
-Info: (GemaraDafAltToc)   רי"ף פסחים: 50 entries
-Info: (GemaraDafAltToc)   רי"ף קידושין: 81 entries
-Info: (GemaraDafAltToc)   רי"ף ראש השנה: 18 entries
-Info: (GemaraDafAltToc)   רי"ף שבועות: 34 entries
-Info: (GemaraDafAltToc)   רי"ף שבת: 125 entries
-Info: (GemaraDafAltToc)   רי"ף תענית: 40 entries
-Info: (BuildStateVerifier) build_state verified against /work/SLb/build/seforim.db: 15 counters ahead of the DB
-> Task :generator-common:buildLineRefIndex
+> Task :dao:kmpPartiallyResolvedDependenciesChecker
+> Task :core:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :dao:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :dao:generateCommonMainSeforimDbInterface UP-TO-DATE
+> Task :dao:jvmProcessResources NO-SOURCE
+> Task :dao:processJvmMainResources SKIPPED
+> Task :generator-common:kmpPartiallyResolvedDependenciesChecker
+> Task :generator-common:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :generator-common:jvmProcessResources UP-TO-DATE
+> Task :generator-common:processJvmMainResources SKIPPED
+> Task :core:compileKotlinJvm UP-TO-DATE
+> Task :core:compileJvmMainJava NO-SOURCE
+> Task :core:jvmMainClasses UP-TO-DATE
+> Task :core:jvmJar UP-TO-DATE
+> Task :dao:compileKotlinJvm UP-TO-DATE
+> Task :dao:compileJvmMainJava NO-SOURCE
+> Task :dao:jvmMainClasses UP-TO-DATE
+> Task :dao:jvmJar UP-TO-DATE
+> Task :generator-common:compileKotlinJvm UP-TO-DATE
+> Task :generator-common:compileJvmMainJava NO-SOURCE
+> Task :generator-common:jvmMainClasses UP-TO-DATE
+> Task :generator-common:jvmJar UP-TO-DATE
+> Task :generator-common:compressLineContent
 Picked up JAVA_TOOL_OPTIONS: -Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts -Djavax.net.ssl.trustStoreType=JKS -Dhttps.proxyHost=127.0.0.1 -Dhttps.proxyPort=39655 -Dhttp.nonProxyHosts=localhost|127.0.0.1|::1|127.*|0.*|::|169.254.*|api.anthropic.com|api-staging.anthropic.com|api-pr-preview.an
 Picked up _JAVA_OPTIONS: -XX:+UnlockDiagnosticVMOptions -XX:DisableIntrinsic=_base64_encodeBlock,_base64_decodeBlock
-Info: (BuildLineRefIndexCli) line_ref: 1000 books, 897006 keys
-Info: (BuildLineRefIndexCli) line_ref: 2000 books, 947896 keys
-Info: (BuildLineRefIndexCli) line_ref: 3000 books, 1437555 keys
-Info: (BuildLineRefIndexCli) line_ref: 4000 books, 1655069 keys
-Info: (BuildLineRefIndexCli) line_ref: 5000 books, 2018162 keys
-Info: (BuildLineRefIndexCli) line_ref: 6000 books, 3316822 keys
 ```
 ## machine
 ```
                total        used        free      shared  buff/cache   available
-Mem:           16087        2044        4489          12        9895       14042
-/dev/vda        252G   48G   22G  70% /
- 15:17:37 up  7:07,  0 user,  load average: 1.56, 1.31, 1.18
+Mem:           16087        1748        1771          12       12910       14338
+/dev/vda        252G   44G   26G  63% /
+ 15:47:40 up  7:37,  0 user,  load average: 2.36, 2.23, 1.82
 ```
