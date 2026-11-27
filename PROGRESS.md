@@ -1,4 +1,4 @@
-# combined delta 2711 — progress (2026-11-27T20:18:01Z)
+# combined delta 2711 — progress (2026-11-27T20:48:04Z)
 
 ## markers
 ```
@@ -21,6 +21,11 @@
 2026-11-27T16:59:39Z v2a START sefaria phase fordb=9bf3ab1cd0b2959962e688caf59fd8a90d32e8b1b7dc545823b21f49fa0d9911 code=c5e28010
 2026-11-27T17:47:44Z v2a DONE sefaria; snapshot
 2026-11-27T17:47:50Z v2a START rest
+2026-11-27T20:26:16Z v2a DONE build -> /work/db/v2a.db
+2026-11-27T20:26:16Z PIPE ALL BUILDS DONE
+2026-11-27T20:26:28Z DELTA v2a copy raw + compress v2a
+2026-11-27T20:26:43Z DELTA v2a FAIL compress v2a
+2026-11-27T20:29:13Z DELTA v2a copy raw + compress v2a
 ```
 ## notes
 - 08:15Z v1 started (v40 inputs verified by sha256; SeforimLibrary c5e2801 + local workarounds).
@@ -36,38 +41,40 @@
 - 17:05Z v2b result pushed: prbody/libdata-2611-delta @112c4568 (READY).
 - 17:47Z v2a Sefaria phase done (48 min); rest started.
 - 20:1xZ deleted v2a Sefaria snapshot to leave room for the links-phase candidate copy.
-## tail of v2a.rest.log
+- 20:26Z v2a built. Direct checks: 28 book titles changed (24 Sefaria + 4 repo), no book lost; BUT book 6305 'חוות דעת חידושים' lost all 1163 line_dh rows (SeforimLibrary line_dh_book_overrides.csv keys it by the old title 'חוות דעת חדושים'), and 1 link lost: DictaToOtzaria/ערוך/links/שפת אמת על כריתות_links.json still targets 'תוספות ישנים  על כריתות' (double space) which book_renames.csv renames. 23 renamed folders + 6 children get NEW category ids.
+- 20:27Z v2a compress hit SQLITE_BUSY (my read-only checks had the DB open); restarted.
+## tail of delta-v2a.log
 ```
-Info: (BuildLineDhIndexCli) line_dh: dropping noisy book 7813 'שפת אמת על שבת' (distinct=0.09, oneWord=0.71, opener=0.10, hits=689)
-Info: (BuildLineDhIndexCli) line_dh: dropping noisy book 7814 'שפת אמת על בכורות' (distinct=0.14, oneWord=1.00, opener=0.03, hits=74)
-Info: (BuildLineDhIndexCli) line_dh: dropping noisy book 7815 'שפת אמת על זבחים' (distinct=0.09, oneWord=1.00, opener=0.04, hits=343)
-Info: (BuildLineDhIndexCli) line_dh: dropping noisy book 7816 'שפת אמת על כריתות' (distinct=0.12, oneWord=1.00, opener=0.11, hits=65)
-Info: (BuildLineDhIndexCli) line_dh: dropping noisy book 7817 'שפת אמת על מנחות' (distinct=0.12, oneWord=1.00, opener=0.12, hits=353)
-Info: (BuildLineDhIndexCli) line_dh: dropping noisy book 7818 'שפת אמת על מעילה' (distinct=0.20, oneWord=1.00, opener=0.07, hits=44)
-Info: (BuildLineDhIndexCli) line_dh: dropping noisy book 7819 'שפת אמת על ערכין' (distinct=0.19, oneWord=1.00, opener=0.13, hits=75)
-Info: (BuildLineDhIndexCli) line_dh: dropping noisy book 7820 'שפת אמת על תמורה' (distinct=0.16, oneWord=1.00, opener=0.10, hits=86)
-Info: (BuildLineDhIndexCli) line_dh: dropping noisy book 7833 'תפארת יעקב על גיטין' (distinct=0.06, oneWord=1.00, opener=0.49, hits=2642)
-Info: (BuildLineDhIndexCli) line_dh: dropping noisy book 8032 'חידושי הר״ן (מיוחס לו) על שבת' (distinct=0.49, oneWord=1.00, opener=0.20, hits=1823)
-Info: (BuildLineDhIndexCli) line_dh: dropping noisy book 8045 'אור הישר (ירושלמי)' (distinct=0.03, oneWord=1.00, opener=0.02, hits=1145)
-Info: (BuildLineDhIndexCli) line_dh: dropping noisy book 8105 'שקל הקדש על ירושלמי שקלים' (distinct=0.25, oneWord=1.00, opener=0.52, hits=677)
-Info: (BuildLineDhIndexCli) line_dh: dropping noisy book 8158 'תורת נתנאל על התורה' (distinct=0.53, oneWord=0.98, opener=0.38, hits=217)
-Info: (BuildLineDhIndexCli) line_dh: 1271986 dibburim over 2630 bold-format (35 of them lead-bold) + 107 dash-format books (2143 books below threshold, 294 books dropped as non-dibbur marking; eligible=4892 metadata + 282 reviewed overrides, unreviewed=3085)
-> Task :sefariasqlite:buildLineDivineNameIndex
+> Task :core:kmpPartiallyResolvedDependenciesChecker
+> Task :core:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :dao:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :dao:generateCommonMainSeforimDbInterface UP-TO-DATE
+> Task :dao:jvmProcessResources NO-SOURCE
+> Task :dao:processJvmMainResources SKIPPED
+> Task :generator-common:kmpPartiallyResolvedDependenciesChecker
+> Task :generator-common:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :generator-common:jvmProcessResources UP-TO-DATE
+> Task :generator-common:processJvmMainResources SKIPPED
+> Task :core:compileKotlinJvm UP-TO-DATE
+> Task :core:compileJvmMainJava NO-SOURCE
+> Task :core:jvmMainClasses UP-TO-DATE
+> Task :core:jvmJar UP-TO-DATE
+> Task :dao:compileKotlinJvm UP-TO-DATE
+> Task :dao:compileJvmMainJava NO-SOURCE
+> Task :dao:jvmMainClasses UP-TO-DATE
+> Task :dao:jvmJar UP-TO-DATE
+> Task :generator-common:compileKotlinJvm UP-TO-DATE
+> Task :generator-common:compileJvmMainJava NO-SOURCE
+> Task :generator-common:jvmMainClasses UP-TO-DATE
+> Task :generator-common:jvmJar UP-TO-DATE
+> Task :generator-common:compressLineContent
 Picked up JAVA_TOOL_OPTIONS: -Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts -Djavax.net.ssl.trustStoreType=JKS -Dhttps.proxyHost=127.0.0.1 -Dhttps.proxyPort=39655 -Dhttp.nonProxyHosts=localhost|127.0.0.1|::1|127.*|0.*|::|169.254.*|api.anthropic.com|api-staging.anthropic.com|api-pr-preview.an
 Picked up _JAVA_OPTIONS: -XX:+UnlockDiagnosticVMOptions -XX:DisableIntrinsic=_base64_encodeBlock,_base64_decodeBlock
-Info: (BuildLineDivineNames) Reading pinned ForDB archive /work/v2a/fordb_latest.zip (sha256=9bf3ab1cd0b2959962e688caf59fd8a90d32e8b1b7dc545823b21f49fa0d9911)
-Info: (BuildLineDivineNames) line_divine_name: 500000 lines, 22568 spans
-Info: (BuildLineDivineNames) line_divine_name: 1000000 lines, 27007 spans
-Info: (BuildLineDivineNames) line_divine_name: 1500000 lines, 33077 spans
-Info: (BuildLineDivineNames) line_divine_name: 2000000 lines, 45503 spans
-Info: (BuildLineDivineNames) line_divine_name: 2500000 lines, 50461 spans
-Info: (BuildLineDivineNames) line_divine_name: 3000000 lines, 52239 spans
-Info: (BuildLineDivineNames) line_divine_name: 3500000 lines, 116193 spans
 ```
 ## machine
 ```
                total        used        free      shared  buff/cache   available
-Mem:           16087        1916        4616          12        9896       14170
-/dev/vda        252G   44G   26G  63% /
- 20:18:01 up 12:07,  0 user,  load average: 1.09, 1.14, 1.11
+Mem:           16087        1483        2035          12       12910       14603
+/dev/vda        252G   45G   25G  65% /
+ 20:48:04 up 12:37,  0 user,  load average: 3.46, 2.75, 2.15
 ```
