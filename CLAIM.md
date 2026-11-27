@@ -1,1 +1,1 @@
-claimed 2026-11-27T01:19:33Z UTC: QA of prbody/perf2-fix (perf/reader-selection-item-cache)
+done: prbody/perf2-qa 9211e0d83ae0964f2961b5034ad0d24fe17808af (2026-11-27T01:47:40Z)
