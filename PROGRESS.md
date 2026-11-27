@@ -1,4 +1,4 @@
-# combined delta 2711 — progress (2026-11-27T16:47:44Z)
+# combined delta 2711 — progress (2026-11-27T17:17:46Z)
 
 ## markers
 ```
@@ -15,6 +15,10 @@
 2026-11-27T15:30:43Z DELTA v2b compress v1
 2026-11-27T16:19:15Z DELTA v2b copy raw + compress v2b
 2026-11-27T16:43:45Z DELTA v2b producePatchAndVerify
+2026-11-27T16:58:20Z DELTA v2b PATCH DONE
+2026-11-27T16:58:20Z ANALYZE v2b
+2026-11-27T16:58:20Z ANALYZE v2b rc=0
+2026-11-27T16:59:39Z v2a START sefaria phase fordb=9bf3ab1cd0b2959962e688caf59fd8a90d32e8b1b7dc545823b21f49fa0d9911 code=c5e28010
 ```
 ## notes
 - 08:15Z v1 started (v40 inputs verified by sha256; SeforimLibrary c5e2801 + local workarounds).
@@ -26,38 +30,40 @@
 - 12:50Z v2b Sefaria phase done (50 min). Early check: Sefaria link 1064034 (שבת קמא:, טז ↔ חידושי רמב"ן קמא:, ב) gone, new link 4454494 (שבת קמא:, כח → same Ramban line), link_range rows Shabbat↔Ramban 4→5 (#4023 as expected).
 - 15:05Z disk nearly full during v2b links phase (DbPublish writes a full seforim.db.candidate copy, +9.7 GB). Deleted /work/db/v1.pristine.db (v1.db itself was still uncompressed and identical).
 - 16:05Z v1 compressed. My delta.sh edit had a syntax error -> v2b compress not started; fixed and restarted 16:1xZ.
-## tail of delta-v2b.log
+- 16:58Z v2b patch verified (target hash 8be6a1a8…); analysis done; v2b.db removed for disk; v2a build released.
+- 17:05Z v2b result pushed: prbody/libdata-2611-delta @112c4568 (READY).
+## tail of v2a.sefaria.log
 ```
-> Task :core:checkKotlinGradlePluginConfigurationErrors SKIPPED
-> Task :dao:checkKotlinGradlePluginConfigurationErrors SKIPPED
-> Task :core:compileKotlinJvm UP-TO-DATE
-> Task :core:compileJvmMainJava NO-SOURCE
-> Task :core:jvmMainClasses UP-TO-DATE
-> Task :core:jvmJar UP-TO-DATE
-> Task :dao:jvmProcessResources NO-SOURCE
-> Task :dao:processJvmMainResources SKIPPED
-> Task :generator-common:kmpPartiallyResolvedDependenciesChecker
-> Task :generator-common:checkKotlinGradlePluginConfigurationErrors SKIPPED
-> Task :generator-common:jvmProcessResources UP-TO-DATE
-> Task :generator-common:processJvmMainResources SKIPPED
-> Task :dao:generateCommonMainSeforimDbInterface UP-TO-DATE
-> Task :dao:compileKotlinJvm UP-TO-DATE
-> Task :dao:compileJvmMainJava NO-SOURCE
-> Task :dao:jvmMainClasses UP-TO-DATE
-> Task :dao:jvmJar UP-TO-DATE
-> Task :generator-common:compileKotlinJvm UP-TO-DATE
-> Task :generator-common:compileJvmMainJava NO-SOURCE
-> Task :generator-common:jvmMainClasses UP-TO-DATE
-> Task :generator-common:jvmJar UP-TO-DATE
-> Task :generator-common:producePatchAndVerify
-Picked up JAVA_TOOL_OPTIONS: -Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts -Djavax.net.ssl.trustStoreType=JKS -Dhttps.proxyHost=127.0.0.1 -Dhttps.proxyPort=39655 -Dhttp.nonProxyHosts=localhost|127.0.0.1|::1|127.*|0.*|::|169.254.*|api.anthropic.com|api-staging.anthropic.com|api-pr-preview.an
-Picked up _JAVA_OPTIONS: -XX:+UnlockDiagnosticVMOptions -XX:DisableIntrinsic=_base64_encodeBlock,_base64_decodeBlock
-Info: (PatchPipelineCli) Producing patch /work/db/v1.db → /work/db/v2b.db at /work/delta/v2b/patch.db (v1 → v2, schema 7 → 7)
+Info: (SefariaDirect) Processed 200/5818 books
+Info: (SefariaDirect) Processed 300/5818 books
+Info: (SefariaDirect) Processed 400/5818 books
+Info: (SefariaDirect) Processed 500/5818 books
+Info: (SefariaDirect) Processed 600/5818 books
+Info: (SefariaDirect) Processed 700/5818 books
+Info: (SefariaDirect) Processed 800/5818 books
+Info: (SefariaDirect) Processed 900/5818 books
+Info: (SefariaDirect) Processed 1000/5818 books
+Info: (SefariaDirect) Processed 1100/5818 books
+Info: (SefariaDirect) Processed 1200/5818 books
+Info: (SefariaDirect) Processed 1300/5818 books
+Info: (SefariaDirect) Processed 1400/5818 books
+Info: (SefariaDirect) Processed 1500/5818 books
+Info: (SefariaDirect) Processed 1600/5818 books
+Info: (SefariaDirect) Processed 1700/5818 books
+Info: (SefariaDirect) Processed 1800/5818 books
+Info: (SefariaDirect) Processed 1900/5818 books
+Info: (SefariaDirect) Processed 2000/5818 books
+Info: (SefariaDirect) Processed 2100/5818 books
+Info: (SefariaDirect) Processed 2200/5818 books
+Info: (SefariaDirect) Processed 2300/5818 books
+Info: (SefariaDirect) Processed 2400/5818 books
+Info: (SefariaDirect) Processed 2500/5818 books
+Info: (SefariaDirect) Processed 2600/5818 books
 ```
 ## machine
 ```
                total        used        free      shared  buff/cache   available
-Mem:           16087        1328        1967          12       13134       14759
-/dev/vda        252G   44G   26G  63% /
- 16:47:44 up  8:37,  0 user,  load average: 1.05, 1.89, 2.06
+Mem:           16087       10031        1887          12        4528        6056
+/dev/vda        252G   36G   34G  52% /
+ 17:17:46 up  9:07,  0 user,  load average: 1.12, 1.23, 1.33
 ```
